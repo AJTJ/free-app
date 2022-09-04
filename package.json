@@ -8,8 +8,13 @@
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
+    "@react-native-community/eslint-config": "^3.1.0",
     "@types/react": "~18.0.0",
     "@types/react-native": "~0.69.1",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.7.1",
     "typescript": "^4.6.3"
   },
   "scripts": {
@@ -20,5 +25,6 @@
   },
   "version": "1.0.0",
   "private": true,
-  "name": "test_expo"
+  "name": "free_app",
+  "resolutions": { "@types/react": "^17" }
 }

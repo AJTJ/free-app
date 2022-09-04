@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, SafeAreaView } from "react-native";
 import React from "react";
+import { Home } from "./Pages/Home";
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
+      <Home />
+    </SafeAreaView>
   );
 }
 

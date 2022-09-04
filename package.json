@@ -24,7 +24,6 @@
     "web": "expo start --web"
   },
   "version": "1.0.0",
-  "private": true,
   "name": "free_app",
   "resolutions": { "@types/react": "^17" }
 }

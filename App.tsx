@@ -1,13 +1,22 @@
 import { StyleSheet, Text, SafeAreaView } from "react-native";
 import React from "react";
-import { Home } from "./Pages/Home";
+import { Home } from "./pages";
+
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from "recoil";
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <Home />
-    </SafeAreaView>
+    <RecoilRoot>
+      <SafeAreaView style={styles.container}>
+        <Home />
+      </SafeAreaView>
+    </RecoilRoot>
   );
 }
 

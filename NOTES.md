@@ -2,6 +2,15 @@
 - start project for dev (with phone)
   - `npx expo start`
 
+### TOOLS
+- state management
+  - recoil
+    - https://recoiljs.org/docs/introduction/getting-started
+
+### NOTES
+- eslint rules, but for typescript:
+  - https://typescript-eslint.io/
+
 ### process
 - state management
 - styling library?

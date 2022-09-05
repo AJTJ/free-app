@@ -6,6 +6,9 @@
 - state management
   - recoil
     - https://recoiljs.org/docs/introduction/getting-started
+- app navigation
+  - React Navigation
+    - https://reactnavigation.org/docs/typescript/
 
 ### NOTES
 - eslint rules, but for typescript:

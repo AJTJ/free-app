@@ -1,30 +1,28 @@
-import { StyleSheet, Text, SafeAreaView } from "react-native";
 import React from "react";
 import { Home } from "./pages";
+import { NavigationContainer } from "@react-navigation/native";
 
-import {
-  RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-} from "recoil";
+import { RecoilRoot } from "recoil";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Auth } from "./pages";
+
+// TODO: Figure out the typing of React Navigator
+type RootStackParamList = {
+  Home: undefined;
+  Auth: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
     <RecoilRoot>
-      <SafeAreaView style={styles.container}>
-        <Home />
-      </SafeAreaView>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Auth" component={Auth} />
+          <Stack.Screen name="Home" component={Home} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </RecoilRoot>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#ffffff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

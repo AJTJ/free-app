@@ -6,7 +6,6 @@
 ### TODOs
 - styling library?
 - data visualization library?
-- graphql integration library
 - debugging
   - https://reactnative.dev/docs/debugging
     - get this working iwth the `react-native-debugger` tool

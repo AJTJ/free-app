@@ -15,6 +15,7 @@
 ### commands
 - start project for dev (with phone)
   - `npx expo start`
+- shake your phone to bring up the developer menu
 
 ### project tools
 - state management

@@ -18,7 +18,7 @@ export default function App() {
   return (
     <RecoilRoot>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="Auth">
           <Stack.Screen name="Auth" component={Auth} />
           <Stack.Screen name="Home" component={Home} />
         </Stack.Navigator>

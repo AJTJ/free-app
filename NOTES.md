@@ -9,6 +9,7 @@
 - app navigation
   - React Navigation
     - https://reactnavigation.org/docs/typescript/
+      - there are several ways to navigate around
 
 ### NOTES
 - eslint rules, but for typescript:

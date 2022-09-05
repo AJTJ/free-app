@@ -10,13 +10,14 @@
   - React Navigation
     - https://reactnavigation.org/docs/typescript/
       - there are several ways to navigate around
-
-### NOTES
+- forms
+  - formik
+    - https://formik.org/docs/guides/typescript
+    - https://formik.org/docs/guides/react-native
 - eslint rules, but for typescript:
   - https://typescript-eslint.io/
 
-### process
-- state management
+### TODOs
 - styling library?
 - data visualization library?
-- formik
+

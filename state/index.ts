@@ -1,1 +1,2 @@
-export { textState, charCountState } from "./test";
+export { textState, textLengthState } from "./test";
+export { userState } from "./user";

@@ -1,5 +1,5 @@
 {
-  "extends": ["@react-native-community", "eslint-config-prettier"],
+  "extends": ["@react-native-community", "eslint-config-prettier", "plugin:valtio/recommended"],
   "rules": {
     "@typescript-eslint/no-unused-vars": "warn"
   }

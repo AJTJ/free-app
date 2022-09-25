@@ -1,45 +1,102 @@
-import { StyleSheet, Button, Text, View } from "react-native";
+import { StyleSheet, Button, Text, View, TextInput } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Modal } from "../../components";
-import { userState } from "../../state";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { requestUserData } from "../../logic";
+import { Modal, Btn } from "../../components";
+import { useForm, Controller } from "react-hook-form";
+// import { useSnapshot } from "valtio";
+import { addUser } from "../../state";
 
 // NAVIGATING WITH NAVIGATION
 // navigation.goBack()
 
 // TODO: what is the navigation type
 export function Auth({ navigation }: { navigation: any }) {
-  // const [user, setUser] = useState();
-  // const user = useRecoilState(currentUser);
-  const [showModal, setShowModal] = useState(false);
+  type FormData = {
+    user: string;
+    password: string;
+  };
 
-  const handleLogin = async () => {
-    // if (!user) {
-    //   const userResponse = await requestUserData();
-    //   if (userResponse) {
-    //     setUser(userResponse)
-    //   }
-    // }
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    defaultValues: {
+      user: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = (data: FormData) => {
+    // TODO: Evidently we need to actually log a user in here
+    addUser({ name: data.user, id: 123 });
+    console.log({ data });
+    navigation.navigate("Home");
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Navigate to home page with button!!</Text>
-      <Button title="Login" onPress={handleLogin} />
-      <Button title="modal" onPress={() => setShowModal(!showModal)} />
-      {showModal ? <Modal /> : <View />}
+      <Controller
+        name="user"
+        control={control}
+        rules={{ required: true }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <>
+            <Text>Name</Text>
+            <TextInput
+              style={styles.Input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          </>
+        )}
+      />
+
+      <Controller
+        name="password"
+        control={control}
+        rules={{
+          maxLength: 100,
+          required: true,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <>
+            <Text>Password</Text>
+            <TextInput
+              style={styles.Input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          </>
+        )}
+      />
+      <Button title="Login" onPress={handleSubmit(onSubmit)} />
+      <Btn
+        title="Primary"
+        type="primary"
+        hasIcon={false}
+        disabled={false}
+        size="reg"
+        onPress={handleSubmit(onSubmit)}
+      />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  button: {
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10,
+  },
   Input: {
     height: 40,
     margin: 12,
     borderWidth: 1,
     padding: 10,
+    minWidth: "80%",
   },
 
   container: {

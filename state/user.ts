@@ -1,23 +1,12 @@
-import { atom, selector } from "recoil";
-import { requestUserData } from "../logic";
+import { proxy } from "valtio";
 
-interface UserState {
+type UserState = {
   name: string;
   id: number;
-}
+};
 
-export const userState = atom({
-  key: "userState",
-  default: {} as UserState,
-});
+export const userStore = proxy<{ user?: UserState }>({});
 
-export const currentUser = selector({
-  key: "CurrentUserName",
-  get: async () => {
-    const response = await requestUserData({
-      email: "email",
-      pw: "PW",
-    });
-    return response.name;
-  },
-});
+export const addUser = (user: UserState) => {
+  userStore.user = user;
+};

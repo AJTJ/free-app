@@ -1,10 +1,3 @@
-import { userState } from "../state";
-
-interface UserResponse {
-  name: string;
-  id: number;
-}
-
 export const requestUserData = async ({
   email,
   pw,
@@ -13,10 +6,11 @@ export const requestUserData = async ({
   pw: string;
 }) => {
   // TODO: create actual backend logic
-
-  console.log({ email, pw });
-  return {
-    name: "Jon",
-    id: 123,
-  };
+  console.log("Sent", { email, pw });
+  setTimeout(() => {
+    return {
+      name: "Jon",
+      id: 123,
+    };
+  }, 2000);
 };

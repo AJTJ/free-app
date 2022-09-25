@@ -19,20 +19,26 @@
   - https://typescript-eslint.io/
 
 ### project tools
-- recoil
-  - https://recoiljs.org/docs/introduction/getting-started
-  - https://recoiljs.org/docs/guides/asynchronous-data-queries
+- Valtio state management
+  - https://valtio.pmnd.rs/
+  - https://github.com/pmndrs/valtio
 - React Navigation
   - BASICS
     - https://reactnavigation.org/docs/navigating
   - TYPESCRIPT particulars
     - https://reactnavigation.org/docs/typescript/
-- formik
-  - https://formik.org/docs/guides/typescript
-  - https://formik.org/docs/guides/react-native 
+- react-hook-form
+  - https://react-hook-form.com/get-started
+  - https://react-hook-form.com/get-started#ReactNative
 - apollo graphql client
   - https://www.apollographql.com/docs/react/integrations/react-native/
   - https://www.apollographql.com/docs/react/development-testing/static-typing/
+- formik (DEPRECATED form solution)
+  - https://formik.org/docs/guides/typescript
+  - https://formik.org/docs/guides/react-native 
+- recoil (DEPRECATED state management)
+  - https://recoiljs.org/docs/introduction/getting-started
+  - https://recoiljs.org/docs/guides/asynchronous-data-queries
 
 ### desktop tools
 - react-native-debugger

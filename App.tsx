@@ -8,6 +8,7 @@ import { Auth } from "./pages";
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
+// not useful until the backend is useable
 const client = new ApolloClient({
   uri: "localhost:4000/graphql",
   cache: new InMemoryCache(),
@@ -27,8 +28,10 @@ export default function App() {
       <RecoilRoot>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Auth">
+            {/* each stack is being injected the navigation object */}
             <Stack.Screen name="Auth" component={Auth} />
             <Stack.Screen name="Home" component={Home} />
+            {/* <Stack.Screen name="ANOTHER_PAGE" component={ANOTHER_PAGE} /> */} 
           </Stack.Navigator>
         </NavigationContainer>
       </RecoilRoot>

@@ -8,7 +8,6 @@ import { addUser } from "../../state";
 
 // NAVIGATING WITH NAVIGATION
 // navigation.goBack()
-
 // TODO: what is the navigation type
 export function Auth({ navigation }: { navigation: any }) {
   type FormData = {

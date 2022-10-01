@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
-
 import styled from "styled-components/native";
+import { colors, spacing } from "../stylessheet/Colors";
 
 interface BtnProps {
   title: string;
   type: string;
   disabled?: boolean;
   hasIcon?: boolean;
-  size: string;
+  size?: any;
   onPress: () => void;
 }
 
@@ -20,9 +20,10 @@ export const Btn = (props: BtnProps) => {
     justify-content: center;
     width: 90%;
     height: 40px;
-    border-radius: 12px;
-    border-color: ${props.type === "primary" ? "none" : "#000"};
-    background-color: ${props.type === "primary" ? "#1E4D95" : "none"};
+    border-radius: 12;
+    border-width: 1;
+    border-color: ${props.type === "primary" ? colors.Blue600 : "#000"};
+    background-color: ${props.type === "primary" ? colors.Blue600 : "none"};
   `;
 
   const BtnTitle = styled.Text`

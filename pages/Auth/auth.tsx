@@ -10,7 +10,6 @@ import { LinearGradient } from "expo-linear-gradient";
 
 // NAVIGATING WITH NAVIGATION
 // navigation.goBack()
-
 // TODO: what is the navigation type
 export function Auth({ navigation }: { navigation: any }) {
   type FormData = {
@@ -98,6 +97,9 @@ export function Auth({ navigation }: { navigation: any }) {
 const styles = StyleSheet.create({
   gradient: {
     flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
   },
   button: {
     alignItems: "center",

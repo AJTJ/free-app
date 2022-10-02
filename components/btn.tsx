@@ -22,8 +22,8 @@ export const Btn = (props: BtnProps) => {
     height: 40px;
     border-radius: 12;
     border-width: 1;
-    border-color: ${props.type === "primary" ? colors.Blue600 : "#000"};
-    background-color: ${props.type === "primary" ? colors.Blue600 : "none"};
+    border-color: ${props.type === "primary" ? colors.blue600 : "#000"};
+    background-color: ${props.type === "primary" ? colors.blue600 : "none"};
   `;
 
   const BtnTitle = styled.Text`

@@ -1,4 +1,4 @@
-import { StyleSheet, Button, Text, View, TextInput } from "react-native";
+import { StyleSheet, Button, Text, View, Image } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Modal, Btn } from "../../components";
@@ -7,6 +7,8 @@ import { useForm, Controller } from "react-hook-form";
 import { addUser } from "../../state";
 import { colors, spacing } from "../../stylessheet/colors";
 import { LinearGradient } from "expo-linear-gradient";
+
+const diverImg = "../../assets/Ellipse372.png";
 
 // NAVIGATING WITH NAVIGATION
 // navigation.goBack()
@@ -37,43 +39,8 @@ export function Auth({ navigation }: { navigation: any }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <LinearGradient colors={["#15418C", "#081E33"]} style={styles.gradient}>
-        <Controller
-          name="user"
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <>
-              <Text style={styles.InputText}>Name</Text>
-              <TextInput
-                style={styles.Input}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-              />
-            </>
-          )}
-        />
-
-        <Controller
-          name="password"
-          control={control}
-          rules={{
-            maxLength: 100,
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <>
-              <Text style={styles.InputText}>Password</Text>
-              <TextInput
-                style={styles.Input}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-              />
-            </>
-          )}
-        />
+      <LinearGradient colors={["#15418C", "#081E33"]} style={styles.background}>
+        <Image source={require(diverImg)}/>
         <Button title="Login" onPress={handleSubmit(onSubmit)} />
         <Btn
           title="Log in"
@@ -83,7 +50,7 @@ export function Auth({ navigation }: { navigation: any }) {
           onPress={handleSubmit(onSubmit)}
         />
         <Btn
-          title="Sign up"
+          title="New user"
           type="secondary"
           hasIcon={false}
           disabled={false}
@@ -95,7 +62,7 @@ export function Auth({ navigation }: { navigation: any }) {
 }
 
 const styles = StyleSheet.create({
-  gradient: {
+  background: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
@@ -106,19 +73,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#DDDDDD",
     padding: 10,
   },
-  Input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    minWidth: "80%",
-    borderColor: colors.blue400,
-    borderRadius: 4,
-  },
-  InputText: {
-    color: colors.blue400,
-  },
-
   container: {
     flex: 1,
     backgroundColor: "#ffffff",

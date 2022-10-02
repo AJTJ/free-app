@@ -1,8 +1,8 @@
-import { StyleSheet, Button, Text, View, Image } from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, Button, Image } from "react-native";
+import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Modal, Btn } from "../../components";
-import { useForm, Controller } from "react-hook-form";
+import { Btn } from "../../components";
+import { useForm } from "react-hook-form";
 // import { useSnapshot } from "valtio";
 import { addUser } from "../../state";
 import { colors, spacing } from "../../stylessheet/colors";
@@ -40,7 +40,7 @@ export function Auth({ navigation }: { navigation: any }) {
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient colors={["#15418C", "#081E33"]} style={styles.background}>
-        <Image source={require(diverImg)}/>
+        <Image source={require(diverImg)} />
         <Button title="Login" onPress={handleSubmit(onSubmit)} />
         <Btn
           title="Log in"

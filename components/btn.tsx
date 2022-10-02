@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
-import { colors, spacing } from "../stylessheet/Colors";
+import { colors, spacing } from "../stylessheet/colors";
 
 interface BtnProps {
   title: string;

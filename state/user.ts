@@ -1,12 +1,8 @@
 import { proxy } from "valtio";
+import { UserQueryData } from "../api/types/types.generated";
 
-type UserState = {
-  name: string;
-  id: number;
-};
+export const userStore = proxy<{ user?: UserQueryData }>({});
 
-export const userStore = proxy<{ user?: UserState }>({});
-
-export const addUser = (user: UserState) => {
+export const addUser = (user: UserQueryData) => {
   userStore.user = user;
 };

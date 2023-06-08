@@ -8,16 +8,16 @@ import { addUser } from "../../state";
 import { colors } from "../../stylessheet/colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLoginUser } from "../../logic";
+import { LazyQueryExecFunction } from "@apollo/client";
+import { LoginQuery } from "../../api/auth.generated";
+import { Exact } from "../../api/types/types.generated";
 
 // NAVIGATING WITH NAVIGATION
 // navigation.goBack()
 // TODO: what is the navigation type
 export function Auth({ navigation }: { navigation: any }) {
-  let [loginUser, response] = useLoginUser();
-  type FormData = {
-    email: string;
-    password: string;
-  };
+  let { loginUser, result } = useLoginUser();
+  let { loading, error, data } = result;
 
   const {
     control,
@@ -30,26 +30,21 @@ export function Auth({ navigation }: { navigation: any }) {
     },
   });
 
-  const onSubmit = (data: FormData) => {
-    // TODO: Evidently we need to actually log a user in here
-    let el = loginUser({
-      variables: { email: data.email, password: data.password },
-    });
-    addUser({ name: data.user, id: 123 });
-    console.log({ data });
+  if (data?.user) {
+    addUser(data.user);
     navigation.navigate("Home");
-  };
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient colors={["#15418C", "#081E33"]} style={styles.gradient}>
         <Controller
-          name="user"
+          name="email"
           control={control}
           rules={{ required: true }}
           render={({ field: { onChange, onBlur, value } }) => (
             <>
-              <Text style={styles.InputText}>Name</Text>
+              <Text style={styles.InputText}>Email</Text>
               <TextInput
                 style={styles.Input}
                 onBlur={onBlur}
@@ -79,20 +74,28 @@ export function Auth({ navigation }: { navigation: any }) {
             </>
           )}
         />
-        <Button title="Login" onPress={handleSubmit(onSubmit)} />
+        <Button
+          title="Login"
+          onPress={handleSubmit((formData) =>
+            onSubmit({ formData, loginUser })
+          )}
+        />
+        {loading && <Text>LOADING</Text>}
+        {error && <Text>{error}</Text>}
+
         <Btn
           title="Log in"
           type="primary"
           hasIcon={false}
           disabled={false}
-          onPress={handleSubmit(onSubmit)}
+          onPress={() => console.log("button press")}
         />
         <Btn
           title="Sign up"
           type="secondary"
           hasIcon={false}
           disabled={false}
-          onPress={handleSubmit(onSubmit)}
+          onPress={() => console.log("button press")}
         />
       </LinearGradient>
     </SafeAreaView>
@@ -131,3 +134,27 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
 });
+
+const onSubmit = async ({
+  formData,
+  loginUser,
+}: {
+  formData: FormData;
+  loginUser: LazyQueryExecFunction<
+    LoginQuery,
+    Exact<{
+      email: any;
+      password: any;
+    }>
+  >;
+}) => {
+  // TODO: Evidently we need to actually log a user in here
+  await loginUser({
+    variables: { email: formData.email, password: formData.password },
+  });
+};
+
+type FormData = {
+  email: string;
+  password: string;
+};

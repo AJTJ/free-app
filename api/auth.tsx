@@ -1,9 +1,17 @@
-import { gql, useQuery } from "@apollo/client";
+import { graphql } from "./gql";
 
-export const LOGIN_USER = gql`
-  query login($email: String!, $password: String!) {
+export const UserFragment = graphql(`
+  fragment UserItem on UserQueryData {
+    email
     userId
     username
-    email
   }
-`;
+`);
+
+export const LOGIN_USER = graphql(`
+  query login($email: String!, $password: String!) {
+    user(queryEmail: $email) {
+      ...UserItem
+    }
+  }
+`);

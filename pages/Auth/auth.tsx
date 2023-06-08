@@ -5,10 +5,8 @@ import { Modal, Btn } from "../../components";
 import { useForm, Controller } from "react-hook-form";
 // import { useSnapshot } from "valtio";
 import { addUser } from "../../state";
-import { colors, spacing } from "../../stylessheet/colors";
+import { colors } from "../../stylessheet/colors";
 import { LinearGradient } from "expo-linear-gradient";
-import { useQuery } from "@apollo/client";
-import { LOGIN_USER } from "../../api/auth";
 import { useLoginUser } from "../../logic";
 
 // NAVIGATING WITH NAVIGATION

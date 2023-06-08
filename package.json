@@ -4,6 +4,7 @@
     "@expo/webpack-config": "^0.17.0",
     "@react-navigation/native": "^6.0.12",
     "@react-navigation/native-stack": "^6.8.0",
+    "concurrently": "^8.1.0",
     "expo": "^46.0.0",
     "expo-linear-gradient": "~11.4.0",
     "formik": "^2.2.9",
@@ -22,6 +23,13 @@
   "devDependencies": {
     "@babel/core": "^7.18.6",
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "@graphql-codegen/typed-document-node": "^4.0.1",
+    "@graphql-codegen/cli": "4.0.1",
+    "@graphql-codegen/client-preset": "4.0.0",
+    "@graphql-codegen/introspection": "4.0.0",
+    "@graphql-codegen/near-operation-file-preset": "^2.5.0",
+    "@graphql-codegen/typescript": "3.0.4",
+    "@graphql-codegen/typescript-resolvers": "3.2.1",
     "@react-native-community/eslint-config": "^3.1.0",
     "@types/react": "~18.0.0",
     "@types/react-native": "~0.69.1",
@@ -34,10 +42,13 @@
     "typescript": "^4.6.3"
   },
   "scripts": {
-    "start": "expo start",
+    "start-old": "expo start",
+    "start": "concurrently \"expo start\" \"yarn generate --watch\"",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "generate": "graphql-codegen",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "version": "1.0.0",
   "name": "free_app",

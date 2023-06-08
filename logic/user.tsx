@@ -11,7 +11,7 @@ import { LOGIN_USER } from "../api/auth";
 //   // TODO: create actual backend logic
 //   console.log("Sent", { email, password });
 
-//   const { loading, error, data } = useQuery(LOGIN_USER);
+//   const { loading, error, data } = useQuery(loginUser);
 
 // };
 
@@ -28,7 +28,8 @@ type loginFunction = ({
 }) => {};
 
 // need the types of the query result! Probably good to focus on that
-export const useLoginUser = (): [loginFunction, any] => {
-  const [loginUser, queryResult] = useLazyQuery(LOGIN_USER);
-  return [loginUser, queryResult];
+export const useLoginUser = () => {
+  const [loginUser, { loading, error, data }] = useLazyQuery(LOGIN_USER);
+  let result = { loading, error, data };
+  return [loginUser, result];
 };

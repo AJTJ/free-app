@@ -11,6 +11,14 @@
     - get this working iwth the `react-native-debugger` tool
     - referenced here: https://www.apollographql.com/docs/react/integrations/react-native/
 
+### GQL Tools
+- https://graphql.org/learn/queries/
+- https://blog.devgenius.io/creating-custom-hooks-using-apollo-in-react-c93ca13cd0c3
+- https://www.apollographql.com/docs/react/data/queries/#manual-execution-with-uselazyquery
+- https://thinkster.io/tutorials/boost-your-react-apps-with-apollo-beyond-the-basics/calling-queries-manually-with-uselazyquery
+- https://the-guild.dev/graphql/codegen/docs/getting-started/installation
+- 
+
 ### commands/processes
 - start project for dev (with phone)
   - `npx expo start`

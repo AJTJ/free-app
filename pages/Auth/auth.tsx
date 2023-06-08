@@ -19,6 +19,11 @@ export function Auth({ navigation }: { navigation: any }) {
   let { loginUser, result } = useLoginUser();
   let { loading, error, data } = result;
 
+  if (data?.user) {
+    addUser(data.user);
+    navigation.navigate("Home");
+  }
+
   const {
     control,
     handleSubmit,
@@ -29,11 +34,6 @@ export function Auth({ navigation }: { navigation: any }) {
       password: "",
     },
   });
-
-  if (data?.user) {
-    addUser(data.user);
-    navigation.navigate("Home");
-  }
 
   return (
     <SafeAreaView style={styles.container}>

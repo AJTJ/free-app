@@ -10,7 +10,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 // not useful until the backend is useable
 const client = new ApolloClient({
-  uri: "localhost:4000/graphql",
+  uri: "localhost:8080",
   cache: new InMemoryCache(),
 });
 
@@ -31,7 +31,7 @@ export default function App() {
             {/* each stack is being injected the navigation object */}
             <Stack.Screen name="Auth" component={Auth} />
             <Stack.Screen name="Home" component={Home} />
-            {/* <Stack.Screen name="ANOTHER_PAGE" component={ANOTHER_PAGE} /> */} 
+            {/* <Stack.Screen name="ANOTHER_PAGE" component={ANOTHER_PAGE} /> */}
           </Stack.Navigator>
         </NavigationContainer>
       </RecoilRoot>

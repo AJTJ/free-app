@@ -1,9 +1,10 @@
 ### TODOs
 - styling library?
-  - I am feeling more convinced this is the way to go
-  - Native vs Emotion/Styled-components <- This is a `Patrick` question.
+  - Choose one
 - data visualization library?
   - not immiment
+- Codegen for front-end queries
+  - https://the-guild.dev/graphql/codegen/docs/getting-started/installation
 - debugging
   - https://reactnative.dev/docs/debugging
     - this is for apollo graphql

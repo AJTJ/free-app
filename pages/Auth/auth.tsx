@@ -7,13 +7,17 @@ import { useForm, Controller } from "react-hook-form";
 import { addUser } from "../../state";
 import { colors, spacing } from "../../stylessheet/colors";
 import { LinearGradient } from "expo-linear-gradient";
+import { useQuery } from "@apollo/client";
+import { LOGIN_USER } from "../../api/auth";
+import { useLoginUser } from "../../logic";
 
 // NAVIGATING WITH NAVIGATION
 // navigation.goBack()
 // TODO: what is the navigation type
 export function Auth({ navigation }: { navigation: any }) {
+  let [loginUser, response] = useLoginUser();
   type FormData = {
-    user: string;
+    email: string;
     password: string;
   };
 
@@ -23,13 +27,16 @@ export function Auth({ navigation }: { navigation: any }) {
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
-      user: "",
+      email: "",
       password: "",
     },
   });
 
   const onSubmit = (data: FormData) => {
     // TODO: Evidently we need to actually log a user in here
+    let el = loginUser({
+      variables: { email: data.email, password: data.password },
+    });
     addUser({ name: data.user, id: 123 });
     console.log({ data });
     navigation.navigate("Home");

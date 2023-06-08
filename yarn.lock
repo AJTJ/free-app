@@ -2783,32 +2783,16 @@
   integrity sha512-L28j2FcJfSZOnL1WBjDYp2vUHCeIFlyYI/53EwD/rKUBQ7MtUUfbQWiyKJGpcnv4/WgrhWsFKrcPstcAt/J0tQ==
 
 "@types/react-native@^0.65":
-  version "0.65.25"
-  resolved "https://registry.npmjs.org/@types/react-native/-/react-native-0.65.25.tgz"
-  integrity sha512-EW1P3uHc+URpMFPE/QYoeIxeHVF/ZLUxdR0d7QrggpcwOgz+QMvXPrh+qZFIOtno8sI314h55tJYobNCSXm1pQ==
+  version "0.65.31"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.65.31.tgz#b75d64144ce1b47b9ae7556c3b15fd1d504517d4"
+  integrity sha512-3hc6910BWlse/IQxeG2uvV76n2TMfbrcyAMIuXf2u3ICKd5f6X7Sjhh2Oi7orsZWGW3+y9pSac/dM6BUPuORtA==
   dependencies:
     "@types/react" "^17"
 
-"@types/react-native@~0.69.1":
-  version "0.69.6"
-  resolved "https://registry.npmjs.org/@types/react-native/-/react-native-0.69.6.tgz"
-  integrity sha512-jx1QdJT3CdQc42EpoIGu22F1wrPZjmC/CNkfR5sRs5GxloJzthuICK7CKqAGEo2SekPs+YYzhbzrJGi1IrG5Lg==
-  dependencies:
-    "@types/react" "*"
-
 "@types/react@*", "@types/react@^17":
-  version "17.0.50"
-  resolved "https://registry.npmjs.org/@types/react/-/react-17.0.50.tgz"
-  integrity sha512-ZCBHzpDb5skMnc1zFXAXnL3l1FAdi+xZvwxK+PkglMmBrwjpp9nKaWuEvrGnSifCJmBFGxZOOFuwC6KH/s0NuA==
-  dependencies:
-    "@types/prop-types" "*"
-    "@types/scheduler" "*"
-    csstype "^3.0.2"
-
-"@types/react@~18.0.0":
-  version "18.0.18"
-  resolved "https://registry.npmjs.org/@types/react/-/react-18.0.18.tgz"
-  integrity sha512-6hI08umYs6NaiHFEEGioXnxJ+oEhY3eRz8VCUaudZmGdtvPviCJB8mgaMxaDWAdPSYd4eFavrPk2QIolwbLYrg==
+  version "17.0.60"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.60.tgz#a4a97dcdbebad76612c188fc06440e4995fd8ad2"
+  integrity sha512-pCH7bqWIfzHs3D+PDs3O/COCQJka+Kcw3RnO9rFA2zalqoXg7cNjJDh6mZ7oRtY1wmY4LVwDdAbA1F7Z8tv3BQ==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"

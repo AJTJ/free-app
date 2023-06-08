@@ -109,7 +109,7 @@ export type MutationRoot = {
   deleteAllDiveSessions: Scalars['Int'];
   deleteAllUsers: Scalars['Int'];
   insertUser: UserQueryData;
-  login: UserQueryData;
+  login: UserQueryDataOutput;
   logout: Scalars['Boolean'];
   modifyDiveSession: DiveSessionQueryData;
 };
@@ -168,7 +168,19 @@ export type UserQueryData = {
   hashedPassword: Scalars['String'];
   id: Scalars['Int'];
   isActive: Scalars['Boolean'];
+  lastLogin: Scalars['NaiveDateTime'];
   passwordSalt: Array<Scalars['Int']>;
+  updatedAt: Scalars['NaiveDateTime'];
+  userId: Scalars['UUID'];
+  username: Scalars['String'];
+};
+
+export type UserQueryDataOutput = {
+  __typename?: 'UserQueryDataOutput';
+  createdAt: Scalars['NaiveDateTime'];
+  email: Scalars['String'];
+  isActive: Scalars['Boolean'];
+  lastLogin: Scalars['NaiveDateTime'];
   updatedAt: Scalars['NaiveDateTime'];
   userId: Scalars['UUID'];
   username: Scalars['String'];

@@ -8,9 +8,6 @@ import { addUser } from "../../state";
 import { colors } from "../../stylessheet/colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLoginUser } from "../../logic";
-import { LazyQueryExecFunction } from "@apollo/client";
-import { LoginQuery } from "../../api/auth.generated";
-import { Exact } from "../../api/types/types.generated";
 
 // NAVIGATING WITH NAVIGATION
 // navigation.goBack()
@@ -19,8 +16,8 @@ export function Auth({ navigation }: { navigation: any }) {
   let { loginUser, result } = useLoginUser();
   let { loading, error, data } = result;
 
-  if (data?.user) {
-    addUser(data.user);
+  if (data?.login) {
+    addUser(data.login);
     navigation.navigate("Home");
   }
 
@@ -140,13 +137,7 @@ const onSubmit = async ({
   loginUser,
 }: {
   formData: FormData;
-  loginUser: LazyQueryExecFunction<
-    LoginQuery,
-    Exact<{
-      email: any;
-      password: any;
-    }>
-  >;
+  loginUser: any;
 }) => {
   // TODO: Evidently we need to actually log a user in here
   await loginUser({

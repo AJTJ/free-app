@@ -139,7 +139,7 @@ export type MutationRoot = {
   deleteAllDiveSessions: Scalars['Int']['output'];
   deleteAllUsers: Scalars['Int']['output'];
   insertUser: UserQueryData;
-  login: UserQueryData;
+  login: UserQueryDataOutput;
   logout: Scalars['Boolean']['output'];
   modifyDiveSession: DiveSessionQueryData;
 };
@@ -198,19 +198,31 @@ export type UserQueryData = {
   hashedPassword: Scalars['String']['output'];
   id: Scalars['Int']['output'];
   isActive: Scalars['Boolean']['output'];
+  lastLogin: Scalars['NaiveDateTime']['output'];
   passwordSalt: Array<Scalars['Int']['output']>;
   updatedAt: Scalars['NaiveDateTime']['output'];
   userId: Scalars['UUID']['output'];
   username: Scalars['String']['output'];
 };
 
-export type LoginQueryVariables = Exact<{
+export type UserQueryDataOutput = {
+  __typename?: 'UserQueryDataOutput';
+  createdAt: Scalars['NaiveDateTime']['output'];
+  email: Scalars['String']['output'];
+  isActive: Scalars['Boolean']['output'];
+  lastLogin: Scalars['NaiveDateTime']['output'];
+  updatedAt: Scalars['NaiveDateTime']['output'];
+  userId: Scalars['UUID']['output'];
+  username: Scalars['String']['output'];
+};
+
+export type LoginMutationVariables = Exact<{
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
 }>;
 
 
-export type LoginQuery = { __typename?: 'QueryRoot', user: { __typename?: 'UserQueryData', email: string, userId: any } };
+export type LoginMutation = { __typename?: 'MutationRoot', login: { __typename?: 'UserQueryDataOutput', createdAt: any, email: string, isActive: boolean, lastLogin: any, updatedAt: any, userId: any, username: string } };
 
 
-export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"queryEmail"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]} as unknown as DocumentNode<LoginQuery, LoginQueryVariables>;
+export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"loginData"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"isActive"}},{"kind":"Field","name":{"kind":"Name","value":"lastLogin"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;

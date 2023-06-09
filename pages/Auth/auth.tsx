@@ -8,32 +8,46 @@ import { addUser } from "../../state";
 import { colors } from "../../stylessheet/colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLoginUser } from "../../logic";
+import { useAllUsers } from "../../logic/user";
 
 // NAVIGATING WITH NAVIGATION
 // navigation.goBack()
 // TODO: what is the navigation type
 export function Auth({ navigation }: { navigation: any }) {
   let { loginUser, result } = useLoginUser();
+  let allUsersReturn = useAllUsers();
+  console.log({ allUsersReturn });
+
   let { loading, error, data } = result;
+
+  if (error) {
+    console.log({ error });
+  }
 
   if (data?.login) {
     addUser(data.login);
     navigation.navigate("Home");
   }
 
+  const onSubmit = (formData: FormData) => {
+    loginUser({
+      variables: { email: formData.email, password: formData.password },
+    }).catch();
+  };
+
   const {
     control,
-    handleSubmit,
+    handleSubmit: handleFormSubmit,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
-      email: "",
-      password: "",
+      email: "phil@gmail.com",
+      password: "123",
     },
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <LinearGradient colors={["#15418C", "#081E33"]} style={styles.gradient}>
         <Controller
           name="email"
@@ -71,31 +85,26 @@ export function Auth({ navigation }: { navigation: any }) {
             </>
           )}
         />
-        <Button
-          title="Login"
-          onPress={handleSubmit((formData) =>
-            onSubmit({ formData, loginUser })
-          )}
-        />
+        <Button title="Login" onPress={handleFormSubmit(onSubmit)} />
         {loading && <Text>LOADING</Text>}
-        {error && <Text>{error}</Text>}
+        {error && <Text>ERROR</Text>}
 
-        <Btn
+        {/* <Btn
           title="Log in"
           type="primary"
           hasIcon={false}
           disabled={false}
-          onPress={() => console.log("button press")}
+          onPress={() => {}}
         />
         <Btn
           title="Sign up"
           type="secondary"
           hasIcon={false}
           disabled={false}
-          onPress={() => console.log("button press")}
-        />
+          onPress={() => {}}
+        /> */}
       </LinearGradient>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -103,7 +112,7 @@ const styles = StyleSheet.create({
   gradient: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    // justifyContent: "center",
     width: "100%",
   },
   button: {
@@ -127,23 +136,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffffff",
-    alignItems: "center",
-    justifyContent: "flex-start",
+    // alignItems: "center",
+    // justifyContent: "flex-start",
   },
 });
-
-const onSubmit = async ({
-  formData,
-  loginUser,
-}: {
-  formData: FormData;
-  loginUser: any;
-}) => {
-  // TODO: Evidently we need to actually log a user in here
-  await loginUser({
-    variables: { email: formData.email, password: formData.password },
-  });
-};
 
 type FormData = {
   email: string;

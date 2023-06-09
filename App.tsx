@@ -8,9 +8,23 @@ import { Auth } from "./pages";
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
-// not useful until the backend is useable
+import Constants from "expo-constants";
+const { manifest } = Constants;
+
+// const api =
+//   typeof manifest?.packagerOpts === `object` && manifest?.packagerOpts?.dev
+//     ? manifest?.debuggerHost?.split(`:`)?.shift()?.concat(`:8080`)
+//     : `http://localhost:8080`;
+
+const uri = `http://${manifest?.debuggerHost?.split(":").shift()}:8080`;
+
+console.log({ uri });
+
 const client = new ApolloClient({
-  uri: "localhost:8080",
+  // uri: "http://localhost:8080",
+  // uri: "http://127.0.0.1:8080",
+  uri: "http://192.168.1.19:8080",
+  // uri,
   cache: new InMemoryCache(),
 });
 

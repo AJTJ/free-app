@@ -138,7 +138,7 @@ export type QueryRoot = {
   __typename?: 'QueryRoot';
   allUsers: Array<UserQueryData>;
   diveSessions: Array<DiveSessionQueryData>;
-  guarded: Scalars['Boolean'];
+  dives: Array<DiveQueryData>;
   user: UserQueryData;
 };
 
@@ -146,6 +146,12 @@ export type QueryRoot = {
 export type QueryRootDiveSessionsArgs = {
   dbQueryDto?: InputMaybe<DbqueryObject>;
   diveSessionInput: DiveSessionQueryInput;
+};
+
+
+export type QueryRootDivesArgs = {
+  dbQueryDto?: InputMaybe<DbqueryObject>;
+  diveInput?: InputMaybe<DiveQueryInput>;
 };
 
 

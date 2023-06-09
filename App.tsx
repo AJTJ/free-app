@@ -4,7 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import { RecoilRoot } from "recoil";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Auth } from "./pages";
+// import { Auth } from "./pages";
+import { Landing } from "./pages";
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
@@ -21,17 +22,15 @@ const uri = `http://${manifest?.debuggerHost?.split(":").shift()}:8080`;
 console.log({ uri });
 
 const client = new ApolloClient({
-  // uri: "http://localhost:8080",
-  // uri: "http://127.0.0.1:8080",
-  uri: "http://192.168.1.19:8080",
-  // uri,
+  uri,
   cache: new InMemoryCache(),
 });
 
 // TODO: Figure out the typing of React Navigator
 type RootStackParamList = {
+  Landing: undefined;
   Home: undefined;
-  Auth: undefined;
+  // Auth: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -41,9 +40,10 @@ export default function App() {
     <ApolloProvider client={client}>
       <RecoilRoot>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Auth">
+          <Stack.Navigator initialRouteName="Landing">
             {/* each stack is being injected the navigation object */}
-            <Stack.Screen name="Auth" component={Auth} />
+            <Stack.Screen name="Landing" component={Landing} />
+            {/* <Stack.Screen name="Auth" component={Auth} /> */}
             <Stack.Screen name="Home" component={Home} />
             {/* <Stack.Screen name="ANOTHER_PAGE" component={ANOTHER_PAGE} /> */}
           </Stack.Navigator>

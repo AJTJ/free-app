@@ -9,7 +9,6 @@ const colors = {
 };
 
 //Using 4pt grid system (4, 8, 12, 16, 20, 24, etc..)
-
 const spacing = {
   xs: "4",
   sm: "8",

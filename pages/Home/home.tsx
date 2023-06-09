@@ -18,7 +18,7 @@ export function Home() {
       ) : (
         <SafeAreaView style={styles.container}>
           <Text>
-            Hello {user.name}! Your userId= {user.id}
+            Hello {user.username}! You last logged in at= {user.lastLogin}
           </Text>
           <Text>This is a home page</Text>
           <Text>Here's a basic state lifecycle example</Text>

@@ -1,38 +1,36 @@
-import { Text, TextInput, StyleSheet } from "react-native";
+import { Text, TextInput, StyleSheet, View } from "react-native";
 import React from "react";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSnapshot } from "valtio";
-import { userStore, textStore, setText, derivedText } from "../../state";
+import { loginStore, textStore, setText, derivedText } from "../../state";
+import { useNavigation } from "@react-navigation/native";
+import { AllNavigationProp } from "../../App";
+import { LinearGradient } from "../../components";
 
 export function Home() {
-  const user = useSnapshot(userStore).user;
-  const text = useSnapshot(textStore).text;
+  let navigation = useNavigation<AllNavigationProp>();
+  const loginData = useSnapshot(loginStore).loginData;
+
+  if (!loginData) {
+    navigation.navigate("Landing");
+  }
 
   return (
-    <>
-      {!user ? (
-        <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
+      <LinearGradient>
+        {!loginData ? (
           <Text>Not logged in</Text>
-        </SafeAreaView>
-      ) : (
-        <SafeAreaView style={styles.container}>
-          <Text>
-            Hello {user.username}! You last logged in at= {user.lastLogin}
-          </Text>
-          <Text>This is a home page</Text>
-          <Text>Here's a basic state lifecycle example</Text>
-          <TextInput
-            style={styles.Input}
-            value={text}
-            onChangeText={(t) => setText(t)}
-          />
-
-          <Text>Echo: {text}</Text>
-          <Text>Character Count: {derivedText.textLength}</Text>
-        </SafeAreaView>
-      )}
-    </>
+        ) : (
+          <>
+            <Text>
+              Hello {loginData.username}! You last logged in at={" "}
+              {loginData.lastLogin}
+            </Text>
+          </>
+        )}
+      </LinearGradient>
+    </View>
   );
 }
 
@@ -41,7 +39,7 @@ const styles = StyleSheet.create({
     height: 70,
     width: 100,
     margin: 12,
-    borderWidth: 2,
+    // borderWidth: 2,
     padding: 10,
   },
 
@@ -52,3 +50,12 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
 });
+
+// const text = useSnapshot(textStore).text;
+// <TextInput
+//               style={styles.Input}
+//               value={text}
+//               onChangeText={(t) => setText(t)}
+//             />
+//             <Text>Echo: {text}</Text>
+//             <Text>Character Count: {derivedText.textLength}</Text>

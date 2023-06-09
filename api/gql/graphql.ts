@@ -49,6 +49,24 @@ export type DbqueryObject = {
   limit?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type DiveInputData = {
+  depth?: InputMaybe<Scalars['Float']['input']>;
+  disciplineType?: InputMaybe<Scalars['String']['input']>;
+  distance?: InputMaybe<Scalars['Float']['input']>;
+  diveName?: InputMaybe<Scalars['String']['input']>;
+  diveTime?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type DiveModificationData = {
+  depth?: InputMaybe<Scalars['Float']['input']>;
+  disciplineType?: InputMaybe<Scalars['String']['input']>;
+  distance?: InputMaybe<Scalars['Float']['input']>;
+  diveId: Scalars['UUID']['input'];
+  diveName?: InputMaybe<Scalars['String']['input']>;
+  diveTime?: InputMaybe<Scalars['Int']['input']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type DiveQueryData = {
   __typename?: 'DiveQueryData';
   createdAt: Scalars['NaiveDateTime']['output'];
@@ -125,7 +143,6 @@ export type DiveSessionQueryInput = {
   sessionName?: InputMaybe<Scalars['String']['input']>;
   startTime?: InputMaybe<Scalars['NaiveDateTime']['input']>;
   updatedAt?: InputMaybe<Scalars['NaiveDateTime']['input']>;
-  userId: Scalars['UUID']['input'];
 };
 
 export type LoginData = {
@@ -135,13 +152,22 @@ export type LoginData = {
 
 export type MutationRoot = {
   __typename?: 'MutationRoot';
+  addDive: DiveQueryData;
   addDiveSession: DiveSessionQueryData;
   deleteAllDiveSessions: Scalars['Int']['output'];
+  deleteAllDives: Scalars['Int']['output'];
   deleteAllUsers: Scalars['Int']['output'];
   insertUser: UserQueryData;
   login: UserQueryDataOutput;
   logout: Scalars['Boolean']['output'];
-  modifyDiveSession: DiveSessionQueryData;
+  updateDive: DiveQueryData;
+  updateDiveSession: DiveSessionQueryData;
+};
+
+
+export type MutationRootAddDiveArgs = {
+  diveData: DiveInputData;
+  diveSessionId: Scalars['UUID']['input'];
 };
 
 
@@ -160,7 +186,12 @@ export type MutationRootLoginArgs = {
 };
 
 
-export type MutationRootModifyDiveSessionArgs = {
+export type MutationRootUpdateDiveArgs = {
+  diveModData: DiveModificationData;
+};
+
+
+export type MutationRootUpdateDiveSessionArgs = {
   sessionInputData: DiveSessionModificationData;
 };
 
@@ -175,7 +206,7 @@ export type QueryRoot = {
 
 export type QueryRootDiveSessionsArgs = {
   dbQueryDto?: InputMaybe<DbqueryObject>;
-  diveSessionInput: DiveSessionQueryInput;
+  diveSessionInput?: InputMaybe<DiveSessionQueryInput>;
 };
 
 
@@ -200,6 +231,7 @@ export type UserQueryData = {
   createdAt: Scalars['NaiveDateTime']['output'];
   deletedAt?: Maybe<Scalars['NaiveDateTime']['output']>;
   deletedBy?: Maybe<Scalars['UUID']['output']>;
+  diveSessions: Array<DiveSessionQueryData>;
   email: Scalars['String']['output'];
   hashedPassword: Scalars['String']['output'];
   id: Scalars['Int']['output'];
@@ -211,9 +243,16 @@ export type UserQueryData = {
   username: Scalars['String']['output'];
 };
 
+
+export type UserQueryDataDiveSessionsArgs = {
+  dbQueryDto?: InputMaybe<DbqueryObject>;
+  diveSessionQuery?: InputMaybe<DiveSessionQueryInput>;
+};
+
 export type UserQueryDataOutput = {
   __typename?: 'UserQueryDataOutput';
   createdAt: Scalars['NaiveDateTime']['output'];
+  diveSessions: Array<DiveSessionQueryData>;
   email: Scalars['String']['output'];
   isActive: Scalars['Boolean']['output'];
   lastLogin: Scalars['NaiveDateTime']['output'];
@@ -222,19 +261,30 @@ export type UserQueryDataOutput = {
   username: Scalars['String']['output'];
 };
 
+
+export type UserQueryDataOutputDiveSessionsArgs = {
+  dbQueryDto?: InputMaybe<DbqueryObject>;
+  diveSessionQuery?: InputMaybe<DiveSessionQueryInput>;
+};
+
+export type LoginItemFragment = { __typename?: 'UserQueryDataOutput', email: string, username: string, lastLogin: any, diveSessions: Array<{ __typename?: 'DiveSessionQueryData', sessionId: any, sessionName?: string | null, startTime: any, endTime: any, dives: Array<{ __typename?: 'DiveQueryData', depth?: number | null, disciplineType?: string | null, distance?: number | null, diveId: any, diveName?: string | null, diveTime?: number | null, sessionId: any, updatedAt: any }> }> } & { ' $fragmentName'?: 'LoginItemFragment' };
+
 export type LoginMutationVariables = Exact<{
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
 }>;
 
 
-export type LoginMutation = { __typename?: 'MutationRoot', login: { __typename?: 'UserQueryDataOutput', createdAt: any, email: string, isActive: boolean, lastLogin: any, updatedAt: any, userId: any, username: string } };
+export type LoginMutation = { __typename?: 'MutationRoot', login: (
+    { __typename?: 'UserQueryDataOutput' }
+    & { ' $fragmentRefs'?: { 'LoginItemFragment': LoginItemFragment } }
+  ) };
 
 export type AllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AllUsersQuery = { __typename?: 'QueryRoot', allUsers: Array<{ __typename?: 'UserQueryData', email: string }> };
 
-
-export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"loginData"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"isActive"}},{"kind":"Field","name":{"kind":"Name","value":"lastLogin"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
+export const LoginItemFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"LoginItem"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserQueryDataOutput"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"lastLogin"}},{"kind":"Field","name":{"kind":"Name","value":"diveSessions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"dbQueryDto"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sessionId"}},{"kind":"Field","name":{"kind":"Name","value":"sessionName"}},{"kind":"Field","name":{"kind":"Name","value":"startTime"}},{"kind":"Field","name":{"kind":"Name","value":"endTime"}},{"kind":"Field","name":{"kind":"Name","value":"dives"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"depth"}},{"kind":"Field","name":{"kind":"Name","value":"disciplineType"}},{"kind":"Field","name":{"kind":"Name","value":"distance"}},{"kind":"Field","name":{"kind":"Name","value":"diveId"}},{"kind":"Field","name":{"kind":"Name","value":"diveName"}},{"kind":"Field","name":{"kind":"Name","value":"diveTime"}},{"kind":"Field","name":{"kind":"Name","value":"sessionId"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]} as unknown as DocumentNode<LoginItemFragment, unknown>;
+export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"loginData"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"LoginItem"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"LoginItem"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserQueryDataOutput"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"lastLogin"}},{"kind":"Field","name":{"kind":"Name","value":"diveSessions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"dbQueryDto"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sessionId"}},{"kind":"Field","name":{"kind":"Name","value":"sessionName"}},{"kind":"Field","name":{"kind":"Name","value":"startTime"}},{"kind":"Field","name":{"kind":"Name","value":"endTime"}},{"kind":"Field","name":{"kind":"Name","value":"dives"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"depth"}},{"kind":"Field","name":{"kind":"Name","value":"disciplineType"}},{"kind":"Field","name":{"kind":"Name","value":"distance"}},{"kind":"Field","name":{"kind":"Name","value":"diveId"}},{"kind":"Field","name":{"kind":"Name","value":"diveName"}},{"kind":"Field","name":{"kind":"Name","value":"diveTime"}},{"kind":"Field","name":{"kind":"Name","value":"sessionId"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
 export const AllUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"allUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<AllUsersQuery, AllUsersQueryVariables>;

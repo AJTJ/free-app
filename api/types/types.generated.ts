@@ -19,6 +19,24 @@ export type DbqueryObject = {
   limit?: InputMaybe<Scalars['Int']>;
 };
 
+export type DiveInputData = {
+  depth?: InputMaybe<Scalars['Float']>;
+  disciplineType?: InputMaybe<Scalars['String']>;
+  distance?: InputMaybe<Scalars['Float']>;
+  diveName?: InputMaybe<Scalars['String']>;
+  diveTime?: InputMaybe<Scalars['Int']>;
+};
+
+export type DiveModificationData = {
+  depth?: InputMaybe<Scalars['Float']>;
+  disciplineType?: InputMaybe<Scalars['String']>;
+  distance?: InputMaybe<Scalars['Float']>;
+  diveId: Scalars['UUID'];
+  diveName?: InputMaybe<Scalars['String']>;
+  diveTime?: InputMaybe<Scalars['Int']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type DiveQueryData = {
   __typename?: 'DiveQueryData';
   createdAt: Scalars['NaiveDateTime'];
@@ -95,7 +113,6 @@ export type DiveSessionQueryInput = {
   sessionName?: InputMaybe<Scalars['String']>;
   startTime?: InputMaybe<Scalars['NaiveDateTime']>;
   updatedAt?: InputMaybe<Scalars['NaiveDateTime']>;
-  userId: Scalars['UUID'];
 };
 
 export type LoginData = {
@@ -105,13 +122,22 @@ export type LoginData = {
 
 export type MutationRoot = {
   __typename?: 'MutationRoot';
+  addDive: DiveQueryData;
   addDiveSession: DiveSessionQueryData;
   deleteAllDiveSessions: Scalars['Int'];
+  deleteAllDives: Scalars['Int'];
   deleteAllUsers: Scalars['Int'];
   insertUser: UserQueryData;
   login: UserQueryDataOutput;
   logout: Scalars['Boolean'];
-  modifyDiveSession: DiveSessionQueryData;
+  updateDive: DiveQueryData;
+  updateDiveSession: DiveSessionQueryData;
+};
+
+
+export type MutationRootAddDiveArgs = {
+  diveData: DiveInputData;
+  diveSessionId: Scalars['UUID'];
 };
 
 
@@ -130,7 +156,12 @@ export type MutationRootLoginArgs = {
 };
 
 
-export type MutationRootModifyDiveSessionArgs = {
+export type MutationRootUpdateDiveArgs = {
+  diveModData: DiveModificationData;
+};
+
+
+export type MutationRootUpdateDiveSessionArgs = {
   sessionInputData: DiveSessionModificationData;
 };
 
@@ -145,7 +176,7 @@ export type QueryRoot = {
 
 export type QueryRootDiveSessionsArgs = {
   dbQueryDto?: InputMaybe<DbqueryObject>;
-  diveSessionInput: DiveSessionQueryInput;
+  diveSessionInput?: InputMaybe<DiveSessionQueryInput>;
 };
 
 
@@ -170,6 +201,7 @@ export type UserQueryData = {
   createdAt: Scalars['NaiveDateTime'];
   deletedAt?: Maybe<Scalars['NaiveDateTime']>;
   deletedBy?: Maybe<Scalars['UUID']>;
+  diveSessions: Array<DiveSessionQueryData>;
   email: Scalars['String'];
   hashedPassword: Scalars['String'];
   id: Scalars['Int'];
@@ -181,13 +213,26 @@ export type UserQueryData = {
   username: Scalars['String'];
 };
 
+
+export type UserQueryDataDiveSessionsArgs = {
+  dbQueryDto?: InputMaybe<DbqueryObject>;
+  diveSessionQuery?: InputMaybe<DiveSessionQueryInput>;
+};
+
 export type UserQueryDataOutput = {
   __typename?: 'UserQueryDataOutput';
   createdAt: Scalars['NaiveDateTime'];
+  diveSessions: Array<DiveSessionQueryData>;
   email: Scalars['String'];
   isActive: Scalars['Boolean'];
   lastLogin: Scalars['NaiveDateTime'];
   updatedAt: Scalars['NaiveDateTime'];
   userId: Scalars['UUID'];
   username: Scalars['String'];
+};
+
+
+export type UserQueryDataOutputDiveSessionsArgs = {
+  dbQueryDto?: InputMaybe<DbqueryObject>;
+  diveSessionQuery?: InputMaybe<DiveSessionQueryInput>;
 };

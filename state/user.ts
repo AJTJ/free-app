@@ -1,8 +1,8 @@
 import { proxy } from "valtio";
-import { UserQueryDataOutput } from "../api/types/types.generated";
+import { LoginItemFragment } from "../api/auth.generated";
 
-export const userStore = proxy<{ user?: UserQueryDataOutput }>({});
+export const loginStore = proxy<{ loginData?: LoginItemFragment }>({});
 
-export const addUser = (user: UserQueryDataOutput) => {
-  userStore.user = user;
+export const addUser = (loginData: LoginItemFragment) => {
+  loginStore.loginData = loginData;
 };

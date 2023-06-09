@@ -1,24 +1,31 @@
 import { StyleSheet, Button, Image, View, Text, TextInput } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Btn } from "../../components";
+import { Btn, LinearGradient } from "../../components";
 import { Controller, useForm } from "react-hook-form";
 // import { useSnapshot } from "valtio";
-import { addUser } from "../../state";
+import { addUser, loginStore } from "../../state";
 import { colors, spacing } from "../../stylessheet/colors";
-import { LinearGradient } from "expo-linear-gradient";
 import { useLoginUser } from "../../logic";
+import { useSnapshot } from "valtio";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { AllNavigationProp } from "../../App";
 
 const diverImg = "../../assets/Ellipse372.png";
 
 // NAVIGATING WITH NAVIGATION
 // navigation.goBack()
-// TODO: what is the navigation type
-export function Landing({ navigation }: { navigation: any }) {
+export function Landing() {
+  let navigation = useNavigation<AllNavigationProp>();
   let { loginUser, result } = useLoginUser();
   let { loading, error, data } = result;
+  const user = useSnapshot(loginStore).loginData;
+  console.log({ user });
   if (data?.login) {
-    addUser(data.login);
+    if (!user) {
+      addUser(data.login);
+    }
+    console.log({ user }, "Logged in");
     navigation.navigate("Home");
   }
 
@@ -45,8 +52,8 @@ export function Landing({ navigation }: { navigation: any }) {
 
   return (
     <View style={styles.container}>
-      <LinearGradient colors={["#15418C", "#081E33"]} style={styles.background}>
-        {/* <Image source={require(diverImg)} /> */}
+      <LinearGradient>
+        <Image style={styles.diver} source={require(diverImg)} />
         <Controller
           name="email"
           control={control}
@@ -104,12 +111,6 @@ export function Landing({ navigation }: { navigation: any }) {
 }
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    alignItems: "center",
-    // justifyContent: "center",
-    width: "100%",
-  },
   button: {
     alignItems: "center",
     backgroundColor: "#DDDDDD",
@@ -129,11 +130,12 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    borderRadius: 12,
     borderWidth: 1,
     backgroundColor: "#ffffff",
-    // alignItems: "center",
-    // justifyContent: "flex-start",
+  },
+  diver: {
+    width: 20,
+    height: 200,
   },
 });
 

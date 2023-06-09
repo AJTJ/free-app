@@ -1,6 +1,7 @@
 import React from "react";
 import { Home } from "./pages";
 import { NavigationContainer } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { RecoilRoot } from "recoil";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -10,6 +11,9 @@ import { Landing } from "./pages";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 import Constants from "expo-constants";
+import { StatusBar } from "react-native";
+import { ThemeProvider } from "styled-components/native";
+import GlobalTheme from "./stylessheet/globalStyles";
 const { manifest } = Constants;
 
 // const api =
@@ -26,29 +30,40 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-// TODO: Figure out the typing of React Navigator
+// TODO: This is where params are sorted
+// https://reactnavigation.org/docs/typescript/
 type RootStackParamList = {
   Landing: undefined;
   Home: undefined;
   // Auth: undefined;
 };
 
+export type AllNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
+
+/*
+  TODO: Can I create a guard for all the routes, if there is no login data?
+*/
 
 export default function App() {
   return (
     <ApolloProvider client={client}>
-      <RecoilRoot>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="Landing">
-            {/* each stack is being injected the navigation object */}
-            <Stack.Screen name="Landing" component={Landing} />
-            {/* <Stack.Screen name="Auth" component={Auth} /> */}
-            <Stack.Screen name="Home" component={Home} />
-            {/* <Stack.Screen name="ANOTHER_PAGE" component={ANOTHER_PAGE} /> */}
-          </Stack.Navigator>
-        </NavigationContainer>
-      </RecoilRoot>
+      <ThemeProvider theme={GlobalTheme}>
+        {/* <StatusBar hidden /> */}
+        <RecoilRoot>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName="Landing"
+              // screenOptions={{ headerShown: false }}
+            >
+              {/* each stack is being injected the navigation object */}
+              <Stack.Screen name="Landing" component={Landing} />
+              <Stack.Screen name="Home" component={Home} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </RecoilRoot>
+      </ThemeProvider>
     </ApolloProvider>
   );
 }

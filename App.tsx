@@ -51,18 +51,18 @@ export default function App() {
     <ApolloProvider client={client}>
       <ThemeProvider theme={GlobalTheme}>
         {/* <StatusBar hidden /> */}
-        <RecoilRoot>
-          <NavigationContainer>
-            <Stack.Navigator
-              initialRouteName="Landing"
-              // screenOptions={{ headerShown: false }}
-            >
-              {/* each stack is being injected the navigation object */}
-              <Stack.Screen name="Landing" component={Landing} />
-              <Stack.Screen name="Home" component={Home} />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </RecoilRoot>
+
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Landing"
+            // THIS HIDES THE HEADER
+            // screenOptions={{ headerShown: false }}
+          >
+            {/* each stack is being injected the navigation object */}
+            <Stack.Screen name="Landing" component={Landing} />
+            <Stack.Screen name="Home" component={Home} />
+          </Stack.Navigator>
+        </NavigationContainer>
       </ThemeProvider>
     </ApolloProvider>
   );

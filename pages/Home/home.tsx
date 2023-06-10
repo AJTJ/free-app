@@ -1,12 +1,13 @@
-import { Text, TextInput, StyleSheet, View } from "react-native";
+import { Text, TextInput, StyleSheet, View, TextBase } from "react-native";
 import React from "react";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSnapshot } from "valtio";
-import { loginStore, textStore, setText, derivedText } from "../../state";
+import { loginStore } from "../../state";
 import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProp } from "../../App";
-import { LinearGradient } from "../../components";
+import { BaseText, Btn, LinearGradient } from "../../components";
+import { RecentSessions } from "./recent_sessions";
 
 export function Home() {
   let navigation = useNavigation<AllNavigationProp>();
@@ -23,10 +24,32 @@ export function Home() {
           <Text>Not logged in</Text>
         ) : (
           <>
-            <Text>
+            <BaseText>
               Hello {loginData.username}! You last logged in at={" "}
               {loginData.lastLogin}
-            </Text>
+            </BaseText>
+            <Btn
+              title="Pre-dive checklist"
+              type="primary"
+              hasIcon={false}
+              disabled={false}
+              onPress={() => console.log("should do something")}
+            />
+            <Btn
+              title="Log my dive session"
+              type="primary"
+              hasIcon={false}
+              disabled={false}
+              onPress={() => console.log("should do something")}
+            />
+            <Btn
+              title="Check the map"
+              type="primary"
+              hasIcon={false}
+              disabled={false}
+              onPress={() => console.log("should do something")}
+            />
+            {/* <RecentSessions /> */}
           </>
         )}
       </LinearGradient>
@@ -50,12 +73,3 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
 });
-
-// const text = useSnapshot(textStore).text;
-// <TextInput
-//               style={styles.Input}
-//               value={text}
-//               onChangeText={(t) => setText(t)}
-//             />
-//             <Text>Echo: {text}</Text>
-//             <Text>Character Count: {derivedText.textLength}</Text>

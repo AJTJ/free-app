@@ -1,7 +1,16 @@
-import { StyleSheet, Button, Image, View, Text, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Button,
+  Image,
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  TouchableWithoutFeedback,
+} from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Btn, LinearGradient } from "../../components";
+import { Btn, LandingTextInput, LinearGradient } from "../../components";
 import { Controller, useForm } from "react-hook-form";
 // import { useSnapshot } from "valtio";
 import { addUser, loginStore } from "../../state";
@@ -10,6 +19,7 @@ import { useLoginUser } from "../../logic";
 import { useSnapshot } from "valtio";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { AllNavigationProp } from "../../App";
+import { Keyboard } from "react-native";
 
 const diverImg = "../../assets/Ellipse372.png";
 
@@ -51,80 +61,73 @@ export function Landing() {
   });
 
   return (
-    <View style={styles.container}>
-      <LinearGradient>
-        <Image style={styles.diver} source={require(diverImg)} />
-        <Controller
-          name="email"
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <>
-              <Text style={styles.InputText}>Email</Text>
-              <TextInput
-                style={styles.Input}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-              />
-            </>
-          )}
-        />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        <LinearGradient>
+          <Image style={styles.diver} source={require(diverImg)} />
+          <Controller
+            name="email"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <>
+                <Text style={styles.InputText}>Email</Text>
+                <LandingTextInput
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              </>
+            )}
+          />
 
-        <Controller
-          name="password"
-          control={control}
-          rules={{
-            maxLength: 100,
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <>
-              <Text style={styles.InputText}>Password</Text>
-              <TextInput
-                style={styles.Input}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-              />
-            </>
-          )}
-        />
-        <Button title="Login" onPress={handleSubmit(onSubmit)} />
-        <Btn
-          title="Log in"
-          type="primary"
-          hasIcon={false}
-          disabled={false}
-          onPress={handleSubmit(onSubmit)}
-        />
-        <Btn
-          title="New user"
-          type="secondary"
-          hasIcon={false}
-          disabled={false}
-          onPress={handleSubmit(onSubmit)}
-        />
-      </LinearGradient>
-    </View>
+          <Controller
+            name="password"
+            control={control}
+            rules={{
+              maxLength: 100,
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <>
+                <Text style={styles.InputText}>Password</Text>
+                <LandingTextInput
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              </>
+            )}
+          />
+          <Button title="Login" onPress={handleSubmit(onSubmit)} />
+          <Btn
+            title="Log in"
+            type="primary"
+            hasIcon={false}
+            disabled={false}
+            onPress={() => console.log("should do something")}
+          />
+          <Btn
+            title="New user"
+            type="secondary"
+            hasIcon={false}
+            disabled={false}
+            onPress={() => console.log("should do something")}
+          />
+        </LinearGradient>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
+// TODO: Turn this into styled-components elsewhere
 const styles = StyleSheet.create({
   button: {
     alignItems: "center",
     backgroundColor: "#DDDDDD",
     padding: 10,
   },
-  Input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    minWidth: "80%",
-    borderColor: colors.blue400,
-    borderRadius: 4,
-  },
+
   InputText: {
     color: colors.blue400,
   },

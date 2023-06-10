@@ -1,11 +1,17 @@
-import React, { useState } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import React, { useContext, useState } from "react";
+import { Text, StyleSheet } from "react-native";
 import styled from "styled-components/native";
-import { CustomThemeProps } from "../stylessheet/globalStyles";
+import {
+  CustomThemeProps,
+  ThemeContext,
+  GlobalTheme,
+} from "../stylessheet/globalStyles";
+
+type ButtonType = "primary" | "secondary";
 
 interface BtnProps {
   title: string;
-  type: string;
+  type: ButtonType;
   disabled?: boolean;
   hasIcon?: boolean;
   size?: any;
@@ -13,7 +19,12 @@ interface BtnProps {
 }
 
 export const Btn = (props: BtnProps) => {
-  const BtnContainer = styled.View<CustomThemeProps>`
+  const theme = useContext(ThemeContext);
+
+  // USING THIS TO UPDATE THE STYLED COMPONENT IS SUPER SLOW AND DOESN"T WORK SOMETIMES
+  const [isPressed, setPressed] = useState(false);
+
+  const BtnContainer = styled.Pressable<CustomThemeProps>`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -25,7 +36,11 @@ export const Btn = (props: BtnProps) => {
     border-color: ${(p) =>
       props.type === "primary" ? p.theme.colors.blue600 : "#000"};
     background-color: ${(p) =>
-      props.type === "primary" ? p.theme.colors.blue600 : "none"};
+      isPressed
+        ? "red"
+        : props.type === "primary"
+        ? p.theme.colors.blue600
+        : "none"};
   `;
 
   const BtnTitle = styled.Text<CustomThemeProps>`
@@ -36,9 +51,46 @@ export const Btn = (props: BtnProps) => {
   `;
 
   return (
-    <BtnContainer>
+    <BtnContainer
+      onPress={() => {
+        props.onPress();
+      }}
+      onPressOut={() => {
+        setPressed(false);
+      }}
+      onPressIn={() => {
+        setPressed(true);
+      }}
+      // THIS IS MUCH FASTER THEN STYLED_COMPONENTS
+      style={({ pressed }) => [styles(theme)({ pressed }).Button]}
+    >
       <BtnTitle>{props.title}</BtnTitle>
       {props.hasIcon ? <Text>i</Text> : null}
     </BtnContainer>
   );
 };
+
+// This seems like a fine alternative to styled-components
+const styles =
+  (theme: typeof GlobalTheme) =>
+  ({ pressed, type }: { pressed: boolean; type?: ButtonType }) => {
+    console.log({ pressed });
+    return StyleSheet.create({
+      Button: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "90%",
+        height: 40,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: type === "primary" ? theme.colors.blue600 : "#000",
+        backgroundColor: pressed
+          ? "red"
+          : type === "primary"
+          ? theme.colors.blue600
+          : theme.colors.blue600,
+      },
+    });
+  };

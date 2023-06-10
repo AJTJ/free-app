@@ -120,7 +120,6 @@ export function Landing() {
   );
 }
 
-// TODO: Turn this into styled-components elsewhere
 const styles = StyleSheet.create({
   button: {
     alignItems: "center",

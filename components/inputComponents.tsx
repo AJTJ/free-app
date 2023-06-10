@@ -3,6 +3,8 @@ import { Text, TextInput } from "react-native";
 import styled, { DefaultTheme } from "styled-components/native";
 import { CustomThemeProps } from "../stylessheet/globalStyles";
 
+//TODO: This needs to be switched to the default StyleSheet method
+
 export const BaseTextInput = styled.TextInput<CustomThemeProps>`
   border-color: ${(p) => p.theme.colors.blue400};
   color: white;

@@ -7,6 +7,8 @@ import {
   GlobalTheme,
 } from "../stylessheet/globalStyles";
 
+//TODO: This needs to be completely switched to the standard Stylesheet method
+
 type ButtonType = "primary" | "secondary";
 
 interface BtnProps {

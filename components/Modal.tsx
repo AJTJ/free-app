@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components/native";
 
+//TODO: This needs to be switched to the default StyleSheet method
+
 export const Modal = () => {
   return (
     <ModalContainer>

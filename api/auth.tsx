@@ -4,9 +4,10 @@ export const LoginFragment = graphql(`
   fragment LoginItem on UserQueryDataOutput {
     email
     username
+    userId
     lastLogin
     diveSessions(dbQueryDto: { limit: 10 }) {
-      sessionId
+      uniqueId
       sessionName
       startTime
       endTime
@@ -14,7 +15,7 @@ export const LoginFragment = graphql(`
         depth
         disciplineType
         distance
-        diveId
+        uniqueId
         diveName
         diveTime
         sessionId

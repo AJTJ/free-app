@@ -1,7 +1,17 @@
-import React from "react";
-import { Text } from "react-native";
-import styled from "styled-components/native";
+import React, { useContext } from "react";
+import { Text, StyleSheet, TextProps } from "react-native";
+import { ThemeContext, GlobalTheme } from "../stylessheet/globalStyles";
 
-export const BaseText = styled(Text)`
-  color: white;
-`;
+export const CoreText = (props: TextProps) => {
+  const theme = useContext(ThemeContext);
+  const stylesWithTheme = styles(theme);
+  return <Text style={stylesWithTheme().text} {...props} />;
+};
+
+const styles = (theme: typeof GlobalTheme) => () => {
+  return StyleSheet.create({
+    text: {
+      color: theme.colors.white,
+    },
+  });
+};

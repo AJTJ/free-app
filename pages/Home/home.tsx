@@ -6,7 +6,7 @@ import { useSnapshot } from "valtio";
 import { loginStore } from "../../state";
 import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProp } from "../../App";
-import { BaseText, Btn, LinearGradient } from "../../components";
+import { Btn, CoreText, LinearGradient } from "../../components";
 import { RecentSessions } from "./recent_sessions";
 
 export function Home() {
@@ -24,10 +24,10 @@ export function Home() {
           <Text>Not logged in</Text>
         ) : (
           <>
-            <BaseText>
+            <CoreText>
               Hello {loginData.username}! You last logged in at={" "}
               {loginData.lastLogin}
-            </BaseText>
+            </CoreText>
             <Btn
               title="Pre-dive checklist"
               type="primary"
@@ -49,7 +49,7 @@ export function Home() {
               disabled={false}
               onPress={() => console.log("should do something")}
             />
-            {/* <RecentSessions /> */}
+            <RecentSessions />
           </>
         )}
       </LinearGradient>

@@ -23,8 +23,6 @@ const { manifest } = Constants;
 
 const uri = `http://${manifest?.debuggerHost?.split(":").shift()}:8080`;
 
-console.log({ uri });
-
 const client = new ApolloClient({
   uri,
   cache: new InMemoryCache(),

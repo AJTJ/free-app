@@ -3,23 +3,29 @@ import {
   Button,
   Image,
   View,
-  Text,
-  TextInput,
-  ScrollView,
   TouchableWithoutFeedback,
 } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Btn, LandingTextInput, LinearGradient } from "../../components";
+import {
+  Btn,
+  CoreText,
+  LandingTextInput,
+  LinearGradient,
+} from "../../components";
 import { Controller, useForm } from "react-hook-form";
 // import { useSnapshot } from "valtio";
 import { addUser, loginStore } from "../../state";
-import { colors, spacing } from "../../stylessheet/colors";
+import { colors } from "../../stylessheet/colors";
 import { useLoginUser } from "../../logic";
 import { useSnapshot } from "valtio";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProp } from "../../App";
 import { Keyboard } from "react-native";
+import {
+  LandingTextInputSTY,
+  CoreTextInputSTY,
+} from "../../components/inputComponents";
 
 const diverImg = "../../assets/Ellipse372.png";
 
@@ -30,23 +36,20 @@ export function Landing() {
   let { loginUser, result } = useLoginUser();
   let { loading, error, data } = result;
   const user = useSnapshot(loginStore).loginData;
-  console.log({ user });
+
   if (data?.login) {
     if (!user) {
       addUser(data.login);
     }
-    console.log({ user }, "Logged in");
     navigation.navigate("Home");
-  }
-
-  if (error) {
-    console.log({ error });
   }
 
   const onSubmit = (formData: FormData) => {
     loginUser({
       variables: { email: formData.email, password: formData.password },
-    }).catch();
+    }).catch((e) => {
+      console.error(e);
+    });
   };
 
   const {
@@ -71,7 +74,7 @@ export function Landing() {
             rules={{ required: true }}
             render={({ field: { onChange, onBlur, value } }) => (
               <>
-                <Text style={styles.InputText}>Email</Text>
+                <CoreText style={styles.InputText}>Email</CoreText>
                 <LandingTextInput
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -90,7 +93,7 @@ export function Landing() {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <>
-                <Text style={styles.InputText}>Password</Text>
+                <CoreText style={styles.InputText}>Password</CoreText>
                 <LandingTextInput
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -99,6 +102,14 @@ export function Landing() {
               </>
             )}
           />
+          <View style={styles.emptyView}>
+            <CoreText>
+              {loading && "Loading"}
+              {error && error.message}
+              {errors.email && errors.email.message}
+              {errors.password && errors.password.message}
+            </CoreText>
+          </View>
           <Button title="Login" onPress={handleSubmit(onSubmit)} />
           <Btn
             title="Log in"
@@ -138,6 +149,9 @@ const styles = StyleSheet.create({
   diver: {
     width: 20,
     height: 200,
+  },
+  emptyView: {
+    height: 20,
   },
 });
 

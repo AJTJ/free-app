@@ -20,7 +20,14 @@ export const useLoginUser = () => {
 };
 
 export const useLogoutUser = () => {
-  const [logoutUser, { loading, error, data }] = useMutation(LogoutDocument);
+  const [logoutUserMutation, { loading, error, data, client }] =
+    useMutation(LogoutDocument);
+
+  const logoutUser = () => {
+    logoutUserMutation().then(() => {
+      client.resetStore();
+    });
+  };
   let result = { loading, error, data };
   return { logoutUser, result };
 };

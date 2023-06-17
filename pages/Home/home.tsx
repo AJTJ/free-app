@@ -1,5 +1,5 @@
 import { Text, TextInput, StyleSheet, View, TextBase } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSnapshot } from "valtio";
@@ -28,14 +28,19 @@ export function Home() {
   console.log({ guardedRouteResult2 });
   console.log({ allUsersResult });
 
-  if (!loginData) {
-    navigation.navigate("Landing");
-  }
+  useEffect(() => {
+    console.log({ loginData });
+    if (!loginData) {
+      navigation.navigate("Landing");
+    }
+  });
+
+  // if (!loginData) {
+  //   navigation.navigate("Landing");
+  // }
 
   const handleLogout = () => {
-    logoutUser().catch((e) => {
-      console.log("logout error: ", e);
-    });
+    logoutUser();
   };
 
   return (

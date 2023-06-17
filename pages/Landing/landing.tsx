@@ -33,34 +33,28 @@ export function Landing() {
   let navigation = useNavigation<AllNavigationProp>();
   let { loginUser, result } = useLoginUser();
   let { loading, error, data } = result;
-
-  const { complete, data: fragData } = useFragment({
-    fragment: LoginFragment,
-    fragmentName: "LoginFragment",
-    from: {
-      __typename: "UserQueryDataOutput",
-      id: 5,
-    },
-  });
-
   const user = useSnapshot(loginStore).loginData;
 
-  if (data?.login) {
-    if (!user) {
-      addUser(data.login);
-    }
-    // setTimeout(() => {
-    //   console.log("after timoeut");
-    // }, 5000);
-    navigation.navigate("Home");
-  }
+  // if (data?.login) {
+  //   if (!user) {
+  //     addUser(data.login);
+  //     navigation.navigate("Home");
+  //   }
+  // }
 
   const onSubmit = (formData: FormData) => {
     loginUser({
       variables: { email: formData.email, password: formData.password },
-    }).catch((e) => {
-      console.error(e);
-    });
+    })
+      .catch((e) => {
+        console.error(e);
+      })
+      .then((res) => {
+        if (res?.data?.login) {
+          addUser(res?.data?.login);
+          navigation.navigate("Home");
+        }
+      });
   };
 
   const {
@@ -170,3 +164,12 @@ type FormData = {
   email: string;
   password: string;
 };
+
+// const { complete, data: fragData } = useFragment({
+//   fragment: LoginFragment,
+//   fragmentName: "LoginFragment",
+//   from: {
+//     __typename: "UserQueryDataOutput",
+//     id: 5,
+//   },
+// });

@@ -1,8 +1,8 @@
 import { proxy } from "valtio";
-import { LoginItemFragment } from "../api/auth.generated";
+import { LoginFragmentFragment } from "../api/auth.generated";
 
-export const loginStore = proxy<{ loginData?: LoginItemFragment }>({});
+export const loginStore = proxy<{ loginData?: LoginFragmentFragment }>({});
 
-export const addUser = (loginData: LoginItemFragment) => {
+export const addUser = (loginData: LoginFragmentFragment) => {
   loginStore.loginData = loginData;
 };

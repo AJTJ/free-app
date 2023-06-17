@@ -22,10 +22,8 @@ import { useSnapshot } from "valtio";
 import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProp } from "../../App";
 import { Keyboard } from "react-native";
-import {
-  LandingTextInputSTY,
-  CoreTextInputSTY,
-} from "../../components/inputComponents";
+import { useFragment } from "@apollo/client";
+import { LoginFragment } from "../../api/auth";
 
 const diverImg = "../../assets/Ellipse372.png";
 
@@ -35,12 +33,27 @@ export function Landing() {
   let navigation = useNavigation<AllNavigationProp>();
   let { loginUser, result } = useLoginUser();
   let { loading, error, data } = result;
+
+  const { complete, data: fragData } = useFragment({
+    fragment: LoginFragment,
+    fragmentName: "LoginFragment",
+    from: {
+      __typename: "UserQueryDataOutput",
+      id: 5,
+    },
+  });
+
+  console.log({ complete, fragData });
+
   const user = useSnapshot(loginStore).loginData;
 
   if (data?.login) {
     if (!user) {
       addUser(data.login);
     }
+    // setTimeout(() => {
+    //   console.log("after timoeut");
+    // }, 5000);
     navigation.navigate("Home");
   }
 

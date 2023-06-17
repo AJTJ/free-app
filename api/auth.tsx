@@ -1,21 +1,21 @@
 import { graphql } from "./gql";
 
 export const LoginFragment = graphql(`
-  fragment LoginItem on UserQueryDataOutput {
+  fragment LoginFragment on UserQueryDataOutput {
+    id
     email
     username
-    userId
     lastLogin
     diveSessions(dbQueryDto: { limit: 10 }) {
-      uniqueId
+      id
       sessionName
       startTime
       endTime
       dives {
+        id
         depth
         disciplineType
         distance
-        uniqueId
         diveName
         diveTime
         sessionId
@@ -28,8 +28,14 @@ export const LoginFragment = graphql(`
 export const LOGIN_USER = graphql(`
   mutation login($email: String!, $password: String!) {
     login(loginData: { email: $email, password: $password }) {
-      ...LoginItem
+      ...LoginFragment
     }
+  }
+`);
+
+export const LOGOUT_USER = graphql(`
+  mutation logout {
+    logout
   }
 `);
 

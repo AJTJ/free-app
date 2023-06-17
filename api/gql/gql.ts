@@ -13,8 +13,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  fragment LoginItem on UserQueryDataOutput {\n    email\n    username\n    userId\n    lastLogin\n    diveSessions(dbQueryDto: { limit: 10 }) {\n      uniqueId\n      sessionName\n      startTime\n      endTime\n      dives {\n        depth\n        disciplineType\n        distance\n        uniqueId\n        diveName\n        diveTime\n        sessionId\n        updatedAt\n      }\n    }\n  }\n": types.LoginItemFragmentDoc,
-    "\n  mutation login($email: String!, $password: String!) {\n    login(loginData: { email: $email, password: $password }) {\n      ...LoginItem\n    }\n  }\n": types.LoginDocument,
+    "\n  fragment LoginFragment on UserQueryDataOutput {\n    id\n    email\n    username\n    lastLogin\n    diveSessions(dbQueryDto: { limit: 10 }) {\n      id\n      sessionName\n      startTime\n      endTime\n      dives {\n        id\n        depth\n        disciplineType\n        distance\n        diveName\n        diveTime\n        sessionId\n        updatedAt\n      }\n    }\n  }\n": types.LoginFragmentFragmentDoc,
+    "\n  mutation login($email: String!, $password: String!) {\n    login(loginData: { email: $email, password: $password }) {\n      ...LoginFragment\n    }\n  }\n": types.LoginDocument,
+    "\n  mutation logout {\n    logout\n  }\n": types.LogoutDocument,
     "\n  query allUsers {\n    allUsers {\n      email\n    }\n  }\n": types.AllUsersDocument,
 };
 
@@ -35,11 +36,15 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  fragment LoginItem on UserQueryDataOutput {\n    email\n    username\n    userId\n    lastLogin\n    diveSessions(dbQueryDto: { limit: 10 }) {\n      uniqueId\n      sessionName\n      startTime\n      endTime\n      dives {\n        depth\n        disciplineType\n        distance\n        uniqueId\n        diveName\n        diveTime\n        sessionId\n        updatedAt\n      }\n    }\n  }\n"): (typeof documents)["\n  fragment LoginItem on UserQueryDataOutput {\n    email\n    username\n    userId\n    lastLogin\n    diveSessions(dbQueryDto: { limit: 10 }) {\n      uniqueId\n      sessionName\n      startTime\n      endTime\n      dives {\n        depth\n        disciplineType\n        distance\n        uniqueId\n        diveName\n        diveTime\n        sessionId\n        updatedAt\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  fragment LoginFragment on UserQueryDataOutput {\n    id\n    email\n    username\n    lastLogin\n    diveSessions(dbQueryDto: { limit: 10 }) {\n      id\n      sessionName\n      startTime\n      endTime\n      dives {\n        id\n        depth\n        disciplineType\n        distance\n        diveName\n        diveTime\n        sessionId\n        updatedAt\n      }\n    }\n  }\n"): (typeof documents)["\n  fragment LoginFragment on UserQueryDataOutput {\n    id\n    email\n    username\n    lastLogin\n    diveSessions(dbQueryDto: { limit: 10 }) {\n      id\n      sessionName\n      startTime\n      endTime\n      dives {\n        id\n        depth\n        disciplineType\n        distance\n        diveName\n        diveTime\n        sessionId\n        updatedAt\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation login($email: String!, $password: String!) {\n    login(loginData: { email: $email, password: $password }) {\n      ...LoginItem\n    }\n  }\n"): (typeof documents)["\n  mutation login($email: String!, $password: String!) {\n    login(loginData: { email: $email, password: $password }) {\n      ...LoginItem\n    }\n  }\n"];
+export function graphql(source: "\n  mutation login($email: String!, $password: String!) {\n    login(loginData: { email: $email, password: $password }) {\n      ...LoginFragment\n    }\n  }\n"): (typeof documents)["\n  mutation login($email: String!, $password: String!) {\n    login(loginData: { email: $email, password: $password }) {\n      ...LoginFragment\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation logout {\n    logout\n  }\n"): (typeof documents)["\n  mutation logout {\n    logout\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

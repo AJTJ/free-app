@@ -8,14 +8,22 @@ import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProp } from "../../App";
 import { Btn, CoreText, LinearGradient } from "../../components";
 import { RecentSessions } from "./recent_sessions";
+import { useLogoutUser } from "../../logic/user";
 
 export function Home() {
   let navigation = useNavigation<AllNavigationProp>();
   const loginData = useSnapshot(loginStore).loginData;
+  let { logoutUser, result } = useLogoutUser();
 
   if (!loginData) {
     navigation.navigate("Landing");
   }
+
+  const handleLogout = () => {
+    logoutUser().catch((e) => {
+      console.log("logout error: ", e);
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -48,6 +56,13 @@ export function Home() {
               hasIcon={false}
               disabled={false}
               onPress={() => console.log("should do something")}
+            />
+            <Btn
+              title="Logout"
+              type="primary"
+              hasIcon={false}
+              disabled={false}
+              onPress={handleLogout}
             />
             <RecentSessions />
           </>

@@ -19,6 +19,20 @@
 - https://the-guild.dev/graphql/codegen/docs/getting-started/installation
 - 
 
+### AUTH THINGS
+- Cookies
+  - Seem... challenging and not really worth it right now.
+- JWT
+  - https://stackoverflow.com/questions/70781323/how-to-properly-handle-login-from-a-react-native-expo-project-using-jwt-token
+  - https://github.com/blake-simpson/expo-jwt
+- General
+  - https://jerrynsh.com/all-to-know-about-auth-and-cookies/#session-based-vs-token-based-authentication
+  - https://stytch.com/blog/jwts-vs-sessions-which-is-right-for-you/#:~:text=JWTs%20versus%20sessions%20cookies&text=JWTs%20enable%20faster%20authorization%20and,to%20sensitive%20data%20or%20actions.
+  - https://www.loginradius.com/blog/engineering/guest-post/jwt-vs-sessions/
+  - https://docs.expo.dev/versions/latest/sdk/securestore/
+  - https://github.com/ammarahm-ed/react-native-mmkv-storage
+  - https://github.com/blake-simpson/expo-jwt
+
 ### commands/processes
 - start project for dev (with phone)
   - `npx expo start`

@@ -76,7 +76,7 @@ export const Btn = (props: BtnProps) => {
 const styles =
   (theme: typeof GlobalTheme) =>
   ({ pressed, type }: { pressed: boolean; type?: ButtonType }) => {
-    console.log({ pressed });
+    // console.log({ pressed });
     return StyleSheet.create({
       Button: {
         display: "flex",

@@ -8,24 +8,88 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 // import { Auth } from "./pages";
 import { Landing } from "./pages";
 
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+  from,
+  ApolloLink,
+} from "@apollo/client";
 
 import Constants from "expo-constants";
 import { StatusBar } from "react-native";
 import { ThemeProvider } from "styled-components/native";
 import GlobalTheme from "./stylessheet/globalStyles";
 const { manifest } = Constants;
+import { setContext } from "@apollo/client/link/context";
+import MobileStore from "./storage/SafeStorage";
 
 // const api =
 //   typeof manifest?.packagerOpts === `object` && manifest?.packagerOpts?.dev
 //     ? manifest?.debuggerHost?.split(`:`)?.shift()?.concat(`:8080`)
 //     : `http://localhost:8080`;
 
+// const authLink = setContext((_, { headers }) => {
+//   // get the authentication token from local storage if it exists
+//   const token = localStorage.getItem("token");
+//   // return the headers to the context so httpLink can read them
+//   return {
+//     headers: {
+//       ...headers,
+//       authorization: token ? `Bearer ${token}` : "",
+//     },
+//   };
+// });
+
+// const client = new ApolloClient({
+//   link: authLink.concat(httpLink),
+//   cache: new InMemoryCache(),
+// });
+
+const authLink = setContext(async (_, { headers }) => {
+  const token = await MobileStore.get();
+  console.log({ token });
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `${token}` : "",
+    },
+  };
+});
+
+const responseLink = new ApolloLink((operation, forward) => {
+  return forward(operation).map((response) => {
+    const context = operation.getContext();
+
+    const authHeader = context.response.headers.get("Authorization");
+
+    if (authHeader) {
+      MobileStore.set(authHeader);
+    }
+
+    return response;
+  });
+});
+
+// BASED ON ENV
 const uri = `http://${manifest?.debuggerHost?.split(":").shift()}:8080`;
+
+const httpLink = createHttpLink({
+  uri,
+});
+
+console.log({ concatLink: authLink.concat(httpLink) });
 
 const client = new ApolloClient({
   uri,
+  link: from([authLink, responseLink, httpLink]),
   cache: new InMemoryCache(),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: "cache-and-network",
+    },
+  },
 });
 
 // TODO: This is where params are sorted

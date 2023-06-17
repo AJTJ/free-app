@@ -43,8 +43,6 @@ export function Landing() {
     },
   });
 
-  console.log({ complete, fragData });
-
   const user = useSnapshot(loginStore).loginData;
 
   if (data?.login) {

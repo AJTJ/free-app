@@ -17,6 +17,8 @@ const documents = {
     "\n  mutation login($email: String!, $password: String!) {\n    login(loginData: { email: $email, password: $password }) {\n      ...LoginFragment\n    }\n  }\n": types.LoginDocument,
     "\n  mutation logout {\n    logout\n  }\n": types.LogoutDocument,
     "\n  query allUsers {\n    allUsers {\n      email\n    }\n  }\n": types.AllUsersDocument,
+    "\n  query guardedRoute {\n    guardedRoute\n  }\n": types.GuardedRouteDocument,
+    "\n  query guardedRoute2 {\n    guardedRouteTwo\n  }\n": types.GuardedRoute2Document,
 };
 
 /**
@@ -49,6 +51,14 @@ export function graphql(source: "\n  mutation logout {\n    logout\n  }\n"): (ty
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query allUsers {\n    allUsers {\n      email\n    }\n  }\n"): (typeof documents)["\n  query allUsers {\n    allUsers {\n      email\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query guardedRoute {\n    guardedRoute\n  }\n"): (typeof documents)["\n  query guardedRoute {\n    guardedRoute\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query guardedRoute2 {\n    guardedRouteTwo\n  }\n"): (typeof documents)["\n  query guardedRoute2 {\n    guardedRouteTwo\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

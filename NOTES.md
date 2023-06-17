@@ -17,7 +17,6 @@
 - https://www.apollographql.com/docs/react/data/queries/#manual-execution-with-uselazyquery
 - https://thinkster.io/tutorials/boost-your-react-apps-with-apollo-beyond-the-basics/calling-queries-manually-with-uselazyquery
 - https://the-guild.dev/graphql/codegen/docs/getting-started/installation
-- 
 
 ### AUTH THINGS
 - Cookies
@@ -32,6 +31,8 @@
   - https://docs.expo.dev/versions/latest/sdk/securestore/
   - https://github.com/ammarahm-ed/react-native-mmkv-storage
   - https://github.com/blake-simpson/expo-jwt
+
+https://dev.to/lico/react-apollo-refresh-tokens-5h0k
 
 ### commands/processes
 - start project for dev (with phone)

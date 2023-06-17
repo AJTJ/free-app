@@ -46,3 +46,15 @@ export const GET_USERS = graphql(`
     }
   }
 `);
+
+export const GUARDED_ROUTE = graphql(`
+  query guardedRoute {
+    guardedRoute
+  }
+`);
+
+export const GUARDED_ROUTE2 = graphql(`
+  query guardedRoute2 {
+    guardedRouteTwo
+  }
+`);

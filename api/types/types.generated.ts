@@ -238,6 +238,8 @@ export type QueryRoot = {
   allUsers: Array<UserQueryData>;
   diveSessions: Array<DiveSessionQueryData>;
   dives: Array<DiveQueryData>;
+  guardedRoute: Scalars['String'];
+  guardedRouteTwo: Scalars['String'];
   loggerEntries: Array<LoggerEntryData>;
   loggers: Array<LoggerData>;
   logs: Array<LogData>;

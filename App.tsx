@@ -15,6 +15,7 @@ import {
   createHttpLink,
   from,
   ApolloLink,
+  gql,
 } from "@apollo/client";
 
 import Constants from "expo-constants";
@@ -24,6 +25,9 @@ import GlobalTheme from "./stylessheet/globalStyles";
 const { manifest } = Constants;
 import { setContext } from "@apollo/client/link/context";
 import MobileStore from "./storage/SafeStorage";
+import { createFragmentRegistry } from "@apollo/client/cache";
+import { DiveSessionFragment } from "./api/dive_sessions";
+import { LoginFragment, UserFragment } from "./api/auth";
 
 // const api =
 //   typeof manifest?.packagerOpts === `object` && manifest?.packagerOpts?.dev
@@ -81,7 +85,11 @@ const httpLink = createHttpLink({
 const client = new ApolloClient({
   uri,
   link: from([authLink, responseLink, httpLink]),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    fragments: createFragmentRegistry(gql`
+      ${UserFragment}
+    `),
+  }),
   defaultOptions: {
     watchQuery: {
       fetchPolicy: "cache-and-network",

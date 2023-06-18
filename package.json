@@ -41,12 +41,11 @@
     "typescript": "^4.6.3"
   },
   "scripts": {
-    "start": "expo start",
+    "start": "expo start --port 8081",
     "watch": "graphql-codegen --watch",
-    "android": "expo start --android",
-    "ios-old": "expo start --ios",
-    "ios": "expo client:install:ios",
-    "web": "expo start --web",
+    "android": "expo start --android --port 8081",
+    "ios": "expo start --ios --port 8081",
+    "web": "expo start --web --port 8081",
     "codegen": "graphql-codegen --config codegen.ts"
   },
   "version": "1.0.0",

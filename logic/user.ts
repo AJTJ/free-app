@@ -1,5 +1,11 @@
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
-import { LOGIN_USER, LoginFragment } from "../api/auth";
+import {
+  useApolloClient,
+  useFragment,
+  useLazyQuery,
+  useMutation,
+  useQuery,
+} from "@apollo/client";
+import { LOGIN_USER, LoginFragment, UserFragment } from "../api/auth";
 import {
   AllUsersDocument,
   GuardedRouteDocument,
@@ -8,7 +14,6 @@ import {
   LogoutDocument,
 } from "../api/auth.generated";
 import { UserQueryDataOutput } from "../api/types/types.generated";
-import { useFragment } from "../api/gql";
 import { LoginFragmentFragmentDoc } from "../api/gql/graphql";
 import { emptyLoginState } from "../state";
 
@@ -53,16 +58,21 @@ export const useGuardedRoute = () => {
   return { accessGuardedRoute, result };
 };
 
-// export const userFrag = () => {};
+// IDEAS
+// export const useReadUserData = () => {
+//   const client = useApolloClient();
+//   const el = client.readQuery({
+//     query:
+//   });
+// };
 
-// const { x, y } = useFragment(
-//   {
-//     fragment: LoginFragment,
-//     fragmentName: "LoginFragment",
+// const useUserFragment = ({ id }: { id: String }) => {
+//   const output = useFragment({
+//     fragment: UserFragment,
 //     from: {
 //       __typename: "UserQueryDataOutput",
-//       id: 5,
+//       id,
 //     },
-//   },
-//   data.login
-// );
+//   });
+//   return output;
+// };

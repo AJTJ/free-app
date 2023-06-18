@@ -1,17 +1,25 @@
+import { gql } from "@apollo/client";
 import { graphql } from "./gql";
 
-export const DiveSessionFragment = graphql(`
+export const DiveSessionFragment = gql(`
   fragment DiveSessionFragment on DiveSessionQueryData {
     id
+    sessionName
     startTime
     endTime
-    sessionName
   }
 `);
 
-export const DiveFragment = graphql(`
+export const DiveFragment = gql(`
   fragment DiveFragment on DiveQueryData {
     id
+    depth
+    disciplineType
+    distance
+    diveName
+    diveTime
+    sessionId
+    updatedAt
   }
 `);
 

@@ -41,8 +41,8 @@ export const ADD_PREPOPULATED_DIVE_SESSION = graphql(`
 `);
 
 export const GET_DIVE_SESSIONS = graphql(`
-  query getDiveSessions {
-    diveSessions {
+  query getDiveSessions($limit: Int!) {
+    diveSessions(dbQueryDto: { limit: $limit }) {
       ...DiveSessionFragment
       dives {
         ...DiveFragment

@@ -1,23 +1,24 @@
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import {
   AddPrepopulatedDiveSessionDocument,
   GetDiveSessionsDocument,
 } from "../api/dive_sessions.generated";
+import { GET_DIVE_SESSIONS } from "../api/dive_sessions";
 
 export const useAddPrePopulatedDiveSession = () => {
   const [addSession, { loading, error, data, client }] = useMutation(
-    AddPrepopulatedDiveSessionDocument
+    AddPrepopulatedDiveSessionDocument,
+    { refetchQueries: [{ query: GET_DIVE_SESSIONS, variables: { limit: 10 } }] }
   );
 
   let result = { loading, error, data };
   return { addSession, result, client };
 };
 
-export const useGetDiveSessions = () => {
-  const [getSessions, { loading, error, data, client }] = useLazyQuery(
-    GetDiveSessionsDocument
-  );
+export const useGetDiveSessions = ({ limit }: { limit: Number }) => {
+  const { loading, error, data, client } = useQuery(GetDiveSessionsDocument, {
+    variables: { limit },
+  });
 
-  let result = { loading, error, data };
-  return { getSessions, result, client };
+  return { loading, error, data, client };
 };

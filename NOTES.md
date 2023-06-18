@@ -64,6 +64,13 @@ https://dev.to/lico/react-apollo-refresh-tokens-5h0k
   - https://recoiljs.org/docs/introduction/getting-started
   - https://recoiljs.org/docs/guides/asynchronous-data-queries
 
+## Apollo
+- fetch policies
+  - https://medium.com/@galen.corey/understanding-apollo-fetch-policies-705b5ad71980
+  - 
+## Offline
+- https://codeburst.io/highly-functional-offline-applications-using-apollo-client-12885bd5f335
+
 ### desktop tools
 - react-native-debugger
   - this seems useful in order to make the best use of apollo graphql

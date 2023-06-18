@@ -14,24 +14,53 @@ import {
   useLogoutUser,
 } from "../../logic/user";
 import { useAddPrePopulatedDiveSession, useGetDiveSessions } from "../../logic";
+import { useApolloClient } from "@apollo/client";
+import { LoginFragment, UserFragment } from "../../api/auth";
+import { DiveSessionFragment } from "../../api/dive_sessions";
 
 export function Home() {
   let navigation = useNavigation<AllNavigationProp>();
   const loginData = useSnapshot(loginStore).loginState;
   let { logoutUser, result } = useLogoutUser();
 
-  // for testing
   let { accessGuardedRoute, result: guardedRouteResult } = useGuardedRoute();
-  let { getSessions, result: getDiveSessionsResult } = useGetDiveSessions();
+  // let {
+  //   loading: sessionsLoading,
+  //   error: sessionsError,
+  //   data: sessionsData,
+  // } = useGetDiveSessions();
   let { getAllUsers, result: allUsersResult } = useAllUsers();
   let { addSession, result: addDiveSessionsResult } =
     useAddPrePopulatedDiveSession();
 
-  console.log("DIVE SESSES", getDiveSessionsResult.data);
+  // let client = useApolloClient();
+  // let userFrag = client.cache.readFragment({
+  //   id: "95e33963-1aa6-44e2-b516-505cc32bb32c",
+  //   fragment: UserFragment,
+  // });
+  // let loginFrag = client.cache.readFragment({
+  //   id: "95e33963-1aa6-44e2-b516-505cc32bb32c",
+  //   fragment: LoginFragment,
+  // });
+  // let diveSessionFrag = client.cache.readFragment({
+  //   id: "893c16ec-7eb2-4568-b719-52c1724db4d1",
+  //   fragment: DiveSessionFragment,
+  // });
 
-  useEffect(() => {
-    getSessions();
-  }, [getSessions]);
+  // let closeSeshFrag = client.readFragment({
+  //   id: "DiveSessionQueryData:893c16ec-7eb2-4568-b719-52c1724db4d1",
+  //   fragment: DiveSessionFragment,
+  // });
+  // console.log(diveSessionFrag);
+  // console.log(userFrag);
+  // console.log(loginFrag);
+  // console.log(closeSeshFrag);
+
+  // console.log("DIVE SESSES", getDiveSessionsResult.data);
+
+  // useEffect(() => {
+  //   getSessions();
+  // }, [getSessions]);
 
   useEffect(() => {
     if (!loginData) {
@@ -48,8 +77,6 @@ export function Home() {
       await addSession();
     } catch (error) {
       console.error(error);
-    } finally {
-      getSessions();
     }
   };
 

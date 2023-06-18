@@ -9,9 +9,11 @@ import { DiveSessionFragment } from "../../api/dive_sessions";
 import { useGetDiveSessions } from "../../logic";
 
 export function RecentSessions() {
-  const loginData = useSnapshot(loginStore).loginState;
-  const { getSessions, result, client } = useGetDiveSessions();
-  console.log("DIVE SESSIONS: ", result.data);
+  // const loginData = useSnapshot(loginStore).loginState;
+  const { loading, error, data } = useGetDiveSessions({ limit: 10 });
+
+  console.log("DiveSessions Data: ", data?.diveSessions);
+  // console.log("DIVE SESSIONS: ", result.data);
 
   // const { complete, data } = useFragment({
   //   fragment: DiveSessionFragment,
@@ -24,9 +26,18 @@ export function RecentSessions() {
 
   // console.log({ complete, data });
 
+  if (error) {
+    console.error(error);
+  }
+
   return (
     <>
-      {loginData?.diveSessions?.map((session, i) => {
+      {loading && (
+        <View>
+          <CoreText>Loading Sessions...</CoreText>
+        </View>
+      )}
+      {data?.diveSessions?.map((session, i) => {
         console.log({ session }, session.id);
         return (
           <View key={session.id + i}>

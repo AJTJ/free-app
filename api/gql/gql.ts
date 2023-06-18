@@ -22,7 +22,7 @@ const documents = {
     "\n  fragment DiveSessionFragment on DiveSessionQueryData {\n    id\n    sessionName\n    startTime\n    endTime\n  }\n": types.DiveSessionFragmentFragmentDoc,
     "\n  fragment DiveFragment on DiveQueryData {\n    id\n    depth\n    disciplineType\n    distance\n    diveName\n    diveTime\n    sessionId\n    updatedAt\n  }\n": types.DiveFragmentFragmentDoc,
     "\n  mutation addPrepopulatedDiveSession {\n    addDiveSession(\n      sessionInputData: {\n        startTime: \"2015-07-01T08:59:60.123\"\n        endTime: \"2015-07-01T08:59:60.123\"\n        sessionName: \"oog\"\n      }\n    ) {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n": types.AddPrepopulatedDiveSessionDocument,
-    "\n  query getDiveSessions {\n    diveSessions {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n": types.GetDiveSessionsDocument,
+    "\n  query getDiveSessions($limit: Int!) {\n    diveSessions(dbQueryDto: { limit: $limit }) {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n": types.GetDiveSessionsDocument,
 };
 
 /**
@@ -78,7 +78,7 @@ export function graphql(source: "\n  mutation addPrepopulatedDiveSession {\n    
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query getDiveSessions {\n    diveSessions {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n"): (typeof documents)["\n  query getDiveSessions {\n    diveSessions {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  query getDiveSessions($limit: Int!) {\n    diveSessions(dbQueryDto: { limit: $limit }) {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n"): (typeof documents)["\n  query getDiveSessions($limit: Int!) {\n    diveSessions(dbQueryDto: { limit: $limit }) {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

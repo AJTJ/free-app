@@ -15,7 +15,7 @@ import {
 } from "../../components";
 import { Controller, useForm } from "react-hook-form";
 // import { useSnapshot } from "valtio";
-import { addUser, loginStore } from "../../state";
+import { addLoginState, loginStore } from "../../state";
 import { colors } from "../../stylessheet/colors";
 import { useLoginUser } from "../../logic";
 import { useSnapshot } from "valtio";
@@ -33,7 +33,7 @@ export function Landing() {
   let navigation = useNavigation<AllNavigationProp>();
   let { loginUser, result } = useLoginUser();
   let { loading, error, data } = result;
-  const user = useSnapshot(loginStore).loginData;
+  const user = useSnapshot(loginStore).loginState;
 
   // if (data?.login) {
   //   if (!user) {
@@ -51,7 +51,7 @@ export function Landing() {
       })
       .then((res) => {
         if (res?.data?.login) {
-          addUser(res?.data?.login);
+          addLoginState(res?.data?.login);
           navigation.navigate("Home");
         }
       });

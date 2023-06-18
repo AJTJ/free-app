@@ -2,7 +2,6 @@ import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { LOGIN_USER, LoginFragment } from "../api/auth";
 import {
   AllUsersDocument,
-  GuardedRoute2Document,
   GuardedRouteDocument,
   LoginDocument,
   LoginFragmentFragment,
@@ -11,23 +10,31 @@ import {
 import { UserQueryDataOutput } from "../api/types/types.generated";
 import { useFragment } from "../api/gql";
 import { LoginFragmentFragmentDoc } from "../api/gql/graphql";
+import { emptyLoginState } from "../state";
 
 export const useLoginUser = () => {
-  const [loginUser, { loading, error, data }] = useMutation(LoginDocument);
+  const [loginUser, { loading, error, data, client }] =
+    useMutation(LoginDocument);
 
   let result = { loading, error, data };
-  return { loginUser, result };
+  return { loginUser, result, client };
 };
 
 export const useLogoutUser = () => {
   const [logoutUserMutation, { loading, error, data, client }] =
     useMutation(LogoutDocument);
 
-  const logoutUser = () => {
-    logoutUserMutation().then(() => {
-      client.resetStore();
-    });
+  const [_, { client: userClient }] = useMutation(LoginDocument);
+
+  const logoutUser = async () => {
+    await logoutUserMutation()
+      .then(async () => {
+        await userClient.resetStore().catch((e) => console.error(e));
+        emptyLoginState();
+      })
+      .catch((e) => console.error(e));
   };
+
   let result = { loading, error, data };
   return { logoutUser, result };
 };
@@ -44,14 +51,6 @@ export const useGuardedRoute = () => {
     useLazyQuery(GuardedRouteDocument);
   let result = { loading, error, data };
   return { accessGuardedRoute, result };
-};
-
-export const useGuardedRoute2 = () => {
-  const [accessGuardedRoute2, { loading, error, data }] = useLazyQuery(
-    GuardedRoute2Document
-  );
-  let result = { loading, error, data };
-  return { accessGuardedRoute2, result };
 };
 
 // export const userFrag = () => {};

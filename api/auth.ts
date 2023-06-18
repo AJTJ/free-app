@@ -52,9 +52,3 @@ export const GUARDED_ROUTE = graphql(`
     guardedRoute
   }
 `);
-
-export const GUARDED_ROUTE2 = graphql(`
-  query guardedRoute2 {
-    guardedRouteTwo
-  }
-`);

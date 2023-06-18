@@ -18,7 +18,10 @@ const documents = {
     "\n  mutation logout {\n    logout\n  }\n": types.LogoutDocument,
     "\n  query allUsers {\n    allUsers {\n      email\n    }\n  }\n": types.AllUsersDocument,
     "\n  query guardedRoute {\n    guardedRoute\n  }\n": types.GuardedRouteDocument,
-    "\n  query guardedRoute2 {\n    guardedRouteTwo\n  }\n": types.GuardedRoute2Document,
+    "\n  fragment DiveSessionFragment on DiveSessionQueryData {\n    id\n    startTime\n    endTime\n    sessionName\n  }\n": types.DiveSessionFragmentFragmentDoc,
+    "\n  fragment DiveFragment on DiveQueryData {\n    id\n  }\n": types.DiveFragmentFragmentDoc,
+    "\n  mutation addPrepopulatedDiveSession {\n    addDiveSession(\n      sessionInputData: {\n        startTime: \"2015-07-01T08:59:60.123\"\n        endTime: \"2015-07-01T08:59:60.123\"\n        sessionName: \"oog\"\n      }\n    ) {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n": types.AddPrepopulatedDiveSessionDocument,
+    "\n  query getDiveSessions {\n    diveSessions {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n": types.GetDiveSessionsDocument,
 };
 
 /**
@@ -58,7 +61,19 @@ export function graphql(source: "\n  query guardedRoute {\n    guardedRoute\n  }
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query guardedRoute2 {\n    guardedRouteTwo\n  }\n"): (typeof documents)["\n  query guardedRoute2 {\n    guardedRouteTwo\n  }\n"];
+export function graphql(source: "\n  fragment DiveSessionFragment on DiveSessionQueryData {\n    id\n    startTime\n    endTime\n    sessionName\n  }\n"): (typeof documents)["\n  fragment DiveSessionFragment on DiveSessionQueryData {\n    id\n    startTime\n    endTime\n    sessionName\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  fragment DiveFragment on DiveQueryData {\n    id\n  }\n"): (typeof documents)["\n  fragment DiveFragment on DiveQueryData {\n    id\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation addPrepopulatedDiveSession {\n    addDiveSession(\n      sessionInputData: {\n        startTime: \"2015-07-01T08:59:60.123\"\n        endTime: \"2015-07-01T08:59:60.123\"\n        sessionName: \"oog\"\n      }\n    ) {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation addPrepopulatedDiveSession {\n    addDiveSession(\n      sessionInputData: {\n        startTime: \"2015-07-01T08:59:60.123\"\n        endTime: \"2015-07-01T08:59:60.123\"\n        sessionName: \"oog\"\n      }\n    ) {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query getDiveSessions {\n    diveSessions {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n"): (typeof documents)["\n  query getDiveSessions {\n    diveSessions {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

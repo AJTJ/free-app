@@ -1,7 +1,6 @@
-import { Text, TextInput, StyleSheet, View, TextBase } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import React, { useEffect } from "react";
 
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useSnapshot } from "valtio";
 import { loginStore } from "../../state";
 import { useNavigation } from "@react-navigation/native";
@@ -11,36 +10,47 @@ import { RecentSessions } from "./recent_sessions";
 import {
   useAllUsers,
   useGuardedRoute,
-  useGuardedRoute2,
+  useLoginUser,
   useLogoutUser,
 } from "../../logic/user";
-import MobileStore from "../../storage/SafeStorage";
+import { useAddPrePopulatedDiveSession, useGetDiveSessions } from "../../logic";
 
 export function Home() {
   let navigation = useNavigation<AllNavigationProp>();
-  const loginData = useSnapshot(loginStore).loginData;
+  const loginData = useSnapshot(loginStore).loginState;
   let { logoutUser, result } = useLogoutUser();
-  let { accessGuardedRoute, result: guardedRouteResult } = useGuardedRoute();
-  let { accessGuardedRoute2, result: guardedRouteResult2 } = useGuardedRoute2();
-  let { getAllUsers, result: allUsersResult } = useAllUsers();
 
-  console.log({ guardedRouteResult });
-  console.log({ guardedRouteResult2 });
-  console.log({ allUsersResult });
+  // for testing
+  let { accessGuardedRoute, result: guardedRouteResult } = useGuardedRoute();
+  let { getSessions, result: getDiveSessionsResult } = useGetDiveSessions();
+  let { getAllUsers, result: allUsersResult } = useAllUsers();
+  let { addSession, result: addDiveSessionsResult } =
+    useAddPrePopulatedDiveSession();
+
+  console.log("DIVE SESSES", getDiveSessionsResult.data);
 
   useEffect(() => {
-    console.log({ loginData });
+    getSessions();
+  }, [getSessions]);
+
+  useEffect(() => {
     if (!loginData) {
       navigation.navigate("Landing");
     }
   });
 
-  // if (!loginData) {
-  //   navigation.navigate("Landing");
-  // }
-
   const handleLogout = () => {
-    logoutUser();
+    logoutUser().catch((e) => console.error(e));
+  };
+
+  const handleAddSession = async () => {
+    try {
+      await addSession();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      getSessions();
+    }
   };
 
   return (
@@ -83,13 +93,6 @@ export function Home() {
               onPress={handleLogout}
             />
             <Btn
-              title="AddToken"
-              type="primary"
-              hasIcon={false}
-              disabled={false}
-              onPress={() => MobileStore.set("MEMES")}
-            />
-            <Btn
               title="GuardedRoute"
               type="primary"
               hasIcon={false}
@@ -97,18 +100,18 @@ export function Home() {
               onPress={() => accessGuardedRoute()}
             />
             <Btn
-              title="GuardedRoute2"
-              type="primary"
-              hasIcon={false}
-              disabled={false}
-              onPress={() => accessGuardedRoute2()}
-            />
-            <Btn
               title="AllUsers"
               type="primary"
               hasIcon={false}
               disabled={false}
               onPress={() => getAllUsers()}
+            />
+            <Btn
+              title="AddSession"
+              type="primary"
+              hasIcon={false}
+              disabled={false}
+              onPress={handleAddSession}
             />
             <RecentSessions />
           </>

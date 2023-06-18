@@ -4,7 +4,6 @@ import React, { ReactNode } from "react";
 import styled from "styled-components/native";
 
 //TODO: This needs to be switched to the default StyleSheet method
-
 let StyledLinearGradient = styled(LinearGradientImport)`
   display: flex;
   flex: 1;

@@ -49,7 +49,6 @@ import MobileStore from "./storage/SafeStorage";
 
 const authLink = setContext(async (_, { headers }) => {
   const token = await MobileStore.get();
-  console.log({ token });
   return {
     headers: {
       ...headers,
@@ -78,8 +77,6 @@ const uri = `http://${manifest?.debuggerHost?.split(":").shift()}:8080`;
 const httpLink = createHttpLink({
   uri,
 });
-
-console.log({ concatLink: authLink.concat(httpLink) });
 
 const client = new ApolloClient({
   uri,

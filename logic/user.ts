@@ -1,20 +1,10 @@
-import {
-  useApolloClient,
-  useFragment,
-  useLazyQuery,
-  useMutation,
-  useQuery,
-} from "@apollo/client";
-import { LOGIN_USER, LoginFragment, UserFragment } from "../api/auth";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import {
   AllUsersDocument,
   GuardedRouteDocument,
   LoginDocument,
-  LoginFragmentFragment,
   LogoutDocument,
 } from "../api/auth.generated";
-import { UserQueryDataOutput } from "../api/types/types.generated";
-import { LoginFragmentFragmentDoc } from "../api/gql/graphql";
 import { emptyLoginState } from "../state";
 
 export const useLoginUser = () => {

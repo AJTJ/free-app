@@ -20,7 +20,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "DbqueryObject",
+        "name": "DbqueryParams",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -42,178 +42,8 @@
         "possibleTypes": null
       },
       {
-        "kind": "INPUT_OBJECT",
-        "name": "DiveInputData",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "depth",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "disciplineType",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "distance",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "diveName",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "diveTime",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "DiveModificationData",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "depth",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "disciplineType",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "distance",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "diveName",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "diveTime",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "UUID",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "isActive",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
-        "name": "DiveQueryData",
+        "name": "Dive",
         "description": null,
         "fields": [
           {
@@ -404,7 +234,78 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "DiveQueryInput",
+        "name": "DiveInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "depth",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "disciplineType",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "distance",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "diveName",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "diveTime",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "DiveQueryParams",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -546,138 +447,8 @@
         "possibleTypes": null
       },
       {
-        "kind": "INPUT_OBJECT",
-        "name": "DiveSessionInputData",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "endTime",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "NaiveDateTime",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "sessionName",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "startTime",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "NaiveDateTime",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "DiveSessionModificationData",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "endTime",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "NaiveDateTime",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "UUID",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "isActive",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "sessionName",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "startTime",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "NaiveDateTime",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
-        "name": "DiveSessionQueryData",
+        "name": "DiveSession",
         "description": null,
         "fields": [
           {
@@ -729,7 +500,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "DbqueryObject",
+                  "name": "DbqueryParams",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -741,7 +512,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "DiveQueryInput",
+                  "name": "DiveQueryParams",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -760,7 +531,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "DiveQueryData",
+                    "name": "Dive",
                     "ofType": null
                   }
                 }
@@ -885,7 +656,62 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "DiveSessionQueryInput",
+        "name": "DiveSessionInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "endTime",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "NaiveDateTime",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "sessionName",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "startTime",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "NaiveDateTime",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "DiveSessionQueryParams",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -979,6 +805,180 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "DiveSessionUpdate",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "endTime",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "NaiveDateTime",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "UUID",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isActive",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "sessionName",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "startTime",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "NaiveDateTime",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "DiveUpdate",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "depth",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "disciplineType",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "distance",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "diveName",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "diveTime",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "UUID",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isActive",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "SCALAR",
         "name": "Float",
         "description": "The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).",
@@ -1010,7 +1010,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "LogData",
+        "name": "Log",
         "description": null,
         "fields": [
           {
@@ -1094,7 +1094,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "DbqueryObject",
+                  "name": "DbqueryParams",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -1113,7 +1113,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "LogEntryData",
+                    "name": "LogEntry",
                     "ofType": null
                   }
                 }
@@ -1202,7 +1202,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "LogEntryData",
+        "name": "LogEntry",
         "description": null,
         "fields": [
           {
@@ -1389,7 +1389,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "LoggerData",
+        "name": "Logger",
         "description": null,
         "fields": [
           {
@@ -1473,7 +1473,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "DbqueryObject",
+                  "name": "DbqueryParams",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -1492,7 +1492,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "LoggerEntryData",
+                    "name": "LoggerEntry",
                     "ofType": null
                   }
                 }
@@ -1557,7 +1557,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "LoggerEntryData",
+        "name": "LoggerEntry",
         "description": null,
         "fields": [
           {
@@ -1748,7 +1748,34 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "LoginData",
+        "name": "LoggerInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "loggerName",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "Login",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -1806,7 +1833,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "DiveInputData",
+                    "name": "DiveInput",
                     "ofType": null
                   }
                 },
@@ -1836,7 +1863,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "DiveQueryData",
+                "name": "Dive",
                 "ofType": null
               }
             },
@@ -1855,7 +1882,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "DiveSessionInputData",
+                    "name": "DiveSessionInput",
                     "ofType": null
                   }
                 },
@@ -1869,7 +1896,40 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "DiveSessionQueryData",
+                "name": "DiveSession",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "addLogger",
+            "description": null,
+            "args": [
+              {
+                "name": "loggerInput",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "LoggerInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Logger",
                 "ofType": null
               }
             },
@@ -1936,7 +1996,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "UserInputData",
+                    "name": "UserInput",
                     "ofType": null
                   }
                 },
@@ -1950,7 +2010,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "UserQueryData",
+                "name": "UserQuery",
                 "ofType": null
               }
             },
@@ -1969,7 +2029,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "LoginData",
+                    "name": "Login",
                     "ofType": null
                   }
                 },
@@ -1983,7 +2043,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "UserQueryDataOutput",
+                "name": "UserQueryOutput",
                 "ofType": null
               }
             },
@@ -2018,7 +2078,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "DiveModificationData",
+                    "name": "DiveUpdate",
                     "ofType": null
                   }
                 },
@@ -2032,7 +2092,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "DiveQueryData",
+                "name": "Dive",
                 "ofType": null
               }
             },
@@ -2051,7 +2111,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "DiveSessionModificationData",
+                    "name": "DiveSessionUpdate",
                     "ofType": null
                   }
                 },
@@ -2065,7 +2125,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "DiveSessionQueryData",
+                "name": "DiveSession",
                 "ofType": null
               }
             },
@@ -2118,7 +2178,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "UserQueryData",
+                    "name": "UserQuery",
                     "ofType": null
                   }
                 }
@@ -2136,7 +2196,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "DbqueryObject",
+                  "name": "DbqueryParams",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -2148,7 +2208,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "DiveSessionQueryInput",
+                  "name": "DiveSessionQueryParams",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -2167,7 +2227,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "DiveSessionQueryData",
+                    "name": "DiveSession",
                     "ofType": null
                   }
                 }
@@ -2185,7 +2245,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "DbqueryObject",
+                  "name": "DbqueryParams",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -2197,7 +2257,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "DiveQueryInput",
+                  "name": "DiveQueryParams",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -2216,7 +2276,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "DiveQueryData",
+                    "name": "Dive",
                     "ofType": null
                   }
                 }
@@ -2273,7 +2333,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "LoggerEntryData",
+                    "name": "LoggerEntry",
                     "ofType": null
                   }
                 }
@@ -2297,7 +2357,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "LoggerData",
+                    "name": "Logger",
                     "ofType": null
                   }
                 }
@@ -2321,7 +2381,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "LogData",
+                    "name": "Log",
                     "ofType": null
                   }
                 }
@@ -2356,7 +2416,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "UserQueryData",
+                "name": "UserQuery",
                 "ofType": null
               }
             },
@@ -2391,7 +2451,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "UserInputData",
+        "name": "UserInput",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -2450,7 +2510,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "UserQueryData",
+        "name": "UserQuery",
         "description": null,
         "fields": [
           {
@@ -2502,7 +2562,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "DbqueryObject",
+                  "name": "DbqueryParams",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -2514,7 +2574,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "DiveSessionQueryInput",
+                  "name": "DiveSessionQueryParams",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -2533,7 +2593,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "DiveSessionQueryData",
+                    "name": "DiveSession",
                     "ofType": null
                   }
                 }
@@ -2686,7 +2746,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "UserQueryDataOutput",
+        "name": "UserQueryOutput",
         "description": null,
         "fields": [
           {
@@ -2714,7 +2774,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "DbqueryObject",
+                  "name": "DbqueryParams",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -2726,7 +2786,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "DiveSessionQueryInput",
+                  "name": "DiveSessionQueryParams",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -2745,7 +2805,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "DiveSessionQueryData",
+                    "name": "DiveSession",
                     "ofType": null
                   }
                 }

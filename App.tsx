@@ -28,6 +28,7 @@ import MobileStore from "./storage/SafeStorage";
 import { createFragmentRegistry } from "@apollo/client/cache";
 import { DiveSessionFragment } from "./api/dive_sessions";
 import { LoginFragment, UserFragment } from "./api/auth";
+import { LoggersList } from "./pages/LoggersList";
 
 // const api =
 //   typeof manifest?.packagerOpts === `object` && manifest?.packagerOpts?.dev
@@ -98,12 +99,12 @@ const client = new ApolloClient({
   },
 });
 
-// TODO: This is where params are sorted
+// TODO: This is where route params are declared
 // https://reactnavigation.org/docs/typescript/
 type RootStackParamList = {
   Landing: undefined;
   Home: undefined;
-  // Auth: undefined;
+  LoggersList: undefined;
 };
 
 export type AllNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -128,6 +129,7 @@ export default function App() {
           >
             {/* each stack is being injected the navigation object */}
             <Stack.Screen name="Landing" component={Landing} />
+            <Stack.Screen name="LoggersList" component={LoggersList} />
             <Stack.Screen name="Home" component={Home} />
           </Stack.Navigator>
         </NavigationContainer>

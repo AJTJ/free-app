@@ -35,13 +35,6 @@ export function Landing() {
   let { loading, error, data } = result;
   const user = useSnapshot(loginStore).loginState;
 
-  // if (data?.login) {
-  //   if (!user) {
-  //     addUser(data.login);
-  //     navigation.navigate("Home");
-  //   }
-  // }
-
   const onSubmit = (formData: FormData) => {
     loginUser({
       variables: { email: formData.email, password: formData.password },
@@ -70,68 +63,66 @@ export function Landing() {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={styles.container}>
-        <LinearGradient>
-          <Image style={styles.diver} source={require(diverImg)} />
-          <Controller
-            name="email"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <>
-                <CoreText style={styles.InputText}>Email</CoreText>
-                <LandingTextInput
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
-              </>
-            )}
-          />
+      <LinearGradient>
+        <Image style={styles.diver} source={require(diverImg)} />
+        <Controller
+          name="email"
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <>
+              <CoreText style={styles.InputText}>Email</CoreText>
+              <LandingTextInput
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            </>
+          )}
+        />
 
-          <Controller
-            name="password"
-            control={control}
-            rules={{
-              maxLength: 100,
-              required: true,
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <>
-                <CoreText style={styles.InputText}>Password</CoreText>
-                <LandingTextInput
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
-              </>
-            )}
-          />
-          <View style={styles.emptyView}>
-            <CoreText>
-              {loading && "Loading"}
-              {error && error.message}
-              {errors.email && errors.email.message}
-              {errors.password && errors.password.message}
-            </CoreText>
-          </View>
-          <Button title="Login" onPress={handleSubmit(onSubmit)} />
-          <Btn
-            title="Log in"
-            type="primary"
-            hasIcon={false}
-            disabled={false}
-            onPress={() => console.log("should do something")}
-          />
-          <Btn
-            title="New user"
-            type="secondary"
-            hasIcon={false}
-            disabled={false}
-            onPress={() => console.log("should do something")}
-          />
-        </LinearGradient>
-      </View>
+        <Controller
+          name="password"
+          control={control}
+          rules={{
+            maxLength: 100,
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <>
+              <CoreText style={styles.InputText}>Password</CoreText>
+              <LandingTextInput
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            </>
+          )}
+        />
+        <View style={styles.emptyView}>
+          <CoreText>
+            {loading && "Loading"}
+            {error && error.message}
+            {errors.email && errors.email.message}
+            {errors.password && errors.password.message}
+          </CoreText>
+        </View>
+        <Button title="Login" onPress={handleSubmit(onSubmit)} />
+        <Btn
+          title="Log in"
+          type="primary"
+          hasIcon={false}
+          disabled={false}
+          onPress={() => console.log("should do something")}
+        />
+        <Btn
+          title="New user"
+          type="secondary"
+          hasIcon={false}
+          disabled={false}
+          onPress={() => console.log("should do something")}
+        />
+      </LinearGradient>
     </TouchableWithoutFeedback>
   );
 }
@@ -164,12 +155,3 @@ type FormData = {
   email: string;
   password: string;
 };
-
-// const { complete, data: fragData } = useFragment({
-//   fragment: LoginFragment,
-//   fragmentName: "LoginFragment",
-//   from: {
-//     __typename: "UserQueryDataOutput",
-//     id: 5,
-//   },
-// });

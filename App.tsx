@@ -87,9 +87,15 @@ const client = new ApolloClient({
   uri,
   link: from([authLink, responseLink, httpLink]),
   cache: new InMemoryCache({
+    typePolicies: {
+      UserOutput: {
+        keyFields: () => "USER",
+      },
+    },
     fragments: createFragmentRegistry(gql`
       ${LoginFragment}
       ${DiveSessionFragment}
+      ${UserFragment}
     `),
   }),
   defaultOptions: {

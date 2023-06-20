@@ -75,3 +75,16 @@ https://dev.to/lico/react-apollo-refresh-tokens-5h0k
 - react-native-debugger
   - this seems useful in order to make the best use of apollo graphql
   - install: https://github.com/jhen0409/react-native-debugger
+
+###
+- ejecting
+  - https://docs.expo.dev/workflow/customizing/
+### mapping
+- mmapbox
+  - https://github.com/rnmapbox/maps
+- maplibre
+  - https://github.com/maplibre/maplibre-react-native
+- GENERAL
+  - https://github.com/onthegomap/planetiler
+  - https://mapnik.org/
+  - https://github.com/mapnik/mapnik

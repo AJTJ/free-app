@@ -13,8 +13,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  fragment UserFragment on UserQueryOutput {\n    id\n    email\n    username\n    lastLogin\n  }\n": types.UserFragmentFragmentDoc,
-    "\n  fragment LoginFragment on UserQueryOutput {\n    ...UserFragment\n    diveSessions(dbQueryDto: { limit: 10 }) {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n": types.LoginFragmentFragmentDoc,
+    "\n  fragment UserFragment on UserOutput {\n    id\n    email\n    username\n    lastLogin\n  }\n": types.UserFragmentFragmentDoc,
+    "\n  fragment LoginFragment on UserOutput {\n    ...UserFragment\n    diveSessions(dbQueryDto: { limit: 10 }) {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n": types.LoginFragmentFragmentDoc,
     "\n  mutation login($email: String!, $password: String!) {\n    login(loginData: { email: $email, password: $password }) {\n      ...LoginFragment\n    }\n  }\n": types.LoginDocument,
     "\n  mutation logout {\n    logout\n  }\n": types.LogoutDocument,
     "\n  query allUsers {\n    allUsers {\n      email\n    }\n  }\n": types.AllUsersDocument,
@@ -46,11 +46,11 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  fragment UserFragment on UserQueryOutput {\n    id\n    email\n    username\n    lastLogin\n  }\n"): (typeof documents)["\n  fragment UserFragment on UserQueryOutput {\n    id\n    email\n    username\n    lastLogin\n  }\n"];
+export function graphql(source: "\n  fragment UserFragment on UserOutput {\n    id\n    email\n    username\n    lastLogin\n  }\n"): (typeof documents)["\n  fragment UserFragment on UserOutput {\n    id\n    email\n    username\n    lastLogin\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  fragment LoginFragment on UserQueryOutput {\n    ...UserFragment\n    diveSessions(dbQueryDto: { limit: 10 }) {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n"): (typeof documents)["\n  fragment LoginFragment on UserQueryOutput {\n    ...UserFragment\n    diveSessions(dbQueryDto: { limit: 10 }) {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  fragment LoginFragment on UserOutput {\n    ...UserFragment\n    diveSessions(dbQueryDto: { limit: 10 }) {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n"): (typeof documents)["\n  fragment LoginFragment on UserOutput {\n    ...UserFragment\n    diveSessions(dbQueryDto: { limit: 10 }) {\n      ...DiveSessionFragment\n      dives {\n        ...DiveFragment\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

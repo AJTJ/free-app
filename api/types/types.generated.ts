@@ -200,8 +200,8 @@ export type MutationRoot = {
   deleteAllDiveSessions: Scalars['Int'];
   deleteAllDives: Scalars['Int'];
   deleteAllUsers: Scalars['Int'];
-  insertUser: UserQuery;
-  login: UserQueryOutput;
+  insertUser: User;
+  login: UserOutput;
   logout: Scalars['Boolean'];
   updateDive: Dive;
   updateDiveSession: DiveSession;
@@ -245,14 +245,14 @@ export type MutationRootUpdateDiveSessionArgs = {
 
 export type QueryRoot = {
   __typename?: 'QueryRoot';
-  allUsers: Array<UserQuery>;
+  allUsers: Array<User>;
   diveSessions: Array<DiveSession>;
   dives: Array<Dive>;
   guardedRoute: Scalars['Float'];
   loggerEntries: Array<LoggerEntry>;
   loggers: Array<Logger>;
   logs: Array<Log>;
-  user: UserQuery;
+  user: User;
 };
 
 
@@ -277,14 +277,8 @@ export type QueryRootUserArgs = {
   queryEmail: Scalars['String'];
 };
 
-export type UserInput = {
-  email: Scalars['String'];
-  password: Scalars['String'];
-  username: Scalars['String'];
-};
-
-export type UserQuery = {
-  __typename?: 'UserQuery';
+export type User = {
+  __typename?: 'User';
   createdAt: Scalars['NaiveDateTime'];
   deletedAt?: Maybe<Scalars['NaiveDateTime']>;
   deletedBy?: Maybe<Scalars['UUID']>;
@@ -300,13 +294,19 @@ export type UserQuery = {
 };
 
 
-export type UserQueryDiveSessionsArgs = {
+export type UserDiveSessionsArgs = {
   dbQueryDto?: InputMaybe<DbqueryParams>;
   diveSessionQuery?: InputMaybe<DiveSessionQueryParams>;
 };
 
-export type UserQueryOutput = {
-  __typename?: 'UserQueryOutput';
+export type UserInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+  username: Scalars['String'];
+};
+
+export type UserOutput = {
+  __typename?: 'UserOutput';
   createdAt: Scalars['NaiveDateTime'];
   diveSessions: Array<DiveSession>;
   email: Scalars['String'];
@@ -318,7 +318,7 @@ export type UserQueryOutput = {
 };
 
 
-export type UserQueryOutputDiveSessionsArgs = {
+export type UserOutputDiveSessionsArgs = {
   dbQueryDto?: InputMaybe<DbqueryParams>;
   diveSessionQuery?: InputMaybe<DiveSessionQueryParams>;
 };

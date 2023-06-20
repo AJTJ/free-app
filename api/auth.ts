@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import { graphql } from "./gql";
 
 export const UserFragment = gql(`
-  fragment UserFragment on UserQueryOutput {
+  fragment UserFragment on UserOutput {
     id
     email
     username
@@ -11,7 +11,7 @@ export const UserFragment = gql(`
 `);
 
 export const LoginFragment = gql(`
-  fragment LoginFragment on UserQueryOutput {
+  fragment LoginFragment on UserOutput {
     ...UserFragment
     diveSessions(dbQueryDto: { limit: 10 }) {
       ...DiveSessionFragment

@@ -14,7 +14,7 @@ import {
   useLogoutUser,
 } from "../../logic/user";
 import { useAddPrePopulatedDiveSession, useGetDiveSessions } from "../../logic";
-import { useApolloClient } from "@apollo/client";
+import { useApolloClient, useFragment } from "@apollo/client";
 import { LoginFragment, UserFragment } from "../../api/auth";
 import { DiveSessionFragment } from "../../api/dive_sessions";
 
@@ -28,6 +28,23 @@ export function Home() {
   let { getAllUsers, result: allUsersResult } = useAllUsers();
   let { addSession, result: addDiveSessionsResult } =
     useAddPrePopulatedDiveSession();
+
+  const { complete, data } = useFragment({
+    fragment: UserFragment,
+    fragmentName: "UserFragment",
+    from: {
+      __typename: "UserOutput",
+      id: "USER",
+    },
+  });
+  console.log("USERFRAG", complete, data);
+
+  let client = useApolloClient();
+  let readUserFrag = client.cache.readFragment({
+    id: "USER",
+    fragment: UserFragment,
+  });
+  console.log("reading", readUserFrag);
 
   useEffect(() => {
     if (!loginData) {

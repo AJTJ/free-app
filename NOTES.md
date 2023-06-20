@@ -79,6 +79,8 @@ https://dev.to/lico/react-apollo-refresh-tokens-5h0k
 ###
 - ejecting
   - https://docs.expo.dev/workflow/customizing/
+  - https://docs.expo.dev/develop/development-builds/introduction/
+  - https://docs.expo.dev/config-plugins/introduction/?redirected
 ### mapping
 - mmapbox
   - https://github.com/rnmapbox/maps

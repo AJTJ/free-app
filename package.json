@@ -2,6 +2,7 @@
   "dependencies": {
     "@apollo/client": "^3.8.0-beta.2",
     "@expo/webpack-config": "^0.17.0",
+    "@maplibre/maplibre-react-native": "^9.0.1",
     "@react-navigation/native": "^6.0.12",
     "@react-navigation/native-stack": "^6.8.0",
     "concurrently": "^8.1.0",

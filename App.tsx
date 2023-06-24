@@ -2,10 +2,7 @@ import React from "react";
 import { Home } from "./pages";
 import { NavigationContainer } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-
-import { RecoilRoot } from "recoil";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-// import { Auth } from "./pages";
 import { Landing } from "./pages";
 
 import {
@@ -19,7 +16,6 @@ import {
 } from "@apollo/client";
 
 import Constants from "expo-constants";
-import { StatusBar } from "react-native";
 import { ThemeProvider } from "styled-components/native";
 import GlobalTheme from "./stylessheet/globalStyles";
 const { manifest } = Constants;
@@ -28,29 +24,9 @@ import MobileStore from "./storage/SafeStorage";
 import { createFragmentRegistry } from "@apollo/client/cache";
 import { DiveSessionFragment } from "./api/dive_sessions";
 import { LoginFragment, UserFragment } from "./api/auth";
-import { LoggersList } from "./pages/LoggersList";
-
-// const api =
-//   typeof manifest?.packagerOpts === `object` && manifest?.packagerOpts?.dev
-//     ? manifest?.debuggerHost?.split(`:`)?.shift()?.concat(`:8080`)
-//     : `http://localhost:8080`;
-
-// const authLink = setContext((_, { headers }) => {
-//   // get the authentication token from local storage if it exists
-//   const token = localStorage.getItem("token");
-//   // return the headers to the context so httpLink can read them
-//   return {
-//     headers: {
-//       ...headers,
-//       authorization: token ? `Bearer ${token}` : "",
-//     },
-//   };
-// });
-
-// const client = new ApolloClient({
-//   link: authLink.concat(httpLink),
-//   cache: new InMemoryCache(),
-// });
+import { AllForms } from "./pages/FormsList/AllForms";
+import { FormsList } from "./pages/FormsList";
+import { FormBuilder } from "./pages/FormBuilder/FormBuilder";
 
 const authLink = setContext(async (_, { headers }) => {
   const token = await MobileStore.get();
@@ -93,8 +69,8 @@ const client = new ApolloClient({
       },
     },
     fragments: createFragmentRegistry(gql`
-      ${LoginFragment}
-      ${DiveSessionFragment}
+      ${DiveSessionFragment},
+      ${LoginFragment},
       ${UserFragment}
     `),
   }),
@@ -110,10 +86,11 @@ const client = new ApolloClient({
 type RootStackParamList = {
   Landing: undefined;
   Home: undefined;
-  LoggersList: undefined;
+  FormsList: undefined;
+  FormBuilder: undefined;
 };
 
-export type AllNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+export type AllNavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -135,7 +112,8 @@ export default function App() {
           >
             {/* each stack is being injected the navigation object */}
             <Stack.Screen name="Landing" component={Landing} />
-            <Stack.Screen name="LoggersList" component={LoggersList} />
+            <Stack.Screen name="FormsList" component={FormsList} />
+            <Stack.Screen name="FormBuilder" component={FormBuilder} />
             <Stack.Screen name="Home" component={Home} />
           </Stack.Navigator>
         </NavigationContainer>
@@ -143,3 +121,25 @@ export default function App() {
     </ApolloProvider>
   );
 }
+
+// const api =
+//   typeof manifest?.packagerOpts === `object` && manifest?.packagerOpts?.dev
+//     ? manifest?.debuggerHost?.split(`:`)?.shift()?.concat(`:8080`)
+//     : `http://localhost:8080`;
+
+// const authLink = setContext((_, { headers }) => {
+//   // get the authentication token from local storage if it exists
+//   const token = localStorage.getItem("token");
+//   // return the headers to the context so httpLink can read them
+//   return {
+//     headers: {
+//       ...headers,
+//       authorization: token ? `Bearer ${token}` : "",
+//     },
+//   };
+// });
+
+// const client = new ApolloClient({
+//   link: authLink.concat(httpLink),
+//   cache: new InMemoryCache(),
+// });

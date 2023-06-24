@@ -10,6 +10,15 @@ export const DiveSessionFragment = gql(`
   }
 `);
 
+// export const DiveSessionConnectionFragment = gql(`
+//   fragment DiveSessionConnectionFragment on DiveSessionConnection {
+//     id
+//     sessionName
+//     startTime
+//     endTime
+//   }
+// `);
+
 export const DiveFragment = gql(`
   fragment DiveFragment on Dive {
     id
@@ -18,7 +27,6 @@ export const DiveFragment = gql(`
     distance
     diveName
     diveTime
-    sessionId
     updatedAt
   }
 `);
@@ -26,7 +34,7 @@ export const DiveFragment = gql(`
 export const ADD_PREPOPULATED_DIVE_SESSION = graphql(`
   mutation addPrepopulatedDiveSession {
     addDiveSession(
-      sessionInputData: {
+      diveSessionInput: {
         startTime: "2015-07-01T08:59:60.123"
         endTime: "2015-07-01T08:59:60.123"
         sessionName: "oog"
@@ -41,11 +49,13 @@ export const ADD_PREPOPULATED_DIVE_SESSION = graphql(`
 `);
 
 export const GET_DIVE_SESSIONS = graphql(`
-  query getDiveSessions($limit: Int!) {
-    diveSessions(dbQueryDto: { limit: $limit }) {
-      ...DiveSessionFragment
-      dives {
-        ...DiveFragment
+  query diveSessions {
+    diveSessions(queryParams: {}) {
+      nodes {
+        ...DiveSessionFragment
+        dives {
+          ...DiveFragment
+        }
       }
     }
   }

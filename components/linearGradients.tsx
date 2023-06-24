@@ -14,6 +14,7 @@ let StyledLinearGradient = styled(LinearGradientImport)`
 export const LinearGradient = ({
   gradient_colors = ["#15418C", "#081E33"],
   children,
+
   ...rest
 }: {
   gradient_colors?: string[];

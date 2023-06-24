@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
 import {
   AddPrepopulatedDiveSessionDocument,
-  GetDiveSessionsDocument,
+  DiveSessionsDocument,
 } from "../api/dive_sessions.generated";
 import { GET_DIVE_SESSIONS } from "../api/dive_sessions";
 
@@ -15,10 +15,8 @@ export const useAddPrePopulatedDiveSession = () => {
   return { addSession, result, client };
 };
 
-export const useGetDiveSessions = ({ limit }: { limit: Number }) => {
-  const { loading, error, data, client } = useQuery(GetDiveSessionsDocument, {
-    variables: { limit },
-  });
+export const useGetDiveSessions = () => {
+  const { loading, error, data, client } = useQuery(DiveSessionsDocument);
 
   return { loading, error, data, client };
 };

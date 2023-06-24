@@ -4,9 +4,9 @@ import {
   Image,
   View,
   TouchableWithoutFeedback,
+  ScrollView,
 } from "react-native";
 import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Btn,
   CoreText,
@@ -14,26 +14,23 @@ import {
   LinearGradient,
 } from "../../components";
 import { Controller, useForm } from "react-hook-form";
-// import { useSnapshot } from "valtio";
-import { addLoginState, loginStore } from "../../state";
+import { addLoginState } from "../../state";
 import { colors } from "../../stylessheet/colors";
 import { useLoginUser } from "../../logic";
-import { useSnapshot } from "valtio";
 import { useNavigation } from "@react-navigation/native";
-import { AllNavigationProp } from "../../App";
+import { AllNavigationProps } from "../../App";
 import { Keyboard } from "react-native";
-import { useFragment } from "@apollo/client";
-import { LoginFragment } from "../../api/auth";
 
 const diverImg = "../../assets/Ellipse372.png";
 
 // NAVIGATING WITH NAVIGATION
 // navigation.goBack()
 export function Landing() {
-  let navigation = useNavigation<AllNavigationProp>();
+  let navigation = useNavigation<AllNavigationProps>();
   let { loginUser, result } = useLoginUser();
   let { loading, error, data } = result;
-  const user = useSnapshot(loginStore).loginState;
+
+  console.log("LoginData: ", data?.login.diveSessions);
 
   const onSubmit = (formData: FormData) => {
     loginUser({
@@ -56,11 +53,11 @@ export function Landing() {
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
-      email: "phil@gmail.com",
-      password: "123",
+      email: "memes@memes.com",
+      password: "memes",
     },
   });
-
+  // keyboardShouldPersistTaps={true}
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <LinearGradient>

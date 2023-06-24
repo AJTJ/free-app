@@ -15,15 +15,74 @@ export type Scalars = {
   UUID: any;
 };
 
-export type DbqueryParams = {
-  limit?: InputMaybe<Scalars['Int']>;
+export enum CategoryNames {
+  General = 'GENERAL'
+}
+
+export type CompletedForm = {
+  __typename?: 'CompletedForm';
+  completedFormFields: Array<CompletedFormField>;
+  completedFormName?: Maybe<Scalars['String']>;
+  createdAt: Scalars['NaiveDateTime'];
+  id: Scalars['UUID'];
+  isActive: Scalars['Boolean'];
+  templateVersion: Array<Maybe<Scalars['Int']>>;
+  updatedAt: Scalars['NaiveDateTime'];
+};
+
+export type CompletedFormConnection = {
+  __typename?: 'CompletedFormConnection';
+  /** A list of edges. */
+  edges: Array<CompletedFormEdge>;
+  /** A list of nodes. */
+  nodes: Array<CompletedForm>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+/** An edge in a connection. */
+export type CompletedFormEdge = {
+  __typename?: 'CompletedFormEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge */
+  node: CompletedForm;
+};
+
+export type CompletedFormField = {
+  __typename?: 'CompletedFormField';
+  categoryName: Scalars['String'];
+  createdAt: Scalars['NaiveDateTime'];
+  fieldName: Scalars['String'];
+  fieldValue?: Maybe<Scalars['String']>;
+  fieldValueType: Scalars['String'];
+  id: Scalars['UUID'];
+  isActive: Scalars['Boolean'];
+  itemOrder?: Maybe<Scalars['Int']>;
+  log: CompletedForm;
+  updatedAt: Scalars['NaiveDateTime'];
+};
+
+export type CompletedFormInput = {
+  completedFormName: Scalars['String'];
+  formId: Scalars['UUID'];
+  formStructure: FormStructure;
+  originalFormId?: InputMaybe<Scalars['UUID']>;
+  previousCompletedFormId?: InputMaybe<Scalars['UUID']>;
+  sessionId: Scalars['UUID'];
+  userId: Scalars['UUID'];
+};
+
+export type CompletedFormOutput = {
+  __typename?: 'CompletedFormOutput';
+  fields: Array<CompletedFormField>;
+  form: CompletedForm;
+  formStructure: FormStructureOutput;
 };
 
 export type Dive = {
   __typename?: 'Dive';
   createdAt: Scalars['NaiveDateTime'];
-  deletedAt?: Maybe<Scalars['NaiveDateTime']>;
-  deletedBy?: Maybe<Scalars['UUID']>;
   depth?: Maybe<Scalars['Float']>;
   disciplineType?: Maybe<Scalars['String']>;
   distance?: Maybe<Scalars['Float']>;
@@ -31,9 +90,21 @@ export type Dive = {
   diveTime?: Maybe<Scalars['Int']>;
   id: Scalars['UUID'];
   isActive: Scalars['Boolean'];
-  sessionId: Scalars['UUID'];
   updatedAt: Scalars['NaiveDateTime'];
-  userId: Scalars['UUID'];
+};
+
+export type DiveFilter = {
+  createdAt?: InputMaybe<Scalars['NaiveDateTime']>;
+  depth?: InputMaybe<Scalars['Float']>;
+  disciplineType?: InputMaybe<Scalars['String']>;
+  distance?: InputMaybe<Scalars['Float']>;
+  diveName?: InputMaybe<Scalars['String']>;
+  diveSession?: InputMaybe<Scalars['UUID']>;
+  diveTime?: InputMaybe<Scalars['NaiveTime']>;
+  id?: InputMaybe<Scalars['UUID']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
+  updatedAt?: InputMaybe<Scalars['NaiveDateTime']>;
+  userId?: InputMaybe<Scalars['UUID']>;
 };
 
 export type DiveInput = {
@@ -44,25 +115,9 @@ export type DiveInput = {
   diveTime?: InputMaybe<Scalars['Int']>;
 };
 
-export type DiveQueryParams = {
-  createdAt?: InputMaybe<Scalars['NaiveDateTime']>;
-  depth?: InputMaybe<Scalars['Float']>;
-  disciplineType?: InputMaybe<Scalars['String']>;
-  distance?: InputMaybe<Scalars['Float']>;
-  diveId?: InputMaybe<Scalars['UUID']>;
-  diveName?: InputMaybe<Scalars['String']>;
-  diveSession?: InputMaybe<Scalars['UUID']>;
-  diveTime?: InputMaybe<Scalars['NaiveTime']>;
-  isActive?: InputMaybe<Scalars['Boolean']>;
-  updatedAt?: InputMaybe<Scalars['NaiveDateTime']>;
-  userId?: InputMaybe<Scalars['UUID']>;
-};
-
 export type DiveSession = {
   __typename?: 'DiveSession';
   createdAt: Scalars['NaiveDateTime'];
-  deletedAt?: Maybe<Scalars['NaiveDateTime']>;
-  deletedBy?: Maybe<Scalars['UUID']>;
   dives: Array<Dive>;
   endTime: Scalars['NaiveDateTime'];
   id: Scalars['UUID'];
@@ -70,22 +125,34 @@ export type DiveSession = {
   sessionName?: Maybe<Scalars['String']>;
   startTime: Scalars['NaiveDateTime'];
   updatedAt: Scalars['NaiveDateTime'];
-  userId: Scalars['UUID'];
 };
 
 
 export type DiveSessionDivesArgs = {
-  dbQueryDto?: InputMaybe<DbqueryParams>;
-  diveQuery?: InputMaybe<DiveQueryParams>;
+  dbQueryDto?: InputMaybe<QueryParams>;
+  diveQuery?: InputMaybe<DiveFilter>;
 };
 
-export type DiveSessionInput = {
-  endTime: Scalars['NaiveDateTime'];
-  sessionName?: InputMaybe<Scalars['String']>;
-  startTime: Scalars['NaiveDateTime'];
+export type DiveSessionConnection = {
+  __typename?: 'DiveSessionConnection';
+  /** A list of edges. */
+  edges: Array<DiveSessionEdge>;
+  /** A list of nodes. */
+  nodes: Array<DiveSession>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
 };
 
-export type DiveSessionQueryParams = {
+/** An edge in a connection. */
+export type DiveSessionEdge = {
+  __typename?: 'DiveSessionEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge */
+  node: DiveSession;
+};
+
+export type DiveSessionFilter = {
   createdAt?: InputMaybe<Scalars['NaiveDateTime']>;
   endTime?: InputMaybe<Scalars['NaiveDateTime']>;
   isActive?: InputMaybe<Scalars['Boolean']>;
@@ -93,6 +160,12 @@ export type DiveSessionQueryParams = {
   sessionName?: InputMaybe<Scalars['String']>;
   startTime?: InputMaybe<Scalars['NaiveDateTime']>;
   updatedAt?: InputMaybe<Scalars['NaiveDateTime']>;
+};
+
+export type DiveSessionInput = {
+  endTime: Scalars['NaiveDateTime'];
+  sessionName?: InputMaybe<Scalars['String']>;
+  startTime: Scalars['NaiveDateTime'];
 };
 
 export type DiveSessionUpdate = {
@@ -113,78 +186,101 @@ export type DiveUpdate = {
   isActive?: InputMaybe<Scalars['Boolean']>;
 };
 
-export type Log = {
-  __typename?: 'Log';
+export type EnumLists = {
+  enums: Array<Scalars['String']>;
+  fieldName: FieldNames;
+};
+
+export type EnumListsOutput = {
+  __typename?: 'EnumListsOutput';
+  enums: Array<Scalars['String']>;
+  fieldName: FieldNames;
+};
+
+export enum FieldNames {
+  GeneralFeeling = 'GENERAL_FEELING'
+}
+
+export enum FieldValueTypes {
+  CustomEnums = 'CUSTOM_ENUMS',
+  Interval = 'INTERVAL',
+  Number = 'NUMBER',
+  Text = 'TEXT',
+  Timestamp = 'TIMESTAMP'
+}
+
+export type Form = {
+  __typename?: 'Form';
   createdAt: Scalars['NaiveDateTime'];
-  deletedAt?: Maybe<Scalars['NaiveDateTime']>;
-  deletedBy?: Maybe<Scalars['UUID']>;
+  formFields: Array<FormField>;
+  formName: Scalars['String'];
   id: Scalars['UUID'];
   isActive: Scalars['Boolean'];
-  logEntries: Array<LogEntry>;
-  logName?: Maybe<Scalars['String']>;
-  loggerUsed: Scalars['UUID'];
-  sessionId?: Maybe<Scalars['UUID']>;
+  templateVersion: Array<Maybe<Scalars['Int']>>;
   updatedAt: Scalars['NaiveDateTime'];
-  userId: Scalars['UUID'];
 };
 
 
-export type LogLogEntriesArgs = {
-  dbQueryDto?: InputMaybe<DbqueryParams>;
+export type FormFormFieldsArgs = {
+  dbQueryDto?: InputMaybe<QueryParams>;
 };
 
-export type LogEntry = {
-  __typename?: 'LogEntry';
-  categoryType: Scalars['String'];
-  createdAt: Scalars['NaiveDateTime'];
-  deletedAt?: Maybe<Scalars['NaiveDateTime']>;
-  deletedBy?: Maybe<Scalars['UUID']>;
-  id: Scalars['UUID'];
-  inputType: Scalars['String'];
-  inputValue?: Maybe<Scalars['String']>;
-  isActive: Scalars['Boolean'];
-  itemOrder?: Maybe<Scalars['Int']>;
-  logId: Scalars['UUID'];
-  updatedAt: Scalars['NaiveDateTime'];
-  userId: Scalars['UUID'];
-};
-
-export type Logger = {
-  __typename?: 'Logger';
-  createdAt: Scalars['NaiveDateTime'];
-  deletedAt?: Maybe<Scalars['NaiveDateTime']>;
-  deletedBy?: Maybe<Scalars['UUID']>;
-  id: Scalars['UUID'];
-  isActive: Scalars['Boolean'];
-  loggerEntries: Array<LoggerEntry>;
-  loggerName: Scalars['String'];
-  updatedAt: Scalars['NaiveDateTime'];
-  userId: Scalars['UUID'];
-};
-
-
-export type LoggerLoggerEntriesArgs = {
-  dbQueryDto?: InputMaybe<DbqueryParams>;
-};
-
-export type LoggerEntry = {
-  __typename?: 'LoggerEntry';
+export type FormField = {
+  __typename?: 'FormField';
   categoryName: Scalars['String'];
   createdAt: Scalars['NaiveDateTime'];
-  deletedAt?: Maybe<Scalars['NaiveDateTime']>;
-  deletedBy?: Maybe<Scalars['UUID']>;
   fieldName: Scalars['String'];
+  fieldValue?: Maybe<Scalars['String']>;
+  fieldValueType: Scalars['String'];
+  form: Form;
   id: Scalars['UUID'];
-  inputType: Scalars['String'];
   isActive: Scalars['Boolean'];
   itemOrder?: Maybe<Scalars['Int']>;
-  loggerId: Scalars['UUID'];
   updatedAt: Scalars['NaiveDateTime'];
-  userId: Scalars['UUID'];
 };
 
-export type LoggerInput = {
-  loggerName: Scalars['String'];
+export type FormInput = {
+  formName: Scalars['String'];
+  formStructure: FormStructure;
+  originalFormId?: InputMaybe<Scalars['UUID']>;
+  previousFormId?: InputMaybe<Scalars['UUID']>;
+};
+
+export type FormOutput = {
+  __typename?: 'FormOutput';
+  fields: Array<FormField>;
+  form: Form;
+  formStructure: FormStructureOutput;
+};
+
+export type FormStructure = {
+  allFields: Array<Fsfield>;
+  enums?: InputMaybe<Array<EnumLists>>;
+  formId?: InputMaybe<Scalars['UUID']>;
+  formTemplateVersion: Array<Scalars['Int']>;
+};
+
+export type FormStructureOutput = {
+  __typename?: 'FormStructureOutput';
+  allFields: Array<FsfieldOutput>;
+  enums?: Maybe<Array<EnumListsOutput>>;
+  formId?: Maybe<Scalars['UUID']>;
+  formTemplateVersion: Array<Scalars['Int']>;
+};
+
+export type Fsfield = {
+  categoryName: CategoryNames;
+  fieldName: FieldNames;
+  fieldValue?: InputMaybe<Scalars['String']>;
+  fieldValueType: FieldValueTypes;
+};
+
+export type FsfieldOutput = {
+  __typename?: 'FsfieldOutput';
+  categoryName: CategoryNames;
+  fieldName: FieldNames;
+  fieldValue?: Maybe<Scalars['String']>;
+  fieldValueType: FieldValueTypes;
 };
 
 export type Login = {
@@ -192,97 +288,124 @@ export type Login = {
   password: Scalars['String'];
 };
 
-export type MutationRoot = {
-  __typename?: 'MutationRoot';
+export type Mutation = {
+  __typename?: 'Mutation';
+  addCompletedForm: CompletedFormOutput;
   addDive: Dive;
   addDiveSession: DiveSession;
-  addLogger: Logger;
+  addForm: FormOutput;
   deleteAllDiveSessions: Scalars['Int'];
   deleteAllDives: Scalars['Int'];
   deleteAllUsers: Scalars['Int'];
   insertUser: User;
-  login: UserOutput;
+  login: User;
   logout: Scalars['Boolean'];
   updateDive: Dive;
   updateDiveSession: DiveSession;
 };
 
 
-export type MutationRootAddDiveArgs = {
-  diveData: DiveInput;
+export type MutationAddCompletedFormArgs = {
+  completedFormInput: CompletedFormInput;
+};
+
+
+export type MutationAddDiveArgs = {
+  diveInput: DiveInput;
   diveSessionId: Scalars['UUID'];
 };
 
 
-export type MutationRootAddDiveSessionArgs = {
-  sessionInputData: DiveSessionInput;
+export type MutationAddDiveSessionArgs = {
+  diveSessionInput: DiveSessionInput;
 };
 
 
-export type MutationRootAddLoggerArgs = {
-  loggerInput: LoggerInput;
+export type MutationAddFormArgs = {
+  formInput: FormInput;
 };
 
 
-export type MutationRootInsertUserArgs = {
+export type MutationInsertUserArgs = {
   userData: UserInput;
 };
 
 
-export type MutationRootLoginArgs = {
+export type MutationLoginArgs = {
   loginData: Login;
 };
 
 
-export type MutationRootUpdateDiveArgs = {
-  diveModData: DiveUpdate;
+export type MutationUpdateDiveArgs = {
+  diveUpdate: DiveUpdate;
 };
 
 
-export type MutationRootUpdateDiveSessionArgs = {
-  sessionInputData: DiveSessionUpdate;
+export type MutationUpdateDiveSessionArgs = {
+  diveSessionUpdate: DiveSessionUpdate;
 };
 
-export type QueryRoot = {
-  __typename?: 'QueryRoot';
+/** Information about pagination in a connection */
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']>;
+};
+
+export type Query = {
+  __typename?: 'Query';
   allUsers: Array<User>;
-  diveSessions: Array<DiveSession>;
+  completedForms: CompletedFormConnection;
+  diveSessions: DiveSessionConnection;
   dives: Array<Dive>;
+  formFields: Array<FormField>;
+  forms: Array<Form>;
   guardedRoute: Scalars['Float'];
-  loggerEntries: Array<LoggerEntry>;
-  loggers: Array<Logger>;
-  logs: Array<Log>;
   user: User;
 };
 
 
-export type QueryRootDiveSessionsArgs = {
-  dbQueryDto?: InputMaybe<DbqueryParams>;
-  diveSessionInput?: InputMaybe<DiveSessionQueryParams>;
+export type QueryCompletedFormsArgs = {
+  queryParams: QueryParams;
 };
 
 
-export type QueryRootDivesArgs = {
-  dbQueryDto?: InputMaybe<DbqueryParams>;
-  diveInput?: InputMaybe<DiveQueryParams>;
+export type QueryDiveSessionsArgs = {
+  diveSessionFilter?: InputMaybe<DiveSessionFilter>;
+  queryParams: QueryParams;
 };
 
 
-export type QueryRootLoggerEntriesArgs = {
+export type QueryDivesArgs = {
+  dbQueryDto?: InputMaybe<QueryParams>;
+  diveInput?: InputMaybe<DiveFilter>;
+};
+
+
+export type QueryFormFieldsArgs = {
   loggerId: Scalars['UUID'];
 };
 
 
-export type QueryRootUserArgs = {
-  queryEmail: Scalars['String'];
+export type QueryUserArgs = {
+  email: Scalars['String'];
+};
+
+export type QueryParams = {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
 };
 
 export type User = {
   __typename?: 'User';
   createdAt: Scalars['NaiveDateTime'];
-  deletedAt?: Maybe<Scalars['NaiveDateTime']>;
-  deletedBy?: Maybe<Scalars['UUID']>;
-  diveSessions: Array<DiveSession>;
+  diveSessions: DiveSessionConnection;
   email: Scalars['String'];
   hashedPassword: Scalars['String'];
   id: Scalars['UUID'];
@@ -295,30 +418,12 @@ export type User = {
 
 
 export type UserDiveSessionsArgs = {
-  dbQueryDto?: InputMaybe<DbqueryParams>;
-  diveSessionQuery?: InputMaybe<DiveSessionQueryParams>;
+  diveSessionFilter?: InputMaybe<DiveSessionFilter>;
+  queryParams: QueryParams;
 };
 
 export type UserInput = {
   email: Scalars['String'];
   password: Scalars['String'];
   username: Scalars['String'];
-};
-
-export type UserOutput = {
-  __typename?: 'UserOutput';
-  createdAt: Scalars['NaiveDateTime'];
-  diveSessions: Array<DiveSession>;
-  email: Scalars['String'];
-  id: Scalars['UUID'];
-  isActive: Scalars['Boolean'];
-  lastLogin: Scalars['NaiveDateTime'];
-  updatedAt: Scalars['NaiveDateTime'];
-  username: Scalars['String'];
-};
-
-
-export type UserOutputDiveSessionsArgs = {
-  dbQueryDto?: InputMaybe<DbqueryParams>;
-  diveSessionQuery?: InputMaybe<DiveSessionQueryParams>;
 };

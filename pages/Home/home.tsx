@@ -1,33 +1,28 @@
-import { Text, StyleSheet, View } from "react-native";
+import { Text } from "react-native";
 import React, { useEffect } from "react";
 
 import { useSnapshot } from "valtio";
 import { loginStore } from "../../state";
 import { useNavigation } from "@react-navigation/native";
-import { AllNavigationProp } from "../../App";
+import { AllNavigationProps } from "../../App";
 import { Btn, CoreText, LinearGradient } from "../../components";
 import { RecentSessions } from "./recent_sessions";
-import {
-  useAllUsers,
-  useGuardedRoute,
-  useLoginUser,
-  useLogoutUser,
-} from "../../logic/user";
-import { useAddPrePopulatedDiveSession, useGetDiveSessions } from "../../logic";
+import { useAllUsers, useGuardedRoute, useLogoutUser } from "../../logic/user";
+import { useAddPrePopulatedDiveSession } from "../../logic";
 import { useApolloClient, useFragment } from "@apollo/client";
-import { LoginFragment, UserFragment } from "../../api/auth";
-import { DiveSessionFragment } from "../../api/dive_sessions";
+import { UserFragment } from "../../api/auth";
 
 export function Home() {
-  let navigation = useNavigation<AllNavigationProp>();
+  let navigation = useNavigation<AllNavigationProps>();
   const loginData = useSnapshot(loginStore).loginState;
-  let { logoutUser, result } = useLogoutUser();
+  let { logoutUser, result: logoutUserResult } = useLogoutUser();
 
-  let { accessGuardedRoute, result: guardedRouteResult } = useGuardedRoute();
+  console.log({ logoutUserResult });
 
-  let { getAllUsers, result: allUsersResult } = useAllUsers();
-  let { addSession, result: addDiveSessionsResult } =
-    useAddPrePopulatedDiveSession();
+  let { accessGuardedRoute } = useGuardedRoute();
+
+  let { getAllUsers } = useAllUsers();
+  let { addSession } = useAddPrePopulatedDiveSession();
 
   const { complete, data } = useFragment({
     fragment: UserFragment,
@@ -37,14 +32,8 @@ export function Home() {
       id: "USER",
     },
   });
-  console.log("USERFRAG", complete, data);
 
-  let client = useApolloClient();
-  let readUserFrag = client.cache.readFragment({
-    id: "USER",
-    fragment: UserFragment,
-  });
-  console.log("reading", readUserFrag);
+  console.log("userfragment data: ", data);
 
   useEffect(() => {
     if (!loginData) {
@@ -129,7 +118,8 @@ export function Home() {
             hasIcon={false}
             disabled={false}
             onPress={() => {
-              navigation.navigate("LoggersList");
+              console.log("should navigate here");
+              navigation.navigate("FormsList");
             }}
           />
           <RecentSessions />
@@ -138,3 +128,10 @@ export function Home() {
     </LinearGradient>
   );
 }
+
+// this does not subscribe the component
+// let client = useApolloClient();
+//   let readUserFrag = client.cache.readFragment({
+//     id: "USER",
+//     fragment: UserFragment,
+//   });

@@ -6,8 +6,6 @@ import { useGetDiveSessions } from "../../logic";
 export function RecentSessions() {
   const { loading, error, data } = useGetDiveSessions();
 
-  console.log("DiveSessions Data: ", data?.diveSessions);
-
   if (error) {
     console.error(error);
   }

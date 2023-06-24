@@ -28,7 +28,7 @@ export function Home() {
     fragment: UserFragment,
     fragmentName: "UserFragment",
     from: {
-      __typename: "UserOutput",
+      __typename: "User",
       id: "USER",
     },
   });

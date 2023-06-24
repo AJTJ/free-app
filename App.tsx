@@ -28,6 +28,7 @@ import { AllForms } from "./pages/FormsList/AllForms";
 import { FormsList } from "./pages/FormsList";
 import { FormBuilder } from "./pages/FormBuilder/FormBuilder";
 import { FormFiller } from "./pages/FormFiller";
+import { FormOutputFragment } from "./api/forms";
 
 const authLink = setContext(async (_, { headers }) => {
   const token = await MobileStore.get();
@@ -65,13 +66,17 @@ const client = new ApolloClient({
   link: from([authLink, responseLink, httpLink]),
   cache: new InMemoryCache({
     typePolicies: {
-      UserOutput: {
+      User: {
         keyFields: () => "USER",
+      },
+      FormOutput: {
+        keyFields: () => "FORM_OUTPUT",
       },
     },
     fragments: createFragmentRegistry(gql`
       ${DiveSessionFragment},
-      ${LoginFragment},
+      ${FormOutputFragment}
+      ${LoginFragment}
       ${UserFragment}
     `),
   }),

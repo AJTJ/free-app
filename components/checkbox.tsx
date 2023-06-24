@@ -11,10 +11,12 @@ export const Checkbox = ({
   checked: boolean;
   disabled: boolean;
   onChange: (arg0: boolean) => void;
-}) => (
-  <CheckBox
-    checked={checked}
-    disabled={disabled}
-    onPress={() => onChange(!checked)}
-  />
-);
+}) => {
+  return (
+    <CheckBox
+      checked={checked}
+      disabled={disabled}
+      onPress={() => onChange(checked)}
+    />
+  );
+};

@@ -25,8 +25,12 @@ const documents = {
     "\n  query diveSessions {\n    diveSessions(queryParams: {}) {\n      nodes {\n        ...DiveSessionFragment\n        dives {\n          ...DiveFragment\n        }\n      }\n    }\n  }\n": types.DiveSessionsDocument,
     "\n  fragment FormFragment on Form {\n      id\n      formName\n      createdAt  \n      updatedAt\n  }\n": types.FormFragmentFragmentDoc,
     "\n  fragment FormFieldFragment on FormField {\n    id\n    itemOrder\n    fieldName\n    fieldValueType\n    categoryName\n  }\n": types.FormFieldFragmentFragmentDoc,
-    "\n  fragment FormOutputFragment on FormOutput {\n    form {\n      id\n    },\n    fields {\n      id\n    },\n    formStructure {\n      formId\n    }\n  }\n": types.FormOutputFragmentFragmentDoc,
+    "\n  fragment EnumListsOutputFragment on EnumListsOutput {\n    enums\n    fieldName\n  }\n": types.EnumListsOutputFragmentFragmentDoc,
+    "\n  fragment FSFieldOutputFragment on FsfieldOutput {\n    categoryName\n    fieldName\n    fieldValue\n    fieldValueType\n  }\n": types.FsFieldOutputFragmentFragmentDoc,
+    "\n  fragment FormStructureOutputFragment on FormStructureOutput {\n    allFields {\n      ...FSFieldOutputFragment\n    }\n    enums {\n      ...EnumListsOutputFragment\n    }\n    formId\n    formTemplateVersion\n  }\n": types.FormStructureOutputFragmentFragmentDoc,
+    "\n  fragment FormOutputFragment on FormOutput {\n    form {\n      ...FormFragment\n    },\n    fields {\n      ...FormFieldFragment\n    },\n    formStructure {\n      ...FormStructureOutputFragment\n    }\n  }\n": types.FormOutputFragmentFragmentDoc,
     "\n  query getForms {\n    forms {\n      ...FormFragment\n      formFields {\n        ...FormFieldFragment\n      }\n    }\n  }\n": types.GetFormsDocument,
+    "\n  query getFormStructures {\n    formStructures {\n      ...FormStructureOutputFragment\n    }\n  }\n": types.GetFormStructuresDocument,
     "\n  mutation addForm($name: String!, $formStructure: FormStructure!) {\n    addForm(formInput: { formStructure: $formStructure, formName: $name }) {\n      ...FormOutputFragment\n    }\n  }\n": types.AddFormDocument,
 };
 
@@ -95,11 +99,27 @@ export function graphql(source: "\n  fragment FormFieldFragment on FormField {\n
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  fragment FormOutputFragment on FormOutput {\n    form {\n      id\n    },\n    fields {\n      id\n    },\n    formStructure {\n      formId\n    }\n  }\n"): (typeof documents)["\n  fragment FormOutputFragment on FormOutput {\n    form {\n      id\n    },\n    fields {\n      id\n    },\n    formStructure {\n      formId\n    }\n  }\n"];
+export function graphql(source: "\n  fragment EnumListsOutputFragment on EnumListsOutput {\n    enums\n    fieldName\n  }\n"): (typeof documents)["\n  fragment EnumListsOutputFragment on EnumListsOutput {\n    enums\n    fieldName\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  fragment FSFieldOutputFragment on FsfieldOutput {\n    categoryName\n    fieldName\n    fieldValue\n    fieldValueType\n  }\n"): (typeof documents)["\n  fragment FSFieldOutputFragment on FsfieldOutput {\n    categoryName\n    fieldName\n    fieldValue\n    fieldValueType\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  fragment FormStructureOutputFragment on FormStructureOutput {\n    allFields {\n      ...FSFieldOutputFragment\n    }\n    enums {\n      ...EnumListsOutputFragment\n    }\n    formId\n    formTemplateVersion\n  }\n"): (typeof documents)["\n  fragment FormStructureOutputFragment on FormStructureOutput {\n    allFields {\n      ...FSFieldOutputFragment\n    }\n    enums {\n      ...EnumListsOutputFragment\n    }\n    formId\n    formTemplateVersion\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  fragment FormOutputFragment on FormOutput {\n    form {\n      ...FormFragment\n    },\n    fields {\n      ...FormFieldFragment\n    },\n    formStructure {\n      ...FormStructureOutputFragment\n    }\n  }\n"): (typeof documents)["\n  fragment FormOutputFragment on FormOutput {\n    form {\n      ...FormFragment\n    },\n    fields {\n      ...FormFieldFragment\n    },\n    formStructure {\n      ...FormStructureOutputFragment\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query getForms {\n    forms {\n      ...FormFragment\n      formFields {\n        ...FormFieldFragment\n      }\n    }\n  }\n"): (typeof documents)["\n  query getForms {\n    forms {\n      ...FormFragment\n      formFields {\n        ...FormFieldFragment\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query getFormStructures {\n    formStructures {\n      ...FormStructureOutputFragment\n    }\n  }\n"): (typeof documents)["\n  query getFormStructures {\n    formStructures {\n      ...FormStructureOutputFragment\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

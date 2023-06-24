@@ -1,5 +1,6 @@
-export { Modal } from "./Modal";
-export { Btn } from "./btn";
-export { LinearGradient } from "./linearGradients";
-export { LandingTextInput } from "./inputComponents";
-export { CoreText } from "./textComponents";
+export * from "./Modal";
+export * from "./btn";
+export * from "./linearGradients";
+export * from "./inputComponents";
+export * from "./textComponents";
+export * from "./checkbox";

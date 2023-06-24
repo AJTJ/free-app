@@ -20,16 +20,45 @@ export const FormFieldFragment = gql(`
   }
 `);
 
+export const EnumListsOutputFragment = gql(`
+  fragment EnumListsOutputFragment on EnumListsOutput {
+    enums
+    fieldName
+  }
+`);
+
+export const FSFieldOutputFragment = gql(`
+  fragment FSFieldOutputFragment on FsfieldOutput {
+    categoryName
+    fieldName
+    fieldValue
+    fieldValueType
+  }
+`);
+
+export const FormStructureOutputFragment = gql(`
+  fragment FormStructureOutputFragment on FormStructureOutput {
+    allFields {
+      ...FSFieldOutputFragment
+    }
+    enums {
+      ...EnumListsOutputFragment
+    }
+    formId
+    formTemplateVersion
+  }
+`);
+
 export const FormOutputFragment = gql(`
   fragment FormOutputFragment on FormOutput {
     form {
-      id
+      ...FormFragment
     },
     fields {
-      id
+      ...FormFieldFragment
     },
     formStructure {
-      formId
+      ...FormStructureOutputFragment
     }
   }
 `);
@@ -41,6 +70,14 @@ export const GET_FORMS = graphql(`
       formFields {
         ...FormFieldFragment
       }
+    }
+  }
+`);
+
+export const GET_FORM_STRUCTURES = graphql(`
+  query getFormStructures {
+    formStructures {
+      ...FormStructureOutputFragment
     }
   }
 `);

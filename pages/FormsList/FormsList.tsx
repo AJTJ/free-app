@@ -7,6 +7,7 @@ import { AllNavigationProps } from "../../App";
 import { Btn, LinearGradient } from "../../components";
 import { useNavigation } from "@react-navigation/native";
 import { AllForms } from "./AllForms";
+import { SmallHeader } from "../../components/textComponents";
 // import { RecentSessions } from "./recent_sessions";
 // import {
 //   useAllUsers,
@@ -41,6 +42,7 @@ export function FormsList() {
           navigation.navigate("Home");
         }}
       />
+      <SmallHeader>My Loggers</SmallHeader>
       <AllForms />
     </LinearGradient>
   );

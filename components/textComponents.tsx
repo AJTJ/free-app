@@ -8,9 +8,19 @@ export const CoreText = (props: TextProps) => {
   return <Text style={stylesWithTheme().text} {...props} />;
 };
 
+export const SmallHeader = (props: TextProps) => {
+  const theme = useContext(ThemeContext);
+  const stylesWithTheme = styles(theme);
+  return <Text style={stylesWithTheme().smallHeader} {...props} />;
+};
+
 const styles = (theme: typeof GlobalTheme) => () => {
   return StyleSheet.create({
     text: {
+      color: theme.colors.white,
+    },
+    smallHeader: {
+      fontSize: 20,
       color: theme.colors.white,
     },
   });

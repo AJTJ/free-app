@@ -27,6 +27,7 @@ import { LoginFragment, UserFragment } from "./api/auth";
 import { AllForms } from "./pages/FormsList/AllForms";
 import { FormsList } from "./pages/FormsList";
 import { FormBuilder } from "./pages/FormBuilder/FormBuilder";
+import { FormFiller } from "./pages/FormFiller";
 
 const authLink = setContext(async (_, { headers }) => {
   const token = await MobileStore.get();
@@ -88,6 +89,7 @@ type RootStackParamList = {
   Home: undefined;
   FormsList: undefined;
   FormBuilder: undefined;
+  FormFiller: undefined;
 };
 
 export type AllNavigationProps = NativeStackNavigationProp<RootStackParamList>;
@@ -112,9 +114,10 @@ export default function App() {
           >
             {/* each stack is being injected the navigation object */}
             <Stack.Screen name="Landing" component={Landing} />
+            <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="FormsList" component={FormsList} />
             <Stack.Screen name="FormBuilder" component={FormBuilder} />
-            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="FormFiller" component={FormFiller} />
           </Stack.Navigator>
         </NavigationContainer>
       </ThemeProvider>

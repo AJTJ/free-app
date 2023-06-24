@@ -113,12 +113,20 @@ export function Home() {
             onPress={handleAddSession}
           />
           <Btn
-            title="MyLoggers"
+            title="My Dive Loggers"
             type="primary"
             hasIcon={false}
             disabled={false}
             onPress={() => {
-              console.log("should navigate here");
+              navigation.navigate("FormsList");
+            }}
+          />
+          <Btn
+            title="Log My Session"
+            type="primary"
+            hasIcon={false}
+            disabled={false}
+            onPress={() => {
               navigation.navigate("FormsList");
             }}
           />

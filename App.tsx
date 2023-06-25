@@ -116,10 +116,6 @@ export type RootStackParamList = {
   FormFiller: { form: FormOutputFragmentFragment };
 };
 
-export type FillerProps = NativeStackScreenProps<
-  RootStackParamList,
-  "FormFiller"
->;
 export type AllNavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

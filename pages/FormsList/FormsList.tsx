@@ -1,49 +1,63 @@
+import { Pressable, View } from "react-native";
 import React from "react";
-
-// import { useSnapshot } from "valtio";
-// import { loginStore } from "../../state";
-// import { useNavigation } from "@react-navigation/native";
-import { AllNavigationProps } from "../../App";
-import { Btn, LinearGradient } from "../../components";
+import { CoreText } from "../../components/textComponents";
+import { useGetForms } from "../../logic/forms";
+import { useFragment } from "@apollo/client";
+import { FormStructureOutputFragment } from "../../api/forms";
 import { useNavigation } from "@react-navigation/native";
-import { AllForms } from "./AllForms";
-import { SmallHeader } from "../../components/textComponents";
-// import { RecentSessions } from "./recent_sessions";
-// import {
-//   useAllUsers,
-//   useGuardedRoute,
-//   useLoginUser,
-//   useLogoutUser,
-// } from "../../logic/user";
-// import { useAddPrePopulatedDiveSession, useGetDiveSessions } from "../../logic";
-// import { useApolloClient } from "@apollo/client";
-// import { LoginFragment, UserFragment } from "../../api/auth";
-// import { DiveSessionFragment } from "../../api/dive_sessions";
+import { AllNavigationProps } from "../../App";
+import { FormOutput, FormOutputFragmentFragment } from "../../api/gql/graphql";
 
 export function FormsList() {
   let navigation = useNavigation<AllNavigationProps>();
+  const { loading, error, data } = useGetForms();
+  if (error) {
+    console.error(error);
+  }
+
+  // const { complete, data: fragData } = useFragment({
+  //   fragment: FormStructureOutputFragment,
+  //   fragmentName: "FormStructureOutputFragment",
+  //   from: {
+  //     __typename: "FormStructureOutput",
+  //     id: "FORM_STRUCTURE_OUTPUT",
+  //   },
+  // });
+  // console.log("fragData:", fragData);
+
+  console.log({ data, loading, error });
+
+  const handleFormPress = (form: FormOutputFragmentFragment) => {
+    navigation.navigate("FormFiller", { form });
+  };
+
   return (
-    <LinearGradient>
-      <Btn
-        title="Create Dive Logger"
-        type="primary"
-        hasIcon={false}
-        disabled={false}
-        onPress={() => {
-          navigation.navigate("FormBuilder");
-        }}
-      />
-      <Btn
-        title="Go Home"
-        type="primary"
-        hasIcon={false}
-        disabled={false}
-        onPress={() => {
-          navigation.navigate("Home");
-        }}
-      />
-      <SmallHeader>My Loggers</SmallHeader>
-      <AllForms />
-    </LinearGradient>
+    <>
+      {loading && (
+        <View>
+          <CoreText>Loading Forms...</CoreText>
+        </View>
+      )}
+      {data?.forms.map((f, i) => {
+        console.log({ forms: data.forms });
+        return (
+          <Pressable onPress={() => handleFormPress(f)} key={f.form.id + i}>
+            <CoreText>{f.form.formName}</CoreText>
+            <CoreText>Created: {f.form.createdAt}</CoreText>
+            <View>
+              {f.formStructure.allFields.map((field, j) => {
+                console.log({ field });
+                return (
+                  <View key={field.fieldName + j}>
+                    <CoreText>{field.fieldName}</CoreText>
+                    <CoreText>{field.fieldValueType}</CoreText>
+                  </View>
+                );
+              })}
+            </View>
+          </Pressable>
+        );
+      })}
+    </>
   );
 }

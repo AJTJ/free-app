@@ -12,14 +12,9 @@ import {
   EnumLists,
   FieldNames,
   FormStructure,
-  FormStructureOutput,
   Fsfield,
   FsfieldOutput,
 } from "../../api/types/types.generated";
-import {
-  AddFormDocument,
-  GetFormStructuresQuery,
-} from "../../api/forms.generated";
 import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProps } from "../../App";
@@ -57,8 +52,6 @@ export function FormBuilder() {
         }
       });
 
-      console.log({ allFields: newData, enums, formTemplateVersion });
-
       let returnEnums: EnumLists[] = enums.map((e) => {
         return { enums: e.enums, fieldName: e.fieldName };
       });
@@ -73,6 +66,8 @@ export function FormBuilder() {
         enums: returnEnums,
         formTemplateVersion,
       };
+
+      console.log({ new_structure });
 
       putFormMutation({
         variables: { name: formData.name, formStructure: new_structure },
@@ -133,7 +128,6 @@ export function FormBuilder() {
           type="primary"
           onPress={() => {
             handleSubmit(onSubmit)();
-            console.log("it is being pressed");
           }}
         />
       </LinearGradient>

@@ -121,15 +121,6 @@ export function Home() {
               navigation.navigate("FormsList");
             }}
           />
-          <Btn
-            title="Log My Session"
-            type="primary"
-            hasIcon={false}
-            disabled={false}
-            onPress={() => {
-              navigation.navigate("FormsList");
-            }}
-          />
           <RecentSessions />
         </>
       )}

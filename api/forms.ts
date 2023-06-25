@@ -1,29 +1,20 @@
 import { gql } from "@apollo/client";
 import { graphql } from "./gql";
 
-export const FormFragment = gql(`
-  fragment FormFragment on Form {
-      id
-      formName
-      createdAt  
-      updatedAt
-  }
-`);
-
-export const FormFieldFragment = gql(`
-  fragment FormFieldFragment on FormField {
-    id
-    itemOrder
-    fieldName
-    fieldValueType
-    categoryName
-  }
-`);
+// FRAGMENTS
 
 export const EnumListsOutputFragment = gql(`
   fragment EnumListsOutputFragment on EnumListsOutput {
     enums
     fieldName
+  }
+`);
+
+export const FormFragment = gql(`
+  fragment FormFragment on Form {
+    formName
+    id
+    createdAt
   }
 `);
 
@@ -51,25 +42,21 @@ export const FormStructureOutputFragment = gql(`
 
 export const FormOutputFragment = gql(`
   fragment FormOutputFragment on FormOutput {
-    form {
-      ...FormFragment
-    },
-    fields {
-      ...FormFieldFragment
-    },
-    formStructure {
-      ...FormStructureOutputFragment
-    }
+      form {
+        ...FormFragment
+      }
+      formStructure {
+        ...FormStructureOutputFragment
+      }
   }
 `);
+
+// QUERIES/MUTATIONS
 
 export const GET_FORMS = graphql(`
   query getForms {
     forms {
-      ...FormFragment
-      formFields {
-        ...FormFieldFragment
-      }
+      ...FormOutputFragment
     }
   }
 `);
@@ -85,7 +72,7 @@ export const GET_FORM_STRUCTURES = graphql(`
 export const PUT_FORM = graphql(`
   mutation addForm($name: String!, $formStructure: FormStructure!) {
     addForm(formInput: { formStructure: $formStructure, formName: $name }) {
-      ...FormOutputFragment
+      ...FormStructureOutputFragment
     }
   }
 `);

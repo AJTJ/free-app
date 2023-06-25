@@ -1,11 +1,9 @@
 import { useMutation, useQuery } from "@apollo/client";
 import {
   AddFormDocument,
-  GetFormsDocument,
   GetFormStructuresDocument,
+  GetFormsDocument,
 } from "../api/forms.generated";
-
-import { FormStructure } from "../api/types/types.generated";
 
 export const useGetForms = () => {
   const { loading, error, data, client } = useQuery(GetFormsDocument);

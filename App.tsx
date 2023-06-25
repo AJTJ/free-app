@@ -1,7 +1,10 @@
 import React from "react";
 import { Home } from "./pages";
 import { NavigationContainer } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Landing } from "./pages";
 
@@ -24,11 +27,24 @@ import MobileStore from "./storage/SafeStorage";
 import { createFragmentRegistry } from "@apollo/client/cache";
 import { DiveSessionFragment } from "./api/dive_sessions";
 import { LoginFragment, UserFragment } from "./api/auth";
-import { AllForms } from "./pages/FormsList/AllForms";
-import { FormsList } from "./pages/FormsList";
+import { AllForms } from "./pages/FormsList";
 import { FormBuilder } from "./pages/FormBuilder/FormBuilder";
 import { FormFiller } from "./pages/FormFiller";
-import { FormOutputFragment } from "./api/forms";
+import {
+  EnumListsOutputFragment,
+  FSFieldOutputFragment,
+  FormOutputFragment,
+  FormStructureOutputFragment,
+} from "./api/forms";
+import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+import { FormOutput } from "./api/types/types.generated";
+import { FormOutputFragmentFragment } from "./api/gql/graphql";
+
+if (__DEV__) {
+  // Adds messages only in a dev environment
+  loadDevMessages();
+  loadErrorMessages();
+}
 
 const authLink = setContext(async (_, { headers }) => {
   const token = await MobileStore.get();
@@ -69,13 +85,16 @@ const client = new ApolloClient({
       User: {
         keyFields: () => "USER",
       },
-      FormOutput: {
-        keyFields: () => "FORM_OUTPUT",
-      },
+      // FormStructureOutput: {
+      //   keyFields: () => "FORM_STRUCTURE_OUTPUT",
+      // },
     },
     fragments: createFragmentRegistry(gql`
-      ${DiveSessionFragment},
+      ${DiveSessionFragment}
+      ${FSFieldOutputFragment}
       ${FormOutputFragment}
+      ${FormStructureOutputFragment}
+      ${EnumListsOutputFragment}
       ${LoginFragment}
       ${UserFragment}
     `),
@@ -89,14 +108,18 @@ const client = new ApolloClient({
 
 // TODO: This is where route params are declared
 // https://reactnavigation.org/docs/typescript/
-type RootStackParamList = {
+export type RootStackParamList = {
   Landing: undefined;
   Home: undefined;
   FormsList: undefined;
   FormBuilder: undefined;
-  FormFiller: undefined;
+  FormFiller: { form: FormOutputFragmentFragment };
 };
 
+export type FillerProps = NativeStackScreenProps<
+  RootStackParamList,
+  "FormFiller"
+>;
 export type AllNavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -120,7 +143,7 @@ export default function App() {
             {/* each stack is being injected the navigation object */}
             <Stack.Screen name="Landing" component={Landing} />
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="FormsList" component={FormsList} />
+            <Stack.Screen name="FormsList" component={AllForms} />
             <Stack.Screen name="FormBuilder" component={FormBuilder} />
             <Stack.Screen name="FormFiller" component={FormFiller} />
           </Stack.Navigator>

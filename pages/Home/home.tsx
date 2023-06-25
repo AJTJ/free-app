@@ -7,8 +7,12 @@ import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProps } from "../../App";
 import { Btn, CoreText, LinearGradient } from "../../components";
 import { RecentSessions } from "./recent_sessions";
-import { useAllUsers, useGuardedRoute, useLogoutUser } from "../../logic/user";
-import { useAddPrePopulatedDiveSession } from "../../logic";
+import {
+  useAllUsers,
+  useGuardedRoute,
+  useLogoutUser,
+} from "../../api/logic/user";
+import { useAddPrePopulatedDiveSession } from "../../api/logic";
 import { useApolloClient, useFragment } from "@apollo/client";
 import { UserFragment } from "../../api/auth";
 

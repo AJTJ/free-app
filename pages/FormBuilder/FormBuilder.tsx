@@ -6,7 +6,7 @@ import {
   LinearGradient,
 } from "../../components";
 import React from "react";
-import { useGetFormStructure, usePutForm } from "../../logic/forms";
+import { useGetFormStructure, usePutForm } from "../../api/logic/forms";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
   EnumLists,
@@ -29,6 +29,7 @@ export function FormBuilder() {
   let enums = structure?.enums;
   let formTemplateVersion = structure?.formTemplateVersion;
 
+  // TODO: How will this work with versioning?
   type ImportTypes = { [K in FieldNames]: boolean };
   type LocalTypes = { name: string };
   type FormValues = ImportTypes & LocalTypes;
@@ -36,7 +37,6 @@ export function FormBuilder() {
   const {
     control,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<FormValues>({});
 

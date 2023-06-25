@@ -1,12 +1,12 @@
 import { Pressable, View } from "react-native";
 import React from "react";
 import { CoreText } from "../../components/textComponents";
-import { useGetForms } from "../../logic/forms";
-import { useFragment } from "@apollo/client";
-import { FormStructureOutputFragment } from "../../api/forms";
+import { useGetForms } from "../../api/logic/forms";
+// import { useFragment } from "@apollo/client";
+// import { FormStructureOutputFragment } from "../../api/forms";
 import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProps } from "../../App";
-import { FormOutput, FormOutputFragmentFragment } from "../../api/gql/graphql";
+import { FormOutputFragmentFragment } from "../../api/forms.generated";
 
 export function FormsList() {
   let navigation = useNavigation<AllNavigationProps>();
@@ -25,11 +25,19 @@ export function FormsList() {
   // });
   // console.log("fragData:", fragData);
 
+  // const el = FormOutputFragment
+
   console.log({ data, loading, error });
 
+  if (data) {
+    // let el: FormO = data.forms;
+  }
+
   const handleFormPress = (form: FormOutputFragmentFragment) => {
-    navigation.navigate("FormFiller", { form });
+    navigation.navigate("FormFiller", { formOutput: form });
   };
+
+  console.log(typeof data?.forms);
 
   return (
     <>

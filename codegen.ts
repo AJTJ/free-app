@@ -14,10 +14,10 @@ const config: CodegenConfig = {
       },
       plugins: ["typescript-operations", "typed-document-node"],
     },
-    "api/gql/": {
-      preset: "client",
-      plugins: [],
-    },
+    // "api/gql/": {
+    //   preset: "client",
+    //   plugins: [],
+    // },
     "graphql.schema.json": {
       plugins: ["introspection"],
     },

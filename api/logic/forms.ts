@@ -3,7 +3,7 @@ import {
   AddFormDocument,
   GetFormStructuresDocument,
   GetFormsDocument,
-} from "../api/forms.generated";
+} from "../forms.generated";
 
 export const useGetForms = () => {
   const { loading, error, data, client } = useQuery(GetFormsDocument);

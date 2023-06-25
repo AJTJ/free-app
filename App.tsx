@@ -38,7 +38,7 @@ import {
 } from "./api/forms";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { FormOutput } from "./api/types/types.generated";
-import { FormOutputFragmentFragment } from "./api/gql/graphql";
+import { FormOutputFragmentFragment } from "./api/forms.generated";
 
 if (__DEV__) {
   // Adds messages only in a dev environment
@@ -113,7 +113,7 @@ export type RootStackParamList = {
   Home: undefined;
   FormsList: undefined;
   FormBuilder: undefined;
-  FormFiller: { form: FormOutputFragmentFragment };
+  FormFiller: { formOutput: FormOutputFragmentFragment };
 };
 
 export type AllNavigationProps = NativeStackNavigationProp<RootStackParamList>;

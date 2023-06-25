@@ -19,6 +19,7 @@ export enum CategoryNames {
   Environment = 'ENVIRONMENT',
   Exertion = 'EXERTION',
   Food = 'FOOD',
+  FormRelated = 'FORM_RELATED',
   General = 'GENERAL',
   Health = 'HEALTH',
   InWater = 'IN_WATER',
@@ -155,6 +156,7 @@ export type EnumListsOutput = {
 
 export enum FieldNames {
   AirTemp = 'AIR_TEMP',
+  CompletedFormName = 'COMPLETED_FORM_NAME',
   Condition = 'CONDITION',
   Congestion = 'CONGESTION',
   CurrentStrength = 'CURRENT_STRENGTH',
@@ -201,12 +203,12 @@ export type FormField = {
   categoryName: Scalars['String'];
   createdAt: Scalars['NaiveDateTime'];
   fieldName: Scalars['String'];
+  fieldOrder?: Maybe<Scalars['Int']>;
   fieldValue?: Maybe<Scalars['String']>;
   fieldValueType: Scalars['String'];
   form: Form;
   id: Scalars['UUID'];
   isActive: Scalars['Boolean'];
-  itemOrder?: Maybe<Scalars['Int']>;
   updatedAt: Scalars['NaiveDateTime'];
 };
 
@@ -260,6 +262,7 @@ export type FormStructureOutputEdge = {
 export type Fsfield = {
   categoryName: CategoryNames;
   fieldName: FieldNames;
+  fieldOrder?: InputMaybe<Scalars['Int']>;
   fieldValue?: InputMaybe<Scalars['String']>;
   fieldValueType: FieldValueTypes;
 };
@@ -268,6 +271,7 @@ export type FsfieldOutput = {
   __typename?: 'FsfieldOutput';
   categoryName: CategoryNames;
   fieldName: FieldNames;
+  fieldOrder?: Maybe<Scalars['Int']>;
   fieldValue?: Maybe<Scalars['String']>;
   fieldValueType: FieldValueTypes;
 };

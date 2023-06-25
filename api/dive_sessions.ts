@@ -1,5 +1,4 @@
 import { gql } from "@apollo/client";
-import { graphql } from "./gql";
 
 export const DiveSessionFragment = gql(`
   fragment DiveSessionFragment on DiveSession {
@@ -31,7 +30,7 @@ export const DiveFragment = gql(`
   }
 `);
 
-export const ADD_PREPOPULATED_DIVE_SESSION = graphql(`
+export const ADD_PREPOPULATED_DIVE_SESSION = gql(`
   mutation addPrepopulatedDiveSession {
     addDiveSession(
       diveSessionInput: {
@@ -48,7 +47,7 @@ export const ADD_PREPOPULATED_DIVE_SESSION = graphql(`
   }
 `);
 
-export const GET_DIVE_SESSIONS = graphql(`
+export const GET_DIVE_SESSIONS = gql(`
   query diveSessions {
     diveSessions(queryParams: {}) {
       nodes {

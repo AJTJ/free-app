@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import React from "react";
 import { CoreText } from "../../components/textComponents";
-import { useGetDiveSessions } from "../../logic";
+import { useGetDiveSessions } from "../../api/logic";
 
 export function RecentSessions() {
   const { loading, error, data } = useGetDiveSessions();

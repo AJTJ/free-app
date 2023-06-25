@@ -1,5 +1,4 @@
 import { gql } from "@apollo/client";
-import { graphql } from "./gql";
 
 // FRAGMENTS
 
@@ -20,6 +19,7 @@ export const FormFragment = gql(`
 
 export const FSFieldOutputFragment = gql(`
   fragment FSFieldOutputFragment on FsfieldOutput {
+    fieldOrder
     categoryName
     fieldName
     fieldValue
@@ -53,7 +53,7 @@ export const FormOutputFragment = gql(`
 
 // QUERIES/MUTATIONS
 
-export const GET_FORMS = graphql(`
+export const GET_FORMS = gql(`
   query getForms {
     forms {
       ...FormOutputFragment
@@ -61,7 +61,7 @@ export const GET_FORMS = graphql(`
   }
 `);
 
-export const GET_FORM_STRUCTURES = graphql(`
+export const GET_FORM_STRUCTURES = gql(`
   query getFormStructures {
     formStructures {
       ...FormStructureOutputFragment
@@ -69,7 +69,7 @@ export const GET_FORM_STRUCTURES = graphql(`
   }
 `);
 
-export const PUT_FORM = graphql(`
+export const PUT_FORM = gql(`
   mutation addForm($name: String!, $formStructure: FormStructure!) {
     addForm(formInput: { formStructure: $formStructure, formName: $name }) {
       ...FormStructureOutputFragment

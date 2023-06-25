@@ -2,8 +2,8 @@ import { useMutation, useQuery } from "@apollo/client";
 import {
   AddPrepopulatedDiveSessionDocument,
   DiveSessionsDocument,
-} from "../api/dive_sessions.generated";
-import { GET_DIVE_SESSIONS } from "../api/dive_sessions";
+} from "../dive_sessions.generated";
+import { GET_DIVE_SESSIONS } from "../dive_sessions";
 
 export const useAddPrePopulatedDiveSession = () => {
   const [addSession, { loading, error, data, client }] = useMutation(

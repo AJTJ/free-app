@@ -1,5 +1,4 @@
 import { gql } from "@apollo/client";
-import { graphql } from "./gql";
 
 export const UserFragment = gql(`
   fragment UserFragment on User {
@@ -27,7 +26,7 @@ export const LoginFragment = gql(`
   }
 `);
 
-export const LOGIN_USER = graphql(`
+export const LOGIN_USER = gql(`
   mutation login($email: String!, $password: String!) {
     login(loginData: { email: $email, password: $password }) {
       ...LoginFragment
@@ -35,13 +34,13 @@ export const LOGIN_USER = graphql(`
   }
 `);
 
-export const LOGOUT_USER = graphql(`
+export const LOGOUT_USER = gql(`
   mutation logout {
     logout
   }
 `);
 
-export const GET_USERS = graphql(`
+export const GET_USERS = gql(`
   query allUsers {
     allUsers {
       email
@@ -49,7 +48,7 @@ export const GET_USERS = graphql(`
   }
 `);
 
-export const GUARDED_ROUTE = graphql(`
+export const GUARDED_ROUTE = gql(`
   query guardedRoute {
     guardedRoute
   }

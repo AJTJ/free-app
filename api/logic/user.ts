@@ -4,8 +4,8 @@ import {
   GuardedRouteDocument,
   LoginDocument,
   LogoutDocument,
-} from "../api/auth.generated";
-import { emptyLoginState } from "../state";
+} from "../auth.generated";
+import { emptyLoginState } from "../../state";
 
 export const useLoginUser = () => {
   const [loginUser, { loading, error, data, client }] =

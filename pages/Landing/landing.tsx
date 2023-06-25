@@ -15,7 +15,7 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { addLoginState } from "../../state";
 import { colors } from "../../stylessheet/colors";
-import { useLoginUser } from "../../logic";
+import { useLoginUser } from "../../api/logic";
 import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProps } from "../../App";
 import { Keyboard } from "react-native";

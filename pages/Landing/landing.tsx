@@ -12,13 +12,15 @@ import {
   LandingTextInput,
   LinearGradient,
 } from "../../components";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, FieldValues, useForm } from "react-hook-form";
 import { addLoginState } from "../../state";
 import { colors } from "../../stylessheet/colors";
 import { useLoginUser } from "../../api/logic";
 import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProps } from "../../App";
 import { Keyboard } from "react-native";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 const diverImg = "../../assets/Ellipse372.png";
 
@@ -31,7 +33,20 @@ export function Landing() {
 
   console.log("LoginData: ", data?.login.diveSessions);
 
-  const onSubmit = (formData: FormData) => {
+  const validationSchema = z.object({
+    email: z.string(),
+    password: z.string(),
+  });
+
+  type ValidationSchema = z.infer<typeof validationSchema>;
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors: formErrors },
+  } = useForm<ValidationSchema>({ resolver: zodResolver(validationSchema) });
+
+  const onSubmit = (formData: ValidationSchema) => {
     loginUser({
       variables: { email: formData.email, password: formData.password },
     })
@@ -46,17 +61,6 @@ export function Landing() {
       });
   };
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    defaultValues: {
-      email: "memes@memes.com",
-      password: "memes",
-    },
-  });
-  // keyboardShouldPersistTaps={true}
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <LinearGradient>
@@ -76,7 +80,11 @@ export function Landing() {
             </>
           )}
         />
-
+        <View style={styles.emptyView}>
+          <CoreText>
+            <CoreText>{formErrors.email && formErrors.email.message}</CoreText>
+          </CoreText>
+        </View>
         <Controller
           name="password"
           control={control}
@@ -95,15 +103,13 @@ export function Landing() {
             </>
           )}
         />
+
         <View style={styles.emptyView}>
           <CoreText>
-            {loading && "Loading"}
-            {error && error.message}
-            {errors.email && errors.email.message}
-            {errors.password && errors.password.message}
+            {formErrors.password && formErrors.password.message}
           </CoreText>
         </View>
-        <Button title="Login" onPress={handleSubmit(onSubmit)} />
+        <Button title="Login" onPress={handleSubmit((e) => onSubmit(e))} />
         <Btn
           title="Log in"
           type="primary"
@@ -118,6 +124,13 @@ export function Landing() {
           disabled={false}
           onPress={() => console.log("should do something")}
         />
+        <View style={styles.emptyView}>
+          <CoreText>
+            {loading && "Loading"}
+            {error && error.message}
+            {formErrors.password && formErrors.password.message}
+          </CoreText>
+        </View>
       </LinearGradient>
     </TouchableWithoutFeedback>
   );
@@ -147,7 +160,19 @@ const styles = StyleSheet.create({
   },
 });
 
-type FormData = {
-  email: string;
-  password: string;
-};
+// type FormData = {
+//   email: string;
+//   password: string;
+// };
+
+// const {
+//   control,
+//   handleSubmit,
+//   formState: { errors },
+// } = useForm<Schema>({
+//   defaultValues: {
+//     email: "memes@memes.com",
+//     password: "memes",
+//   },
+// });
+// keyboardShouldPersistTaps={true}

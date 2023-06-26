@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { CoreText } from "../../components";
+import { CoreText, FieldNumberInput } from "../../components";
 import { FieldValueTypes } from "../../api/types/types.generated";
 import { ControllerRenderProps, Noop } from "react-hook-form";
 
@@ -13,11 +13,27 @@ const CustomComponent = ({
 }: {
   onChange: (...event: any[]) => void;
   onBlur: Noop;
-  value: boolean;
+  value: any;
   valueType: FieldValueTypes;
 }) => {
   return <CoreText>{valueType}</CoreText>;
 };
+
+const NumberComponent = ({
+  onChange,
+  onBlur,
+  value,
+  valueType,
+}: {
+  onChange: (...event: any[]) => void;
+  onBlur: Noop;
+  value: any;
+  valueType: FieldValueTypes;
+}) => {
+  return <FieldNumberInput {...{ onChange, onBlur, value, valueType }} />;
+};
+
+// Parent component
 
 export const ValueTypeComponent = ({
   valueType,
@@ -28,10 +44,8 @@ export const ValueTypeComponent = ({
   valueType: FieldValueTypes;
   onChange: (...event: any[]) => void;
   onBlur: Noop;
-  value: boolean;
+  value: any;
 }) => {
-  console.log({ valueType });
-
   const renderComponent = (type: FieldValueTypes) => {
     switch (type) {
       case FieldValueTypes.Enum:
@@ -51,7 +65,7 @@ export const ValueTypeComponent = ({
 
       case FieldValueTypes.Number:
         return (
-          <CustomComponent {...{ valueType: type, onChange, onBlur, value }} />
+          <FieldNumberInput {...{ valueType: type, onChange, onBlur, value }} />
         );
 
       case FieldValueTypes.Text:
@@ -70,10 +84,5 @@ export const ValueTypeComponent = ({
     }
   };
 
-  return (
-    <View>
-      <CoreText>The component</CoreText>
-      {renderComponent(valueType)}
-    </View>
-  );
+  return <View>{renderComponent(valueType)}</View>;
 };

@@ -11,6 +11,10 @@
     - get this working iwth the `react-native-debugger` tool
     - referenced here: https://www.apollographql.com/docs/react/integrations/react-native/
 
+### Form stuff
+- Validation
+  - https://zod.dev/
+
 ### GQL Tools
 - https://graphql.org/learn/queries/
 - https://blog.devgenius.io/creating-custom-hooks-using-apollo-in-react-c93ca13cd0c3

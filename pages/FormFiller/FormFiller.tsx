@@ -35,6 +35,7 @@ export function FormFiller(props: Props) {
 
   const {
     control,
+
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>({});
@@ -77,10 +78,9 @@ export function FormFiller(props: Props) {
   return (
     <LinearGradient>
       <CoreText>Form filler</CoreText>
-      <CoreText>Using this form builder: {form.formName}</CoreText>
+      <CoreText>Form builder name: {form.formName}</CoreText>
       {orderedFields &&
         orderedFields.map((field, i) => {
-          console.log("MEOW", field.fieldValueType);
           return (
             <Controller
               key={i + field.fieldName}
@@ -89,7 +89,7 @@ export function FormFiller(props: Props) {
               render={({ field: { onChange, onBlur, value } }) => (
                 <>
                   <View>
-                    <CoreText>{field.fieldName}</CoreText>
+                    <CoreText>Field Name: {field.fieldName}</CoreText>
                     <ValueTypeComponent
                       valueType={field.fieldValueType}
                       {...{ onChange, onBlur, value }}

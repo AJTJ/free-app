@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { CoreText, FieldNumberInput } from "../../components";
+import { CoreText, FieldNumberInput, LandingTextInput } from "../../components";
 import { FieldValueTypes } from "../../api/types/types.generated";
 import { ControllerRenderProps, Noop } from "react-hook-form";
 
@@ -19,7 +19,8 @@ const CustomComponent = ({
   return <CoreText>{valueType}</CoreText>;
 };
 
-const NumberComponent = ({
+// https://github.com/mrlaessig/react-native-autocomplete-input
+const EnumFieldInput = ({
   onChange,
   onBlur,
   value,
@@ -30,7 +31,7 @@ const NumberComponent = ({
   value: any;
   valueType: FieldValueTypes;
 }) => {
-  return <FieldNumberInput {...{ onChange, onBlur, value, valueType }} />;
+  return <CoreText>{valueType}</CoreText>;
 };
 
 // Parent component
@@ -64,14 +65,10 @@ export const ValueTypeComponent = ({
         );
 
       case FieldValueTypes.Number:
-        return (
-          <FieldNumberInput {...{ valueType: type, onChange, onBlur, value }} />
-        );
+        return <FieldNumberInput {...{ onChange, onBlur, value, valueType }} />;
 
       case FieldValueTypes.Text:
-        return (
-          <CustomComponent {...{ valueType: type, onChange, onBlur, value }} />
-        );
+        return <LandingTextInput {...{ onChange, onBlur, value, valueType }} />;
 
       case FieldValueTypes.Timestamp:
         return (
@@ -79,8 +76,10 @@ export const ValueTypeComponent = ({
         );
 
       default:
-        console.error(`valueType: ${type}, is not generating a component`);
-        return null;
+        console.log(`ERROR: valueType: ${type}, is not generating a component`);
+        return (
+          <CustomComponent {...{ valueType: type, onChange, onBlur, value }} />
+        );
     }
   };
 

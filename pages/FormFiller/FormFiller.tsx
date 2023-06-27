@@ -24,9 +24,9 @@ export function FormFiller(props: Props) {
   let form = props.route.params.formOutput.form;
   let formStructure = props.route.params.formOutput.formStructure;
   let allFields = props.route.params.formOutput.formStructure.allFields;
-  let orderedFields = allFields.sort((a, b) =>
-    (a.fieldOrder || Infinity) < (b.fieldOrder || Infinity) ? -1 : 1
-  );
+  let orderedFields = [...allFields].sort((a, b) => {
+    return (a.fieldOrder || Infinity) <= (b.fieldOrder || Infinity) ? -1 : 1;
+  });
 
   // TODO: How will this work with versioning?
   type ImportTypes = { [K in FieldNames]: boolean };
@@ -35,7 +35,6 @@ export function FormFiller(props: Props) {
 
   const {
     control,
-
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>({});

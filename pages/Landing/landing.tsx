@@ -44,7 +44,13 @@ export function Landing() {
     control,
     handleSubmit,
     formState: { errors: formErrors },
-  } = useForm<ValidationSchema>({ resolver: zodResolver(validationSchema) });
+  } = useForm<ValidationSchema>({
+    defaultValues: {
+      email: "memes@memes.com",
+      password: "memes",
+    },
+    resolver: zodResolver(validationSchema),
+  });
 
   const onSubmit = (formData: ValidationSchema) => {
     loginUser({

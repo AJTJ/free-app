@@ -19,7 +19,7 @@ TypeScript is a superset of JavaScript which gives you static types and powerful
 
 #### Creating a new project
 
-- Install the CLI: `npm i -g expo-cli`
+- Install the CLI: `npm i -g expo-cli`l 
 - Create a project: `npx create-react-native-app -t with-typescript`
 - `cd` into the project
 

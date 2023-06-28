@@ -13,6 +13,11 @@ const config: CodegenConfig = {
         baseTypesPath: "types.generated.ts",
       },
       plugins: ["typescript-operations", "typed-document-node"],
+
+      config: {
+        // dedupeOperationSuffix: true,
+        // typesSuffix: "Type",
+      },
     },
     // "api/gql/": {
     //   preset: "client",

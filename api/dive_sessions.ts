@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
-export const DiveSessionFragment = gql(`
-  fragment DiveSessionFragment on DiveSession {
+export const DiveSession = gql(`
+  fragment DiveSession on DiveSession {
     id
     sessionName
     startTime
@@ -9,25 +9,33 @@ export const DiveSessionFragment = gql(`
   }
 `);
 
-// export const DiveSessionConnectionFragment = gql(`
-//   fragment DiveSessionConnectionFragment on DiveSessionConnection {
-//     id
-//     sessionName
-//     startTime
-//     endTime
-//   }
-// `);
-
-export const DiveFragment = gql(`
-  fragment DiveFragment on Dive {
+export const Dive = gql(`
+  fragment Dive on Dive {
     id
     depth
     disciplineType
     distance
     diveName
     diveTime
-    updatedAt
+    updatedAt   
   }
+`);
+
+export const DiveSessionWithDives = gql(`
+  fragment DiveSessionWithDives on DiveSession {
+    ...DiveSession
+    dives {
+      ...Dive
+    }
+  }
+`);
+
+export const MyDiveSessionConnection = gql(`
+fragment MyDiveSessionConnection on DiveSessionConnection {
+  nodes {
+    ...DiveSessionWithDives
+  }
+}
 `);
 
 export const ADD_PREPOPULATED_DIVE_SESSION = gql(`
@@ -39,10 +47,7 @@ export const ADD_PREPOPULATED_DIVE_SESSION = gql(`
         sessionName: "oog"
       }
     ) {
-      ...DiveSessionFragment
-      dives {
-        ...DiveFragment
-      }
+      ...DiveSessionWithDives
     }
   }
 `);
@@ -50,12 +55,7 @@ export const ADD_PREPOPULATED_DIVE_SESSION = gql(`
 export const GET_DIVE_SESSIONS = gql(`
   query diveSessions {
     diveSessions(queryParams: {}) {
-      nodes {
-        ...DiveSessionFragment
-        dives {
-          ...DiveFragment
-        }
-      }
+      ...MyDiveSessionConnection
     }
   }
 `);

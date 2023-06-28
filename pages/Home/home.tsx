@@ -13,8 +13,8 @@ import {
   useLogoutUser,
 } from "../../api/logic/user";
 import { useAddPrePopulatedDiveSession } from "../../api/logic";
-import { useApolloClient, useFragment } from "@apollo/client";
-import { UserFragment } from "../../api/auth";
+import { useFragment } from "@apollo/client";
+import { User } from "../../api/auth";
 
 export function Home() {
   let navigation = useNavigation<AllNavigationProps>();
@@ -29,15 +29,15 @@ export function Home() {
   let { addSession } = useAddPrePopulatedDiveSession();
 
   const { complete, data } = useFragment({
-    fragment: UserFragment,
-    fragmentName: "UserFragment",
+    fragment: User,
+    fragmentName: "User",
     from: {
       __typename: "User",
       id: "USER",
     },
   });
 
-  console.log("userfragment data: ", data);
+  // console.log("userfragment data: ", data);
 
   useEffect(() => {
     if (!loginData) {

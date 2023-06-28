@@ -6,7 +6,7 @@ import { useGetForms } from "../../api/logic/forms";
 // import { FormStructureOutputFragment } from "../../api/forms";
 import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProps } from "../../App";
-import { FormOutputFragmentFragment } from "../../api/forms.generated";
+import { FormOutputFragment } from "../../api/forms.generated";
 
 export function FormsList() {
   let navigation = useNavigation<AllNavigationProps>();
@@ -27,17 +27,17 @@ export function FormsList() {
 
   // const el = FormOutputFragment
 
-  console.log({ data, loading, error });
+  // console.log({ data, loading, error });
 
   if (data) {
     // let el: FormO = data.forms;
   }
 
-  const handleFormPress = (form: FormOutputFragmentFragment) => {
+  const handleFormPress = (form: FormOutputFragment) => {
     navigation.navigate("FormFiller", { formOutput: form });
   };
 
-  console.log(typeof data?.forms);
+  // console.log(typeof data?.forms);
 
   return (
     <>
@@ -47,14 +47,14 @@ export function FormsList() {
         </View>
       )}
       {data?.forms.map((f, i) => {
-        console.log({ forms: data.forms });
+        // console.log({ forms: data.forms });
         return (
           <Pressable onPress={() => handleFormPress(f)} key={f.form.id + i}>
             <CoreText>{f.form.formName}</CoreText>
             <CoreText>Created: {f.form.createdAt}</CoreText>
             <View>
               {f.formStructure.allFields.map((field, j) => {
-                console.log({ field });
+                // console.log({ field });
                 return (
                   <View key={field.fieldName + j}>
                     <CoreText>{field.fieldName}</CoreText>

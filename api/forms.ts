@@ -2,23 +2,23 @@ import { gql } from "@apollo/client";
 
 // FRAGMENTS
 
-export const EnumListsOutputFragment = gql(`
-  fragment EnumListsOutputFragment on EnumListsOutput {
+export const EnumListsOutput = gql(`
+  fragment EnumListsOutput on EnumListsOutput {
     enums
     fieldName
   }
 `);
 
-export const FormFragment = gql(`
-  fragment FormFragment on Form {
+export const Form = gql(`
+  fragment Form on Form {
     formName
     id
     createdAt
   }
 `);
 
-export const FSFieldOutputFragment = gql(`
-  fragment FSFieldOutputFragment on FsfieldOutput {
+export const FSFieldOutput = gql(`
+  fragment FSFieldOutput on FsfieldOutput {
     fieldOrder
     categoryName
     fieldName
@@ -27,26 +27,26 @@ export const FSFieldOutputFragment = gql(`
   }
 `);
 
-export const FormStructureOutputFragment = gql(`
-  fragment FormStructureOutputFragment on FormStructureOutput {
+export const FormStructureOutput = gql(`
+  fragment FormStructureOutput on FormStructureOutput {
     allFields {
-      ...FSFieldOutputFragment
+      ...FSFieldOutput
     }
     enums {
-      ...EnumListsOutputFragment
+      ...EnumListsOutput
     }
     formId
     formTemplateVersion
   }
 `);
 
-export const FormOutputFragment = gql(`
-  fragment FormOutputFragment on FormOutput {
+export const FormOutput = gql(`
+  fragment FormOutput on FormOutput {
       form {
-        ...FormFragment
+        ...Form
       }
       formStructure {
-        ...FormStructureOutputFragment
+        ...FormStructureOutput
       }
   }
 `);
@@ -56,7 +56,7 @@ export const FormOutputFragment = gql(`
 export const GET_FORMS = gql(`
   query getForms {
     forms {
-      ...FormOutputFragment
+      ...FormOutput
     }
   }
 `);
@@ -64,15 +64,15 @@ export const GET_FORMS = gql(`
 export const GET_FORM_STRUCTURES = gql(`
   query getFormStructures {
     formStructures {
-      ...FormStructureOutputFragment
+      ...FormStructureOutput
     }
   }
 `);
 
-export const PUT_FORM = gql(`
+export const ADD_FORM = gql(`
   mutation addForm($name: String!, $formStructure: FormStructure!) {
     addForm(formInput: { formStructure: $formStructure, formName: $name }) {
-      ...FormStructureOutputFragment
+      ...FormStructureOutput
     }
   }
 `);

@@ -31,7 +31,7 @@ export function Landing() {
   let { loginUser, result } = useLoginUser();
   let { loading, error, data } = result;
 
-  console.log("LoginData: ", data?.login.diveSessions);
+  // console.log("LoginData: ", data?.login.diveSessions);
 
   const validationSchema = z.object({
     email: z.string(),

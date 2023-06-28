@@ -10,6 +10,8 @@ export function RecentSessions() {
     console.error(error);
   }
 
+  console.log("WOOF", data);
+
   return (
     <>
       {loading && (
@@ -18,7 +20,6 @@ export function RecentSessions() {
         </View>
       )}
       {data?.diveSessions?.nodes.map((session, i) => {
-        console.log({ session }, session.id);
         return (
           <View key={session.id + i}>
             <CoreText>DiveSession Name: {session.sessionName}</CoreText>

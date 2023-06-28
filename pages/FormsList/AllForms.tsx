@@ -27,7 +27,7 @@ export function AllForms() {
           navigation.navigate("Home");
         }}
       />
-      <SmallHeader>My Loggers</SmallHeader>
+      <SmallHeader>My Dive Forms</SmallHeader>
       <FormsList />
     </LinearGradient>
   );

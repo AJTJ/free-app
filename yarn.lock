@@ -1862,6 +1862,17 @@
     auto-bind "~4.0.0"
     tslib "~2.5.0"
 
+"@graphql-codegen/typescript-operations@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-operations/-/typescript-operations-4.0.1.tgz#930af3e2d2ae8ff06de696291be28fe7046a2fef"
+  integrity sha512-GpUWWdBVUec/Zqo23aFLBMrXYxN2irypHqDcKjN78JclDPdreasAEPcIpMfqf4MClvpmvDLy4ql+djVAwmkjbw==
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "^5.0.0"
+    "@graphql-codegen/typescript" "^4.0.1"
+    "@graphql-codegen/visitor-plugin-common" "4.0.1"
+    auto-bind "~4.0.0"
+    tslib "~2.5.0"
+
 "@graphql-codegen/typescript-resolvers@3.2.1":
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-resolvers/-/typescript-resolvers-3.2.1.tgz#d0e6aca10d2417b67267f53f3e0304c7be4cbd84"
@@ -1893,6 +1904,17 @@
     "@graphql-codegen/plugin-helpers" "^5.0.0"
     "@graphql-codegen/schema-ast" "^4.0.0"
     "@graphql-codegen/visitor-plugin-common" "4.0.0"
+    auto-bind "~4.0.0"
+    tslib "~2.5.0"
+
+"@graphql-codegen/typescript@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript/-/typescript-4.0.1.tgz#7481d68f59bea802dd10e278dce73c8a1552b2a4"
+  integrity sha512-3YziQ21dCVdnHb+Us1uDb3pA6eG5Chjv0uTK+bt9dXeMlwYBU8MbtzvQTo4qvzWVC1AxSOKj0rgfNu1xCXqJyA==
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "^5.0.0"
+    "@graphql-codegen/schema-ast" "^4.0.0"
+    "@graphql-codegen/visitor-plugin-common" "4.0.1"
     auto-bind "~4.0.0"
     tslib "~2.5.0"
 
@@ -1932,6 +1954,22 @@
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/visitor-plugin-common/-/visitor-plugin-common-4.0.0.tgz#b1db0138ea78b96a1f78b78ebce0443faee27fba"
   integrity sha512-OFWr5tkrG4nCcE7AI9BSAwuA0VLP16uNCLssbmXpBa1rKR6b4mX+rJTQCoz47TFV5hii8yp8xaWfXVUcsNY39w==
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "^5.0.0"
+    "@graphql-tools/optimize" "^2.0.0"
+    "@graphql-tools/relay-operation-optimizer" "^7.0.0"
+    "@graphql-tools/utils" "^10.0.0"
+    auto-bind "~4.0.0"
+    change-case-all "1.0.15"
+    dependency-graph "^0.11.0"
+    graphql-tag "^2.11.0"
+    parse-filepath "^1.0.2"
+    tslib "~2.5.0"
+
+"@graphql-codegen/visitor-plugin-common@4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/visitor-plugin-common/-/visitor-plugin-common-4.0.1.tgz#64e293728b3c186f6767141e41fcdb310e50d367"
+  integrity sha512-Bi/1z0nHg4QMsAqAJhds+ForyLtk7A3HQOlkrZNm3xEkY7lcBzPtiOTLBtvziwopBsXUxqeSwVjOOFPLS5Yw1Q==
   dependencies:
     "@graphql-codegen/plugin-helpers" "^5.0.0"
     "@graphql-tools/optimize" "^2.0.0"
@@ -5141,6 +5179,17 @@ css-select@^4.1.3:
     domutils "^2.8.0"
     nth-check "^2.0.1"
 
+css-select@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/css-select/-/css-select-5.1.0.tgz#b8ebd6554c3637ccc76688804ad3f6a6fdaea8a6"
+  integrity sha512-nwoRF1rvRRnnCqqY7updORDsuqKzqYJ28+oSMaJMMgOauh3fvwHqMS7EZpIPqK8GL+g9mKxF1vP/ZjSeNjEVHg==
+  dependencies:
+    boolbase "^1.0.0"
+    css-what "^6.1.0"
+    domhandler "^5.0.2"
+    domutils "^3.0.1"
+    nth-check "^2.0.1"
+
 css-to-react-native@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/css-to-react-native/-/css-to-react-native-3.0.0.tgz"
@@ -5158,7 +5207,7 @@ css-tree@1.0.0-alpha.37:
     mdn-data "2.0.4"
     source-map "^0.6.1"
 
-css-tree@^1.1.2:
+css-tree@^1.1.2, css-tree@^1.1.3:
   version "1.1.3"
   resolved "https://registry.npmjs.org/css-tree/-/css-tree-1.1.3.tgz"
   integrity sha512-tRpdppF7TRazZrjJ6v3stzv93qxRcSsFmW6cX0Zm2NVKpxE1WV1HblnghVv9TreireHkqI/VDEsfolRF1p6y7Q==
@@ -5171,7 +5220,7 @@ css-what@^3.2.1:
   resolved "https://registry.npmjs.org/css-what/-/css-what-3.4.2.tgz"
   integrity sha512-ACUm3L0/jiZTqfzRM3Hi9Q8eZqd6IK37mMWPLz9PJxkLWllYeRf+EHUSHYEtFop2Eqytaq1FizFVh7XfBnXCDQ==
 
-css-what@^6.0.1:
+css-what@^6.0.1, css-what@^6.1.0:
   version "6.1.0"
   resolved "https://registry.npmjs.org/css-what/-/css-what-6.1.0.tgz"
   integrity sha512-HTUrgRJ7r4dsZKU6GjmpfRK1O76h97Z8MfS1G0FozR+oF2kG6Vfe8JE6zwrkbxigziPHinCJ+gCPjA9EaBDtRw==
@@ -5572,6 +5621,15 @@ dom-serializer@^1.0.1:
     domhandler "^4.2.0"
     entities "^2.0.0"
 
+dom-serializer@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/dom-serializer/-/dom-serializer-2.0.0.tgz#e41b802e1eedf9f6cae183ce5e622d789d7d8e53"
+  integrity sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==
+  dependencies:
+    domelementtype "^2.3.0"
+    domhandler "^5.0.2"
+    entities "^4.2.0"
+
 domain-browser@^1.1.1:
   version "1.2.0"
   resolved "https://registry.npmjs.org/domain-browser/-/domain-browser-1.2.0.tgz"
@@ -5582,7 +5640,7 @@ domelementtype@1:
   resolved "https://registry.npmjs.org/domelementtype/-/domelementtype-1.3.1.tgz"
   integrity sha512-BSKB+TSpMpFI/HOxCNr1O8aMOTZ8hT3pM3GQ0w/mWRmkhEDSFJkkyzz4XQsBV44BChwGkrDfMyjVD0eA2aFV3w==
 
-domelementtype@^2.0.1, domelementtype@^2.2.0:
+domelementtype@^2.0.1, domelementtype@^2.2.0, domelementtype@^2.3.0:
   version "2.3.0"
   resolved "https://registry.npmjs.org/domelementtype/-/domelementtype-2.3.0.tgz"
   integrity sha512-OLETBj6w0OsagBwdXnPdN0cnMfF9opN69co+7ZrbfPGrdpPVNBUj02spi6B1N7wChLQiPn4CSH/zJvXw56gmHw==
@@ -5601,6 +5659,13 @@ domhandler@^4.0.0, domhandler@^4.2.0, domhandler@^4.3.1:
   dependencies:
     domelementtype "^2.2.0"
 
+domhandler@^5.0.2, domhandler@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/domhandler/-/domhandler-5.0.3.tgz#cc385f7f751f1d1fc650c21374804254538c7d31"
+  integrity sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w==
+  dependencies:
+    domelementtype "^2.3.0"
+
 domutils@^1.7.0:
   version "1.7.0"
   resolved "https://registry.npmjs.org/domutils/-/domutils-1.7.0.tgz"
@@ -5617,6 +5682,15 @@ domutils@^2.0.0, domutils@^2.5.2, domutils@^2.8.0:
     dom-serializer "^1.0.1"
     domelementtype "^2.2.0"
     domhandler "^4.2.0"
+
+domutils@^3.0.1:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/domutils/-/domutils-3.1.0.tgz#c47f551278d3dc4b0b1ab8cbb42d751a6f0d824e"
+  integrity sha512-H78uMmQtI2AhgDJjWeQmHwJJ2bLPD3GMmO7Zja/ZZh84wkm+4ut+IUnUdRa8uCGX88DiVx1j6FRe1XfxEgjEZA==
+  dependencies:
+    dom-serializer "^2.0.0"
+    domelementtype "^2.3.0"
+    domhandler "^5.0.3"
 
 dot-case@^3.0.4:
   version "3.0.4"
@@ -5721,6 +5795,11 @@ entities@^2.0.0:
   version "2.2.0"
   resolved "https://registry.npmjs.org/entities/-/entities-2.2.0.tgz"
   integrity sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A==
+
+entities@^4.2.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/entities/-/entities-4.5.0.tgz#5d268ea5e7113ec74c4d033b79ea5a35a488fb48"
+  integrity sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==
 
 env-editor@^0.4.1:
   version "0.4.2"
@@ -8382,7 +8461,7 @@ lodash-es@^4.17.21:
   resolved "https://registry.npmjs.org/lodash-es/-/lodash-es-4.17.21.tgz"
   integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
 
-lodash.debounce@^4.0.8:
+lodash.debounce@*, lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.npmjs.org/lodash.debounce/-/lodash.debounce-4.0.8.tgz"
   integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
@@ -10663,12 +10742,23 @@ react-is@^16.13.0, react-is@^16.13.1, react-is@^16.7.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-native-animatable@1.3.3:
+react-native-animatable@1.3.3, react-native-animatable@^1.3.3:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.3.3.tgz#a13a4af8258e3bb14d0a9d839917e9bb9274ec8a"
   integrity sha512-2ckIxZQAsvWn25Ho+DK3d1mXIgj7tITkrS4pYDvx96WyOttSvzzFeQnM2od0+FUMzILbdHDsDEqZvnz1DYNQ1w==
   dependencies:
     prop-types "^15.7.2"
+
+react-native-autocomplete-dropdown@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-autocomplete-dropdown/-/react-native-autocomplete-dropdown-3.0.2.tgz#41f813f34b7974e9cad40c3c409782a73a65f9b0"
+  integrity sha512-TNQyrCOT0qPYvmChbxc+pLnD+W1mTCxQZ4R5a//AMstzPvaQPEyE6m5eIkKgp5j8m2EZYJ/tMD3q72+q0LqXoA==
+  dependencies:
+    lodash.debounce "*"
+    prop-types "*"
+    react-native-animatable "^1.3.3"
+    react-native-feather "^1.1.2"
+    react-native-size-matters "^0.4.0"
 
 react-native-autocomplete-input@^5.3.2:
   version "5.3.2"
@@ -10695,6 +10785,11 @@ react-native-codegen@^0.69.1:
     flow-parser "^0.121.0"
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
+
+react-native-feather@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-feather/-/react-native-feather-1.1.2.tgz#da055f8bd56db74c1b5009dc470536a11ef1d5c4"
+  integrity sha512-qBc0+XegKkX4JV6ykgScasguEV3RdlbYp9IrCMnbozngOgJ7vi76pyRpb+dnZ1AZVkYsbYnpdA9JXeP7EJbMCA==
 
 react-native-gradle-plugin@^0.0.7:
   version "0.0.7"
@@ -10728,6 +10823,19 @@ react-native-screens@~3.15.0:
   dependencies:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
+
+react-native-size-matters@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.4.0.tgz#01bfd0d59454318f4e0b13fe9c1eb0523d70f2e0"
+  integrity sha512-8/C0htHrFWeUm9N8JegmadovUfgTWkGBkDPZ1N3YkXtDWb+98Ya2gThiKcu445r8c7YhcrBfnHz/mYsXIusaOQ==
+
+react-native-svg@^13.9.0:
+  version "13.9.0"
+  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.9.0.tgz#8df8a690dd00362601f074dec5d3a86dd0f99c7f"
+  integrity sha512-Ey18POH0dA0ob/QiwCBVrxIiwflhYuw0P0hBlOHeY4J5cdbs8ngdKHeWC/Kt9+ryP6fNoEQ1PUgPYw2Bs/rp5Q==
+  dependencies:
+    css-select "^5.1.0"
+    css-tree "^1.1.3"
 
 react-native-vector-icons@^9.2.0:
   version "9.2.0"

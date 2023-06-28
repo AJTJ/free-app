@@ -175,7 +175,6 @@ export enum FieldNames {
 
 export enum FieldValueTypes {
   Enum = 'ENUM',
-  EnumAndNumber = 'ENUM_AND_NUMBER',
   Interval = 'INTERVAL',
   Number = 'NUMBER',
   Text = 'TEXT',
@@ -204,8 +203,8 @@ export type FormField = {
   createdAt: Scalars['NaiveDateTime'];
   fieldName: Scalars['String'];
   fieldOrder?: Maybe<Scalars['Int']>;
-  fieldValue?: Maybe<Scalars['String']>;
-  fieldValueType: Scalars['String'];
+  fieldValue?: Maybe<Array<Maybe<Scalars['String']>>>;
+  fieldValueType: Array<Maybe<Scalars['String']>>;
   form: Form;
   id: Scalars['UUID'];
   isActive: Scalars['Boolean'];
@@ -263,8 +262,8 @@ export type Fsfield = {
   categoryName: CategoryNames;
   fieldName: FieldNames;
   fieldOrder?: InputMaybe<Scalars['Int']>;
-  fieldValue?: InputMaybe<Scalars['String']>;
-  fieldValueType: FieldValueTypes;
+  fieldValue?: InputMaybe<Array<Scalars['String']>>;
+  fieldValueType: Array<FieldValueTypes>;
 };
 
 export type FsfieldOutput = {
@@ -272,8 +271,8 @@ export type FsfieldOutput = {
   categoryName: CategoryNames;
   fieldName: FieldNames;
   fieldOrder?: Maybe<Scalars['Int']>;
-  fieldValue?: Maybe<Scalars['String']>;
-  fieldValueType: FieldValueTypes;
+  fieldValue?: Maybe<Array<Scalars['String']>>;
+  fieldValueType: Array<FieldValueTypes>;
 };
 
 export type Login = {

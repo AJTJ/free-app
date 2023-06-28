@@ -6,7 +6,7 @@ import {
   LinearGradient,
 } from "../../components";
 import React from "react";
-import { useGetFormStructure, usePutForm } from "../../api/logic/forms";
+import { useGetFormStructure, useAddForm } from "../../api/logic/forms";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
   EnumLists,
@@ -22,7 +22,7 @@ import { AllNavigationProps } from "../../App";
 export function FormBuilder() {
   let navigation = useNavigation<AllNavigationProps>();
   const { data } = useGetFormStructure();
-  const { putFormMutation, result } = usePutForm();
+  const { putFormMutation, result } = useAddForm();
 
   let structure = data?.formStructures;
   let allFields = structure?.allFields;
@@ -67,14 +67,11 @@ export function FormBuilder() {
         formTemplateVersion,
       };
 
-      console.log({ new_structure });
-
       putFormMutation({
         variables: { name: formData.name, formStructure: new_structure },
       })
         .catch((e) => console.error("MEMES", e))
         .then((res) => {
-          console.log("it is created");
           navigation.navigate("FormsList");
         });
     }

@@ -15,9 +15,14 @@ export const useGetFormStructure = () => {
   return { loading, error, data, client };
 };
 
-export const usePutForm = () => {
-  const [putFormMutation, { loading, error, data, client }] =
-    useMutation(AddFormDocument);
+export const useAddForm = () => {
+  const [putFormMutation, { loading, error, data, client }] = useMutation(
+    AddFormDocument,
+    {
+      // TODO: Need something better than a refetch
+      refetchQueries: [GetFormsDocument],
+    }
+  );
   let result = { loading, error, data, client };
   return { putFormMutation, result };
 };

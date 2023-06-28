@@ -80,6 +80,8 @@ export function FormFiller(props: Props) {
       <CoreText>Form builder name: {form.formName}</CoreText>
       {orderedFields &&
         orderedFields.map((field, i) => {
+          console.log({ field });
+
           return (
             <Controller
               key={i + field.fieldName}
@@ -90,8 +92,14 @@ export function FormFiller(props: Props) {
                   <View>
                     <CoreText>Field Name: {field.fieldName}</CoreText>
                     <ValueTypeComponent
-                      valueType={field.fieldValueType}
-                      {...{ onChange, onBlur, value }}
+                      valueTypes={field.fieldValueType}
+                      {...{
+                        onChange,
+                        onBlur,
+                        value,
+                        formStructure,
+                        field,
+                      }}
                     />
                   </View>
                 </>

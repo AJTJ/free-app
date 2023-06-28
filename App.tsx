@@ -25,20 +25,21 @@ const { manifest } = Constants;
 import { setContext } from "@apollo/client/link/context";
 import MobileStore from "./storage/SafeStorage";
 import { createFragmentRegistry } from "@apollo/client/cache";
-import { DiveSessionFragment } from "./api/dive_sessions";
-import { LoginFragment, UserFragment } from "./api/auth";
+import { DiveSession } from "./api/dive_sessions";
+import { Login, User } from "./api/auth";
 import { AllForms } from "./pages/FormsList";
 import { FormBuilder } from "./pages/FormBuilder/FormBuilder";
 import { FormFiller } from "./pages/FormFiller";
 import {
-  EnumListsOutputFragment,
-  FSFieldOutputFragment,
-  FormOutputFragment,
-  FormStructureOutputFragment,
+  EnumListsOutput,
+  FSFieldOutput,
+  FormOutput,
+  FormStructureOutput,
 } from "./api/forms";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
-import { FormOutput } from "./api/types/types.generated";
-import { FormOutputFragmentFragment } from "./api/forms.generated";
+import { FormOutputFragment } from "./api/forms.generated";
+import { relayStylePagination } from "@apollo/client/utilities";
+import { AutocompleteDropdownContextProvider } from "react-native-autocomplete-dropdown";
 
 if (__DEV__) {
   // Adds messages only in a dev environment
@@ -82,6 +83,11 @@ const client = new ApolloClient({
   link: from([authLink, responseLink, httpLink]),
   cache: new InMemoryCache({
     typePolicies: {
+      Query: {
+        fields: {
+          diveSessions: relayStylePagination(),
+        },
+      },
       User: {
         keyFields: () => "USER",
       },
@@ -90,13 +96,13 @@ const client = new ApolloClient({
       // },
     },
     fragments: createFragmentRegistry(gql`
-      ${DiveSessionFragment}
-      ${FSFieldOutputFragment}
-      ${FormOutputFragment}
-      ${FormStructureOutputFragment}
-      ${EnumListsOutputFragment}
-      ${LoginFragment}
-      ${UserFragment}
+      ${DiveSession}
+      ${FSFieldOutput}
+      ${FormOutput}
+      ${FormStructureOutput}
+      ${EnumListsOutput}
+      ${Login}
+      ${User}
     `),
   }),
   defaultOptions: {
@@ -113,7 +119,7 @@ export type RootStackParamList = {
   Home: undefined;
   FormsList: undefined;
   FormBuilder: undefined;
-  FormFiller: { formOutput: FormOutputFragmentFragment };
+  FormFiller: { formOutput: FormOutputFragment };
 };
 
 export type AllNavigationProps = NativeStackNavigationProp<RootStackParamList>;
@@ -127,24 +133,26 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function App() {
   return (
     <ApolloProvider client={client}>
-      <ThemeProvider theme={GlobalTheme}>
-        {/* <StatusBar hidden /> */}
+      <AutocompleteDropdownContextProvider>
+        <ThemeProvider theme={GlobalTheme}>
+          {/* <StatusBar hidden /> */}
 
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="Landing"
-            // THIS HIDES THE HEADER
-            // screenOptions={{ headerShown: false }}
-          >
-            {/* each stack is being injected the navigation object */}
-            <Stack.Screen name="Landing" component={Landing} />
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="FormsList" component={AllForms} />
-            <Stack.Screen name="FormBuilder" component={FormBuilder} />
-            <Stack.Screen name="FormFiller" component={FormFiller} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </ThemeProvider>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName="Landing"
+              // THIS HIDES THE HEADER
+              // screenOptions={{ headerShown: false }}
+            >
+              {/* each stack is being injected the navigation object */}
+              <Stack.Screen name="Landing" component={Landing} />
+              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name="FormsList" component={AllForms} />
+              <Stack.Screen name="FormBuilder" component={FormBuilder} />
+              <Stack.Screen name="FormFiller" component={FormFiller} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </ThemeProvider>
+      </AutocompleteDropdownContextProvider>
     </ApolloProvider>
   );
 }

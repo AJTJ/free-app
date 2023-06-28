@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
-export const UserFragment = gql(`
-  fragment UserFragment on User {
+export const User = gql(`
+  fragment User on User {
     id
     email
     username
@@ -9,16 +9,16 @@ export const UserFragment = gql(`
   }
 `);
 
-export const LoginFragment = gql(`
-  fragment LoginFragment on User {
-    ...UserFragment
+export const Login = gql(`
+  fragment Login on User {
+    ...User
     diveSessions(queryParams: {
       first: 100,
     }) {
       nodes {
-        ...DiveSessionFragment
+        ...DiveSession
         dives {
-          ...DiveFragment
+          ...Dive
         }
       }
       
@@ -29,7 +29,7 @@ export const LoginFragment = gql(`
 export const LOGIN_USER = gql(`
   mutation login($email: String!, $password: String!) {
     login(loginData: { email: $email, password: $password }) {
-      ...LoginFragment
+      ...Login
     }
   }
 `);

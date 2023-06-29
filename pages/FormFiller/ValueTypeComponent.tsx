@@ -1,34 +1,42 @@
 import React from "react";
-import { View, StyleSheet, SafeAreaView } from "react-native";
-import { CoreText, FieldNumberInput, LandingTextInput } from "../../components";
 import {
-  EnumListsOutput,
-  FieldValueTypes,
+  View,
+  StyleSheet,
+  NativeSyntheticEvent,
+  TextInputChangeEventData,
+} from "react-native";
+import { CoreText, NumberInput, LandingTextInput } from "../../components";
+import {
   FormStructureOutput,
   FsfieldOutput,
 } from "../../api/types/types.generated";
 import { ControllerRenderProps, Noop } from "react-hook-form";
-import AutoComplete from "react-native-autocomplete-input";
-import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
+// import AutoComplete from "react-native-autocomplete-input";
+// import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
 
 // enums: EnumListsOutput[] | null | undefined;
 
 type ParentProps = {
-  valueTypes: FieldValueTypes[];
+  valueTypes: String[];
   onChange: (...event: any[]) => void;
   onBlur: Noop;
-  value: any;
+  value: string[];
   formStructure: FormStructureOutput;
   field: FsfieldOutput;
 };
 
 type ChildProps = {
-  valueType: FieldValueTypes;
+  valueType: String;
   onChange: (...event: any[]) => void;
   onBlur: Noop;
-  value: any;
+  value: string[];
   formStructure: FormStructureOutput;
   field: FsfieldOutput;
+  typeIndex: number;
+};
+
+type EnumProps = {
+  enumList: string[];
 };
 
 const CustomComponent = (props: ChildProps) => {
@@ -36,95 +44,114 @@ const CustomComponent = (props: ChildProps) => {
 };
 
 // https://github.com/mrlaessig/react-native-autocomplete-input
-const FieldEnumComponent = (props: ChildProps) => {
-  let fieldName = props.field.fieldName;
-  let relatedEnums = props?.formStructure?.enums?.find(
-    (e) => e.fieldName === fieldName
-  )?.enums;
+const FieldEnumComponent = (props: ChildProps & EnumProps) => {
+  // let onChange = (e: string) => {
+  //   let newValue = ([...props.value][props.typeIndex] = e);
+  //   props.onChange(newValue);
+  // };
+  // let enumObject = props.enumList.map((e, i) => {
+  //   return {
+  //     id: i.toString(),
+  //     title: e,
+  //   };
+  // });
+  // return <AutocompleteDropdown dataSet={enumObject} onChangeText={onChange} />;
 
-  if (!relatedEnums) {
-    // throw new Error("No related data: ", fieldName);
-    console.error(fieldName, relatedEnums);
-    return <CoreText>MISSING ENUMS</CoreText>;
-  } else {
-    let enumObject = relatedEnums.map((e, i) => {
-      return {
-        id: i.toString(),
-        title: e,
-      };
-    });
-    return (
-      // <SafeAreaView>
-      //   <View>
-      //     <View>
-      //       <AutoComplete
-      //         style={styles.autocompleteContainer}
-      //         flatListProps={{
-      //           keyboardShouldPersistTaps: "always",
-      //           keyExtractor: (item, index) => item,
-      //           renderItem: ({ item }) => (
-      //             <CoreText style={styles.itemText}>{item}</CoreText>
-      //           ),
-      //         }}
-      //         data={relatedEnums}
-      //       />
-      //     </View>
-      //   </View>
-      // </SafeAreaView>
-      <AutocompleteDropdown dataSet={enumObject} />
-    );
-  }
+  return <CoreText>No dropdown yet</CoreText>;
 };
 
-// Parent component
+const FieldNumberInput = (props: ChildProps) => {
+  let onChangeText = (e: string) => {
+    let newArray = [...props.value];
+    newArray[props.typeIndex] = e;
+    console.log({ newArray });
+    props.onChange(newArray);
+  };
+  return <NumberInput onBlur={props.onBlur} onChangeText={onChangeText} />;
+};
+
+const FormTextInput = (props: ChildProps) => {
+  let onChangeText = (e: string) => {
+    let newValue = ([...props.value][props.typeIndex] = e);
+    props.onChange(newValue);
+  };
+  return <LandingTextInput onBlur={props.onBlur} onChangeText={onChangeText} />;
+};
 
 export const ValueTypeComponent = ({ valueTypes, ...rest }: ParentProps) => {
-  // TODO: There could be unique components here for each input pair
-  const renderComponents = (types: FieldValueTypes[]) => {
+  const renderComponents = (types: String[]) => {
     return types.map((valueType, i) => {
-      switch (valueType) {
-        case FieldValueTypes.Enum:
+      const currentTypes = ["Number", "Timestamp", "Interval", "Text"];
+
+      let typeInCurrentTypes = currentTypes.find((e) => e === valueType);
+      if (typeInCurrentTypes) {
+        switch (typeInCurrentTypes) {
+          case "Number":
+            return (
+              <FieldNumberInput
+                key={typeInCurrentTypes + i}
+                {...{ ...rest, valueType }}
+                typeIndex={i}
+              />
+            );
+          case "Timestamp":
+            return (
+              <CustomComponent
+                key={typeInCurrentTypes + i}
+                {...{ valueType, ...rest }}
+                typeIndex={i}
+              />
+            );
+          case "Interval":
+            return (
+              <CustomComponent
+                key={typeInCurrentTypes + i}
+                {...{ valueType, ...rest }}
+                typeIndex={i}
+              />
+            );
+
+          case "Text":
+            return (
+              <FormTextInput
+                key={typeInCurrentTypes + i}
+                {...{ ...rest, valueType }}
+                typeIndex={i}
+              />
+            );
+        }
+      } else {
+        let enumOutput = rest.formStructure.enums.find(
+          (e) => e.enumName === valueType
+        );
+
+        if (enumOutput) {
           return (
             <FieldEnumComponent
-              key={valueType + i}
+              key={valueType.toString() + i}
+              enumList={enumOutput.enums}
+              typeIndex={i}
               {...{
                 valueType,
                 ...rest,
               }}
             />
           );
-
-        case FieldValueTypes.Interval:
-          return (
-            <CustomComponent key={valueType + i} {...{ valueType, ...rest }} />
-          );
-
-        case FieldValueTypes.Number:
-          return (
-            <FieldNumberInput key={valueType + i} {...{ ...rest, valueType }} />
-          );
-
-        case FieldValueTypes.Text:
-          return (
-            <LandingTextInput key={valueType + i} {...{ ...rest, valueType }} />
-          );
-
-        case FieldValueTypes.Timestamp:
-          return (
-            <CustomComponent key={valueType + i} {...{ valueType, ...rest }} />
-          );
-
-        default:
+        } else {
           console.log(
             `ERROR: valueType: ${valueType}, is not generating a component`
           );
           return (
-            <CustomComponent key={valueType + i} {...{ valueType, ...rest }} />
+            <CustomComponent
+              key={valueType.toString() + i}
+              {...{ valueType, ...rest }}
+              typeIndex={i}
+            />
           );
+        }
       }
     });
   };
-
   return <View>{renderComponents(valueTypes)}</View>;
 };
 
@@ -176,3 +203,21 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 });
+
+// <SafeAreaView>
+//   <View>
+//     <View>
+//       <AutoComplete
+//         style={styles.autocompleteContainer}
+//         flatListProps={{
+//           keyboardShouldPersistTaps: "always",
+//           keyExtractor: (item, index) => item,
+//           renderItem: ({ item }) => (
+//             <CoreText style={styles.itemText}>{item}</CoreText>
+//           ),
+//         }}
+//         data={relatedEnums}
+//       />
+//     </View>
+//   </View>
+// </SafeAreaView>

@@ -133,26 +133,26 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function App() {
   return (
     <ApolloProvider client={client}>
-      <AutocompleteDropdownContextProvider>
-        <ThemeProvider theme={GlobalTheme}>
-          {/* <StatusBar hidden /> */}
+      {/* <AutocompleteDropdownContextProvider> */}
+      <ThemeProvider theme={GlobalTheme}>
+        {/* <StatusBar hidden /> */}
 
-          <NavigationContainer>
-            <Stack.Navigator
-              initialRouteName="Landing"
-              // THIS HIDES THE HEADER
-              // screenOptions={{ headerShown: false }}
-            >
-              {/* each stack is being injected the navigation object */}
-              <Stack.Screen name="Landing" component={Landing} />
-              <Stack.Screen name="Home" component={Home} />
-              <Stack.Screen name="FormsList" component={AllForms} />
-              <Stack.Screen name="FormBuilder" component={FormBuilder} />
-              <Stack.Screen name="FormFiller" component={FormFiller} />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </ThemeProvider>
-      </AutocompleteDropdownContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Landing"
+            // THIS HIDES THE HEADER
+            // screenOptions={{ headerShown: false }}
+          >
+            {/* each stack is being injected the navigation object */}
+            <Stack.Screen name="Landing" component={Landing} />
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="FormsList" component={AllForms} />
+            <Stack.Screen name="FormBuilder" component={FormBuilder} />
+            <Stack.Screen name="FormFiller" component={FormFiller} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ThemeProvider>
+      {/* </AutocompleteDropdownContextProvider> */}
     </ApolloProvider>
   );
 }

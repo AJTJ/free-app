@@ -10,7 +10,6 @@ import { useGetFormStructure, useAddForm } from "../../api/logic/forms";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
   EnumLists,
-  FieldNames,
   FormStructure,
   Fsfield,
   FsfieldOutput,
@@ -24,21 +23,28 @@ export function FormBuilder() {
   const { data } = useGetFormStructure();
   const { putFormMutation, result } = useAddForm();
 
-  let structure = data?.formStructures;
-  let allFields = structure?.allFields;
-  let enums = structure?.enums;
-  let formTemplateVersion = structure?.formTemplateVersion;
-
-  // TODO: How will this work with versioning?
-  type ImportTypes = { [K in FieldNames]: boolean };
-  type LocalTypes = { name: string };
-  type FormValues = ImportTypes & LocalTypes;
-
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>({});
+
+  if (!data) {
+    // TODO: This should be more useful
+    console.error("no data");
+    return null;
+  }
+
+  let structure = data?.formStructures;
+  let allFields = structure?.allFields;
+  let enums = structure?.enums;
+  let formTemplateVersion = structure?.formTemplateVersion;
+  let fieldNames = structure?.fieldNames;
+
+  // TODO: How will this work with versioning?
+  type ImportTypes = Record<typeof fieldNames[number], boolean>;
+  type LocalTypes = { name: string };
+  type FormValues = ImportTypes & LocalTypes;
 
   const onSubmit: SubmitHandler<FormValues> = (formData) => {
     if (enums && allFields && structure && formTemplateVersion) {
@@ -53,7 +59,7 @@ export function FormBuilder() {
       });
 
       let returnEnums: EnumLists[] = enums.map((e) => {
-        return { enums: e.enums, fieldName: e.fieldName };
+        return { enums: e.enums, enumName: e.enumName };
       });
 
       let returnFields: Fsfield[] = newData.map((e) => {
@@ -63,7 +69,10 @@ export function FormBuilder() {
 
       let new_structure: FormStructure = {
         allFields: returnFields,
+        categoryNames: structure.categoryNames,
         enums: returnEnums,
+        fieldNames: structure.fieldNames,
+        fieldValueTypes: structure.fieldValueTypes,
         formTemplateVersion,
       };
 

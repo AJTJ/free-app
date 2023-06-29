@@ -5,7 +5,7 @@ import { gql } from "@apollo/client";
 export const EnumListsOutput = gql(`
   fragment EnumListsOutput on EnumListsOutput {
     enums
-    fieldName
+    enumName
   }
 `);
 
@@ -32,9 +32,12 @@ export const FormStructureOutput = gql(`
     allFields {
       ...FSFieldOutput
     }
+    categoryNames
     enums {
       ...EnumListsOutput
     }
+    fieldNames
+    fieldValueTypes
     formId
     formTemplateVersion
   }

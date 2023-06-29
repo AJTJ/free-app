@@ -7,7 +7,6 @@ import {
 } from "../stylessheet/globalStyles";
 import styled from "styled-components/native";
 import { Noop } from "react-hook-form";
-import { FieldValueTypes } from "../api/types/types.generated";
 
 export const CoreTextInput = (props: TextInputProps) => {
   const theme = useContext(ThemeContext);
@@ -15,14 +14,7 @@ export const CoreTextInput = (props: TextInputProps) => {
   return <TextInput style={stylesWithTheme().textInput} {...props} />;
 };
 
-type FormProps = {
-  onChange: (...event: any[]) => void;
-  onBlur: Noop;
-  value: any;
-  valueType: FieldValueTypes;
-};
-
-export const FieldNumberInput = (props: TextInputProps & FormProps) => {
+export const NumberInput = (props: TextInputProps) => {
   // https://stackoverflow.com/questions/32946793/react-native-textinput-that-only-accepts-numeric-characters
   const theme = useContext(ThemeContext);
   const stylesWithTheme = styles(theme);

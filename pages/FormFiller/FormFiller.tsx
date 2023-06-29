@@ -9,7 +9,6 @@ import React from "react";
 import { RootStackParamList } from "../../App";
 import {
   EnumLists,
-  FieldNames,
   FormStructure,
   Fsfield,
   FsfieldOutput,
@@ -21,23 +20,36 @@ import { ValueTypeComponent } from "./ValueTypeComponent";
 export type Props = NativeStackScreenProps<RootStackParamList, "FormFiller">;
 
 export function FormFiller(props: Props) {
-  let form = props.route.params.formOutput.form;
-  let formStructure = props.route.params.formOutput.formStructure;
-  let allFields = props.route.params.formOutput.formStructure.allFields;
+  const formOutput = props.route.params.formOutput;
+  let form = formOutput.form;
+  let formStructure = formOutput.formStructure;
+  let allFields = formStructure.allFields;
+  let currentFieldNames = allFields.map((f) => f.fieldName);
+  let possibleFieldNames = formStructure.fieldNames;
   let orderedFields = [...allFields].sort((a, b) => {
     return (a.fieldOrder || Infinity) <= (b.fieldOrder || Infinity) ? -1 : 1;
   });
 
   // TODO: How will this work with versioning?
-  type ImportTypes = { [K in FieldNames]: boolean };
+
+  type ImportTypes = Record<typeof currentFieldNames[number], string[]>;
   type LocalTypes = { name: string };
   type FormValues = ImportTypes & LocalTypes;
 
+  let defaultValues: Record<string, any> = { name: "" };
+
+  [...currentFieldNames].forEach((n) => {
+    defaultValues[n] = [];
+  });
+
   const {
     control,
+    watch,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>({});
+  } = useForm<FormValues>({ defaultValues: defaultValues });
+
+  console.log({ watch: watch() });
 
   const onSubmit: SubmitHandler<FormValues> = (formData) => {
     // if (enums && allFields && structure && formTemplateVersion) {

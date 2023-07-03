@@ -9,35 +9,82 @@ import React from "react";
 import { RootStackParamList } from "../../App";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { View } from "react-native";
-import { ValueTypeComponent } from "./ValueTypeComponent";
+import { FieldTypeComponent } from "./ValueTypeComponent";
 import { FormV1Wrapper } from "../../utility/formV1Wrapper";
+import { omitDeep } from "@apollo/client/utilities";
+import {
+  CongestionOutputV1,
+  DisciplineAndMaxDepthOutputV1,
+  MaxDepthOutputV1,
+  ReportNameOutputV1,
+  VisibilityOutputV1,
+  WeatherOutputV1,
+  WildlifeOutputV1,
+} from "../../api/types/types.generated";
 
 export type Props = NativeStackScreenProps<RootStackParamList, "ReportBuilder">;
 
 export function ReportBuilder(props: Props) {
   let form = props.route.params.form;
-
   type FormValueTypes = typeof form.formData;
+  const sortedFields = FormV1Wrapper.getSortedFields(form.formData);
+
+  type FieldTypes = {
+    CongestionOutputV1: CongestionOutputV1;
+    DisciplineAndMaxDepthOutputV1: DisciplineAndMaxDepthOutputV1;
+    MaxDepthOutputV1: MaxDepthOutputV1;
+    ReportNameOutputV1: ReportNameOutputV1;
+    VisibilityOutputV1: VisibilityOutputV1;
+    WeatherOutputV1: WeatherOutputV1;
+    WildlifeOutputV1: WildlifeOutputV1;
+  };
 
   const {
     control,
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValueTypes>();
+  } = useForm<FieldTypes>();
 
   console.log({ watch: watch() });
 
   const onSubmit: SubmitHandler<FormValueTypes> = (formData) => {};
 
-  const sortedFields = FormV1Wrapper.getSortedFields(form.formData);
-
   return (
     <LinearGradient>
       <CoreText>Report Builder: {form.formName}</CoreText>
+      {sortedFields.map((field, i) => {
+        return (
+          <Controller
+            key={i + field.name}
+            name={field.name}
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => {
+              <FieldTypeComponent
+                field={field}
+                {...{
+                  onChange,
+                  onBlur,
+                  value,
+                }}
+              />;
+              return <CoreText>Memes</CoreText>;
+            }}
+          />
+        );
+      })}
     </LinearGradient>
   );
 }
+
+// switch (f.__typename) {
+//   case "CongestionOutputV1":
+//     break;
+
+//   default:
+//     break;
+// }
+
 // {orderedFields &&
 //   orderedFields.map((field, i) => {
 //     console.log({ field });

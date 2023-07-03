@@ -2,28 +2,38 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { CoreText, NumberInput, LandingTextInput } from "../../components";
 import { ControllerRenderProps, Noop } from "react-hook-form";
+import {
+  CongestionOutputV1,
+  DisciplineAndMaxDepthOutputV1,
+  MaxDepthOutputV1,
+  ReportNameOutputV1,
+  VisibilityOutputV1,
+  WeatherOutputV1,
+  WildlifeOutputV1,
+} from "../../api/types/types.generated";
 // import AutoComplete from "react-native-autocomplete-input";
 // import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
 
-// enums: EnumListsOutput[] | null | undefined;
+type AllFields =
+  | CongestionOutputV1
+  | DisciplineAndMaxDepthOutputV1
+  | MaxDepthOutputV1
+  | ReportNameOutputV1
+  | VisibilityOutputV1
+  | WeatherOutputV1
+  | WildlifeOutputV1;
 
 type ParentProps = {
-  valueTypes: String[];
+  field: AllFields;
   onChange: (...event: any[]) => void;
   onBlur: Noop;
-  value: string[];
-  formStructure: FormStructureOutput;
-  field: FsfieldOutput;
+  value: AllFields;
 };
 
 type ChildProps = {
-  valueType: String;
   onChange: (...event: any[]) => void;
   onBlur: Noop;
-  value: string[];
-  formStructure: FormStructureOutput;
-  field: FsfieldOutput;
-  typeIndex: number;
+  value: AllFields;
 };
 
 type EnumProps = {
@@ -69,81 +79,60 @@ const FormTextInput = (props: ChildProps) => {
   return <LandingTextInput onBlur={props.onBlur} onChangeText={onChangeText} />;
 };
 
-export const ValueTypeComponent = ({ valueTypes, ...rest }: ParentProps) => {
-  const renderComponents = (types: String[]) => {
-    return types.map((valueType, i) => {
-      const currentTypes = ["Number", "Timestamp", "Interval", "Text"];
+interface CongestionProps {
+  field: CongestionOutputV1;
+}
 
-      let typeInCurrentTypes = currentTypes.find((e) => e === valueType);
-      if (typeInCurrentTypes) {
-        switch (typeInCurrentTypes) {
-          case "Number":
-            return (
-              <FieldNumberInput
-                key={typeInCurrentTypes + i}
-                {...{ ...rest, valueType }}
-                typeIndex={i}
-              />
-            );
-          case "Timestamp":
-            return (
-              <CustomComponent
-                key={typeInCurrentTypes + i}
-                {...{ valueType, ...rest }}
-                typeIndex={i}
-              />
-            );
-          case "Interval":
-            return (
-              <CustomComponent
-                key={typeInCurrentTypes + i}
-                {...{ valueType, ...rest }}
-                typeIndex={i}
-              />
-            );
+const CongestionComponent = (props: ChildProps & CongestionProps) => {
+  return <FieldNumberInput />;
+};
 
-          case "Text":
-            return (
-              <FormTextInput
-                key={typeInCurrentTypes + i}
-                {...{ ...rest, valueType }}
-                typeIndex={i}
-              />
-            );
-        }
-      } else {
-        let enumOutput = rest.formStructure.enums.find(
-          (e) => e.enumName === valueType
+export const FieldTypeComponent = ({ field, ...rest }: ParentProps) => {
+  const renderComponents = () => {
+    switch (field.__typename) {
+      case "CongestionOutputV1":
+        return <CongestionComponent field={field} {...rest} />;
+      case "DisciplineAndMaxDepthOutputV1":
+        return (
+          <View>
+            <CoreText>Memes</CoreText>
+          </View>
+        );
+      case "MaxDepthOutputV1":
+        return (
+          <View>
+            <CoreText>Memes</CoreText>
+          </View>
         );
 
-        if (enumOutput) {
-          return (
-            <FieldEnumComponent
-              key={valueType.toString() + i}
-              enumList={enumOutput.enums}
-              typeIndex={i}
-              {...{
-                valueType,
-                ...rest,
-              }}
-            />
-          );
-        } else {
-          console.log(
-            `ERROR: valueType: ${valueType}, is not generating a component`
-          );
-          return (
-            <CustomComponent
-              key={valueType.toString() + i}
-              {...{ valueType, ...rest }}
-              typeIndex={i}
-            />
-          );
-        }
-      }
-    });
+      case "ReportNameOutputV1":
+        return (
+          <View>
+            <CoreText>Memes</CoreText>
+          </View>
+        );
+      case "VisibilityOutputV1":
+        return (
+          <View>
+            <CoreText>Memes</CoreText>
+          </View>
+        );
+      case "WeatherOutputV1":
+        return (
+          <View>
+            <CoreText>Memes</CoreText>
+          </View>
+        );
+      case "WildlifeOutputV1":
+        return (
+          <View>
+            <CoreText>Memes</CoreText>
+          </View>
+        );
+    }
   };
-  return <View>{renderComponents(valueTypes)}</View>;
+
+  return <View>{renderComponents()}</View>;
 };
 
 const styles = StyleSheet.create({
@@ -194,21 +183,3 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 });
-
-// <SafeAreaView>
-//   <View>
-//     <View>
-//       <AutoComplete
-//         style={styles.autocompleteContainer}
-//         flatListProps={{
-//           keyboardShouldPersistTaps: "always",
-//           keyExtractor: (item, index) => item,
-//           renderItem: ({ item }) => (
-//             <CoreText style={styles.itemText}>{item}</CoreText>
-//           ),
-//         }}
-//         data={relatedEnums}
-//       />
-//     </View>
-//   </View>
-// </SafeAreaView>

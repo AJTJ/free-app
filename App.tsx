@@ -25,7 +25,7 @@ const { manifest } = Constants;
 import { setContext } from "@apollo/client/link/context";
 import MobileStore from "./storage/SafeStorage";
 import { createFragmentRegistry } from "@apollo/client/cache";
-import { DiveSession } from "./api/dive_sessions";
+import { DiveSession } from "./api/apnea_sessions";
 import { Login, User } from "./api/auth";
 import { AllForms } from "./pages/FormsList";
 import { FormBuilder } from "./pages/FormBuilder/FormBuilder";

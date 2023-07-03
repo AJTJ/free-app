@@ -1,27 +1,34 @@
-import {
-  Btn,
-  Checkbox,
-  CoreText,
-  LandingTextInput,
-  LinearGradient,
-} from "../../components";
+import { Btn, Checkbox, CoreText, LinearGradient } from "../../components";
 import React from "react";
-import { useGetFormStructure, useAddForm } from "../../api/logic/forms";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import {
-  EnumLists,
-  FormStructure,
-  Fsfield,
-  FsfieldOutput,
-} from "../../api/types/types.generated";
 import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProps } from "../../App";
+import { FormInputV1 } from "../../api/types/types.generated";
+import { useInsertForm } from "../../api/logic/forms";
 
 export function FormBuilder() {
   let navigation = useNavigation<AllNavigationProps>();
-  const { data } = useGetFormStructure();
-  const { putFormMutation, result } = useAddForm();
+  // const { data } = useGetFormStructure();
+  const { putFormMutation, result } = useInsertForm();
+
+  // type ImportTypes = Record<typeof fieldNames[number], boolean>;
+  // type LocalTypes = { name: string };
+  // type FormValues = ImportTypes & LocalTypes;
+
+  // { [Property in keyof FormInputV1]: boolean };
+  type FormValues = Record<keyof FormInputV1, boolean>;
+
+  // TODO: This needs to be updated
+  const allFields: (keyof FormValues)[] = [
+    "congestion",
+    "disciplineAndMaxDepth",
+    "maxDepth",
+    "reportName",
+    "visibility",
+    "weather",
+    "wildlife",
+  ];
 
   const {
     control,
@@ -29,120 +36,72 @@ export function FormBuilder() {
     formState: { errors },
   } = useForm<FormValues>({});
 
-  if (!data) {
-    // TODO: This should be more useful
-    console.error("no data");
-    return null;
-  }
-
-  let structure = data?.formStructures;
-  let allFields = structure?.allFields;
-  let enums = structure?.enums;
-  let formTemplateVersion = structure?.formTemplateVersion;
-  let fieldNames = structure?.fieldNames;
-
-  // TODO: How will this work with versioning?
-  type ImportTypes = Record<typeof fieldNames[number], boolean>;
-  type LocalTypes = { name: string };
-  type FormValues = ImportTypes & LocalTypes;
-
   const onSubmit: SubmitHandler<FormValues> = (formData) => {
-    if (enums && allFields && structure && formTemplateVersion) {
-      let newData: FsfieldOutput[] = [];
-      Object.entries(formData).forEach(([key, value]) => {
-        if (value === true) {
-          let field = allFields?.find((f) => f.fieldName === key);
-          if (field) {
-            newData.push(field);
-          }
-        }
-      });
-
-      let returnEnums: EnumLists[] = enums.map((e) => {
-        return { enums: e.enums, enumName: e.enumName };
-      });
-
-      let returnFields: Fsfield[] = newData.map((e) => {
-        const { __typename, ...returnType } = e;
-        return returnType;
-      });
-
-      let new_structure: FormStructure = {
-        allFields: returnFields,
-        categoryNames: structure.categoryNames,
-        enums: returnEnums,
-        fieldNames: structure.fieldNames,
-        fieldValueTypes: structure.fieldValueTypes,
-        formTemplateVersion,
-      };
-
-      putFormMutation({
-        variables: { name: formData.name, formStructure: new_structure },
-      })
-        .catch((e) => console.error("MEMES", e))
-        .then((res) => {
-          navigation.navigate("FormsList");
-        });
-    }
+    let newForm: FormInputV1 = {};
   };
 
-  if (allFields) {
-    return (
-      <LinearGradient>
-        <CoreText>Form builder</CoreText>
+  return (
+    <LinearGradient>
+      <CoreText>Form builder</CoreText>
+      {allFields.map((fieldName) => {
         <Controller
-          name={"name"}
+          name={fieldName}
           rules={{ required: true }}
           control={control}
           render={({ field: { onBlur, onChange, value } }) => (
             <>
               <View>
-                <CoreText>Dive Logger Name</CoreText>
-                <LandingTextInput
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
+                <CoreText>{fieldName}</CoreText>
+                <Checkbox
+                  checked={value}
+                  onChange={(e) => onChange(!e)}
+                  disabled={false}
                 />
               </View>
             </>
           )}
-        />
-        {allFields &&
-          allFields.map((field, i) => {
-            return (
-              <Controller
-                key={i + field.fieldName}
-                name={field.fieldName}
-                control={control}
-                render={({ field: renderField }) => (
-                  <>
-                    <View>
-                      <CoreText>{field.fieldName}</CoreText>
-                      <Checkbox
-                        checked={renderField.value}
-                        onChange={(e) => renderField.onChange(!e)}
-                        disabled={false}
-                      />
-                    </View>
-                  </>
-                )}
-              />
-            );
-          })}
-        <Btn
-          title="Submit"
-          type="primary"
-          onPress={() => {
-            handleSubmit(onSubmit)();
-          }}
-        />
-      </LinearGradient>
-    );
-  } else {
-    return (
-      <LinearGradient>
-        <CoreText>No Form data</CoreText>
-      </LinearGradient>
-    );
-  }
+        />;
+      })}
+
+      <Btn
+        title="Submit"
+        type="primary"
+        onPress={() => {
+          handleSubmit(onSubmit)();
+        }}
+      />
+    </LinearGradient>
+  );
 }
+
+// let newData: FsfieldOutput[] = [];
+// Object.entries(formData).forEach(([key, value]) => {
+//   if (value === true) {
+//     let field = allFields?.find((f) => f.fieldName === key);
+//     if (field) {
+//       newData.push(field);
+//     }
+//   }
+// });
+// let returnEnums: EnumLists[] = enums.map((e) => {
+//   return { enums: e.enums, enumName: e.enumName };
+// });
+// let returnFields: Fsfield[] = newData.map((e) => {
+//   const { __typename, ...returnType } = e;
+//   return returnType;
+// });
+// let new_structure: FormStructure = {
+//   allFields: returnFields,
+//   categoryNames: structure.categoryNames,
+//   enums: returnEnums,
+//   fieldNames: structure.fieldNames,
+//   fieldValueTypes: structure.fieldValueTypes,
+//   formTemplateVersion,
+// };
+// putFormMutation({
+//   variables: { name: formData.name, formStructure: new_structure },
+// })
+//   .catch((e) => console.error("MEMES", e))
+//   .then((res) => {
+//     navigation.navigate("FormsList");
+//   });

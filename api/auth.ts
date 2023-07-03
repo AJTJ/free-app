@@ -12,11 +12,11 @@ export const User = gql(`
 export const Login = gql(`
   fragment Login on User {
     ...User
-    diveSessions(queryParams: {
+    apneaSessions(queryParams: {
       first: 100,
     }) {
       nodes {
-        ...DiveSession
+        ...ApneaSession
         dives {
           ...Dive
         }
@@ -45,11 +45,5 @@ export const GET_USERS = gql(`
     allUsers {
       email
     }
-  }
-`);
-
-export const GUARDED_ROUTE = gql(`
-  query guardedRoute {
-    guardedRoute
   }
 `);

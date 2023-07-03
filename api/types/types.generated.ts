@@ -21,15 +21,97 @@ export type Scalars = {
   UUID: any;
 };
 
-export type CompletedFormInput = {
-  completedFormName: Scalars["String"];
-  formId: Scalars["UUID"];
-  formStructure: FormStructure;
-  originalFormId?: InputMaybe<Scalars["UUID"]>;
-  previousCompletedFormId?: InputMaybe<Scalars["UUID"]>;
-  sessionId: Scalars["UUID"];
-  userId: Scalars["UUID"];
+export type ApneaSession = {
+  __typename?: "ApneaSession";
+  createdAt: Scalars["NaiveDateTime"];
+  dives: Array<Dive>;
+  endTime: Scalars["NaiveDateTime"];
+  id: Scalars["UUID"];
+  isActive: Scalars["Boolean"];
+  sessionName?: Maybe<Scalars["String"]>;
+  startTime: Scalars["NaiveDateTime"];
+  updatedAt: Scalars["NaiveDateTime"];
 };
+
+export type ApneaSessionDivesArgs = {
+  dbQueryDto?: InputMaybe<QueryParams>;
+  diveQuery?: InputMaybe<DiveFilter>;
+};
+
+export type ApneaSessionConnection = {
+  __typename?: "ApneaSessionConnection";
+  /** A list of edges. */
+  edges: Array<ApneaSessionEdge>;
+  /** A list of nodes. */
+  nodes: Array<ApneaSession>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+/** An edge in a connection. */
+export type ApneaSessionEdge = {
+  __typename?: "ApneaSessionEdge";
+  /** A cursor for use in pagination */
+  cursor: Scalars["String"];
+  /** The item at the end of the edge */
+  node: ApneaSession;
+};
+
+export type ApneaSessionFilter = {
+  createdAt?: InputMaybe<Scalars["NaiveDateTime"]>;
+  endTime?: InputMaybe<Scalars["NaiveDateTime"]>;
+  isActive?: InputMaybe<Scalars["Boolean"]>;
+  sessionId?: InputMaybe<Scalars["UUID"]>;
+  sessionName?: InputMaybe<Scalars["String"]>;
+  startTime?: InputMaybe<Scalars["NaiveDateTime"]>;
+  updatedAt?: InputMaybe<Scalars["NaiveDateTime"]>;
+};
+
+export type ApneaSessionInput = {
+  endTime: Scalars["NaiveDateTime"];
+  sessionName?: InputMaybe<Scalars["String"]>;
+  startTime: Scalars["NaiveDateTime"];
+};
+
+export type ApneaSessionUpdate = {
+  endTime?: InputMaybe<Scalars["NaiveDateTime"]>;
+  id: Scalars["UUID"];
+  isActive?: InputMaybe<Scalars["Boolean"]>;
+  sessionName?: InputMaybe<Scalars["String"]>;
+  startTime?: InputMaybe<Scalars["NaiveDateTime"]>;
+};
+
+export type CongestionInputV1 = {
+  fieldOrder?: InputMaybe<Scalars["Int"]>;
+  value: Scalars["Int"];
+};
+
+export type CongestionOutputV1 = {
+  __typename?: "CongestionOutputV1";
+  fieldOrder?: Maybe<Scalars["Int"]>;
+  value: Scalars["Int"];
+};
+
+export type DisciplineAndMaxDepthInputV1 = {
+  discipline: DisciplinesEnum;
+  fieldOrder?: InputMaybe<Scalars["Int"]>;
+  maxDepth: Scalars["Int"];
+};
+
+export type DisciplineAndMaxDepthOutputV1 = {
+  __typename?: "DisciplineAndMaxDepthOutputV1";
+  discipline: DisciplinesEnum;
+  fieldOrder?: Maybe<Scalars["Int"]>;
+  maxDepth: Scalars["Int"];
+};
+
+export enum DisciplinesEnum {
+  Cnf = "CNF",
+  Cwt = "CWT",
+  Dnf = "DNF",
+  Fim = "FIM",
+  Sta = "STA",
+}
 
 export type Dive = {
   __typename?: "Dive";
@@ -45,12 +127,12 @@ export type Dive = {
 };
 
 export type DiveFilter = {
+  apneaSession?: InputMaybe<Scalars["UUID"]>;
   createdAt?: InputMaybe<Scalars["NaiveDateTime"]>;
   depth?: InputMaybe<Scalars["Float"]>;
   disciplineType?: InputMaybe<Scalars["String"]>;
   distance?: InputMaybe<Scalars["Float"]>;
   diveName?: InputMaybe<Scalars["String"]>;
-  diveSession?: InputMaybe<Scalars["UUID"]>;
   diveTime?: InputMaybe<Scalars["NaiveTime"]>;
   id?: InputMaybe<Scalars["UUID"]>;
   isActive?: InputMaybe<Scalars["Boolean"]>;
@@ -66,66 +148,6 @@ export type DiveInput = {
   diveTime?: InputMaybe<Scalars["Int"]>;
 };
 
-export type DiveSession = {
-  __typename?: "DiveSession";
-  createdAt: Scalars["NaiveDateTime"];
-  dives: Array<Dive>;
-  endTime: Scalars["NaiveDateTime"];
-  id: Scalars["UUID"];
-  isActive: Scalars["Boolean"];
-  sessionName?: Maybe<Scalars["String"]>;
-  startTime: Scalars["NaiveDateTime"];
-  updatedAt: Scalars["NaiveDateTime"];
-};
-
-export type DiveSessionDivesArgs = {
-  dbQueryDto?: InputMaybe<QueryParams>;
-  diveQuery?: InputMaybe<DiveFilter>;
-};
-
-export type DiveSessionConnection = {
-  __typename?: "DiveSessionConnection";
-  /** A list of edges. */
-  edges: Array<DiveSessionEdge>;
-  /** A list of nodes. */
-  nodes: Array<DiveSession>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-};
-
-/** An edge in a connection. */
-export type DiveSessionEdge = {
-  __typename?: "DiveSessionEdge";
-  /** A cursor for use in pagination */
-  cursor: Scalars["String"];
-  /** The item at the end of the edge */
-  node: DiveSession;
-};
-
-export type DiveSessionFilter = {
-  createdAt?: InputMaybe<Scalars["NaiveDateTime"]>;
-  endTime?: InputMaybe<Scalars["NaiveDateTime"]>;
-  isActive?: InputMaybe<Scalars["Boolean"]>;
-  sessionId?: InputMaybe<Scalars["UUID"]>;
-  sessionName?: InputMaybe<Scalars["String"]>;
-  startTime?: InputMaybe<Scalars["NaiveDateTime"]>;
-  updatedAt?: InputMaybe<Scalars["NaiveDateTime"]>;
-};
-
-export type DiveSessionInput = {
-  endTime: Scalars["NaiveDateTime"];
-  sessionName?: InputMaybe<Scalars["String"]>;
-  startTime: Scalars["NaiveDateTime"];
-};
-
-export type DiveSessionUpdate = {
-  endTime?: InputMaybe<Scalars["NaiveDateTime"]>;
-  id: Scalars["UUID"];
-  isActive?: InputMaybe<Scalars["Boolean"]>;
-  sessionName?: InputMaybe<Scalars["String"]>;
-  startTime?: InputMaybe<Scalars["NaiveDateTime"]>;
-};
-
 export type DiveUpdate = {
   depth?: InputMaybe<Scalars["Float"]>;
   disciplineType?: InputMaybe<Scalars["String"]>;
@@ -136,114 +158,56 @@ export type DiveUpdate = {
   isActive?: InputMaybe<Scalars["Boolean"]>;
 };
 
-export type EnumLists = {
-  enumName: Scalars["String"];
-  enums: Array<Scalars["String"]>;
-};
-
-export type EnumListsOutput = {
-  __typename?: "EnumListsOutput";
-  enumName: Scalars["String"];
-  enums: Array<Scalars["String"]>;
-};
-
-export type Form = {
-  __typename?: "Form";
-  createdAt: Scalars["NaiveDateTime"];
-  formFields: Array<FormField>;
+export type FormDetailsInput = {
   formName: Scalars["String"];
-  id: Scalars["UUID"];
-  isActive: Scalars["Boolean"];
-  templateVersion: Array<Maybe<Scalars["Int"]>>;
-  updatedAt: Scalars["NaiveDateTime"];
-};
-
-export type FormFormFieldsArgs = {
-  dbQueryDto?: InputMaybe<QueryParams>;
-};
-
-export type FormField = {
-  __typename?: "FormField";
-  categoryName: Scalars["String"];
-  createdAt: Scalars["NaiveDateTime"];
-  fieldName: Scalars["String"];
-  fieldOrder?: Maybe<Scalars["Int"]>;
-  fieldValue?: Maybe<Array<Maybe<Scalars["String"]>>>;
-  fieldValueType: Array<Maybe<Scalars["String"]>>;
-  form: Form;
-  id: Scalars["UUID"];
-  isActive: Scalars["Boolean"];
-  updatedAt: Scalars["NaiveDateTime"];
-};
-
-export type FormInput = {
-  formName: Scalars["String"];
-  formStructure: FormStructure;
   originalFormId?: InputMaybe<Scalars["UUID"]>;
   previousFormId?: InputMaybe<Scalars["UUID"]>;
 };
 
-export type FormOutput = {
-  __typename?: "FormOutput";
-  form: Form;
-  formStructure: FormStructureOutput;
+export type FormInput = {
+  v1?: InputMaybe<FormInputV1>;
 };
 
-export type FormStructure = {
-  allFields: Array<Fsfield>;
-  categoryNames: Array<Scalars["String"]>;
-  enums: Array<EnumLists>;
-  fieldNames: Array<Scalars["String"]>;
-  fieldValueTypes: Array<Scalars["String"]>;
-  formId?: InputMaybe<Scalars["UUID"]>;
-  formTemplateVersion: Array<Scalars["Int"]>;
+export type FormInputV1 = {
+  congestion?: InputMaybe<CongestionInputV1>;
+  disciplineAndMaxDepth?: InputMaybe<Array<DisciplineAndMaxDepthInputV1>>;
+  maxDepth?: InputMaybe<MaxDepthInputV1>;
+  reportName?: InputMaybe<ReportNameInputV1>;
+  visibility?: InputMaybe<VisibilityInputV1>;
+  weather?: InputMaybe<WeatherInputV1>;
+  wildlife?: InputMaybe<WildlifeInputV1>;
 };
 
-export type FormStructureOutput = {
-  __typename?: "FormStructureOutput";
-  allFields: Array<FsfieldOutput>;
-  categoryNames: Array<Scalars["String"]>;
-  enums: Array<EnumListsOutput>;
-  fieldNames: Array<Scalars["String"]>;
-  fieldValueTypes: Array<Scalars["String"]>;
-  formId?: Maybe<Scalars["UUID"]>;
-  formTemplateVersion: Array<Scalars["Int"]>;
-};
+export type FormOutput = FormOutputV1;
 
-export type FormStructureOutputConnection = {
-  __typename?: "FormStructureOutputConnection";
+export type FormOutputConnection = {
+  __typename?: "FormOutputConnection";
   /** A list of edges. */
-  edges: Array<FormStructureOutputEdge>;
+  edges: Array<FormOutputEdge>;
   /** A list of nodes. */
-  nodes: Array<FormStructureOutput>;
+  nodes: Array<FormOutput>;
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
 };
 
 /** An edge in a connection. */
-export type FormStructureOutputEdge = {
-  __typename?: "FormStructureOutputEdge";
+export type FormOutputEdge = {
+  __typename?: "FormOutputEdge";
   /** A cursor for use in pagination */
   cursor: Scalars["String"];
   /** The item at the end of the edge */
-  node: FormStructureOutput;
+  node: FormOutput;
 };
 
-export type Fsfield = {
-  categoryName: Scalars["String"];
-  fieldName: Scalars["String"];
-  fieldOrder?: InputMaybe<Scalars["Int"]>;
-  fieldValue?: InputMaybe<Array<Scalars["String"]>>;
-  fieldValueType: Array<Scalars["String"]>;
-};
-
-export type FsfieldOutput = {
-  __typename?: "FsfieldOutput";
-  categoryName: Scalars["String"];
-  fieldName: Scalars["String"];
-  fieldOrder?: Maybe<Scalars["Int"]>;
-  fieldValue?: Maybe<Array<Scalars["String"]>>;
-  fieldValueType: Array<Scalars["String"]>;
+export type FormOutputV1 = {
+  __typename?: "FormOutputV1";
+  congestion?: Maybe<CongestionOutputV1>;
+  disciplineAndMaxDepth?: Maybe<Array<DisciplineAndMaxDepthOutputV1>>;
+  maxDepth?: Maybe<MaxDepthOutputV1>;
+  reportName?: Maybe<ReportNameOutputV1>;
+  visibility?: Maybe<VisibilityOutputV1>;
+  weather?: Maybe<WeatherOutputV1>;
+  wildlife?: Maybe<WildlifeOutputV1>;
 };
 
 export type Login = {
@@ -251,37 +215,51 @@ export type Login = {
   password: Scalars["String"];
 };
 
+export type MaxDepthInputV1 = {
+  fieldOrder?: InputMaybe<Scalars["Int"]>;
+  maxDepth: Scalars["Int"];
+};
+
+export type MaxDepthOutputV1 = {
+  __typename?: "MaxDepthOutputV1";
+  fieldOrder?: Maybe<Scalars["Int"]>;
+  maxDepth: Scalars["Int"];
+};
+
 export type Mutation = {
   __typename?: "Mutation";
-  addCompletedForm: FormStructureOutput;
-  addDive: Dive;
-  addDiveSession: DiveSession;
-  addForm: FormStructureOutput;
-  deleteAllDiveSessions: Scalars["Int"];
-  deleteAllDives: Scalars["Int"];
+  deleteAllApneaSessions: Scalars["Int"];
   deleteAllUsers: Scalars["Int"];
+  insertApneaSession: ApneaSession;
+  insertDive: Dive;
+  insertForm: FormOutput;
+  insertReport: FormOutput;
   insertUser: User;
   login: User;
   logout: Scalars["Boolean"];
+  modifyForm: FormOutput;
+  modifyReport: FormOutput;
+  updateApneaSession: ApneaSession;
   updateDive: Dive;
-  updateDiveSession: DiveSession;
 };
 
-export type MutationAddCompletedFormArgs = {
-  completedFormInput: CompletedFormInput;
+export type MutationInsertApneaSessionArgs = {
+  apneaSessionInput: ApneaSessionInput;
 };
 
-export type MutationAddDiveArgs = {
+export type MutationInsertDiveArgs = {
+  apneaSessionId: Scalars["UUID"];
   diveInput: DiveInput;
-  diveSessionId: Scalars["UUID"];
 };
 
-export type MutationAddDiveSessionArgs = {
-  diveSessionInput: DiveSessionInput;
-};
-
-export type MutationAddFormArgs = {
+export type MutationInsertFormArgs = {
+  formDetailsInput: FormDetailsInput;
   formInput: FormInput;
+};
+
+export type MutationInsertReportArgs = {
+  reportDetailsInput: ReportDetailsInput;
+  reportInput: FormInput;
 };
 
 export type MutationInsertUserArgs = {
@@ -292,12 +270,22 @@ export type MutationLoginArgs = {
   loginData: Login;
 };
 
-export type MutationUpdateDiveArgs = {
-  diveUpdate: DiveUpdate;
+export type MutationModifyFormArgs = {
+  formInput: FormInput;
+  previousFormId: Scalars["UUID"];
 };
 
-export type MutationUpdateDiveSessionArgs = {
-  diveSessionUpdate: DiveSessionUpdate;
+export type MutationModifyReportArgs = {
+  formsInput: FormInput;
+  previousReportId: Scalars["UUID"];
+};
+
+export type MutationUpdateApneaSessionArgs = {
+  apneaSessionUpdate: ApneaSessionUpdate;
+};
+
+export type MutationUpdateDiveArgs = {
+  diveUpdate: DiveUpdate;
 };
 
 /** Information about pagination in a connection */
@@ -316,22 +304,15 @@ export type PageInfo = {
 export type Query = {
   __typename?: "Query";
   allUsers: Array<User>;
-  completedForms: FormStructureOutputConnection;
-  diveSessions: DiveSessionConnection;
+  apneaSessions: ApneaSessionConnection;
   dives: Array<Dive>;
-  formFields: Array<FormField>;
-  formStructures: FormStructureOutput;
   forms: Array<FormOutput>;
-  guardedRoute: Scalars["Float"];
+  reports: FormOutputConnection;
   user: User;
 };
 
-export type QueryCompletedFormsArgs = {
-  queryParams: QueryParams;
-};
-
-export type QueryDiveSessionsArgs = {
-  diveSessionFilter?: InputMaybe<DiveSessionFilter>;
+export type QueryApneaSessionsArgs = {
+  apneaSessionFilter?: InputMaybe<ApneaSessionFilter>;
   queryParams: QueryParams;
 };
 
@@ -340,8 +321,12 @@ export type QueryDivesArgs = {
   diveInput?: InputMaybe<DiveFilter>;
 };
 
-export type QueryFormFieldsArgs = {
-  loggerId: Scalars["UUID"];
+export type QueryFormsArgs = {
+  queryParams: QueryParams;
+};
+
+export type QueryReportsArgs = {
+  queryParams: QueryParams;
 };
 
 export type QueryUserArgs = {
@@ -353,10 +338,29 @@ export type QueryParams = {
   first?: InputMaybe<Scalars["Int"]>;
 };
 
+export type ReportDetailsInput = {
+  formId: Scalars["UUID"];
+  originalFormId?: InputMaybe<Scalars["UUID"]>;
+  previousReportId?: InputMaybe<Scalars["UUID"]>;
+  sessionId: Scalars["UUID"];
+  userId: Scalars["UUID"];
+};
+
+export type ReportNameInputV1 = {
+  fieldOrder?: InputMaybe<Scalars["Int"]>;
+  name: Scalars["String"];
+};
+
+export type ReportNameOutputV1 = {
+  __typename?: "ReportNameOutputV1";
+  fieldOrder?: Maybe<Scalars["Int"]>;
+  name: Scalars["String"];
+};
+
 export type User = {
   __typename?: "User";
+  apneaSessions: ApneaSessionConnection;
   createdAt: Scalars["NaiveDateTime"];
-  diveSessions: DiveSessionConnection;
   email: Scalars["String"];
   hashedPassword: Scalars["String"];
   id: Scalars["UUID"];
@@ -367,8 +371,8 @@ export type User = {
   username: Scalars["String"];
 };
 
-export type UserDiveSessionsArgs = {
-  diveSessionFilter?: InputMaybe<DiveSessionFilter>;
+export type UserApneaSessionsArgs = {
+  apneaSessionFilter?: InputMaybe<ApneaSessionFilter>;
   queryParams: QueryParams;
 };
 
@@ -376,4 +380,43 @@ export type UserInput = {
   email: Scalars["String"];
   password: Scalars["String"];
   username: Scalars["String"];
+};
+
+export type VisibilityInputV1 = {
+  fieldOrder?: InputMaybe<Scalars["Int"]>;
+  value: Scalars["Int"];
+};
+
+export type VisibilityOutputV1 = {
+  __typename?: "VisibilityOutputV1";
+  fieldOrder?: Maybe<Scalars["Int"]>;
+  value: Scalars["Int"];
+};
+
+export type WeatherInputV1 = {
+  fieldOrder?: InputMaybe<Scalars["Int"]>;
+  wind: Scalars["Int"];
+};
+
+export type WeatherOutputV1 = {
+  __typename?: "WeatherOutputV1";
+  fieldOrder?: Maybe<Scalars["Int"]>;
+  wind: Scalars["Int"];
+};
+
+export enum WildlifeEnumV1 {
+  Big = "BIG",
+  Medium = "MEDIUM",
+  Small = "SMALL",
+}
+
+export type WildlifeInputV1 = {
+  fieldOrder?: InputMaybe<Scalars["Int"]>;
+  value: WildlifeEnumV1;
+};
+
+export type WildlifeOutputV1 = {
+  __typename?: "WildlifeOutputV1";
+  fieldOrder?: Maybe<Scalars["Int"]>;
+  value: WildlifeEnumV1;
 };

@@ -2,54 +2,44 @@ import { gql } from "@apollo/client";
 
 // FRAGMENTS
 
-export const EnumListsOutput = gql(`
-  fragment EnumListsOutput on EnumListsOutput {
-    enums
-    enumName
-  }
-`);
-
-export const Form = gql(`
-  fragment Form on Form {
-    formName
-    id
-    createdAt
-  }
-`);
-
-export const FSFieldOutput = gql(`
-  fragment FSFieldOutput on FsfieldOutput {
-    fieldOrder
-    categoryName
-    fieldName
-    fieldValue
-    fieldValueType
-  }
-`);
-
-export const FormStructureOutput = gql(`
-  fragment FormStructureOutput on FormStructureOutput {
-    allFields {
-      ...FSFieldOutput
+export const FormV1 = gql(`
+  fragment FormV1 on FormOutputV1 {
+    reportName {
+      name
+      fieldOrder
     }
-    categoryNames
-    enums {
-      ...EnumListsOutput
+    wildlife {
+      value
+      fieldOrder
     }
-    fieldNames
-    fieldValueTypes
-    formId
-    formTemplateVersion
+    weather {
+      wind
+      fieldOrder
+    }
+    disciplineAndMaxDepth {
+      discipline
+      maxDepth
+      fieldOrder
+    }
+    maxDepth {
+      maxDepth
+      fieldOrder
+    }
+    congestion {
+      value
+      fieldOrder
+    }
+    visibility {
+      value
+      fieldOrder
+    }
   }
 `);
 
 export const FormOutput = gql(`
   fragment FormOutput on FormOutput {
-      form {
-        ...Form
-      }
-      formStructure {
-        ...FormStructureOutput
+      ... on FormOutputV1 {
+        ...FormV1
       }
   }
 `);
@@ -58,24 +48,16 @@ export const FormOutput = gql(`
 
 export const GET_FORMS = gql(`
   query getForms {
-    forms {
+    forms(queryParams: {}) {
+        ...FormOutput
+    }
+  }
+`);
+
+export const INSERT_FORM = gql(`
+  mutation insertForm($formDetailsInput: FormDetailsInput!, $form_input: FormInput!) {
+    insertForm( formDetailsInput: $formDetailsInput, formInput: $form_input ) {
       ...FormOutput
-    }
-  }
-`);
-
-export const GET_FORM_STRUCTURES = gql(`
-  query getFormStructures {
-    formStructures {
-      ...FormStructureOutput
-    }
-  }
-`);
-
-export const ADD_FORM = gql(`
-  mutation addForm($name: String!, $formStructure: FormStructure!) {
-    addForm(formInput: { formStructure: $formStructure, formName: $name }) {
-      ...FormStructureOutput
     }
   }
 `);

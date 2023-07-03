@@ -1,7 +1,6 @@
 import { useLazyQuery, useMutation } from "@apollo/client";
 import {
   AllUsersDocument,
-  GuardedRouteDocument,
   LoginDocument,
   LogoutDocument,
 } from "../auth.generated";
@@ -40,29 +39,3 @@ export const useAllUsers = () => {
   let result = { loading, error, data };
   return { getAllUsers, result };
 };
-
-export const useGuardedRoute = () => {
-  const [accessGuardedRoute, { loading, error, data }] =
-    useLazyQuery(GuardedRouteDocument);
-  let result = { loading, error, data };
-  return { accessGuardedRoute, result };
-};
-
-// IDEAS
-// export const useReadUserData = () => {
-//   const client = useApolloClient();
-//   const el = client.readQuery({
-//     query:
-//   });
-// };
-
-// const useUserFragment = ({ id }: { id: String }) => {
-//   const output = useFragment({
-//     fragment: UserFragment,
-//     from: {
-//       __typename: "UserQueryDataOutput",
-//       id,
-//     },
-//   });
-//   return output;
-// };

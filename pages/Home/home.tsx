@@ -12,7 +12,7 @@ import {
   useGuardedRoute,
   useLogoutUser,
 } from "../../api/logic/user";
-import { useAddPrePopulatedDiveSession } from "../../api/logic";
+import { useInsertPrePopulatedDiveSession } from "../../api/logic";
 import { useFragment } from "@apollo/client";
 import { User } from "../../api/auth";
 
@@ -26,7 +26,7 @@ export function Home() {
   let { accessGuardedRoute } = useGuardedRoute();
 
   let { getAllUsers } = useAllUsers();
-  let { addSession } = useAddPrePopulatedDiveSession();
+  let { addSession } = useInsertPrePopulatedDiveSession();
 
   const { complete, data } = useFragment({
     fragment: User,

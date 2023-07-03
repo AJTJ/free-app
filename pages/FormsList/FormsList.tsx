@@ -2,11 +2,9 @@ import { Pressable, View } from "react-native";
 import React from "react";
 import { CoreText } from "../../components/textComponents";
 import { useGetForms } from "../../api/logic/forms";
-// import { useFragment } from "@apollo/client";
-// import { FormStructureOutputFragment } from "../../api/forms";
 import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProps } from "../../App";
-import { FormOutputFragment } from "../../api/forms.generated";
+import { Form } from "../../api/types/types.generated";
 
 export function FormsList() {
   let navigation = useNavigation<AllNavigationProps>();
@@ -15,29 +13,9 @@ export function FormsList() {
     console.error(error);
   }
 
-  // const { complete, data: fragData } = useFragment({
-  //   fragment: FormStructureOutputFragment,
-  //   fragmentName: "FormStructureOutputFragment",
-  //   from: {
-  //     __typename: "FormStructureOutput",
-  //     id: "FORM_STRUCTURE_OUTPUT",
-  //   },
-  // });
-  // console.log("fragData:", fragData);
-
-  // const el = FormOutputFragment
-
-  // console.log({ data, loading, error });
-
-  if (data) {
-    // let el: FormO = data.forms;
-  }
-
-  const handleFormPress = (form: FormOutputFragment) => {
-    navigation.navigate("FormFiller", { formOutput: form });
+  const handleFormPress = (form: Form) => {
+    navigation.navigate("ReportBuilder", { form });
   };
-
-  // console.log(typeof data?.forms);
 
   return (
     <>
@@ -47,21 +25,46 @@ export function FormsList() {
         </View>
       )}
       {data?.forms.map((f, i) => {
-        // console.log({ forms: data.forms });
         return (
-          <Pressable onPress={() => handleFormPress(f)} key={f.form.id + i}>
-            <CoreText>{f.form.formName}</CoreText>
-            <CoreText>Created: {f.form.createdAt}</CoreText>
+          <Pressable onPress={() => handleFormPress(f)} key={f.id + i}>
+            <CoreText>{f.formName}</CoreText>
+            <CoreText>Created: {f.createdAt}</CoreText>
             <View>
-              {f.formStructure.allFields.map((field, j) => {
-                // console.log({ field });
-                return (
-                  <View key={field.fieldName + j}>
-                    <CoreText>{field.fieldName}</CoreText>
-                    <CoreText>{field.fieldValueType}</CoreText>
-                  </View>
-                );
-              })}
+              {f.formData.congestion && (
+                <View>
+                  <CoreText>Congestion</CoreText>
+                </View>
+              )}
+              {f.formData.disciplineAndMaxDepth && (
+                <View>
+                  <CoreText>disciplineAndMaxDepth</CoreText>
+                </View>
+              )}
+              {f.formData.maxDepth && (
+                <View>
+                  <CoreText>maxDepth</CoreText>
+                </View>
+              )}
+              {f.formData.reportName && (
+                <View>
+                  <CoreText>reportName</CoreText>
+                </View>
+              )}
+              {f.formData.visibility && (
+                <View>
+                  <CoreText>visibility</CoreText>
+                </View>
+              )}
+              {f.formData.weather && (
+                <View>
+                  <CoreText>weather</CoreText>
+                </View>
+              )}
+              {f.formData.wildlife && (
+                <View>
+                  <CoreText>wildlife</CoreText>
+                </View>
+              )}
             </View>
           </Pressable>
         );
@@ -69,3 +72,24 @@ export function FormsList() {
     </>
   );
 }
+
+// const { complete, data: fragData } = useFragment({
+//   fragment: FormStructureOutputFragment,
+//   fragmentName: "FormStructureOutputFragment",
+//   from: {
+//     __typename: "FormStructureOutput",
+//     id: "FORM_STRUCTURE_OUTPUT",
+//   },
+// });
+
+// <View>
+//   <CoreText>Congestion</CoreText>
+//   <CoreText>{f.formData.congestion.value}</CoreText>
+// </View>
+
+// return (
+//   <View key={field.fieldName + j}>
+//     <CoreText>{field.fieldName}</CoreText>
+//     <CoreText>{field.fieldValueType}</CoreText>
+//   </View>
+// );

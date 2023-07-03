@@ -17,8 +17,10 @@ export const FormV1 = gql(`
       fieldOrder
     }
     disciplineAndMaxDepth {
-      discipline
-      maxDepth
+      disciplineMaxDepth {
+        discipline
+        maxDepth
+      }
       fieldOrder
     }
     maxDepth {
@@ -44,20 +46,55 @@ export const FormOutput = gql(`
   }
 `);
 
+export const Form = gql(`
+  fragment Form on Form {
+    createdAt
+    formData {
+      ...FormOutput
+    }
+    formName
+    id
+    isActive
+    updatedAt
+  }
+`);
+
+export const Report = gql(`
+  fragment Report on Report {
+    createdAt
+    id
+    isActive
+    reportData {
+      ...FormOutput
+    }
+    updatedAt
+  }
+`);
+
 // QUERIES/MUTATIONS
 
 export const GET_FORMS = gql(`
   query getForms {
     forms(queryParams: {}) {
-        ...FormOutput
+        ...Form
+    }
+  }
+`);
+
+export const GET_REPORTS = gql(`
+  query getReports {
+    reports(queryParams: {}) {
+      nodes {
+        ...Report
+      }
     }
   }
 `);
 
 export const INSERT_FORM = gql(`
-  mutation insertForm($formDetailsInput: FormDetailsInput!, $form_input: FormInput!) {
-    insertForm( formDetailsInput: $formDetailsInput, formInput: $form_input ) {
-      ...FormOutput
+  mutation insertForm($formDetailsInput: FormDetailsInput!, $formInput: FormInput!) {
+    insertForm( formDetailsInput: $formDetailsInput, formInput: $formInput ) {
+      ...Form
     }
   }
 `);

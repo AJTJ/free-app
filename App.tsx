@@ -29,7 +29,7 @@ import { DiveSession } from "./api/apnea_sessions";
 import { Login, User } from "./api/auth";
 import { AllForms } from "./pages/FormsList";
 import { FormBuilder } from "./pages/FormBuilder/FormBuilder";
-import { FormFiller } from "./pages/FormFiller";
+import { FormFiller, ReportBuilder } from "./pages/ReportBuilder";
 import {
   EnumListsOutput,
   FSFieldOutput,
@@ -37,7 +37,11 @@ import {
   FormStructureOutput,
 } from "./api/forms";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
-import { FormOutputFragment } from "./api/forms.generated";
+import {
+  FormFragment,
+  FormOutputFragment,
+  ReportFragment,
+} from "./api/forms.generated";
 import { relayStylePagination } from "@apollo/client/utilities";
 import { AutocompleteDropdownContextProvider } from "react-native-autocomplete-dropdown";
 
@@ -119,7 +123,7 @@ export type RootStackParamList = {
   Home: undefined;
   FormsList: undefined;
   FormBuilder: undefined;
-  FormFiller: { formOutput: FormOutputFragment };
+  ReportBuilder: { form: FormFragment };
 };
 
 export type AllNavigationProps = NativeStackNavigationProp<RootStackParamList>;
@@ -148,7 +152,7 @@ export default function App() {
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="FormsList" component={AllForms} />
             <Stack.Screen name="FormBuilder" component={FormBuilder} />
-            <Stack.Screen name="FormFiller" component={FormFiller} />
+            <Stack.Screen name="ReportBuilder" component={ReportBuilder} />
           </Stack.Navigator>
         </NavigationContainer>
       </ThemeProvider>

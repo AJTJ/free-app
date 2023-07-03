@@ -1,15 +1,6 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  NativeSyntheticEvent,
-  TextInputChangeEventData,
-} from "react-native";
+import { View, StyleSheet } from "react-native";
 import { CoreText, NumberInput, LandingTextInput } from "../../components";
-import {
-  FormStructureOutput,
-  FsfieldOutput,
-} from "../../api/types/types.generated";
 import { ControllerRenderProps, Noop } from "react-hook-form";
 // import AutoComplete from "react-native-autocomplete-input";
 // import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";

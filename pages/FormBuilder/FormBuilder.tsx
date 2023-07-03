@@ -4,31 +4,26 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProps } from "../../App";
-import { FormInputV1 } from "../../api/types/types.generated";
+import {
+  FormDetailsInput,
+  FormInput,
+  FormInputV1,
+} from "../../api/types/types.generated";
 import { useInsertForm } from "../../api/logic/forms";
+import { FormV1Wrapper } from "../../utility/formV1Wrapper";
 
 export function FormBuilder() {
   let navigation = useNavigation<AllNavigationProps>();
-  // const { data } = useGetFormStructure();
+
   const { putFormMutation, result } = useInsertForm();
 
-  // type ImportTypes = Record<typeof fieldNames[number], boolean>;
-  // type LocalTypes = { name: string };
-  // type FormValues = ImportTypes & LocalTypes;
-
-  // { [Property in keyof FormInputV1]: boolean };
-  type FormValues = Record<keyof FormInputV1, boolean>;
-
-  // TODO: This needs to be updated
-  const allFields: (keyof FormValues)[] = [
-    "congestion",
-    "disciplineAndMaxDepth",
-    "maxDepth",
-    "reportName",
-    "visibility",
-    "weather",
-    "wildlife",
-  ];
+  type ImportValues = Record<
+    keyof FormInputV1,
+    { active: boolean; fieldOrder: number }
+  >;
+  let allFields = FormV1Wrapper.getKeyArray();
+  type LocalValues = { name: string };
+  type FormValues = ImportValues & LocalValues;
 
   const {
     control,
@@ -37,7 +32,20 @@ export function FormBuilder() {
   } = useForm<FormValues>({});
 
   const onSubmit: SubmitHandler<FormValues> = (formData) => {
-    let newForm: FormInputV1 = {};
+    let newForm = FormV1Wrapper.createForm(formData);
+
+    const formInput: FormInput = {
+      v1: newForm,
+    };
+
+    // TODO: Add originalform and previousform for "editing"?
+    const formDetailsInput: FormDetailsInput = {
+      formName: "memes",
+      // originalFormId: _,
+      // previousFormId: _
+    };
+
+    putFormMutation({ variables: { formDetailsInput, formInput } });
   };
 
   return (
@@ -53,7 +61,7 @@ export function FormBuilder() {
               <View>
                 <CoreText>{fieldName}</CoreText>
                 <Checkbox
-                  checked={value}
+                  checked={value.active}
                   onChange={(e) => onChange(!e)}
                   disabled={false}
                 />

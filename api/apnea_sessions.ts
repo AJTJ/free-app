@@ -6,6 +6,9 @@ export const ApneaSession = gql(`
     sessionName
     startTime
     endTime
+    report {
+      ...Report
+    }
   }
 `);
 
@@ -52,7 +55,16 @@ export const INSERT_PREPOPULATED_APNEA_SESSION = gql(`
   }
 `);
 
-export const INSERT_APNEA_SESSIONS = gql(`
+export const INSERT_APNEA_SESSION = gql(`
+  mutation insertApneaSession($apneaSessionInput: ApneaSessionInput!, $reportDetails: ReportDetailsInput) {
+    insertApneaSession(apneaSessionInput: $apneaSessionInput, reportDetails: $reportDetails)
+     {
+      ...ApneaSessionWithDives
+    }
+  }
+`);
+
+export const GET_APNEA_SESSIONS = gql(`
   query ApneaSessions {
     apneaSessions(queryParams: {}) {
       ...MyApneaSessionConnection

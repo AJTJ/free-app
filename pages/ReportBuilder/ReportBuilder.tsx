@@ -6,7 +6,7 @@ import {
   LandingTextInput,
   LinearGradient,
 } from "../../components";
-import React from "react";
+import React, { useState } from "react";
 import { RootStackParamList } from "../../App";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { View } from "react-native";
@@ -14,24 +14,65 @@ import { FieldTypeComponent } from "./FieldTypeComponent";
 import { ReportFieldTypesV1, FormV1Wrapper } from "../../utility/formV1Wrapper";
 import { omitDeep } from "@apollo/client/utilities";
 import { useInsertReport } from "../../api/logic/forms";
-import { ReportDetailsInput } from "../../api/types/types.generated";
+import {
+  ApneaSessionInput,
+  FormInput,
+  ReportDetailsInput,
+} from "../../api/types/types.generated";
+import { useInsertApneaSession } from "../../api/logic";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export type Props = NativeStackScreenProps<RootStackParamList, "ReportBuilder">;
 
 export function ReportBuilder(props: Props) {
+  const [mode, setMode] = useState<"date" | "time">("date");
+  const [show, setShow] = useState(false);
+
+  const showMode = (currentMode: "date" | "time") => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode("date");
+  };
+
+  const showTimepicker = () => {
+    showMode("time");
+  };
+
   const { insertReportMutation, result } = useInsertReport();
+  const { insertSession } = useInsertApneaSession();
   let form = props.route.params.form;
   type FormValueTypes = typeof form.formData;
   const sortedFields = FormV1Wrapper.getSortedFields(form.formData);
 
-  const defaultValues: ReportFieldTypesV1 = {
+  const reportDefaultValues: ReportFieldTypesV1 = {
     CongestionOutputV1: { value: undefined },
     DisciplineAndMaxDepthOutputV1: { disciplineMaxDepth: undefined },
     MaxDepthOutputV1: { maxDepth: undefined },
-    ReportNameOutputV1: { name: undefined },
+    SessionNameOutputV1: { name: undefined },
     VisibilityOutputV1: { value: undefined },
     WeatherOutputV1: { wind: undefined },
     WildlifeOutputV1: { value: undefined },
+  };
+
+  const sessionInputDefaultValus = {
+    startTime: undefined,
+    endTime: undefined,
+    sessionName: undefined,
+  };
+
+  const defaultValues = {
+    ...reportDefaultValues,
+    ...sessionInputDefaultValus,
+  };
+
+  type SessionInputTypes = {
+    startTime: Date;
+    endTime: Date;
+    sessionName: string;
   };
 
   const {
@@ -39,20 +80,34 @@ export function ReportBuilder(props: Props) {
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm<ReportFieldTypesV1>({ defaultValues });
+  } = useForm<ReportFieldTypesV1 & SessionInputTypes>({ defaultValues });
 
   console.log({ watch: watch() });
 
-  const onSubmit: SubmitHandler<ReportFieldTypesV1> = (formData) => {
+  const onSubmit: SubmitHandler<ReportFieldTypesV1 & SessionInputTypes> = (
+    formData
+  ) => {
     let newReport = FormV1Wrapper.createReport(formData);
 
-    // let reportDetails: ReportDetailsInput = {
-    //   formId: form.id,
-    //   // TODO: Allow "editing"
-    //   // originalFormId?: InputMaybe<Scalars["UUID"]>;
-    //   // previousReportId?: InputMaybe<Scalars["UUID"]>;
-    //   sessionId
-    // };
+    let sessionReport: FormInput = {
+      v1: newReport,
+    };
+
+    let apneaSessionInput: ApneaSessionInput = {
+      startTime: formData.startTime,
+      endTime: formData.endTime,
+      sessionName: newReport.sessionName?.name,
+      sessionReport,
+    };
+
+    let reportDetails: ReportDetailsInput = {
+      formId: form.id,
+      // TODO: Allow "editing" eventually
+      // originalFormId?: InputMaybe<Scalars["UUID"]>;
+      // previousReportId?: InputMaybe<Scalars["UUID"]>;
+    };
+
+    insertSession({ variables: { apneaSessionInput, reportDetails } });
 
     // insertReportMutation({variables: {reportInput: newReport, reportDetailsInput: })
   };
@@ -60,6 +115,36 @@ export function ReportBuilder(props: Props) {
   return (
     <LinearGradient>
       <CoreText>Report Builder: {form.formName}</CoreText>
+      <Controller
+        name={"startTime"}
+        control={control}
+        render={({ field: { onChange, onBlur, value } }) => {
+          return (
+            <SafeAreaView>
+              <Btn
+                onPress={showDatepicker}
+                title="Show date picker!"
+                type="primary"
+              />
+              <Btn
+                onPress={showTimepicker}
+                title="Show time picker!"
+                type="primary"
+              />
+              <CoreText>selected: {value.toLocaleString()}</CoreText>
+              {show && (
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={value}
+                  mode={mode}
+                  is24Hour={true}
+                  onChange={onChange}
+                />
+              )}
+            </SafeAreaView>
+          );
+        }}
+      />
       {sortedFields.map((field, i) => {
         console.log({ sortedFields });
         return (

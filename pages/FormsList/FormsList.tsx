@@ -50,9 +50,9 @@ export function FormsList() {
                   <CoreText>maxDepth</CoreText>
                 </View>
               )}
-              {f.formData.reportName && (
+              {f.formData.sessionName && (
                 <View>
-                  <CoreText>reportName</CoreText>
+                  <CoreText>sessionName</CoreText>
                 </View>
               )}
               {f.formData.visibility && (

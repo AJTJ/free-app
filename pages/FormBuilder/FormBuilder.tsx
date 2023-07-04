@@ -38,7 +38,7 @@ export function FormBuilder() {
       active: false,
       fieldOrder: Infinity,
     },
-    ReportNameOutputV1: {
+    SessionNameOutputV1: {
       active: false,
       fieldOrder: Infinity,
     },

@@ -4,6 +4,7 @@
     "@expo/webpack-config": "^0.17.0",
     "@hookform/resolvers": "^3.1.1",
     "@maplibre/maplibre-react-native": "^9.0.1",
+    "@react-native-community/datetimepicker": "6.2.0",
     "@react-navigation/native": "^6.0.12",
     "@react-navigation/native-stack": "^6.8.0",
     "@types/omit-deep": "^0.3.0",

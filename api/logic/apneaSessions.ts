@@ -1,12 +1,13 @@
 import { useMutation, useQuery } from "@apollo/client";
 import {
   ApneaSessionsDocument,
+  InsertApneaSessionDocument,
   InsertPrepopulatedApneaSessionDocument,
 } from "../apnea_sessions.generated";
 
 // https://www.apollographql.com/docs/react/pagination/cursor-based/#relay-style-cursor-pagination
-export const useInsertPrePopulatedDiveSession = () => {
-  const [addSession, { loading, error, data, client }] = useMutation(
+export const useInsertPrePopulatedApneaSession = () => {
+  const [insertSession, { loading, error, data, client }] = useMutation(
     InsertPrepopulatedApneaSessionDocument,
     {
       refetchQueries: [ApneaSessionsDocument],
@@ -14,7 +15,19 @@ export const useInsertPrePopulatedDiveSession = () => {
   );
 
   let result = { loading, error, data };
-  return { addSession, result, client };
+  return { insertSession, result, client };
+};
+
+export const useInsertApneaSession = () => {
+  const [insertSession, { loading, error, data, client }] = useMutation(
+    InsertApneaSessionDocument,
+    {
+      refetchQueries: [ApneaSessionsDocument],
+    }
+  );
+
+  let result = { loading, error, data };
+  return { insertSession, result, client };
 };
 
 export const useGetDiveSessions = () => {

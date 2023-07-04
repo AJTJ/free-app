@@ -8,7 +8,7 @@ import { AllNavigationProps } from "../../App";
 import { Btn, CoreText, LinearGradient } from "../../components";
 import { RecentSessions } from "./recent_sessions";
 import { useAllUsers, useLogoutUser } from "../../api/logic/user";
-import { useInsertPrePopulatedDiveSession } from "../../api/logic";
+import { useInsertPrePopulatedApneaSession } from "../../api/logic";
 import { useFragment } from "@apollo/client";
 import { User } from "../../api/auth";
 
@@ -20,7 +20,7 @@ export function Home() {
   console.log({ logoutUserResult });
 
   let { getAllUsers } = useAllUsers();
-  let { addSession } = useInsertPrePopulatedDiveSession();
+  let { insertSession } = useInsertPrePopulatedApneaSession();
 
   const { complete, data } = useFragment({
     fragment: User,
@@ -43,9 +43,9 @@ export function Home() {
     logoutUser().catch((e) => console.error(e));
   };
 
-  const handleAddSession = async () => {
+  const handleInsertSession = async () => {
     try {
-      await addSession();
+      await insertSession();
     } catch (error) {
       console.error(error);
     }
@@ -101,7 +101,7 @@ export function Home() {
             type="primary"
             hasIcon={false}
             disabled={false}
-            onPress={handleAddSession}
+            onPress={handleInsertSession}
           />
           <Btn
             title="My Dive Loggers"

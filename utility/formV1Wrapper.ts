@@ -6,7 +6,7 @@ import {
   CongestionOutputV1,
   DisciplineAndMaxDepthOutputV1,
   MaxDepthOutputV1,
-  ReportNameOutputV1,
+  SessionNameOutputV1,
   VisibilityOutputV1,
   WeatherOutputV1,
   WildlifeOutputV1,
@@ -16,7 +16,7 @@ export const allFieldsV1 = [
   "CongestionOutputV1",
   "DisciplineAndMaxDepthOutputV1",
   "MaxDepthOutputV1",
-  "ReportNameOutputV1",
+  "SessionNameOutputV1",
   "VisibilityOutputV1",
   "WeatherOutputV1",
   "WildlifeOutputV1",
@@ -31,7 +31,7 @@ export type ReportFieldTypesV1 = {
   CongestionOutputV1: CongestionOutputV1;
   DisciplineAndMaxDepthOutputV1: DisciplineAndMaxDepthOutputV1;
   MaxDepthOutputV1: MaxDepthOutputV1;
-  ReportNameOutputV1: ReportNameOutputV1;
+  SessionNameOutputV1: SessionNameOutputV1;
   VisibilityOutputV1: VisibilityOutputV1;
   WeatherOutputV1: WeatherOutputV1;
   WildlifeOutputV1: WildlifeOutputV1;
@@ -67,11 +67,11 @@ export class FormV1Wrapper {
         order: form.maxDepth.fieldOrder || Infinity,
       });
     }
-    if (form.reportName?.__typename) {
+    if (form.sessionName?.__typename) {
       fieldArray.push({
-        name: form.reportName.__typename,
-        field: omitDeep(form.reportName, "__typename"),
-        order: form.reportName.fieldOrder || Infinity,
+        name: form.sessionName.__typename,
+        field: omitDeep(form.sessionName, "__typename"),
+        order: form.sessionName.fieldOrder || Infinity,
       });
     }
     if (form.visibility?.__typename) {
@@ -128,8 +128,8 @@ export class FormV1Wrapper {
       maxDepth: f.MaxDepthOutputV1.active
         ? { fieldOrder: f.MaxDepthOutputV1.fieldOrder }
         : undefined,
-      reportName: f.ReportNameOutputV1.active
-        ? { fieldOrder: f.ReportNameOutputV1.fieldOrder }
+      sessionName: f.SessionNameOutputV1.active
+        ? { fieldOrder: f.SessionNameOutputV1.fieldOrder }
         : undefined,
       visibility: f.VisibilityOutputV1.active
         ? { fieldOrder: f.VisibilityOutputV1.fieldOrder }
@@ -150,7 +150,7 @@ export class FormV1Wrapper {
       congestion: fieldTypes.CongestionOutputV1,
       disciplineAndMaxDepth: fieldTypes.DisciplineAndMaxDepthOutputV1,
       maxDepth: fieldTypes.MaxDepthOutputV1,
-      reportName: fieldTypes.ReportNameOutputV1,
+      sessionName: fieldTypes.SessionNameOutputV1,
       visibility: fieldTypes.VisibilityOutputV1,
       weather: fieldTypes.WeatherOutputV1,
       wildlife: fieldTypes.WildlifeOutputV1,

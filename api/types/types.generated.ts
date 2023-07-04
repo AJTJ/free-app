@@ -19,9 +19,10 @@ export type ApneaSession = {
   __typename?: 'ApneaSession';
   createdAt: Scalars['NaiveDateTime'];
   dives: Array<Dive>;
-  endTime: Scalars['NaiveDateTime'];
+  endTime?: Maybe<Scalars['NaiveDateTime']>;
   id: Scalars['UUID'];
   isActive: Scalars['Boolean'];
+  report: Report;
   sessionName?: Maybe<Scalars['String']>;
   startTime: Scalars['NaiveDateTime'];
   updatedAt: Scalars['NaiveDateTime'];
@@ -63,8 +64,9 @@ export type ApneaSessionFilter = {
 };
 
 export type ApneaSessionInput = {
-  endTime: Scalars['NaiveDateTime'];
+  endTime?: InputMaybe<Scalars['NaiveDateTime']>;
   sessionName?: InputMaybe<Scalars['String']>;
+  sessionReport?: InputMaybe<FormInput>;
   startTime: Scalars['NaiveDateTime'];
 };
 
@@ -175,7 +177,7 @@ export type FormInputV1 = {
   congestion?: InputMaybe<CongestionInputV1>;
   disciplineAndMaxDepth?: InputMaybe<DisciplineAndMaxDepthInputV1>;
   maxDepth?: InputMaybe<MaxDepthInputV1>;
-  reportName?: InputMaybe<ReportNameInputV1>;
+  sessionName?: InputMaybe<SessionNameInputV1>;
   visibility?: InputMaybe<VisibilityInputV1>;
   weather?: InputMaybe<WeatherInputV1>;
   wildlife?: InputMaybe<WildlifeInputV1>;
@@ -188,7 +190,7 @@ export type FormOutputV1 = {
   congestion?: Maybe<CongestionOutputV1>;
   disciplineAndMaxDepth?: Maybe<DisciplineAndMaxDepthOutputV1>;
   maxDepth?: Maybe<MaxDepthOutputV1>;
-  reportName?: Maybe<ReportNameOutputV1>;
+  sessionName?: Maybe<SessionNameOutputV1>;
   visibility?: Maybe<VisibilityOutputV1>;
   weather?: Maybe<WeatherOutputV1>;
   wildlife?: Maybe<WildlifeOutputV1>;
@@ -241,6 +243,7 @@ export type Mutation = {
 
 export type MutationInsertApneaSessionArgs = {
   apneaSessionInput: ApneaSessionInput;
+  reportDetails?: InputMaybe<ReportDetailsInput>;
 };
 
 
@@ -259,6 +262,7 @@ export type MutationInsertFormArgs = {
 export type MutationInsertReportArgs = {
   reportDetailsInput: ReportDetailsInput;
   reportInput: FormInput;
+  sessionId: Scalars['UUID'];
 };
 
 
@@ -371,7 +375,6 @@ export type ReportDetailsInput = {
   formId: Scalars['UUID'];
   originalFormId?: InputMaybe<Scalars['UUID']>;
   previousReportId?: InputMaybe<Scalars['UUID']>;
-  sessionId: Scalars['UUID'];
 };
 
 /** An edge in a connection. */
@@ -383,13 +386,13 @@ export type ReportEdge = {
   node: Report;
 };
 
-export type ReportNameInputV1 = {
+export type SessionNameInputV1 = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
 };
 
-export type ReportNameOutputV1 = {
-  __typename?: 'ReportNameOutputV1';
+export type SessionNameOutputV1 = {
+  __typename?: 'SessionNameOutputV1';
   fieldOrder?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
 };

@@ -4,7 +4,7 @@ import { gql } from "@apollo/client";
 
 export const FormV1 = gql(`
   fragment FormV1 on FormOutputV1 {
-    reportName {
+    sessionName {
       name
       fieldOrder
     }
@@ -106,8 +106,8 @@ export const INSERT_FORM = gql(`
 `);
 
 export const INSERT_REPORT = gql(`
-  mutation insertReport($reportDetailsInput: ReportDetailsInput!, $reportInput: FormInput!) {
-    insertReport( reportDetailsInput: $reportDetailsInput, reportInput: $reportInput ) {
+  mutation insertReport($sessionId: UUID!, $reportDetailsInput: ReportDetailsInput!, $reportInput: FormInput!) {
+    insertReport( sessionId: $sessionId, reportDetailsInput: $reportDetailsInput, reportInput: $reportInput ) {
       ...Report
     }
   }

@@ -7,7 +7,7 @@ import {
   DisciplineAndMaxDepthOutputV1,
   Form,
   MaxDepthOutputV1,
-  ReportNameOutputV1,
+  SessionNameOutputV1,
   VisibilityOutputV1,
   WeatherOutputV1,
   WildlifeOutputV1,
@@ -21,7 +21,7 @@ type AllFields =
   | CongestionOutputV1
   | DisciplineAndMaxDepthOutputV1
   | MaxDepthOutputV1
-  | ReportNameOutputV1
+  | SessionNameOutputV1
   | VisibilityOutputV1
   | WeatherOutputV1
   | WildlifeOutputV1;
@@ -93,7 +93,7 @@ export const FieldTypeComponent = (props: ParentProps) => {
           </View>
         );
 
-      case "ReportNameOutputV1":
+      case "SessionNameOutputV1":
         return (
           <View>
             <CoreText>Memes</CoreText>

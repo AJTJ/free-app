@@ -83,13 +83,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "NaiveDateTime",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "NaiveDateTime",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -120,6 +116,22 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "report",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Report",
                 "ofType": null
               }
             },
@@ -399,13 +411,9 @@
             "name": "endTime",
             "description": null,
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "NaiveDateTime",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "NaiveDateTime",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -417,6 +425,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "sessionReport",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "FormInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -1408,11 +1428,11 @@
             "deprecationReason": null
           },
           {
-            "name": "reportName",
+            "name": "sessionName",
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "ReportNameInputV1",
+              "name": "SessionNameInputV1",
               "ofType": null
             },
             "defaultValue": null,
@@ -1518,12 +1538,12 @@
             "deprecationReason": null
           },
           {
-            "name": "reportName",
+            "name": "sessionName",
             "description": null,
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "ReportNameOutputV1",
+              "name": "SessionNameOutputV1",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1838,6 +1858,18 @@
                 "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
+              },
+              {
+                "name": "reportDetails",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ReportDetailsInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
               }
             ],
             "type": {
@@ -1979,6 +2011,22 @@
                   "ofType": {
                     "kind": "INPUT_OBJECT",
                     "name": "FormInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "sessionId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "UUID",
                     "ofType": null
                   }
                 },
@@ -2820,22 +2868,6 @@
             "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
-          },
-          {
-            "name": "sessionId",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "UUID",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
           }
         ],
         "interfaces": null,
@@ -2887,7 +2919,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "ReportNameInputV1",
+        "name": "SessionNameInputV1",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -2922,7 +2954,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "ReportNameOutputV1",
+        "name": "SessionNameOutputV1",
         "description": null,
         "fields": [
           {

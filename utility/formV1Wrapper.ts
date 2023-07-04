@@ -1,4 +1,4 @@
-import { FormOutputFragment, FormV1Fragment } from "../api/forms.generated";
+import { FormOutputFragment } from "../api/forms.generated";
 import { FormInputV1, FormOutputV1 } from "../api/types/types.generated";
 // import omitDeep from "omit-deep";
 import { omitDeep } from "@apollo/client/utilities";
@@ -11,6 +11,7 @@ import {
   WeatherOutputV1,
   WildlifeOutputV1,
 } from "../api/types/types.generated";
+import { number } from "zod";
 
 export const allFieldsV1 = [
   "CongestionOutputV1",
@@ -39,8 +40,33 @@ export type ReportFieldTypesV1 = {
 
 export class FormV1Wrapper {
   readonly formOutput?: FormOutputV1;
-  constructor(formOutput: FormOutputV1) {
+  constructor(formOutput?: FormOutputV1) {
     this.formOutput = formOutput;
+  }
+
+  static getForm(form?: FormOutputV1): FormInputV1 {
+    let congestion: CongestionOutputV1 = { ...form?.congestion };
+    // let disciplineMaxDepth: InnerDisciplineMaxDepthInputV1[] = [];
+    let disciplineAndMaxDepth: DisciplineAndMaxDepthOutputV1 = {
+      ...form?.disciplineAndMaxDepth,
+    };
+    let maxDepth: MaxDepthOutputV1 = { ...form?.maxDepth };
+    let sessionName: SessionNameOutputV1 = { ...form?.sessionName };
+    let visibility: VisibilityOutputV1 = { ...form?.visibility };
+    let weather: WeatherOutputV1 = { ...form?.weather };
+    let wildlife: WildlifeOutputV1 = { ...form?.wildlife };
+
+    let newForm: FormInputV1 = {
+      congestion,
+      disciplineAndMaxDepth,
+      maxDepth,
+      sessionName,
+      visibility,
+      weather,
+      wildlife,
+    };
+
+    return newForm;
   }
 
   static getSortedFields(form: FormOutputFragment) {
@@ -113,34 +139,24 @@ export class FormV1Wrapper {
   }
 
   static createForm(
-    f: Record<
-      typeof allFieldsV1[number],
+    form_input: Record<
+      keyof FormInputV1,
       { active: boolean; fieldOrder: number }
     >
   ): FormInputV1 {
-    let newForm: FormInputV1 = {
-      congestion: f.CongestionOutputV1.active
-        ? { fieldOrder: f.CongestionOutputV1.fieldOrder }
-        : undefined,
-      disciplineAndMaxDepth: f.DisciplineAndMaxDepthOutputV1.active
-        ? { fieldOrder: f.DisciplineAndMaxDepthOutputV1.fieldOrder }
-        : undefined,
-      maxDepth: f.MaxDepthOutputV1.active
-        ? { fieldOrder: f.MaxDepthOutputV1.fieldOrder }
-        : undefined,
-      sessionName: f.SessionNameOutputV1.active
-        ? { fieldOrder: f.SessionNameOutputV1.fieldOrder }
-        : undefined,
-      visibility: f.VisibilityOutputV1.active
-        ? { fieldOrder: f.VisibilityOutputV1.fieldOrder }
-        : undefined,
-      weather: f.WeatherOutputV1.active
-        ? { fieldOrder: f.WeatherOutputV1.fieldOrder }
-        : undefined,
-      wildlife: f.WildlifeOutputV1.active
-        ? { fieldOrder: f.WildlifeOutputV1.fieldOrder }
-        : undefined,
-    };
+    let newForm = FormV1Wrapper.getForm();
+    type ValType = { active: boolean; fieldOrder: number };
+
+    let formEntries = Object.entries(form_input) as [
+      keyof typeof newForm,
+      ValType
+    ][];
+
+    formEntries.forEach(([fieldName, val]) => {
+      if (val.active) {
+        newForm[fieldName] = { fieldOrder: val.fieldOrder };
+      }
+    });
 
     return newForm;
   }
@@ -176,3 +192,28 @@ export class FormV1Wrapper {
 // If you wish to assume otherwise, this utility is often helpful:
 // // A signature for `Object.keys` that assumes the only keys are the ones indicated by the type
 // const unsafeKeys = Object.keys as <T>(obj: T) => Array<keyof T>;
+
+// let newForm: FormInputV1 = {
+//   congestion: f.CongestionOutputV1.active
+//     ? { fieldOrder: f.CongestionOutputV1.fieldOrder }
+//     : undefined,
+//   disciplineAndMaxDepth: f.DisciplineAndMaxDepthOutputV1.active
+//     ? { fieldOrder: f.DisciplineAndMaxDepthOutputV1.fieldOrder }
+//     : undefined,
+//   maxDepth: f.MaxDepthOutputV1.active
+//     ? { fieldOrder: f.MaxDepthOutputV1.fieldOrder }
+//     : undefined,
+//   sessionName: f.SessionNameOutputV1.active
+//     ? { fieldOrder: f.SessionNameOutputV1.fieldOrder }
+//     : undefined,
+//   visibility: f.VisibilityOutputV1.active
+//     ? { fieldOrder: f.VisibilityOutputV1.fieldOrder }
+//     : undefined,
+//   weather: f.WeatherOutputV1.active
+//     ? { fieldOrder: f.WeatherOutputV1.fieldOrder }
+//     : undefined,
+//   wildlife: f.WildlifeOutputV1.active
+//     ? { fieldOrder: f.WildlifeOutputV1.fieldOrder }
+//     : undefined,
+// };
+// return newForm;

@@ -30,7 +30,7 @@ export const useInsertApneaSession = () => {
   return { insertSession, result, client };
 };
 
-export const useGetDiveSessions = () => {
+export const useGetApneaSessions = () => {
   const { loading, error, data, client } = useQuery(ApneaSessionsDocument);
 
   return { loading, error, data, client };

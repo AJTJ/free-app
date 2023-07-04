@@ -22,7 +22,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "NaiveDateTime",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -84,7 +84,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "NaiveDateTime",
+              "name": "DateTime",
               "ofType": null
             },
             "isDeprecated": false,
@@ -127,13 +127,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "Report",
-                "ofType": null
-              }
+              "kind": "OBJECT",
+              "name": "Report",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -159,7 +155,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "NaiveDateTime",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -175,7 +171,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "NaiveDateTime",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -317,7 +313,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "NaiveDateTime",
+              "name": "DateTime",
               "ofType": null
             },
             "defaultValue": null,
@@ -329,7 +325,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "NaiveDateTime",
+              "name": "DateTime",
               "ofType": null
             },
             "defaultValue": null,
@@ -377,7 +373,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "NaiveDateTime",
+              "name": "DateTime",
               "ofType": null
             },
             "defaultValue": null,
@@ -389,7 +385,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "NaiveDateTime",
+              "name": "DateTime",
               "ofType": null
             },
             "defaultValue": null,
@@ -412,7 +408,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "NaiveDateTime",
+              "name": "DateTime",
               "ofType": null
             },
             "defaultValue": null,
@@ -451,7 +447,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "NaiveDateTime",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -475,7 +471,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "NaiveDateTime",
+              "name": "DateTime",
               "ofType": null
             },
             "defaultValue": null,
@@ -527,7 +523,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "NaiveDateTime",
+              "name": "DateTime",
               "ofType": null
             },
             "defaultValue": null,
@@ -616,6 +612,16 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
+        "name": "DateTime",
+        "description": "Implement the DateTime<Utc> scalar\n\nThe input/output is a string in RFC3339 format.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -760,7 +766,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "NaiveDateTime",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -868,7 +874,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "NaiveDateTime",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -904,7 +910,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "NaiveDateTime",
+              "name": "DateTime",
               "ofType": null
             },
             "defaultValue": null,
@@ -1000,7 +1006,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "NaiveDateTime",
+              "name": "DateTime",
               "ofType": null
             },
             "defaultValue": null,
@@ -1218,7 +1224,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "NaiveDateTime",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -1298,7 +1304,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "NaiveDateTime",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -2301,16 +2307,6 @@
       },
       {
         "kind": "SCALAR",
-        "name": "NaiveDateTime",
-        "description": "ISO 8601 combined date and time without timezone.\n\n# Examples\n\n* `2015-07-01T08:59:60.123`,",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "SCALAR",
         "name": "NaiveTime",
         "description": "ISO 8601 time without timezone.\nAllows for the nanosecond precision and optional leap second representation.\nFormat: %H:%M:%S%.f\n\n# Examples\n\n* `08:59:60.123`",
         "fields": null,
@@ -2671,7 +2667,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "NaiveDateTime",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -2735,7 +2731,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "NaiveDateTime",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -3066,7 +3062,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "NaiveDateTime",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -3146,7 +3142,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "NaiveDateTime",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -3186,7 +3182,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "NaiveDateTime",
+                "name": "DateTime",
                 "ofType": null
               }
             },

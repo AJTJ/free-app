@@ -10,22 +10,22 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  NaiveDateTime: any;
+  DateTime: any;
   NaiveTime: any;
   UUID: any;
 };
 
 export type ApneaSession = {
   __typename?: 'ApneaSession';
-  createdAt: Scalars['NaiveDateTime'];
+  createdAt: Scalars['DateTime'];
   dives: Array<Dive>;
-  endTime?: Maybe<Scalars['NaiveDateTime']>;
+  endTime?: Maybe<Scalars['DateTime']>;
   id: Scalars['UUID'];
   isActive: Scalars['Boolean'];
-  report: Report;
+  report?: Maybe<Report>;
   sessionName?: Maybe<Scalars['String']>;
-  startTime: Scalars['NaiveDateTime'];
-  updatedAt: Scalars['NaiveDateTime'];
+  startTime: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
 };
 
 
@@ -54,28 +54,28 @@ export type ApneaSessionEdge = {
 };
 
 export type ApneaSessionFilter = {
-  createdAt?: InputMaybe<Scalars['NaiveDateTime']>;
-  endTime?: InputMaybe<Scalars['NaiveDateTime']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  endTime?: InputMaybe<Scalars['DateTime']>;
   isActive?: InputMaybe<Scalars['Boolean']>;
   sessionId?: InputMaybe<Scalars['UUID']>;
   sessionName?: InputMaybe<Scalars['String']>;
-  startTime?: InputMaybe<Scalars['NaiveDateTime']>;
-  updatedAt?: InputMaybe<Scalars['NaiveDateTime']>;
+  startTime?: InputMaybe<Scalars['DateTime']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type ApneaSessionInput = {
-  endTime?: InputMaybe<Scalars['NaiveDateTime']>;
+  endTime?: InputMaybe<Scalars['DateTime']>;
   sessionName?: InputMaybe<Scalars['String']>;
   sessionReport?: InputMaybe<FormInput>;
-  startTime: Scalars['NaiveDateTime'];
+  startTime: Scalars['DateTime'];
 };
 
 export type ApneaSessionUpdate = {
-  endTime?: InputMaybe<Scalars['NaiveDateTime']>;
+  endTime?: InputMaybe<Scalars['DateTime']>;
   id: Scalars['UUID'];
   isActive?: InputMaybe<Scalars['Boolean']>;
   sessionName?: InputMaybe<Scalars['String']>;
-  startTime?: InputMaybe<Scalars['NaiveDateTime']>;
+  startTime?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type CongestionInputV1 = {
@@ -110,7 +110,7 @@ export enum DisciplinesEnum {
 
 export type Dive = {
   __typename?: 'Dive';
-  createdAt: Scalars['NaiveDateTime'];
+  createdAt: Scalars['DateTime'];
   depth?: Maybe<Scalars['Float']>;
   disciplineType?: Maybe<Scalars['String']>;
   distance?: Maybe<Scalars['Float']>;
@@ -118,12 +118,12 @@ export type Dive = {
   diveTime?: Maybe<Scalars['Int']>;
   id: Scalars['UUID'];
   isActive: Scalars['Boolean'];
-  updatedAt: Scalars['NaiveDateTime'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type DiveFilter = {
   apneaSession?: InputMaybe<Scalars['UUID']>;
-  createdAt?: InputMaybe<Scalars['NaiveDateTime']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
   depth?: InputMaybe<Scalars['Float']>;
   disciplineType?: InputMaybe<Scalars['String']>;
   distance?: InputMaybe<Scalars['Float']>;
@@ -131,7 +131,7 @@ export type DiveFilter = {
   diveTime?: InputMaybe<Scalars['NaiveTime']>;
   id?: InputMaybe<Scalars['UUID']>;
   isActive?: InputMaybe<Scalars['Boolean']>;
-  updatedAt?: InputMaybe<Scalars['NaiveDateTime']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
   userId?: InputMaybe<Scalars['UUID']>;
 };
 
@@ -155,12 +155,12 @@ export type DiveUpdate = {
 
 export type Form = {
   __typename?: 'Form';
-  createdAt: Scalars['NaiveDateTime'];
+  createdAt: Scalars['DateTime'];
   formData: FormOutput;
   formName: Scalars['String'];
   id: Scalars['UUID'];
   isActive: Scalars['Boolean'];
-  updatedAt: Scalars['NaiveDateTime'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type FormDetailsInput = {
@@ -354,11 +354,11 @@ export type QueryParams = {
 
 export type Report = {
   __typename?: 'Report';
-  createdAt: Scalars['NaiveDateTime'];
+  createdAt: Scalars['DateTime'];
   id: Scalars['UUID'];
   isActive: Scalars['Boolean'];
   reportData: FormOutput;
-  updatedAt: Scalars['NaiveDateTime'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type ReportConnection = {
@@ -400,14 +400,14 @@ export type SessionNameOutputV1 = {
 export type User = {
   __typename?: 'User';
   apneaSessions: ApneaSessionConnection;
-  createdAt: Scalars['NaiveDateTime'];
+  createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   hashedPassword: Scalars['String'];
   id: Scalars['UUID'];
   isActive: Scalars['Boolean'];
-  lastLogin: Scalars['NaiveDateTime'];
+  lastLogin: Scalars['DateTime'];
   passwordSalt: Array<Scalars['Int']>;
-  updatedAt: Scalars['NaiveDateTime'];
+  updatedAt: Scalars['DateTime'];
   username: Scalars['String'];
 };
 

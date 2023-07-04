@@ -22,46 +22,27 @@ export function FormBuilder() {
   let navigation = useNavigation<AllNavigationProps>();
   const { insertFormMutation, result } = useInsertForm();
 
-  type OtherTypes = { formName: string };
-  type FormTypes = FormFieldTypesV1 & OtherTypes;
+  let emptyForm = FormV1Wrapper.getForm();
 
-  const defaultValues: FormTypes = {
-    CongestionOutputV1: {
-      active: false,
-      fieldOrder: Infinity,
-    },
-    DisciplineAndMaxDepthOutputV1: {
-      active: false,
-      fieldOrder: Infinity,
-    },
-    MaxDepthOutputV1: {
-      active: false,
-      fieldOrder: Infinity,
-    },
-    SessionNameOutputV1: {
-      active: false,
-      fieldOrder: Infinity,
-    },
-    VisibilityOutputV1: {
-      active: false,
-      fieldOrder: Infinity,
-    },
-    WeatherOutputV1: {
-      active: false,
-      fieldOrder: Infinity,
-    },
-    WildlifeOutputV1: {
-      active: false,
-      fieldOrder: Infinity,
-    },
-    formName: "",
-  };
+  type KeyType = keyof typeof emptyForm;
+
+  type FieldTypes = Record<KeyType, { active: boolean; fieldOrder: number }>;
+
+  let fieldDefaults = Object.keys(emptyForm).reduce<FieldTypes>((acc, cur) => {
+    return { ...acc, [cur]: { active: false, fieldOrder: Infinity } };
+  }, {} as FieldTypes);
+
+  type OtherTypes = { formName: string };
+  let otherTypeDefaults = { formName: "" };
+  type FormTypes = FieldTypes & OtherTypes;
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormTypes>({ defaultValues });
+  } = useForm<FormTypes>({
+    defaultValues: { ...fieldDefaults, ...otherTypeDefaults },
+  });
 
   console.log({ errors });
 
@@ -90,6 +71,11 @@ export function FormBuilder() {
       });
   };
 
+  let fieldsObject = Object.entries(emptyForm) as [
+    KeyType,
+    { active: boolean; fieldOrder: number }
+  ][];
+
   return (
     <LinearGradient>
       <CoreText>Form builder</CoreText>
@@ -110,7 +96,7 @@ export function FormBuilder() {
           </>
         )}
       />
-      {allFieldsV1.map((fieldName, i) => {
+      {fieldsObject.map(([fieldName, val], i) => {
         return (
           <Controller
             key={fieldName + i}

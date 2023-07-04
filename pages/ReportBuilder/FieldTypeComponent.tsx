@@ -57,17 +57,19 @@ const FieldNumberInput = (props: ChildProps) => {
 //   };
 
 const CongestionComponent = (props: ChildProps) => {
-  console.log("__typaname: ", props);
   if (props.name === "CongestionOutputV1") {
     let onChangeText = (e: string) => {
       const cur = props.value;
+      let numVal = Number(e);
+      console.log({ numVal });
       let newValue = {
-        value: e,
+        value: numVal,
         __typename: cur.__typename,
         fieldOrder: cur.fieldOrder,
       };
       props.onChange(newValue);
     };
+
     return <NumberInput onBlur={props.onBlur} onChangeText={onChangeText} />;
   } else {
     return null;
@@ -75,7 +77,6 @@ const CongestionComponent = (props: ChildProps) => {
 };
 
 export const FieldTypeComponent = (props: ParentProps) => {
-  console.log("THE NAME:", props.name);
   const renderComponents = () => {
     switch (props.name) {
       case "CongestionOutputV1":

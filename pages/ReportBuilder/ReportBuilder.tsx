@@ -7,7 +7,7 @@ import {
   LinearGradient,
 } from "../../components";
 import React, { useState } from "react";
-import { RootStackParamList } from "../../App";
+import { AllNavigationProps, RootStackParamList } from "../../App";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { View } from "react-native";
 import { FieldTypeComponent } from "./FieldTypeComponent";
@@ -22,10 +22,12 @@ import {
 import { useInsertApneaSession } from "../../api/logic";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 
 export type Props = NativeStackScreenProps<RootStackParamList, "ReportBuilder">;
 
 export function ReportBuilder(props: Props) {
+  let navigation = useNavigation<AllNavigationProps>();
   const [mode, setMode] = useState<"date" | "time">("date");
   const [show, setShow] = useState(false);
 
@@ -58,20 +60,20 @@ export function ReportBuilder(props: Props) {
     WildlifeOutputV1: { value: undefined },
   };
 
-  const sessionInputDefaultValus = {
-    startTime: undefined,
+  const sessionInputDefaultValues = {
+    startTime: new Date(Date.now()).toISOString(),
     endTime: undefined,
     sessionName: undefined,
   };
 
   const defaultValues = {
     ...reportDefaultValues,
-    ...sessionInputDefaultValus,
+    ...sessionInputDefaultValues,
   };
 
   type SessionInputTypes = {
-    startTime: Date;
-    endTime: Date;
+    startTime: string;
+    endTime?: string | undefined;
     sessionName: string;
   };
 
@@ -81,8 +83,6 @@ export function ReportBuilder(props: Props) {
     handleSubmit,
     formState: { errors },
   } = useForm<ReportFieldTypesV1 & SessionInputTypes>({ defaultValues });
-
-  console.log({ watch: watch() });
 
   const onSubmit: SubmitHandler<ReportFieldTypesV1 & SessionInputTypes> = (
     formData
@@ -100,6 +100,8 @@ export function ReportBuilder(props: Props) {
       sessionReport,
     };
 
+    console.log("INPUT", apneaSessionInput);
+
     let reportDetails: ReportDetailsInput = {
       formId: form.id,
       // TODO: Allow "editing" eventually
@@ -107,7 +109,13 @@ export function ReportBuilder(props: Props) {
       // previousReportId?: InputMaybe<Scalars["UUID"]>;
     };
 
-    insertSession({ variables: { apneaSessionInput, reportDetails } });
+    insertSession({ variables: { apneaSessionInput, reportDetails } })
+      .catch((e) => {
+        console.error("insert sesh e:", e);
+      })
+      .then((d) => {
+        navigation.navigate("Home");
+      });
 
     // insertReportMutation({variables: {reportInput: newReport, reportDetailsInput: })
   };
@@ -131,14 +139,23 @@ export function ReportBuilder(props: Props) {
                 title="Show time picker!"
                 type="primary"
               />
-              <CoreText>selected: {value.toLocaleString()}</CoreText>
+              <CoreText>
+                selected:{" "}
+                {(value && (
+                  <>
+                    <CoreText>{new Date(value).toLocaleDateString()}</CoreText>
+                    <CoreText>{new Date(value).toLocaleTimeString()}</CoreText>
+                  </>
+                )) ||
+                  ""}
+              </CoreText>
               {show && (
                 <DateTimePicker
                   testID="dateTimePicker"
-                  value={value}
+                  value={new Date(value)}
                   mode={mode}
                   is24Hour={true}
-                  onChange={onChange}
+                  onChange={(e, d) => onChange(d?.toISOString())}
                 />
               )}
             </SafeAreaView>
@@ -146,7 +163,6 @@ export function ReportBuilder(props: Props) {
         }}
       />
       {sortedFields.map((field, i) => {
-        console.log({ sortedFields });
         return (
           <Controller
             key={i + field.name}

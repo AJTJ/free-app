@@ -20,7 +20,7 @@ export function Home() {
   console.log({ logoutUserResult });
 
   let { getAllUsers } = useAllUsers();
-  let { insertSession } = useInsertPrePopulatedApneaSession();
+  let { insertSession, result } = useInsertPrePopulatedApneaSession();
 
   const { complete, data } = useFragment({
     fragment: User,
@@ -47,7 +47,9 @@ export function Home() {
     try {
       await insertSession();
     } catch (error) {
-      console.error(error);
+      console.error("INSERT SESSION ERROR: ", error);
+    } finally {
+      console.log("INSERT SESSSION result: ", result);
     }
   };
 

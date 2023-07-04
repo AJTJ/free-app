@@ -16,6 +16,7 @@ export function RecentSessions() {
   }
 
   const getFormEntries = (form: FormInputV1) => {
+    // TODO: Maybe just show a word for now.
     return <CoreText>memes</CoreText>;
   };
 

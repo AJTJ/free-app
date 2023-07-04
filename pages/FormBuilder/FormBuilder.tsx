@@ -12,11 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProps } from "../../App";
 import { FormDetailsInput, FormInput } from "../../api/types/types.generated";
 import { useInsertForm } from "../../api/logic/forms";
-import {
-  FormFieldTypesV1,
-  FormV1Wrapper,
-  allFieldsV1,
-} from "../../utility/formV1Wrapper";
+import { FormV1Wrapper } from "../../utility/formV1Wrapper";
 
 export function FormBuilder() {
   let navigation = useNavigation<AllNavigationProps>();

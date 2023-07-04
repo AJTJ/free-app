@@ -13,31 +13,6 @@ import {
 } from "../api/types/types.generated";
 import { number } from "zod";
 
-export const allFieldsV1 = [
-  "CongestionOutputV1",
-  "DisciplineAndMaxDepthOutputV1",
-  "MaxDepthOutputV1",
-  "SessionNameOutputV1",
-  "VisibilityOutputV1",
-  "WeatherOutputV1",
-  "WildlifeOutputV1",
-] as const;
-
-export type FormFieldTypesV1 = Record<
-  typeof allFieldsV1[number],
-  { active: boolean; fieldOrder: number }
->;
-
-export type ReportFieldTypesV1 = {
-  CongestionOutputV1: CongestionOutputV1;
-  DisciplineAndMaxDepthOutputV1: DisciplineAndMaxDepthOutputV1;
-  MaxDepthOutputV1: MaxDepthOutputV1;
-  SessionNameOutputV1: SessionNameOutputV1;
-  VisibilityOutputV1: VisibilityOutputV1;
-  WeatherOutputV1: WeatherOutputV1;
-  WildlifeOutputV1: WildlifeOutputV1;
-};
-
 export class FormV1Wrapper {
   readonly formOutput?: FormOutputV1;
   constructor(formOutput?: FormOutputV1) {
@@ -67,6 +42,43 @@ export class FormV1Wrapper {
     };
 
     return newForm;
+  }
+
+  static createForm(
+    form_input: Record<
+      keyof FormInputV1,
+      { active: boolean; fieldOrder: number }
+    >
+  ): FormInputV1 {
+    let newForm = FormV1Wrapper.getForm();
+    type ValType = { active: boolean; fieldOrder: number };
+
+    let formEntries = Object.entries(form_input) as [
+      keyof typeof newForm,
+      ValType
+    ][];
+
+    formEntries.forEach(([fieldName, val]) => {
+      if (val.active) {
+        newForm[fieldName] = { fieldOrder: val.fieldOrder };
+      }
+    });
+
+    return newForm;
+  }
+
+  static createReport(fieldTypes: ReportFieldTypesV1): FormInputV1 {
+    let newReport: FormInputV1 = {
+      congestion: fieldTypes.CongestionOutputV1,
+      disciplineAndMaxDepth: fieldTypes.DisciplineAndMaxDepthOutputV1,
+      maxDepth: fieldTypes.MaxDepthOutputV1,
+      sessionName: fieldTypes.SessionNameOutputV1,
+      visibility: fieldTypes.VisibilityOutputV1,
+      weather: fieldTypes.WeatherOutputV1,
+      wildlife: fieldTypes.WildlifeOutputV1,
+    };
+
+    return newReport;
   }
 
   static getSortedFields(form: FormOutputFragment) {
@@ -137,43 +149,6 @@ export class FormV1Wrapper {
 
     return sortedArray;
   }
-
-  static createForm(
-    form_input: Record<
-      keyof FormInputV1,
-      { active: boolean; fieldOrder: number }
-    >
-  ): FormInputV1 {
-    let newForm = FormV1Wrapper.getForm();
-    type ValType = { active: boolean; fieldOrder: number };
-
-    let formEntries = Object.entries(form_input) as [
-      keyof typeof newForm,
-      ValType
-    ][];
-
-    formEntries.forEach(([fieldName, val]) => {
-      if (val.active) {
-        newForm[fieldName] = { fieldOrder: val.fieldOrder };
-      }
-    });
-
-    return newForm;
-  }
-
-  static createReport(fieldTypes: ReportFieldTypesV1): FormInputV1 {
-    let newReport: FormInputV1 = {
-      congestion: fieldTypes.CongestionOutputV1,
-      disciplineAndMaxDepth: fieldTypes.DisciplineAndMaxDepthOutputV1,
-      maxDepth: fieldTypes.MaxDepthOutputV1,
-      sessionName: fieldTypes.SessionNameOutputV1,
-      visibility: fieldTypes.VisibilityOutputV1,
-      weather: fieldTypes.WeatherOutputV1,
-      wildlife: fieldTypes.WildlifeOutputV1,
-    };
-
-    return newReport;
-  }
 }
 
 // const fooKeys = ['a','b','c'] as const;
@@ -217,3 +192,18 @@ export class FormV1Wrapper {
 //     : undefined,
 // };
 // return newForm;
+
+// export const allFieldsV1 = [
+//   "CongestionOutputV1",
+//   "DisciplineAndMaxDepthOutputV1",
+//   "MaxDepthOutputV1",
+//   "SessionNameOutputV1",
+//   "VisibilityOutputV1",
+//   "WeatherOutputV1",
+//   "WildlifeOutputV1",
+// ] as const;
+
+// export type FormFieldTypesV1 = Record<
+//   typeof allFieldsV1[number],
+//   { active: boolean; fieldOrder: number }
+// >;

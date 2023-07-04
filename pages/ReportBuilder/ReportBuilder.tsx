@@ -11,7 +11,7 @@ import { AllNavigationProps, RootStackParamList } from "../../App";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { View } from "react-native";
 import { FieldTypeComponent } from "./FieldTypeComponent";
-import { ReportFieldTypesV1, FormV1Wrapper } from "../../utility/formV1Wrapper";
+import { FormV1Wrapper } from "../../utility/formV1Wrapper";
 import { omitDeep } from "@apollo/client/utilities";
 import { useInsertReport } from "../../api/logic/forms";
 import {
@@ -50,25 +50,29 @@ export function ReportBuilder(props: Props) {
   type FormValueTypes = typeof form.formData;
   const sortedFields = FormV1Wrapper.getSortedFields(form.formData);
 
-  const reportDefaultValues: ReportFieldTypesV1 = {
-    CongestionOutputV1: { value: undefined },
-    DisciplineAndMaxDepthOutputV1: { disciplineMaxDepth: undefined },
-    MaxDepthOutputV1: { maxDepth: undefined },
-    SessionNameOutputV1: { name: undefined },
-    VisibilityOutputV1: { value: undefined },
-    WeatherOutputV1: { wind: undefined },
-    WildlifeOutputV1: { value: undefined },
-  };
+  let myForm = FormV1Wrapper.getForm(form.formData);
 
-  const sessionInputDefaultValues = {
-    startTime: new Date(Date.now()).toISOString(),
-    endTime: undefined,
-    sessionName: undefined,
-  };
+  type IncomingFormTypes = typeof myForm;
+
+  // const reportDefaultValues: IncomingFormTypes = {
+  //   CongestionOutputV1: { value: undefined },
+  //   DisciplineAndMaxDepthOutputV1: { disciplineMaxDepth: undefined },
+  //   MaxDepthOutputV1: { maxDepth: undefined },
+  //   SessionNameOutputV1: { name: undefined },
+  //   VisibilityOutputV1: { value: undefined },
+  //   WeatherOutputV1: { wind: undefined },
+  //   WildlifeOutputV1: { value: undefined },
+  // };
+
+  // const sessionInputDefaultValues = {
+  //   startTime: new Date(Date.now()).toISOString(),
+  //   endTime: undefined,
+  //   sessionName: undefined,
+  // };
 
   const defaultValues = {
-    ...reportDefaultValues,
-    ...sessionInputDefaultValues,
+    // ...reportDefaultValues,
+    // ...sessionInputDefaultValues,
   };
 
   type SessionInputTypes = {
@@ -82,9 +86,9 @@ export function ReportBuilder(props: Props) {
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm<ReportFieldTypesV1 & SessionInputTypes>({ defaultValues });
+  } = useForm<IncomingFormTypes & SessionInputTypes>({ defaultValues });
 
-  const onSubmit: SubmitHandler<ReportFieldTypesV1 & SessionInputTypes> = (
+  const onSubmit: SubmitHandler<IncomingFormTypes & SessionInputTypes> = (
     formData
   ) => {
     let newReport = FormV1Wrapper.createReport(formData);

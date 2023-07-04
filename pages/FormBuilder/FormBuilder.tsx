@@ -1,37 +1,71 @@
-import { Btn, Checkbox, CoreText, LinearGradient } from "../../components";
+import {
+  Btn,
+  Checkbox,
+  CoreText,
+  LandingTextInput,
+  LinearGradient,
+} from "../../components";
 import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProps } from "../../App";
-import {
-  FormDetailsInput,
-  FormInput,
-  FormInputV1,
-} from "../../api/types/types.generated";
+import { FormDetailsInput, FormInput } from "../../api/types/types.generated";
 import { useInsertForm } from "../../api/logic/forms";
-import { FormV1Wrapper } from "../../utility/formV1Wrapper";
+import {
+  FormFieldTypesV1,
+  FormV1Wrapper,
+  allFieldsV1,
+} from "../../utility/formV1Wrapper";
 
 export function FormBuilder() {
   let navigation = useNavigation<AllNavigationProps>();
+  const { insertFormMutation, result } = useInsertForm();
 
-  const { putFormMutation, result } = useInsertForm();
+  type OtherTypes = { formName: string };
+  type FormTypes = FormFieldTypesV1 & OtherTypes;
 
-  type ImportValues = Record<
-    keyof FormInputV1,
-    { active: boolean; fieldOrder: number }
-  >;
-  let allFields = FormV1Wrapper.getKeyArray();
-  type LocalValues = { name: string };
-  type FormValues = ImportValues & LocalValues;
+  const defaultValues: FormTypes = {
+    CongestionOutputV1: {
+      active: false,
+      fieldOrder: Infinity,
+    },
+    DisciplineAndMaxDepthOutputV1: {
+      active: false,
+      fieldOrder: Infinity,
+    },
+    MaxDepthOutputV1: {
+      active: false,
+      fieldOrder: Infinity,
+    },
+    ReportNameOutputV1: {
+      active: false,
+      fieldOrder: Infinity,
+    },
+    VisibilityOutputV1: {
+      active: false,
+      fieldOrder: Infinity,
+    },
+    WeatherOutputV1: {
+      active: false,
+      fieldOrder: Infinity,
+    },
+    WildlifeOutputV1: {
+      active: false,
+      fieldOrder: Infinity,
+    },
+    formName: "",
+  };
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>({});
+  } = useForm<FormTypes>({ defaultValues });
 
-  const onSubmit: SubmitHandler<FormValues> = (formData) => {
+  console.log({ errors });
+
+  const onSubmit: SubmitHandler<FormTypes> = (formData) => {
     let newForm = FormV1Wrapper.createForm(formData);
 
     const formInput: FormInput = {
@@ -40,43 +74,71 @@ export function FormBuilder() {
 
     // TODO: Add originalform and previousform for "editing"?
     const formDetailsInput: FormDetailsInput = {
-      formName: "memes",
+      formName: formData.formName,
+      // TODO: make it so that you can "update"
       // originalFormId: _,
       // previousFormId: _
     };
 
-    putFormMutation({ variables: { formDetailsInput, formInput } });
+    insertFormMutation({ variables: { formDetailsInput, formInput } })
+      .catch((e) => {
+        console.error(e);
+      })
+      .then((data) => {
+        console.log("putFormResponse", data);
+        navigation.navigate("FormsList");
+      });
   };
 
   return (
     <LinearGradient>
       <CoreText>Form builder</CoreText>
-      {allFields.map((fieldName) => {
-        <Controller
-          name={fieldName}
-          rules={{ required: true }}
-          control={control}
-          render={({ field: { onBlur, onChange, value } }) => (
-            <>
-              <View>
-                <CoreText>{fieldName}</CoreText>
-                <Checkbox
-                  checked={value.active}
-                  onChange={(e) => onChange(!e)}
-                  disabled={false}
-                />
-              </View>
-            </>
-          )}
-        />;
+      <Controller
+        name={"formName"}
+        rules={{ required: true }}
+        control={control}
+        render={({ field: { onBlur, onChange, value } }) => (
+          <>
+            <View>
+              <CoreText>Form Name</CoreText>
+              <LandingTextInput
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            </View>
+          </>
+        )}
+      />
+      {allFieldsV1.map((fieldName, i) => {
+        return (
+          <Controller
+            key={fieldName + i}
+            name={fieldName}
+            rules={{ required: false }}
+            control={control}
+            render={({ field: { onBlur, onChange, value } }) => (
+              <>
+                <View>
+                  <CoreText>{fieldName}</CoreText>
+                  <Checkbox
+                    checked={value?.active}
+                    onChange={(e) =>
+                      onChange({ active: !e, fieldOrder: value.fieldOrder })
+                    }
+                    disabled={false}
+                  />
+                </View>
+              </>
+            )}
+          />
+        );
       })}
 
       <Btn
         title="Submit"
         type="primary"
-        onPress={() => {
-          handleSubmit(onSubmit)();
-        }}
+        onPress={handleSubmit((e) => onSubmit(e))}
       />
     </LinearGradient>
   );
@@ -106,10 +168,16 @@ export function FormBuilder() {
 //   fieldValueTypes: structure.fieldValueTypes,
 //   formTemplateVersion,
 // };
-// putFormMutation({
+// insertFormMutation({
 //   variables: { name: formData.name, formStructure: new_structure },
 // })
 //   .catch((e) => console.error("MEMES", e))
 //   .then((res) => {
 //     navigation.navigate("FormsList");
 //   });
+
+// let allFields = FormV1Wrapper.getKeyArray();
+// type FieldTypes = Record<
+//   typeof allFields[number],
+//   { active: boolean; fieldOrder: number }
+// >;

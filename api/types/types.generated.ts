@@ -372,7 +372,6 @@ export type ReportDetailsInput = {
   originalFormId?: InputMaybe<Scalars['UUID']>;
   previousReportId?: InputMaybe<Scalars['UUID']>;
   sessionId: Scalars['UUID'];
-  userId: Scalars['UUID'];
 };
 
 /** An edge in a connection. */

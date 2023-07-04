@@ -5,15 +5,19 @@ import { useGetForms } from "../../api/logic/forms";
 import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProps } from "../../App";
 import { Form } from "../../api/types/types.generated";
+import { FormFragment } from "../../api/forms.generated";
 
 export function FormsList() {
   let navigation = useNavigation<AllNavigationProps>();
   const { loading, error, data } = useGetForms();
+
+  console.log("forms data", data);
+
   if (error) {
     console.error(error);
   }
 
-  const handleFormPress = (form: Form) => {
+  const handleFormPress = (form: FormFragment) => {
     navigation.navigate("ReportBuilder", { form });
   };
 
@@ -25,6 +29,7 @@ export function FormsList() {
         </View>
       )}
       {data?.forms.map((f, i) => {
+        console.log("FORMDATA LIST", f.formData.congestion);
         return (
           <Pressable onPress={() => handleFormPress(f)} key={f.id + i}>
             <CoreText>{f.formName}</CoreText>

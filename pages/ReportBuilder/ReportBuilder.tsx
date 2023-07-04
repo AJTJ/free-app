@@ -1,5 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import {
+  Btn,
   Checkbox,
   CoreText,
   LandingTextInput,
@@ -9,34 +10,28 @@ import React from "react";
 import { RootStackParamList } from "../../App";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { View } from "react-native";
-import { FieldTypeComponent } from "./ValueTypeComponent";
-import { FormV1Wrapper } from "../../utility/formV1Wrapper";
+import { FieldTypeComponent } from "./FieldTypeComponent";
+import { ReportFieldTypesV1, FormV1Wrapper } from "../../utility/formV1Wrapper";
 import { omitDeep } from "@apollo/client/utilities";
-import {
-  CongestionOutputV1,
-  DisciplineAndMaxDepthOutputV1,
-  MaxDepthOutputV1,
-  ReportNameOutputV1,
-  VisibilityOutputV1,
-  WeatherOutputV1,
-  WildlifeOutputV1,
-} from "../../api/types/types.generated";
+import { useInsertReport } from "../../api/logic/forms";
+import { ReportDetailsInput } from "../../api/types/types.generated";
 
 export type Props = NativeStackScreenProps<RootStackParamList, "ReportBuilder">;
 
 export function ReportBuilder(props: Props) {
+  const { insertReportMutation, result } = useInsertReport();
   let form = props.route.params.form;
   type FormValueTypes = typeof form.formData;
   const sortedFields = FormV1Wrapper.getSortedFields(form.formData);
 
-  type FieldTypes = {
-    CongestionOutputV1: CongestionOutputV1;
-    DisciplineAndMaxDepthOutputV1: DisciplineAndMaxDepthOutputV1;
-    MaxDepthOutputV1: MaxDepthOutputV1;
-    ReportNameOutputV1: ReportNameOutputV1;
-    VisibilityOutputV1: VisibilityOutputV1;
-    WeatherOutputV1: WeatherOutputV1;
-    WildlifeOutputV1: WildlifeOutputV1;
+  const defaultValues: ReportFieldTypesV1 = {
+    CongestionOutputV1: { value: undefined },
+    DisciplineAndMaxDepthOutputV1: { disciplineMaxDepth: undefined },
+    MaxDepthOutputV1: { maxDepth: undefined },
+    ReportNameOutputV1: { name: undefined },
+    VisibilityOutputV1: { value: undefined },
+    WeatherOutputV1: { wind: undefined },
+    WildlifeOutputV1: { value: undefined },
   };
 
   const {
@@ -44,35 +39,55 @@ export function ReportBuilder(props: Props) {
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm<FieldTypes>();
+  } = useForm<ReportFieldTypesV1>({ defaultValues });
 
   console.log({ watch: watch() });
 
-  const onSubmit: SubmitHandler<FormValueTypes> = (formData) => {};
+  const onSubmit: SubmitHandler<ReportFieldTypesV1> = (formData) => {
+    let newReport = FormV1Wrapper.createReport(formData);
+
+    // let reportDetails: ReportDetailsInput = {
+    //   formId: form.id,
+    //   // TODO: Allow "editing"
+    //   // originalFormId?: InputMaybe<Scalars["UUID"]>;
+    //   // previousReportId?: InputMaybe<Scalars["UUID"]>;
+    //   sessionId
+    // };
+
+    // insertReportMutation({variables: {reportInput: newReport, reportDetailsInput: })
+  };
 
   return (
     <LinearGradient>
       <CoreText>Report Builder: {form.formName}</CoreText>
       {sortedFields.map((field, i) => {
+        console.log({ sortedFields });
         return (
           <Controller
             key={i + field.name}
             name={field.name}
             control={control}
             render={({ field: { onChange, onBlur, value } }) => {
-              <FieldTypeComponent
-                field={field}
-                {...{
-                  onChange,
-                  onBlur,
-                  value,
-                }}
-              />;
-              return <CoreText>Memes</CoreText>;
+              return (
+                <FieldTypeComponent
+                  form={form}
+                  name={field.name}
+                  {...{
+                    onChange,
+                    onBlur,
+                    value,
+                  }}
+                />
+              );
             }}
           />
         );
       })}
+      <Btn
+        title="Submit"
+        type="primary"
+        onPress={handleSubmit((e) => onSubmit(e))}
+      />
     </LinearGradient>
   );
 }

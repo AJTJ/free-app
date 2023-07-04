@@ -2,29 +2,45 @@ import { FormOutputFragment, FormV1Fragment } from "../api/forms.generated";
 import { FormInputV1, FormOutputV1 } from "../api/types/types.generated";
 // import omitDeep from "omit-deep";
 import { omitDeep } from "@apollo/client/utilities";
+import {
+  CongestionOutputV1,
+  DisciplineAndMaxDepthOutputV1,
+  MaxDepthOutputV1,
+  ReportNameOutputV1,
+  VisibilityOutputV1,
+  WeatherOutputV1,
+  WildlifeOutputV1,
+} from "../api/types/types.generated";
+
+export const allFieldsV1 = [
+  "CongestionOutputV1",
+  "DisciplineAndMaxDepthOutputV1",
+  "MaxDepthOutputV1",
+  "ReportNameOutputV1",
+  "VisibilityOutputV1",
+  "WeatherOutputV1",
+  "WildlifeOutputV1",
+] as const;
+
+export type FormFieldTypesV1 = Record<
+  typeof allFieldsV1[number],
+  { active: boolean; fieldOrder: number }
+>;
+
+export type ReportFieldTypesV1 = {
+  CongestionOutputV1: CongestionOutputV1;
+  DisciplineAndMaxDepthOutputV1: DisciplineAndMaxDepthOutputV1;
+  MaxDepthOutputV1: MaxDepthOutputV1;
+  ReportNameOutputV1: ReportNameOutputV1;
+  VisibilityOutputV1: VisibilityOutputV1;
+  WeatherOutputV1: WeatherOutputV1;
+  WildlifeOutputV1: WildlifeOutputV1;
+};
 
 export class FormV1Wrapper {
   readonly formOutput?: FormOutputV1;
   constructor(formOutput: FormOutputV1) {
     this.formOutput = formOutput;
-  }
-
-  static getKeyArray(): typeof allFieldsKeys {
-    // type FormValues = Record<keyof FormInputV1, boolean>;
-    const allFieldsKeys = [
-      "CongestionOutputV1",
-      "DisciplineAndMaxDepthOutputV1",
-      "MaxDepthOutputV1",
-      "ReportNameOutputV1",
-      "VisibilityOutputV1",
-      "WeatherOutputV1",
-      "WildlifeOutputV1",
-    ] as const;
-    type AllFieldsKey = typeof allFieldsKeys[number];
-    // TODO: use this?
-    type AllFields = Record<AllFieldsKey, string>;
-
-    return allFieldsKeys;
   }
 
   static getSortedFields(form: FormOutputFragment) {
@@ -84,6 +100,10 @@ export class FormV1Wrapper {
       return a.order > b.order ? -1 : 1;
     });
 
+    // let fieldObject = sortedArray.reduce((acc, cur) => {
+    //   return { ...acc, [cur.name]: { field: cur.field, order: cur.order } };
+    // }, {});
+
     // let returnArray = sortedArray.map((x) => ({
     //   name: x.typename,
     //   field: x.field,
@@ -93,33 +113,50 @@ export class FormV1Wrapper {
   }
 
   static createForm(
-    f: Record<keyof FormInputV1, { active: boolean; fieldOrder: number }>
+    f: Record<
+      typeof allFieldsV1[number],
+      { active: boolean; fieldOrder: number }
+    >
   ): FormInputV1 {
     let newForm: FormInputV1 = {
-      congestion: f.congestion.active
-        ? { fieldOrder: f.congestion.fieldOrder }
+      congestion: f.CongestionOutputV1.active
+        ? { fieldOrder: f.CongestionOutputV1.fieldOrder }
         : undefined,
-      disciplineAndMaxDepth: f.disciplineAndMaxDepth.active
-        ? { fieldOrder: f.disciplineAndMaxDepth.fieldOrder }
+      disciplineAndMaxDepth: f.DisciplineAndMaxDepthOutputV1.active
+        ? { fieldOrder: f.DisciplineAndMaxDepthOutputV1.fieldOrder }
         : undefined,
-      maxDepth: f.maxDepth.active
-        ? { fieldOrder: f.maxDepth.fieldOrder }
+      maxDepth: f.MaxDepthOutputV1.active
+        ? { fieldOrder: f.MaxDepthOutputV1.fieldOrder }
         : undefined,
-      reportName: f.reportName.active
-        ? { fieldOrder: f.reportName.fieldOrder }
+      reportName: f.ReportNameOutputV1.active
+        ? { fieldOrder: f.ReportNameOutputV1.fieldOrder }
         : undefined,
-      visibility: f.visibility.active
-        ? { fieldOrder: f.visibility.fieldOrder }
+      visibility: f.VisibilityOutputV1.active
+        ? { fieldOrder: f.VisibilityOutputV1.fieldOrder }
         : undefined,
-      weather: f.weather.active
-        ? { fieldOrder: f.weather.fieldOrder }
+      weather: f.WeatherOutputV1.active
+        ? { fieldOrder: f.WeatherOutputV1.fieldOrder }
         : undefined,
-      wildlife: f.wildlife.active
-        ? { fieldOrder: f.wildlife.fieldOrder }
+      wildlife: f.WildlifeOutputV1.active
+        ? { fieldOrder: f.WildlifeOutputV1.fieldOrder }
         : undefined,
     };
 
     return newForm;
+  }
+
+  static createReport(fieldTypes: ReportFieldTypesV1): FormInputV1 {
+    let newReport: FormInputV1 = {
+      congestion: fieldTypes.CongestionOutputV1,
+      disciplineAndMaxDepth: fieldTypes.DisciplineAndMaxDepthOutputV1,
+      maxDepth: fieldTypes.MaxDepthOutputV1,
+      reportName: fieldTypes.ReportNameOutputV1,
+      visibility: fieldTypes.VisibilityOutputV1,
+      weather: fieldTypes.WeatherOutputV1,
+      wildlife: fieldTypes.WildlifeOutputV1,
+    };
+
+    return newReport;
   }
 }
 

@@ -1,13 +1,9 @@
 import React from "react";
 import { Home } from "./pages";
 import { NavigationContainer } from "@react-navigation/native";
-import {
-  NativeStackNavigationProp,
-  NativeStackScreenProps,
-} from "@react-navigation/native-stack";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Landing } from "./pages";
-
 import {
   ApolloClient,
   InMemoryCache,
@@ -17,7 +13,6 @@ import {
   ApolloLink,
   gql,
 } from "@apollo/client";
-
 import Constants from "expo-constants";
 import { ThemeProvider } from "styled-components/native";
 import GlobalTheme from "./stylessheet/globalStyles";
@@ -25,25 +20,16 @@ const { manifest } = Constants;
 import { setContext } from "@apollo/client/link/context";
 import MobileStore from "./storage/SafeStorage";
 import { createFragmentRegistry } from "@apollo/client/cache";
-import { DiveSession } from "./api/apnea_sessions";
 import { Login, User } from "./api/auth";
 import { AllForms } from "./pages/FormsList";
 import { FormBuilder } from "./pages/FormBuilder/FormBuilder";
-import { FormFiller, ReportBuilder } from "./pages/ReportBuilder";
-import {
-  EnumListsOutput,
-  FSFieldOutput,
-  FormOutput,
-  FormStructureOutput,
-} from "./api/forms";
+import { ReportBuilder } from "./pages/ReportBuilder";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
-import {
-  FormFragment,
-  FormOutputFragment,
-  ReportFragment,
-} from "./api/forms.generated";
+import { FormFragment } from "./api/forms.generated";
 import { relayStylePagination } from "@apollo/client/utilities";
-import { AutocompleteDropdownContextProvider } from "react-native-autocomplete-dropdown";
+import { Reports } from "./pages/Reports";
+import { ApneaSession } from "./api/apnea_sessions";
+import { Form, FormOutput, FormV1, Report } from "./api/forms";
 
 if (__DEV__) {
   // Adds messages only in a dev environment
@@ -100,11 +86,11 @@ const client = new ApolloClient({
       // },
     },
     fragments: createFragmentRegistry(gql`
-      ${DiveSession}
-      ${FSFieldOutput}
+      ${ApneaSession}
+      ${FormV1}
+      ${Form}
       ${FormOutput}
-      ${FormStructureOutput}
-      ${EnumListsOutput}
+      ${Report}
       ${Login}
       ${User}
     `),
@@ -124,6 +110,7 @@ export type RootStackParamList = {
   FormsList: undefined;
   FormBuilder: undefined;
   ReportBuilder: { form: FormFragment };
+  Reports: undefined;
 };
 
 export type AllNavigationProps = NativeStackNavigationProp<RootStackParamList>;
@@ -153,6 +140,7 @@ export default function App() {
             <Stack.Screen name="FormsList" component={AllForms} />
             <Stack.Screen name="FormBuilder" component={FormBuilder} />
             <Stack.Screen name="ReportBuilder" component={ReportBuilder} />
+            <Stack.Screen name="Reports" component={Reports} />
           </Stack.Navigator>
         </NavigationContainer>
       </ThemeProvider>

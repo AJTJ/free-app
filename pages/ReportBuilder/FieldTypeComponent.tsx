@@ -5,12 +5,15 @@ import { ControllerRenderProps, Noop } from "react-hook-form";
 import {
   CongestionOutputV1,
   DisciplineAndMaxDepthOutputV1,
+  Form,
   MaxDepthOutputV1,
   ReportNameOutputV1,
   VisibilityOutputV1,
   WeatherOutputV1,
   WildlifeOutputV1,
 } from "../../api/types/types.generated";
+import { FormV1Wrapper, ReportFieldTypesV1 } from "../../utility/formV1Wrapper";
+import { FormFragment } from "../../api/forms.generated";
 // import AutoComplete from "react-native-autocomplete-input";
 // import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
 
@@ -24,74 +27,59 @@ type AllFields =
   | WildlifeOutputV1;
 
 type ParentProps = {
-  field: AllFields;
+  name: keyof ReportFieldTypesV1;
+  form: FormFragment;
   onChange: (...event: any[]) => void;
   onBlur: Noop;
   value: AllFields;
 };
 
 type ChildProps = {
+  name: keyof ReportFieldTypesV1;
+  form: FormFragment;
   onChange: (...event: any[]) => void;
   onBlur: Noop;
   value: AllFields;
 };
 
-type EnumProps = {
-  enumList: string[];
-};
-
-const CustomComponent = (props: ChildProps) => {
-  return <CoreText>{props.valueType}</CoreText>;
-};
-
-// https://github.com/mrlaessig/react-native-autocomplete-input
-const FieldEnumComponent = (props: ChildProps & EnumProps) => {
-  // let onChange = (e: string) => {
-  //   let newValue = ([...props.value][props.typeIndex] = e);
-  //   props.onChange(newValue);
-  // };
-  // let enumObject = props.enumList.map((e, i) => {
-  //   return {
-  //     id: i.toString(),
-  //     title: e,
-  //   };
-  // });
-  // return <AutocompleteDropdown dataSet={enumObject} onChangeText={onChange} />;
-
-  return <CoreText>No dropdown yet</CoreText>;
-};
-
 const FieldNumberInput = (props: ChildProps) => {
-  let onChangeText = (e: string) => {
-    let newArray = [...props.value];
-    newArray[props.typeIndex] = e;
-    console.log({ newArray });
-    props.onChange(newArray);
-  };
-  return <NumberInput onBlur={props.onBlur} onChangeText={onChangeText} />;
+  return <NumberInput onBlur={props.onBlur} onChangeText={props.onChange} />;
 };
 
-const FormTextInput = (props: ChildProps) => {
-  let onChangeText = (e: string) => {
-    let newValue = ([...props.value][props.typeIndex] = e);
-    props.onChange(newValue);
-  };
-  return <LandingTextInput onBlur={props.onBlur} onChangeText={onChangeText} />;
+// interface CongestionProps {
+//   field: CongestionOutputV1;
+// }
+// & CongestionProps
+
+//   let onChangeText = (e: string) => {
+//     let newValue = ([...props.value][props.typeIndex] = e);
+//     props.onChange(newValue);
+//   };
+
+const CongestionComponent = (props: ChildProps) => {
+  console.log("__typaname: ", props);
+  if (props.name === "CongestionOutputV1") {
+    let onChangeText = (e: string) => {
+      const cur = props.value;
+      let newValue = {
+        value: e,
+        __typename: cur.__typename,
+        fieldOrder: cur.fieldOrder,
+      };
+      props.onChange(newValue);
+    };
+    return <NumberInput onBlur={props.onBlur} onChangeText={onChangeText} />;
+  } else {
+    return null;
+  }
 };
 
-interface CongestionProps {
-  field: CongestionOutputV1;
-}
-
-const CongestionComponent = (props: ChildProps & CongestionProps) => {
-  return <FieldNumberInput />;
-};
-
-export const FieldTypeComponent = ({ field, ...rest }: ParentProps) => {
+export const FieldTypeComponent = (props: ParentProps) => {
+  console.log("THE NAME:", props.name);
   const renderComponents = () => {
-    switch (field.__typename) {
+    switch (props.name) {
       case "CongestionOutputV1":
-        return <CongestionComponent field={field} {...rest} />;
+        return <CongestionComponent {...props} />;
       case "DisciplineAndMaxDepthOutputV1":
         return (
           <View>
@@ -183,3 +171,36 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 });
+
+// type EnumProps = {
+//   enumList: string[];
+// };
+
+// // const CustomComponent = (props: ChildProps) => {
+// //   return <CoreText>{props.valueType}</CoreText>;
+// // };
+
+// // https://github.com/mrlaessig/react-native-autocomplete-input
+// const FieldEnumComponent = (props: ChildProps & EnumProps) => {
+//   // let onChange = (e: string) => {
+//   //   let newValue = ([...props.value][props.typeIndex] = e);
+//   //   props.onChange(newValue);
+//   // };
+//   // let enumObject = props.enumList.map((e, i) => {
+//   //   return {
+//   //     id: i.toString(),
+//   //     title: e,
+//   //   };
+//   // });
+//   // return <AutocompleteDropdown dataSet={enumObject} onChangeText={onChange} />;
+
+//   return <CoreText>No dropdown yet</CoreText>;
+// };
+
+// const FormTextInput = (props: ChildProps) => {
+//   let onChangeText = (e: string) => {
+//     let newValue = ([...props.value][props.typeIndex] = e);
+//     props.onChange(newValue);
+//   };
+//   return <LandingTextInput onBlur={props.onBlur} onChangeText={onChangeText} />;
+// };

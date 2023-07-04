@@ -7,11 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProps } from "../../App";
 import { Btn, CoreText, LinearGradient } from "../../components";
 import { RecentSessions } from "./recent_sessions";
-import {
-  useAllUsers,
-  useGuardedRoute,
-  useLogoutUser,
-} from "../../api/logic/user";
+import { useAllUsers, useLogoutUser } from "../../api/logic/user";
 import { useInsertPrePopulatedDiveSession } from "../../api/logic";
 import { useFragment } from "@apollo/client";
 import { User } from "../../api/auth";
@@ -22,8 +18,6 @@ export function Home() {
   let { logoutUser, result: logoutUserResult } = useLogoutUser();
 
   console.log({ logoutUserResult });
-
-  let { accessGuardedRoute } = useGuardedRoute();
 
   let { getAllUsers } = useAllUsers();
   let { addSession } = useInsertPrePopulatedDiveSession();
@@ -96,13 +90,6 @@ export function Home() {
             onPress={handleLogout}
           />
           <Btn
-            title="GuardedRoute"
-            type="primary"
-            hasIcon={false}
-            disabled={false}
-            onPress={() => accessGuardedRoute()}
-          />
-          <Btn
             title="AllUsers"
             type="primary"
             hasIcon={false}
@@ -123,6 +110,15 @@ export function Home() {
             disabled={false}
             onPress={() => {
               navigation.navigate("FormsList");
+            }}
+          />
+          <Btn
+            title="My Logged Dives"
+            type="primary"
+            hasIcon={false}
+            disabled={false}
+            onPress={() => {
+              navigation.navigate("Reports");
             }}
           />
           <RecentSessions />

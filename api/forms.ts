@@ -50,7 +50,10 @@ export const Form = gql(`
   fragment Form on Form {
     createdAt
     formData {
-      ...FormOutput
+      __typename
+      ... on FormOutputV1 {
+        ...FormV1
+      }
     }
     formName
     id
@@ -65,7 +68,10 @@ export const Report = gql(`
     id
     isActive
     reportData {
-      ...FormOutput
+      __typename
+      ... on FormOutputV1 {
+        ...FormV1
+      }
     }
     updatedAt
   }
@@ -95,6 +101,14 @@ export const INSERT_FORM = gql(`
   mutation insertForm($formDetailsInput: FormDetailsInput!, $formInput: FormInput!) {
     insertForm( formDetailsInput: $formDetailsInput, formInput: $formInput ) {
       ...Form
+    }
+  }
+`);
+
+export const INSERT_REPORT = gql(`
+  mutation insertReport($reportDetailsInput: ReportDetailsInput!, $reportInput: FormInput!) {
+    insertReport( reportDetailsInput: $reportDetailsInput, reportInput: $reportInput ) {
+      ...Report
     }
   }
 `);

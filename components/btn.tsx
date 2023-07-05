@@ -1,13 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Text, StyleSheet, Pressable } from "react-native";
-import styled from "styled-components/native";
-import {
-  CustomThemeProps,
-  ThemeContext,
-  GlobalTheme,
-} from "../stylessheet/globalStyles";
-
-//TODO: This needs to be completely switched to the standard Stylesheet method
+import { ThemeContext, GlobalTheme } from "../stylessheet/globalStyles";
 
 type ButtonType = "primary" | "secondary";
 
@@ -22,65 +15,43 @@ interface BtnProps {
 
 export const Btn = (props: BtnProps) => {
   const theme = useContext(ThemeContext);
-
-  // USING THIS TO UPDATE THE STYLED COMPONENT IS SUPER SLOW AND DOESN"T WORK SOMETIMES
-  // const [isPressed, setPressed] = useState(false);
-
-  // const BtnContainer = styled.Pressable<CustomThemeProps>`
-  //   display: flex;
-  //   flex-direction: row;
-  //   align-items: center;
-  //   justify-content: center;
-  //   width: 90%;
-  //   height: 40px;
-  //   border-radius: "12";
-  //   border-width: "1";
-  //   border-color: ${(p) =>
-  //     props.type === "primary" ? p.theme.colors.blue600 : "#000"};
-  //   background-color: ${(p) =>
-  //     isPressed
-  //       ? "red"
-  //       : props.type === "primary"
-  //       ? p.theme.colors.blue600
-  //       : "none"};
-  // `;
-
-  // const BtnTitle = styled.Text<CustomThemeProps>`
-  //   font-size: 16px;
-  //   color: ${(p) =>
-  //     props.type === "primary" ? p.theme.colors.white : p.theme.colors.black};
-  //   margin: 0 auto;
-  // `;
-
   let themedStyles = styles(theme);
   return (
     <Pressable
       onPress={() => {
         props.onPress();
       }}
-      // onPressOut={() => {
-      //   setPressed(false);
-      // }}
-      // onPressIn={() => {
-      //   setPressed(true);
-      // }}
-      // THIS IS MUCH FASTER THEN STYLED_COMPONENTS
-      style={({ pressed }) => [themedStyles({ pressed }).Button]}
+      style={({ pressed }) => [themedStyles({ pressed }).BigBtn]}
     >
-      <Text style={themedStyles({ type: props.type }).ButtonText}>
+      <Text style={themedStyles({ type: props.type }).BigBtnText}>
         {props.title}
       </Text>
-      {props.hasIcon ? <Text>i</Text> : null}
     </Pressable>
   );
 };
 
-// This seems like a fine alternative to styled-components
+export const SmallBtn = (props: BtnProps) => {
+  const theme = useContext(ThemeContext);
+  let themedStyles = styles(theme);
+  return (
+    <Pressable
+      onPress={() => {
+        props.onPress();
+      }}
+      style={({ pressed }) => [themedStyles({ pressed }).SmallBtn]}
+    >
+      <Text style={themedStyles({ type: props.type }).SmallBtnText}>
+        {props.title}
+      </Text>
+    </Pressable>
+  );
+};
+
 const styles =
   (theme: typeof GlobalTheme) =>
   ({ pressed, type }: { pressed?: boolean; type?: ButtonType }) => {
     return StyleSheet.create({
-      Button: {
+      BigBtn: {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
@@ -91,15 +62,38 @@ const styles =
         borderWidth: 1,
         borderColor: type === "primary" ? theme.colors.blue600 : "#000",
         backgroundColor: pressed
-          ? "red"
+          ? theme.colors.blue700
           : type === "primary"
-          ? theme.colors.blue600
+          ? theme.colors.blue700
           : theme.colors.blue600,
       },
-      ButtonText: {
+
+      BigBtnText: {
         fontSize: 16,
         color: type === "primary" ? theme.colors.white : theme.colors.black,
-        // margin: "0 auto",
+      },
+
+      SmallBtn: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        // borderColor: type === "primary" ? theme.colors.blue600 : "#000",
+        width: 75,
+        height: 35,
+        borderRadius: 12,
+        margin: 5,
+        // borderWidth: 1,
+        backgroundColor: pressed
+          ? theme.colors.blue700
+          : type === "primary"
+          ? theme.colors.blue700
+          : theme.colors.blue600,
+      },
+
+      SmallBtnText: {
+        fontSize: 14,
+        color: type === "primary" ? theme.colors.white : theme.colors.black,
       },
     });
   };

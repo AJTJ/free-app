@@ -50,7 +50,6 @@ export const Form = gql(`
   fragment Form on Form {
     createdAt
     formData {
-      __typename
       ... on FormOutputV1 {
         ...FormV1
       }

@@ -4,6 +4,7 @@ import { CoreText } from "../../components/textComponents";
 import { useGetApneaSessions } from "../../api/logic";
 import { FormV1Wrapper } from "../../utility/formV1Wrapper";
 import { FormInputV1 } from "../../api/types/types.generated";
+import { ItemContainer } from "../../components";
 
 export function RecentSessions() {
   const { loading, error, data } = useGetApneaSessions();
@@ -29,16 +30,18 @@ export function RecentSessions() {
       )}
       {data?.apneaSessions?.nodes.map((session, i) => {
         return (
-          <View key={session.id + i}>
+          <ItemContainer key={session.id + i}>
             {session.sessionName && (
               <CoreText>Apnea Session Name: {session.sessionName}</CoreText>
             )}
-            <CoreText>{session.id}</CoreText>
-            <CoreText>{session.startTime}</CoreText>
-            <CoreText>{session.endTime}</CoreText>
+            <CoreText>
+              Session time: {new Date(session.startTime).toLocaleString()}
+              {session.endTime &&
+                " -> " + new Date(session.endTime).toLocaleTimeString()}
+            </CoreText>
             {session.report?.reportData &&
               getFormEntries(FormV1Wrapper.getForm(session.report?.reportData))}
-          </View>
+          </ItemContainer>
         );
       })}
     </>

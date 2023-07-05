@@ -11,7 +11,7 @@ import {
   WeatherOutputV1,
   WildlifeOutputV1,
 } from "../api/types/types.generated";
-import { number } from "zod";
+import { Values, number } from "zod";
 
 export class FormV1Wrapper {
   readonly formOutput?: FormOutputV1;
@@ -19,6 +19,7 @@ export class FormV1Wrapper {
     this.formOutput = formOutput;
   }
 
+  // FORM UPDATE AREA
   static getForm(form?: FormOutputV1): FormInputV1 {
     let congestion: CongestionOutputV1 = { ...form?.congestion };
     // let disciplineMaxDepth: InnerDisciplineMaxDepthInputV1[] = [];
@@ -50,7 +51,7 @@ export class FormV1Wrapper {
       { active: boolean; fieldOrder: number }
     >
   ): FormInputV1 {
-    let newForm = FormV1Wrapper.getForm();
+    let newForm: FormInputV1 = {};
     type ValType = { active: boolean; fieldOrder: number };
 
     let formEntries = Object.entries(form_input) as [
@@ -67,87 +68,23 @@ export class FormV1Wrapper {
     return newForm;
   }
 
-  static createReport(fieldTypes: ReportFieldTypesV1): FormInputV1 {
-    let newReport: FormInputV1 = {
-      congestion: fieldTypes.CongestionOutputV1,
-      disciplineAndMaxDepth: fieldTypes.DisciplineAndMaxDepthOutputV1,
-      maxDepth: fieldTypes.MaxDepthOutputV1,
-      sessionName: fieldTypes.SessionNameOutputV1,
-      visibility: fieldTypes.VisibilityOutputV1,
-      weather: fieldTypes.WeatherOutputV1,
-      wildlife: fieldTypes.WildlifeOutputV1,
-    };
+  static getSortedFields(serverForm: FormOutputV1) {
+    let form: FormInputV1 = serverForm;
+    console.log("form not sorted", form);
+    type KeyType = keyof typeof form;
+    let formValues = Object.values(form);
+    let entries = Object.entries(form) as [
+      KeyType,
+      typeof formValues[number]
+    ][];
 
-    return newReport;
-  }
-
-  static getSortedFields(form: FormOutputFragment) {
-    let fieldArray = [];
-
-    if (form.congestion?.__typename) {
-      fieldArray.push({
-        name: form.congestion.__typename,
-        field: omitDeep(form.congestion, "__typename"),
-        order: form.congestion.fieldOrder || Infinity,
-      });
-    }
-    if (form.disciplineAndMaxDepth?.__typename) {
-      fieldArray.push({
-        name: form.disciplineAndMaxDepth.__typename,
-        field: omitDeep(form.disciplineAndMaxDepth, "__typename"),
-        order: form.disciplineAndMaxDepth.fieldOrder || Infinity,
-      });
-    }
-    if (form.maxDepth?.__typename) {
-      fieldArray.push({
-        name: form.maxDepth.__typename,
-        field: omitDeep(form.maxDepth, "__typename"),
-        order: form.maxDepth.fieldOrder || Infinity,
-      });
-    }
-    if (form.sessionName?.__typename) {
-      fieldArray.push({
-        name: form.sessionName.__typename,
-        field: omitDeep(form.sessionName, "__typename"),
-        order: form.sessionName.fieldOrder || Infinity,
-      });
-    }
-    if (form.visibility?.__typename) {
-      fieldArray.push({
-        name: form.visibility.__typename,
-        field: omitDeep(form.visibility, "__typename"),
-        order: form.visibility.fieldOrder || Infinity,
-      });
-    }
-    if (form.weather?.__typename) {
-      fieldArray.push({
-        name: form.weather.__typename,
-        field: omitDeep(form.weather, "__typename"),
-        order: form.weather.fieldOrder || Infinity,
-      });
-    }
-    if (form.wildlife?.__typename) {
-      fieldArray.push({
-        name: form.wildlife.__typename,
-        field: omitDeep(form.wildlife, "__typename"),
-        order: form.wildlife.fieldOrder || Infinity,
-      });
-    }
-
-    let sortedArray = fieldArray.sort((a, b) => {
-      return a.order > b.order ? -1 : 1;
+    let sortedEntries = entries.sort(([_aKey, aValue], [_bKey, bValue]) => {
+      return (aValue?.fieldOrder || Infinity) < (bValue?.fieldOrder || Infinity)
+        ? -1
+        : 1;
     });
 
-    // let fieldObject = sortedArray.reduce((acc, cur) => {
-    //   return { ...acc, [cur.name]: { field: cur.field, order: cur.order } };
-    // }, {});
-
-    // let returnArray = sortedArray.map((x) => ({
-    //   name: x.typename,
-    //   field: x.field,
-    // }));
-
-    return sortedArray;
+    return sortedEntries;
   }
 }
 
@@ -207,3 +144,79 @@ export class FormV1Wrapper {
 //   typeof allFieldsV1[number],
 //   { active: boolean; fieldOrder: number }
 // >;
+
+// let fieldArray = [];
+// if (form.congestion?.__typename) {
+//   fieldArray.push({
+//     name: form.congestion.__typename,
+//     field: omitDeep(form.congestion, "__typename"),
+//     order: form.congestion.fieldOrder || Infinity,
+//   });
+// }
+// if (form.disciplineAndMaxDepth?.__typename) {
+//   fieldArray.push({
+//     name: form.disciplineAndMaxDepth.__typename,
+//     field: omitDeep(form.disciplineAndMaxDepth, "__typename"),
+//     order: form.disciplineAndMaxDepth.fieldOrder || Infinity,
+//   });
+// }
+// if (form.maxDepth?.__typename) {
+//   fieldArray.push({
+//     name: form.maxDepth.__typename,
+//     field: omitDeep(form.maxDepth, "__typename"),
+//     order: form.maxDepth.fieldOrder || Infinity,
+//   });
+// }
+// if (form.sessionName?.__typename) {
+//   fieldArray.push({
+//     name: form.sessionName.__typename,
+//     field: omitDeep(form.sessionName, "__typename"),
+//     order: form.sessionName.fieldOrder || Infinity,
+//   });
+// }
+// if (form.visibility?.__typename) {
+//   fieldArray.push({
+//     name: form.visibility.__typename,
+//     field: omitDeep(form.visibility, "__typename"),
+//     order: form.visibility.fieldOrder || Infinity,
+//   });
+// }
+// if (form.weather?.__typename) {
+//   fieldArray.push({
+//     name: form.weather.__typename,
+//     field: omitDeep(form.weather, "__typename"),
+//     order: form.weather.fieldOrder || Infinity,
+//   });
+// }
+// if (form.wildlife?.__typename) {
+//   fieldArray.push({
+//     name: form.wildlife.__typename,
+//     field: omitDeep(form.wildlife, "__typename"),
+//     order: form.wildlife.fieldOrder || Infinity,
+//   });
+// }
+// let sortedArray = fieldArray.sort((a, b) => {
+//   return a.order > b.order ? -1 : 1;
+// });
+// let fieldObject = sortedArray.reduce((acc, cur) => {
+//   return { ...acc, [cur.name]: { field: cur.field, order: cur.order } };
+// }, {});
+// let returnArray = sortedArray.map((x) => ({
+//   name: x.typename,
+//   field: x.field,
+// }));
+// return sortedArray;
+
+// static createReport(fieldTypes: FormInputV1): FormInputV1 {
+//   let newReport: FormInputV1 = {
+//     congestion: fieldTypes.CongestionOutputV1,
+//     disciplineAndMaxDepth: fieldTypes.DisciplineAndMaxDepthOutputV1,
+//     maxDepth: fieldTypes.MaxDepthOutputV1,
+//     sessionName: fieldTypes.SessionNameOutputV1,
+//     visibility: fieldTypes.VisibilityOutputV1,
+//     weather: fieldTypes.WeatherOutputV1,
+//     wildlife: fieldTypes.WildlifeOutputV1,
+//   };
+
+//   return newReport;
+// }

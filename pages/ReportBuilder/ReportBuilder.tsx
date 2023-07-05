@@ -1,28 +1,22 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import {
-  Btn,
-  Checkbox,
-  CoreText,
-  LandingTextInput,
-  LinearGradient,
-} from "../../components";
+import { Btn, CoreText, LinearGradient, SmallBtn } from "../../components";
 import React, { useState } from "react";
 import { AllNavigationProps, RootStackParamList } from "../../App";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { View } from "react-native";
 import { FieldTypeComponent } from "./FieldTypeComponent";
 import { FormV1Wrapper } from "../../utility/formV1Wrapper";
-import { omitDeep } from "@apollo/client/utilities";
 import { useInsertReport } from "../../api/logic/forms";
 import {
   ApneaSessionInput,
   FormInput,
+  FormInputV1,
   ReportDetailsInput,
 } from "../../api/types/types.generated";
 import { useInsertApneaSession } from "../../api/logic";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
+import { View } from "react-native";
 
 export type Props = NativeStackScreenProps<RootStackParamList, "ReportBuilder">;
 
@@ -36,44 +30,21 @@ export function ReportBuilder(props: Props) {
     setMode(currentMode);
   };
 
-  const showDatepicker = () => {
-    showMode("date");
-  };
-
-  const showTimepicker = () => {
-    showMode("time");
+  const switchDateTime = () => {
+    if (mode === "date") {
+      showMode("time");
+    } else {
+      showMode("date");
+    }
   };
 
   const { insertReportMutation, result } = useInsertReport();
   const { insertSession } = useInsertApneaSession();
   let form = props.route.params.form;
-  type FormValueTypes = typeof form.formData;
   const sortedFields = FormV1Wrapper.getSortedFields(form.formData);
-
   let myForm = FormV1Wrapper.getForm(form.formData);
 
   type IncomingFormTypes = typeof myForm;
-
-  // const reportDefaultValues: IncomingFormTypes = {
-  //   CongestionOutputV1: { value: undefined },
-  //   DisciplineAndMaxDepthOutputV1: { disciplineMaxDepth: undefined },
-  //   MaxDepthOutputV1: { maxDepth: undefined },
-  //   SessionNameOutputV1: { name: undefined },
-  //   VisibilityOutputV1: { value: undefined },
-  //   WeatherOutputV1: { wind: undefined },
-  //   WildlifeOutputV1: { value: undefined },
-  // };
-
-  // const sessionInputDefaultValues = {
-  //   startTime: new Date(Date.now()).toISOString(),
-  //   endTime: undefined,
-  //   sessionName: undefined,
-  // };
-
-  const defaultValues = {
-    // ...reportDefaultValues,
-    // ...sessionInputDefaultValues,
-  };
 
   type SessionInputTypes = {
     startTime: string;
@@ -86,12 +57,16 @@ export function ReportBuilder(props: Props) {
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm<IncomingFormTypes & SessionInputTypes>({ defaultValues });
+  } = useForm<IncomingFormTypes & SessionInputTypes>({
+    defaultValues: { startTime: new Date(Date.now()).toISOString() },
+  });
+
+  console.log(watch());
 
   const onSubmit: SubmitHandler<IncomingFormTypes & SessionInputTypes> = (
     formData
   ) => {
-    let newReport = FormV1Wrapper.createReport(formData);
+    let newReport: FormInputV1 = { ...formData };
 
     let sessionReport: FormInput = {
       v1: newReport,
@@ -104,8 +79,6 @@ export function ReportBuilder(props: Props) {
       sessionReport,
     };
 
-    console.log("INPUT", apneaSessionInput);
-
     let reportDetails: ReportDetailsInput = {
       formId: form.id,
       // TODO: Allow "editing" eventually
@@ -113,15 +86,16 @@ export function ReportBuilder(props: Props) {
       // previousReportId?: InputMaybe<Scalars["UUID"]>;
     };
 
+    // TODO: Maybe this will be useful for editing?
+    // insertReportMutation({variables: {reportInput: newReport, reportDetailsInput: })
     insertSession({ variables: { apneaSessionInput, reportDetails } })
       .catch((e) => {
         console.error("insert sesh e:", e);
       })
       .then((d) => {
+        console.log("it works", d);
         navigation.navigate("Home");
       });
-
-    // insertReportMutation({variables: {reportInput: newReport, reportDetailsInput: })
   };
 
   return (
@@ -129,63 +103,83 @@ export function ReportBuilder(props: Props) {
       <CoreText>Report Builder: {form.formName}</CoreText>
       <Controller
         name={"startTime"}
+        rules={{ required: true }}
         control={control}
         render={({ field: { onChange, onBlur, value } }) => {
           return (
-            <SafeAreaView>
-              <Btn
-                onPress={showDatepicker}
-                title="Show date picker!"
-                type="primary"
-              />
-              <Btn
-                onPress={showTimepicker}
-                title="Show time picker!"
-                type="primary"
-              />
-              <CoreText>
-                selected:{" "}
-                {(value && (
+            <>
+              <View>
+                {value && (
                   <>
                     <CoreText>{new Date(value).toLocaleDateString()}</CoreText>
                     <CoreText>{new Date(value).toLocaleTimeString()}</CoreText>
                   </>
-                )) ||
-                  ""}
-              </CoreText>
-              {show && (
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  value={new Date(value)}
-                  mode={mode}
-                  is24Hour={true}
-                  onChange={(e, d) => onChange(d?.toISOString())}
+                )}
+              </View>
+              <SafeAreaView
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                }}
+              >
+                {/* https:github.com/react-native-datetimepicker/datetimepicker#component-usage-on-ios--android--windows */}
+                <CoreText>Current Time:</CoreText>
+                <View
+                  style={{
+                    // width: "100%",
+                    width: 120,
+                    // display: "flex",
+                    // justifyContent: "flex-end",
+                    // alignContent: "flex-start",
+                  }}
+                >
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={new Date(value)}
+                    mode={mode}
+                    is24Hour={true}
+                    onChange={(e, d) => onChange(d?.toISOString())}
+                  />
+                </View>
+                <SmallBtn
+                  onPress={switchDateTime}
+                  title={`Switch to ${mode ? "date" : "time"}`}
+                  type="primary"
                 />
-              )}
-            </SafeAreaView>
+              </SafeAreaView>
+            </>
           );
         }}
       />
-      {sortedFields.map((field, i) => {
+      {sortedFields.map(([fieldName, fieldValue], i) => {
         return (
-          <Controller
-            key={i + field.name}
-            name={field.name}
-            control={control}
-            render={({ field: { onChange, onBlur, value } }) => {
-              return (
-                <FieldTypeComponent
-                  form={form}
-                  name={field.name}
-                  {...{
-                    onChange,
-                    onBlur,
-                    value,
-                  }}
-                />
-              );
-            }}
-          />
+          fieldValue &&
+          // @ts-ignore There are still properties from FormOutputV1
+          fieldName !== "__typename" && (
+            <Controller
+              key={i + fieldName}
+              name={fieldName}
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => {
+                return (
+                  <>
+                    <CoreText>{fieldName}</CoreText>
+                    <FieldTypeComponent
+                      name={fieldName}
+                      form={myForm}
+                      {...{
+                        onChange,
+                        onBlur,
+                        value,
+                      }}
+                    />
+                  </>
+                );
+              }}
+            />
+          )
         );
       })}
       <Btn
@@ -289,3 +283,24 @@ export function ReportBuilder(props: Props) {
 // [...currentFieldNames].forEach((n) => {
 //   defaultValues[n] = [];
 // });
+
+// const reportDefaultValues: IncomingFormTypes = {
+//   CongestionOutputV1: { value: undefined },
+//   DisciplineAndMaxDepthOutputV1: { disciplineMaxDepth: undefined },
+//   MaxDepthOutputV1: { maxDepth: undefined },
+//   SessionNameOutputV1: { name: undefined },
+//   VisibilityOutputV1: { value: undefined },
+//   WeatherOutputV1: { wind: undefined },
+//   WildlifeOutputV1: { value: undefined },
+// };
+
+// const sessionInputDefaultValues = {
+//   startTime: new Date(Date.now()).toISOString(),
+//   endTime: undefined,
+//   sessionName: undefined,
+// };
+
+// const defaultValues = {
+//   // ...reportDefaultValues,
+//   // ...sessionInputDefaultValues,
+// };

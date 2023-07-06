@@ -61,12 +61,10 @@ export function ReportBuilder(props: Props) {
     defaultValues: { startTime: new Date(Date.now()).toISOString() },
   });
 
-  console.log(watch());
-
   const onSubmit: SubmitHandler<IncomingFormTypes & SessionInputTypes> = (
     formData
   ) => {
-    let newReport: FormInputV1 = { ...formData };
+    let newReport = FormV1Wrapper.getForm(formData);
 
     let sessionReport: FormInput = {
       v1: newReport,

@@ -1,5 +1,13 @@
 {
   "expo": {
-    "plugins": ["@maplibre/maplibre-react-native"]
+    "plugins": [
+      "@maplibre/maplibre-react-native"
+    ],
+    "android": {
+      "package": "com.anonymous.free_app"
+    },
+    "ios": {
+      "bundleIdentifier": "io.free.client"
+    }
   }
 }

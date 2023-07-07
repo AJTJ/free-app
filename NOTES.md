@@ -99,6 +99,7 @@ https://dev.to/lico/react-apollo-refresh-tokens-5h0k
 - EAS
   - somewhat pricey for OTA updates
   - Builds aren't that bad
+  - alternatives: https://www.reddit.com/r/reactnative/comments/13pqw48/expo_eas_build_alternative/
 - Codepush
   - https://appcenter.ms/?utm_source=CodePush&utm_medium=Azure
   - 

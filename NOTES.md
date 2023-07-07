@@ -105,5 +105,6 @@ https://dev.to/lico/react-apollo-refresh-tokens-5h0k
   - 
 - Fastlane for signing, building, and releasing the app
   - https://github.com/fastlane/fastlane
+  - https://dev.to/gabrielsadaka/react-native-expo-automated-deployment-using-fastlane-and-circleci-1ggc
 - CodePush & fastlane
   - https://echobind.com/post/automating-codepush-deploys-with-fastlane

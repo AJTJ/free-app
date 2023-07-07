@@ -31,6 +31,8 @@ import { Reports } from "./pages/Reports";
 import { ApneaSession } from "./api/apnea_sessions";
 import { Form, FormOutput, FormV1, Report } from "./api/forms";
 import { GiftedTest, VictoryTest } from "./pages/ReportVisualizer";
+import { FormReordering } from "./pages/FormBuilder/FormReordering";
+import { FormInputV1 } from "./api/types/types.generated";
 
 if (__DEV__) {
   // Adds messages only in a dev environment
@@ -62,14 +64,9 @@ const responseLink = new ApolloLink((operation, forward) => {
   });
 });
 
-console.log(expoConfig?.hostUri);
-
 // BASED ON ENV
-// const uri = `http://127.0.0.1:8080`;
 // const uri = `http://${manifest?.debuggerHost?.split(":").shift()}:8080`;
 const uri = `http://${expoConfig?.hostUri?.split(":").shift()}:8080`;
-
-console.log({ uri });
 
 const httpLink = createHttpLink({
   uri,
@@ -120,6 +117,7 @@ export type RootStackParamList = {
   Reports: undefined;
   VictoryTest: undefined;
   GiftedTest: undefined;
+  FormReordering: { form: FormInputV1; onSubmit: (form: FormInputV1) => void };
 };
 
 export type AllNavigationProps = NativeStackNavigationProp<RootStackParamList>;
@@ -152,6 +150,7 @@ export default function App() {
             <Stack.Screen name="Reports" component={Reports} />
             <Stack.Screen name="VictoryTest" component={VictoryTest} />
             <Stack.Screen name="GiftedTest" component={GiftedTest} />
+            <Stack.Screen name="FormReordering" component={FormReordering} />
           </Stack.Navigator>
         </NavigationContainer>
       </ThemeProvider>

@@ -8,6 +8,11 @@
     },
     "ios": {
       "bundleIdentifier": "io.free.client"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "41765981-3e36-437f-ab7c-e1b2d2ec1e24"
+      }
     }
   }
 }

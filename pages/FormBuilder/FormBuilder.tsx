@@ -10,7 +10,11 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProps } from "../../App";
-import { FormDetailsInput, FormInput } from "../../api/types/types.generated";
+import {
+  FormDetailsInput,
+  FormInput,
+  FormInputV1,
+} from "../../api/types/types.generated";
 import { useInsertForm } from "../../api/logic/forms";
 import { FormV1Wrapper } from "../../utility/formV1Wrapper";
 
@@ -18,18 +22,16 @@ export function FormBuilder() {
   let navigation = useNavigation<AllNavigationProps>();
   const { insertFormMutation, result } = useInsertForm();
 
+  // Typing information
   let emptyForm = FormV1Wrapper.getForm();
-
   type KeyType = keyof typeof emptyForm;
-
   type FieldTypes = Record<KeyType, { active: boolean; fieldOrder: number }>;
-
   let fieldDefaults = Object.keys(emptyForm).reduce<FieldTypes>((acc, cur) => {
     return { ...acc, [cur]: { active: false, fieldOrder: Infinity } };
   }, {} as FieldTypes);
-
   type OtherTypes = { formName: string };
   let otherTypeDefaults = { formName: "" };
+
   type FormTypes = FieldTypes & OtherTypes;
 
   const {
@@ -42,16 +44,14 @@ export function FormBuilder() {
 
   console.log({ errors });
 
-  const onSubmit: SubmitHandler<FormTypes> = (formData) => {
-    let newForm = FormV1Wrapper.createForm(formData);
-
+  const reorderingSubmit = (formName: string) => (newForm: FormInputV1) => {
     const formInput: FormInput = {
       v1: newForm,
     };
 
     // TODO: Add originalform and previousform for "editing"?
     const formDetailsInput: FormDetailsInput = {
-      formName: formData.formName,
+      formName: formName,
       // TODO: make it so that you can "update"
       // originalFormId: _,
       // previousFormId: _
@@ -65,6 +65,14 @@ export function FormBuilder() {
         console.log("putFormResponse", data);
         navigation.navigate("FormsList");
       });
+  };
+
+  const onSubmit: SubmitHandler<FormTypes> = (formData) => {
+    let newForm = FormV1Wrapper.createForm(formData);
+    navigation.navigate("FormReordering", {
+      form: newForm,
+      onSubmit: reorderingSubmit(formData.formName),
+    });
   };
 
   let fieldsObject = Object.entries(emptyForm) as [

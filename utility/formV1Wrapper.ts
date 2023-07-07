@@ -51,26 +51,28 @@ export class FormV1Wrapper {
       { active: boolean; fieldOrder: number }
     >
   ): FormInputV1 {
-    let newForm: FormInputV1 = {};
+    let tempForm: FormInputV1 = {};
     type ValType = { active: boolean; fieldOrder: number };
 
     let formEntries = Object.entries(form_input) as [
-      keyof typeof newForm,
+      keyof typeof tempForm,
       ValType
     ][];
 
     formEntries.forEach(([fieldName, val]) => {
       if (val.active) {
-        newForm[fieldName] = { fieldOrder: val.fieldOrder };
+        tempForm[fieldName] = { fieldOrder: val.fieldOrder };
       }
     });
 
-    return newForm;
+    return FormV1Wrapper.getForm(tempForm);
   }
 
-  static getSortedFields(serverForm: FormOutputV1) {
-    let form: FormInputV1 = serverForm;
-    console.log("form not sorted", form);
+  static getSortedFields(
+    serverForm: FormOutputV1 | FormInputV1
+  ): [keyof FormInputV1, FormInputV1[keyof FormInputV1]][] {
+    let form: FormInputV1 = FormV1Wrapper.getForm(serverForm);
+
     type KeyType = keyof typeof form;
     let formValues = Object.values(form);
     let entries = Object.entries(form) as [
@@ -78,14 +80,36 @@ export class FormV1Wrapper {
       typeof formValues[number]
     ][];
 
-    let sortedEntries = entries.sort(([_aKey, aValue], [_bKey, bValue]) => {
-      return (aValue?.fieldOrder || Infinity) < (bValue?.fieldOrder || Infinity)
-        ? -1
-        : 1;
-    });
+    let sortedEntries = entries
+      .sort(([_aKey, aValue], [_bKey, bValue]) => {
+        return (aValue?.fieldOrder || Infinity) <
+          (bValue?.fieldOrder || Infinity)
+          ? -1
+          : 1;
+      })
+      .filter((x) => x[1] !== null);
 
     return sortedEntries;
   }
+
+  // static getFormFromArray(
+  //   sortedForm: [keyof FormInputV1, FormInputV1[keyof FormInputV1]][]
+  // ): FormInputV1 {
+  //   let tempForm: FormInputV1 = {};
+
+  //   let entries = sortedForm as [
+  //     keyof FormInputV1,
+  //     FormInputV1[keyof FormInputV1]
+  //   ][];
+
+  //   entries.map((x) => {
+  //     let key = x[0];
+  //     let val = x[1];
+  //     tempForm[key] = val as FormInputV1[typeof key];
+  //   });
+
+  //   return FormV1Wrapper.getForm(tempForm);
+  // }
 }
 
 // const fooKeys = ['a','b','c'] as const;

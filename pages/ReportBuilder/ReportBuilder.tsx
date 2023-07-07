@@ -24,28 +24,13 @@ export function ReportBuilder(props: Props) {
   let navigation = useNavigation<AllNavigationProps>();
   const [mode, setMode] = useState<"date" | "time">("date");
   const [show, setShow] = useState(false);
-
-  const showMode = (currentMode: "date" | "time") => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const switchDateTime = () => {
-    if (mode === "date") {
-      showMode("time");
-    } else {
-      showMode("date");
-    }
-  };
-
   const { insertReportMutation, result } = useInsertReport();
   const { insertSession } = useInsertApneaSession();
+
   let form = props.route.params.form;
   const sortedFields = FormV1Wrapper.getSortedFields(form.formData);
   let myForm = FormV1Wrapper.getForm(form.formData);
-
   type IncomingFormTypes = typeof myForm;
-
   type SessionInputTypes = {
     startTime: string;
     endTime?: string | undefined;
@@ -94,6 +79,18 @@ export function ReportBuilder(props: Props) {
         console.log("it works", d);
         navigation.navigate("Home");
       });
+  };
+
+  const showMode = (currentMode: "date" | "time") => {
+    setShow(true);
+    setMode(currentMode);
+  };
+  const switchDateTime = () => {
+    if (mode === "date") {
+      showMode("time");
+    } else {
+      showMode("date");
+    }
   };
 
   return (

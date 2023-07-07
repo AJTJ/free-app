@@ -94,3 +94,15 @@ https://dev.to/lico/react-apollo-refresh-tokens-5h0k
   - https://github.com/onthegomap/planetiler
   - https://mapnik.org/
   - https://github.com/mapnik/mapnik
+
+### Eventual deployment
+- EAS
+  - somewhat pricey for OTA updates
+  - Builds aren't that bad
+- Codepush
+  - https://appcenter.ms/?utm_source=CodePush&utm_medium=Azure
+  - 
+- Fastlane for signing, building, and releasing the app
+  - https://github.com/fastlane/fastlane
+- CodePush & fastlane
+  - https://echobind.com/post/automating-codepush-deploys-with-fastlane

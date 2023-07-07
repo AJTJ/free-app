@@ -30,6 +30,7 @@ import { relayStylePagination } from "@apollo/client/utilities";
 import { Reports } from "./pages/Reports";
 import { ApneaSession } from "./api/apnea_sessions";
 import { Form, FormOutput, FormV1, Report } from "./api/forms";
+import { GiftedTest, VictoryTest } from "./pages/ReportVisualizer";
 
 if (__DEV__) {
   // Adds messages only in a dev environment
@@ -111,6 +112,8 @@ export type RootStackParamList = {
   FormBuilder: undefined;
   ReportBuilder: { form: FormFragment };
   Reports: undefined;
+  VictoryTest: undefined;
+  GiftedTest: undefined;
 };
 
 export type AllNavigationProps = NativeStackNavigationProp<RootStackParamList>;
@@ -141,6 +144,8 @@ export default function App() {
             <Stack.Screen name="FormBuilder" component={FormBuilder} />
             <Stack.Screen name="ReportBuilder" component={ReportBuilder} />
             <Stack.Screen name="Reports" component={Reports} />
+            <Stack.Screen name="VictoryTest" component={VictoryTest} />
+            <Stack.Screen name="GiftedTest" component={GiftedTest} />
           </Stack.Navigator>
         </NavigationContainer>
       </ThemeProvider>

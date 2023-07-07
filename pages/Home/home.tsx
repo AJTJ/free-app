@@ -64,21 +64,7 @@ export function Home() {
             {loginData.lastLogin}
           </CoreText>
           <Btn
-            title="Pre-dive checklist"
-            type="primary"
-            hasIcon={false}
-            disabled={false}
-            onPress={() => console.log("should do something")}
-          />
-          <Btn
             title="Log my dive session"
-            type="primary"
-            hasIcon={false}
-            disabled={false}
-            onPress={() => console.log("should do something")}
-          />
-          <Btn
-            title="Check the map"
             type="primary"
             hasIcon={false}
             disabled={false}
@@ -90,13 +76,6 @@ export function Home() {
             hasIcon={false}
             disabled={false}
             onPress={handleLogout}
-          />
-          <Btn
-            title="AllUsers"
-            type="primary"
-            hasIcon={false}
-            disabled={false}
-            onPress={() => getAllUsers()}
           />
           <Btn
             title="AddPregeneratedSession"
@@ -123,6 +102,25 @@ export function Home() {
               navigation.navigate("Reports");
             }}
           />
+          <Btn
+            title="Data viz lib Victory test"
+            type="primary"
+            hasIcon={false}
+            disabled={false}
+            onPress={() => {
+              navigation.navigate("VictoryTest");
+            }}
+          />
+          <Btn
+            title="Data viz lib Gifted test"
+            type="primary"
+            hasIcon={false}
+            disabled={false}
+            onPress={() => {
+              navigation.navigate("GiftedTest");
+            }}
+          />
+
           <RecentSessions />
         </>
       )}

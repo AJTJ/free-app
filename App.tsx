@@ -16,7 +16,7 @@ import {
 import Constants from "expo-constants";
 import { ThemeProvider } from "styled-components/native";
 import GlobalTheme from "./stylessheet/globalStyles";
-const { manifest } = Constants;
+const { expoConfig } = Constants;
 import { setContext } from "@apollo/client/link/context";
 import MobileStore from "./storage/SafeStorage";
 import { createFragmentRegistry } from "@apollo/client/cache";
@@ -62,8 +62,14 @@ const responseLink = new ApolloLink((operation, forward) => {
   });
 });
 
+console.log(expoConfig?.hostUri);
+
 // BASED ON ENV
-const uri = `http://${manifest?.debuggerHost?.split(":").shift()}:8080`;
+// const uri = `http://127.0.0.1:8080`;
+// const uri = `http://${manifest?.debuggerHost?.split(":").shift()}:8080`;
+const uri = `http://${expoConfig?.hostUri?.split(":").shift()}:8080`;
+
+console.log({ uri });
 
 const httpLink = createHttpLink({
   uri,

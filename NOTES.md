@@ -1,3 +1,5 @@
+
+
 ### TODOs
 - styling library?
   - Choose one
@@ -10,6 +12,8 @@
     - this is for apollo graphql
     - get this working iwth the `react-native-debugger` tool
     - referenced here: https://www.apollographql.com/docs/react/integrations/react-native/
+- Upgrades
+  - change react navigation to expo router v2
 
 ### Form stuff
 - Validation

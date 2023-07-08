@@ -61,7 +61,7 @@ export const INSERT_PREPOPULATED_APNEA_SESSION = gql(`
 `);
 
 export const INSERT_APNEA_SESSION = gql(`
-  mutation insertApneaSession($apneaSessionInput: ApneaSessionInput!, $reportDetails: ReportDetailsInput) {
+  mutation insertApneaSession($apneaSessionInput: ApneaSessionInput!, $reportDetails: ReportDetails) {
     insertApneaSession(apneaSessionInput: $apneaSessionInput, reportDetails: $reportDetails)
      {
       ...ApneaSessionWithDives

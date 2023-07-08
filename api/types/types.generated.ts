@@ -66,7 +66,7 @@ export type ApneaSessionFilter = {
 export type ApneaSessionInput = {
   endTime?: InputMaybe<Scalars['DateTime']>;
   sessionName?: InputMaybe<Scalars['String']>;
-  sessionReport?: InputMaybe<FormInput>;
+  sessionReport?: InputMaybe<FormRequest>;
   startTime: Scalars['DateTime'];
 };
 
@@ -156,24 +156,24 @@ export type DiveUpdate = {
 export type Form = {
   __typename?: 'Form';
   createdAt: Scalars['DateTime'];
-  formData: FormOutput;
+  formData: FormResponse;
   formName: Scalars['String'];
   id: Scalars['UUID'];
   isActive: Scalars['Boolean'];
   updatedAt: Scalars['DateTime'];
 };
 
-export type FormDetailsInput = {
+export type FormDetails = {
   formName: Scalars['String'];
   originalFormId?: InputMaybe<Scalars['UUID']>;
   previousFormId?: InputMaybe<Scalars['UUID']>;
 };
 
-export type FormInput = {
-  v1?: InputMaybe<FormInputV1>;
+export type FormRequest = {
+  v1?: InputMaybe<FormRequestV1>;
 };
 
-export type FormInputV1 = {
+export type FormRequestV1 = {
   congestion?: InputMaybe<CongestionInputV1>;
   disciplineAndMaxDepth?: InputMaybe<DisciplineAndMaxDepthInputV1>;
   maxDepth?: InputMaybe<MaxDepthInputV1>;
@@ -183,10 +183,10 @@ export type FormInputV1 = {
   wildlife?: InputMaybe<WildlifeInputV1>;
 };
 
-export type FormOutput = FormOutputV1;
+export type FormResponse = FormResponseV1;
 
-export type FormOutputV1 = {
-  __typename?: 'FormOutputV1';
+export type FormResponseV1 = {
+  __typename?: 'FormResponseV1';
   congestion?: Maybe<CongestionOutputV1>;
   disciplineAndMaxDepth?: Maybe<DisciplineAndMaxDepthOutputV1>;
   maxDepth?: Maybe<MaxDepthOutputV1>;
@@ -243,7 +243,7 @@ export type Mutation = {
 
 export type MutationInsertApneaSessionArgs = {
   apneaSessionInput: ApneaSessionInput;
-  reportDetails?: InputMaybe<ReportDetailsInput>;
+  reportDetails?: InputMaybe<ReportDetails>;
 };
 
 
@@ -254,14 +254,14 @@ export type MutationInsertDiveArgs = {
 
 
 export type MutationInsertFormArgs = {
-  formDetailsInput: FormDetailsInput;
-  formInput: FormInput;
+  formDetails: FormDetails;
+  formRequest: FormRequest;
 };
 
 
 export type MutationInsertReportArgs = {
-  reportDetailsInput: ReportDetailsInput;
-  reportInput: FormInput;
+  reportDetails: ReportDetails;
+  reportRequest: FormRequest;
   sessionId: Scalars['UUID'];
 };
 
@@ -277,13 +277,13 @@ export type MutationLoginArgs = {
 
 
 export type MutationModifyFormArgs = {
-  formInput: FormInput;
+  formRequest: FormRequest;
   previousFormId: Scalars['UUID'];
 };
 
 
 export type MutationModifyReportArgs = {
-  formsInput: FormInput;
+  formsInput: FormRequest;
   previousReportId: Scalars['UUID'];
 };
 
@@ -357,7 +357,7 @@ export type Report = {
   createdAt: Scalars['DateTime'];
   id: Scalars['UUID'];
   isActive: Scalars['Boolean'];
-  reportData: FormOutput;
+  reportData: FormResponse;
   updatedAt: Scalars['DateTime'];
 };
 
@@ -371,7 +371,7 @@ export type ReportConnection = {
   pageInfo: PageInfo;
 };
 
-export type ReportDetailsInput = {
+export type ReportDetails = {
   formId: Scalars['UUID'];
   originalFormId?: InputMaybe<Scalars['UUID']>;
   previousReportId?: InputMaybe<Scalars['UUID']>;

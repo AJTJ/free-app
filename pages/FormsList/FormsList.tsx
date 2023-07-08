@@ -17,7 +17,7 @@ export function FormsList() {
   let navigation = useNavigation<AllNavigationProps>();
   const { loading, error, data } = useGetForms();
 
-  const emptyForm = FormV1Wrapper.getForm();
+  const emptyForm = FormV1Wrapper.getRequestForm();
 
   if (error) {
     console.error(error);
@@ -28,7 +28,7 @@ export function FormsList() {
   };
 
   const displayForms = (formData: FormOutputV1) => {
-    let formInput: FormInputV1 = FormV1Wrapper.getForm(formData);
+    let formInput: FormInputV1 = FormV1Wrapper.getRequestForm(formData);
 
     let entries = Object.entries(formInput)
       .sort((a, b) => {

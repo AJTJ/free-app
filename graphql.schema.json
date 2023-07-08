@@ -432,7 +432,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "FormInput",
+              "name": "FormRequest",
               "ofType": null
             },
             "defaultValue": null,
@@ -1240,7 +1240,7 @@
               "name": null,
               "ofType": {
                 "kind": "UNION",
-                "name": "FormOutput",
+                "name": "FormResponse",
                 "ofType": null
               }
             },
@@ -1319,7 +1319,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "FormDetailsInput",
+        "name": "FormDetails",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -1370,7 +1370,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "FormInput",
+        "name": "FormRequest",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -1379,7 +1379,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "FormInputV1",
+              "name": "FormRequestV1",
               "ofType": null
             },
             "defaultValue": null,
@@ -1393,7 +1393,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "FormInputV1",
+        "name": "FormRequestV1",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -1488,7 +1488,7 @@
       },
       {
         "kind": "UNION",
-        "name": "FormOutput",
+        "name": "FormResponse",
         "description": null,
         "fields": null,
         "inputFields": null,
@@ -1497,14 +1497,14 @@
         "possibleTypes": [
           {
             "kind": "OBJECT",
-            "name": "FormOutputV1",
+            "name": "FormResponseV1",
             "ofType": null
           }
         ]
       },
       {
         "kind": "OBJECT",
-        "name": "FormOutputV1",
+        "name": "FormResponseV1",
         "description": null,
         "fields": [
           {
@@ -1870,7 +1870,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "ReportDetailsInput",
+                  "name": "ReportDetails",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -1944,14 +1944,14 @@
             "description": null,
             "args": [
               {
-                "name": "formDetailsInput",
+                "name": "formDetails",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "FormDetailsInput",
+                    "name": "FormDetails",
                     "ofType": null
                   }
                 },
@@ -1960,14 +1960,14 @@
                 "deprecationReason": null
               },
               {
-                "name": "formInput",
+                "name": "formRequest",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "FormInput",
+                    "name": "FormRequest",
                     "ofType": null
                   }
                 },
@@ -1993,14 +1993,14 @@
             "description": null,
             "args": [
               {
-                "name": "reportDetailsInput",
+                "name": "reportDetails",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "ReportDetailsInput",
+                    "name": "ReportDetails",
                     "ofType": null
                   }
                 },
@@ -2009,14 +2009,14 @@
                 "deprecationReason": null
               },
               {
-                "name": "reportInput",
+                "name": "reportRequest",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "FormInput",
+                    "name": "FormRequest",
                     "ofType": null
                   }
                 },
@@ -2140,14 +2140,14 @@
             "description": null,
             "args": [
               {
-                "name": "formInput",
+                "name": "formRequest",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "FormInput",
+                    "name": "FormRequest",
                     "ofType": null
                   }
                 },
@@ -2196,7 +2196,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "FormInput",
+                    "name": "FormRequest",
                     "ofType": null
                   }
                 },
@@ -2715,7 +2715,7 @@
               "name": null,
               "ofType": {
                 "kind": "UNION",
-                "name": "FormOutput",
+                "name": "FormResponse",
                 "ofType": null
               }
             },
@@ -2821,7 +2821,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "ReportDetailsInput",
+        "name": "ReportDetails",
         "description": null,
         "fields": null,
         "inputFields": [

@@ -10,7 +10,7 @@ import {
   ApneaSessionInput,
   FormInput,
   FormInputV1,
-  ReportDetailsInput,
+  ReportDetails,
 } from "../../api/types/types.generated";
 import { useInsertApneaSession } from "../../api/logic";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -29,7 +29,7 @@ export function ReportBuilder(props: Props) {
 
   let form = props.route.params.form;
   const sortedFields = FormV1Wrapper.getSortedFields(form.formData);
-  let myForm = FormV1Wrapper.getForm(form.formData);
+  let myForm = FormV1Wrapper.getRequestForm(form.formData);
   type IncomingFormTypes = typeof myForm;
   type SessionInputTypes = {
     startTime: string;
@@ -49,7 +49,7 @@ export function ReportBuilder(props: Props) {
   const onSubmit: SubmitHandler<IncomingFormTypes & SessionInputTypes> = (
     formData
   ) => {
-    let newReport = FormV1Wrapper.getForm(formData);
+    let newReport = FormV1Wrapper.getRequestForm(formData);
 
     let sessionReport: FormInput = {
       v1: newReport,
@@ -62,7 +62,7 @@ export function ReportBuilder(props: Props) {
       sessionReport,
     };
 
-    let reportDetails: ReportDetailsInput = {
+    let reportDetails: ReportDetails = {
       formId: form.id,
       // TODO: Allow "editing" eventually
       // originalFormId?: InputMaybe<Scalars["UUID"]>;
@@ -70,7 +70,7 @@ export function ReportBuilder(props: Props) {
     };
 
     // TODO: Maybe this will be useful for editing?
-    // insertReportMutation({variables: {reportInput: newReport, reportDetailsInput: })
+    // insertReportMutation({variables: {reportInput: newReport, ReportDetails: })
     insertSession({ variables: { apneaSessionInput, reportDetails } })
       .catch((e) => {
         console.error("insert sesh e:", e);

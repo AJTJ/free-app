@@ -1,10 +1,10 @@
-import { FormOutputFragment } from "../api/forms.generated";
-import { FormInputV1, FormOutputV1 } from "../api/types/types.generated";
 // import omitDeep from "omit-deep";
 import { omitDeep } from "@apollo/client/utilities";
 import {
   CongestionOutputV1,
   DisciplineAndMaxDepthOutputV1,
+  FormRequestV1,
+  FormResponseV1,
   MaxDepthOutputV1,
   SessionNameOutputV1,
   VisibilityOutputV1,
@@ -14,16 +14,11 @@ import {
 import { Values, number } from "zod";
 
 export class FormV1Wrapper {
-  readonly formOutput?: FormOutputV1;
-  constructor(formOutput?: FormOutputV1) {
-    this.formOutput = formOutput;
-  }
-
   // FORM UPDATE AREA
-  static getForm(form?: FormOutputV1): FormInputV1 {
+  static getRequestForm(form?: FormResponseV1): FormRequestV1 {
     const myForm = { ...form };
     if (myForm) {
-      let keys = Object.keys(myForm) as [keyof FormOutputV1];
+      let keys = Object.keys(myForm) as [keyof FormResponseV1];
 
       keys.map((key) => {
         if (key === "__typename") {
@@ -32,16 +27,15 @@ export class FormV1Wrapper {
       });
     }
 
-    let newForm: FormInputV1 = {
+    let newForm: FormRequestV1 = {
       ...myForm,
     };
 
     return newForm;
   }
 
-  static getEmptyForm(): FormInputV1 {
+  static getEmptyForm(): FormRequestV1 {
     let congestion: CongestionOutputV1 = {};
-    // let disciplineMaxDepth: InnerDisciplineMaxDepthInputV1[] = [];
     let disciplineAndMaxDepth: DisciplineAndMaxDepthOutputV1 = {};
     let maxDepth: MaxDepthOutputV1 = {};
     let sessionName: SessionNameOutputV1 = {};
@@ -49,7 +43,7 @@ export class FormV1Wrapper {
     let weather: WeatherOutputV1 = {};
     let wildlife: WildlifeOutputV1 = {};
 
-    let newForm: FormInputV1 = {
+    let newForm: FormRequestV1 = {
       congestion,
       disciplineAndMaxDepth,
       maxDepth,
@@ -61,14 +55,15 @@ export class FormV1Wrapper {
 
     return newForm;
   }
+  // let disciplineMaxDepth: InnerDisciplineMaxDepthInputV1[] = [];
 
   static createForm(
     form_input: Record<
-      keyof FormInputV1,
+      keyof FormRequestV1,
       { active: boolean; fieldOrder: number }
     >
-  ): FormInputV1 {
-    let tempForm: FormInputV1 = {};
+  ): FormRequestV1 {
+    let tempForm: FormRequestV1 = {};
     type ValType = { active: boolean; fieldOrder: number };
 
     let formEntries = Object.entries(form_input) as [
@@ -87,9 +82,9 @@ export class FormV1Wrapper {
   }
 
   static getSortedFields(
-    serverForm: FormOutputV1 | FormInputV1
-  ): [keyof FormInputV1, FormInputV1[keyof FormInputV1]][] {
-    let form: FormInputV1 = FormV1Wrapper.getForm(serverForm);
+    inputForm: FormRequestV1
+  ): [keyof FormRequestV1, FormRequestV1[keyof FormRequestV1]][] {
+    let form: FormRequestV1 = FormV1Wrapper.getRequestForm(inputForm);
 
     type KeyType = keyof typeof form;
     let formValues = Object.values(form);
@@ -111,19 +106,19 @@ export class FormV1Wrapper {
   }
 
   // static getFormFromArray(
-  //   sortedForm: [keyof FormInputV1, FormInputV1[keyof FormInputV1]][]
-  // ): FormInputV1 {
-  //   let tempForm: FormInputV1 = {};
+  //   sortedForm: [keyof FormRequestV1, FormRequestV1[keyof FormRequestV1]][]
+  // ): FormRequestV1 {
+  //   let tempForm: FormRequestV1 = {};
 
   //   let entries = sortedForm as [
-  //     keyof FormInputV1,
-  //     FormInputV1[keyof FormInputV1]
+  //     keyof FormRequestV1,
+  //     FormRequestV1[keyof FormRequestV1]
   //   ][];
 
   //   entries.map((x) => {
   //     let key = x[0];
   //     let val = x[1];
-  //     tempForm[key] = val as FormInputV1[typeof key];
+  //     tempForm[key] = val as FormRequestV1[typeof key];
   //   });
 
   //   return FormV1Wrapper.getForm(tempForm);
@@ -147,7 +142,7 @@ export class FormV1Wrapper {
 // // A signature for `Object.keys` that assumes the only keys are the ones indicated by the type
 // const unsafeKeys = Object.keys as <T>(obj: T) => Array<keyof T>;
 
-// let newForm: FormInputV1 = {
+// let newForm: FormRequestV1 = {
 //   congestion: f.CongestionOutputV1.active
 //     ? { fieldOrder: f.CongestionOutputV1.fieldOrder }
 //     : undefined,
@@ -249,8 +244,8 @@ export class FormV1Wrapper {
 // }));
 // return sortedArray;
 
-// static createReport(fieldTypes: FormInputV1): FormInputV1 {
-//   let newReport: FormInputV1 = {
+// static createReport(fieldTypes: FormRequestV1): FormRequestV1 {
+//   let newReport: FormRequestV1 = {
 //     congestion: fieldTypes.CongestionOutputV1,
 //     disciplineAndMaxDepth: fieldTypes.DisciplineAndMaxDepthOutputV1,
 //     maxDepth: fieldTypes.MaxDepthOutputV1,

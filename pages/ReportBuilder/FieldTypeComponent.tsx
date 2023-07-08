@@ -50,7 +50,7 @@ type ParentProps = {
 // FORM UPDATE AREA
 export const FieldTypeComponent = (props: ParentProps) => {
   const { onChange, onBlur, value } = props;
-  let myForm = FormV1Wrapper.getForm(props.form);
+  let myForm = FormV1Wrapper.getRequestForm(props.form);
 
   const renderComponents = () => {
     switch (props.name) {

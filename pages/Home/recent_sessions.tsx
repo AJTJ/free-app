@@ -38,7 +38,9 @@ export function RecentSessions() {
                 " -> " + new Date(session.endTime).toLocaleTimeString()}
             </CoreText>
             {session.report?.reportData &&
-              getFormEntries(FormV1Wrapper.getForm(session.report?.reportData))}
+              getFormEntries(
+                FormV1Wrapper.getRequestForm(session.report?.reportData)
+              )}
           </ItemContainer>
         );
       })}

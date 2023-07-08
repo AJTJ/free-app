@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 // FRAGMENTS
 
 export const FormV1 = gql(`
-  fragment FormV1 on FormOutputV1 {
+  fragment FormV1 on FormResponseV1 {
     sessionName {
       name
       fieldOrder
@@ -38,9 +38,9 @@ export const FormV1 = gql(`
   }
 `);
 
-export const FormOutput = gql(`
-  fragment FormOutput on FormOutput {
-      ... on FormOutputV1 {
+export const FormResponse = gql(`
+  fragment FormResponse on FormResponse {
+      ... on FormResponseV1 {
         ...FormV1
       }
   }
@@ -50,7 +50,7 @@ export const Form = gql(`
   fragment Form on Form {
     createdAt
     formData {
-      ... on FormOutputV1 {
+      ... on FormResponseV1 {
         ...FormV1
       }
     }
@@ -68,7 +68,7 @@ export const Report = gql(`
     isActive
     reportData {
       __typename
-      ... on FormOutputV1 {
+      ... on FormResponseV1 {
         ...FormV1
       }
     }
@@ -97,16 +97,16 @@ export const GET_REPORTS = gql(`
 `);
 
 export const INSERT_FORM = gql(`
-  mutation insertForm($formDetailsInput: FormDetailsInput!, $formInput: FormInput!) {
-    insertForm( formDetailsInput: $formDetailsInput, formInput: $formInput ) {
+  mutation insertForm($formDetails: FormDetails!, $formRequest: FormRequest!) {
+    insertForm( formDetails: $formDetails, formRequest: $formRequest ) {
       ...Form
     }
   }
 `);
 
 export const INSERT_REPORT = gql(`
-  mutation insertReport($sessionId: UUID!, $reportDetailsInput: ReportDetailsInput!, $reportInput: FormInput!) {
-    insertReport( sessionId: $sessionId, reportDetailsInput: $reportDetailsInput, reportInput: $reportInput ) {
+  mutation insertReport($sessionId: UUID!, $reportDetails: ReportDetails!, $reportRequest: FormRequest!) {
+    insertReport( sessionId: $sessionId, reportDetails: $reportDetails, reportRequest: $reportRequest ) {
       ...Report
     }
   }

@@ -29,10 +29,10 @@ import { FormFragment } from "./api/forms.generated";
 import { relayStylePagination } from "@apollo/client/utilities";
 import { Reports } from "./pages/Reports";
 import { ApneaSession } from "./api/apnea_sessions";
-import { Form, FormOutput, FormV1, Report } from "./api/forms";
+import { Form, FormResponse, FormV1, Report } from "./api/forms";
 import { GiftedTest, VictoryTest } from "./pages/ReportVisualizer";
 import { FormReordering } from "./pages/FormBuilder/FormReordering";
-import { FormInputV1 } from "./api/types/types.generated";
+import { FormRequestV1 } from "./api/types/types.generated";
 
 // For top of app
 import "react-native-gesture-handler";
@@ -97,7 +97,7 @@ const client = new ApolloClient({
       ${ApneaSession}
       ${FormV1}
       ${Form}
-      ${FormOutput}
+      ${FormResponse}
       ${Report}
       ${Login}
       ${User}
@@ -121,7 +121,10 @@ export type RootStackParamList = {
   Reports: undefined;
   VictoryTest: undefined;
   GiftedTest: undefined;
-  FormReordering: { form: FormInputV1; onSubmit: (form: FormInputV1) => void };
+  FormReordering: {
+    form: FormRequestV1;
+    onSubmit: (form: FormRequestV1) => void;
+  };
 };
 
 export type AllNavigationProps = NativeStackNavigationProp<RootStackParamList>;

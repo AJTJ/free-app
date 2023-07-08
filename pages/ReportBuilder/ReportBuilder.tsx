@@ -8,8 +8,7 @@ import { FormV1Wrapper } from "../../utility/formV1Wrapper";
 import { useInsertReport } from "../../api/logic/forms";
 import {
   ApneaSessionInput,
-  FormInput,
-  FormInputV1,
+  FormRequest,
   ReportDetails,
 } from "../../api/types/types.generated";
 import { useInsertApneaSession } from "../../api/logic";
@@ -51,7 +50,7 @@ export function ReportBuilder(props: Props) {
   ) => {
     let newReport = FormV1Wrapper.getRequestForm(formData);
 
-    let sessionReport: FormInput = {
+    let sessionReport: FormRequest = {
       v1: newReport,
     };
 
@@ -151,7 +150,7 @@ export function ReportBuilder(props: Props) {
       {sortedFields.map(([fieldName, fieldValue], i) => {
         return (
           fieldValue &&
-          // @ts-ignore There are still properties from FormOutputV1
+          // @ts-ignore There are still properties from FormResponseV1
           fieldName !== "__typename" && (
             <Controller
               key={i + fieldName}
@@ -185,117 +184,3 @@ export function ReportBuilder(props: Props) {
     </LinearGradient>
   );
 }
-
-// switch (f.__typename) {
-//   case "CongestionOutputV1":
-//     break;
-
-//   default:
-//     break;
-// }
-
-// {orderedFields &&
-//   orderedFields.map((field, i) => {
-//     console.log({ field });
-
-//     return (
-//       <Controller
-//         key={i + field.fieldName}
-//         name={field.fieldName}
-//         control={control}
-//         render={({ field: { onChange, onBlur, value } }) => (
-//           <>
-//             <View>
-//               <CoreText>Field Name: {field.fieldName}</CoreText>
-//               <ValueTypeComponent
-//                 valueTypes={field.fieldValueType}
-//                 {...{
-//                   onChange,
-//                   onBlur,
-//                   value,
-//                   formStructure,
-//                   field,
-//                 }}
-//               />
-//             </View>
-//           </>
-//         )}
-//       />
-//     );
-//   })}
-
-// IN ONSUBMIT
-// if (enums && allFields && structure && formTemplateVersion) {
-//   let newData: FsfieldOutput[] = [];
-//   Object.entries(formData).forEach(([key, value]) => {
-//     if (value === true) {
-//       let field = allFields?.find((f) => f.fieldName === key);
-//       if (field) {
-//         newData.push(field);
-//       }
-//     }
-//   });
-//   let returnEnums: EnumLists[] = enums.map((e) => {
-//     return { enums: e.enums, fieldName: e.fieldName };
-//   });
-//   let returnFields: Fsfield[] = newData.map((e) => {
-//     const { __typename, ...returnType } = e;
-//     return returnType;
-//   });
-//   let new_structure: FormStructure = {
-//     allFields: returnFields,
-//     enums: returnEnums,
-//     formTemplateVersion,
-//   };
-//   console.log({ new_structure });
-//   putFormMutation({
-//     variables: { name: formData.name, formStructure: new_structure },
-//   })
-//     .catch((e) => console.error("MEMES", e))
-//     .then((res) => {
-//       console.log("it is created");
-//       navigation.navigate("FormsList");
-//     });
-// }
-
-// const formOutput = props.route.params.formOutput;
-// let form = formOutput.form;
-// let formStructure = formOutput.formStructure;
-// let allFields = formStructure.allFields;
-// let currentFieldNames = allFields.map((f) => f.fieldName);
-// let possibleFieldNames = formStructure.fieldNames;
-// let orderedFields = [...allFields].sort((a, b) => {
-//   return (a.fieldOrder || Infinity) <= (b.fieldOrder || Infinity) ? -1 : 1;
-// });
-
-// TODO: How will this work with versioning?
-// type ImportTypes = Record<typeof currentFieldNames[number], string[]>;
-// type LocalTypes = { name: string };
-// type FormValues = ImportTypes & LocalTypes;
-
-// let defaultValues: Record<string, any> = { name: "" };
-
-// [...currentFieldNames].forEach((n) => {
-//   defaultValues[n] = [];
-// });
-
-// const reportDefaultValues: IncomingFormTypes = {
-//   CongestionOutputV1: { value: undefined },
-//   DisciplineAndMaxDepthOutputV1: { disciplineMaxDepth: undefined },
-//   MaxDepthOutputV1: { maxDepth: undefined },
-//   SessionNameOutputV1: { name: undefined },
-//   VisibilityOutputV1: { value: undefined },
-//   WeatherOutputV1: { wind: undefined },
-//   WildlifeOutputV1: { value: undefined },
-// };
-
-// const sessionInputDefaultValues = {
-//   startTime: new Date(Date.now()).toISOString(),
-//   endTime: undefined,
-//   sessionName: undefined,
-// };
-
-// const defaultValues = {
-//   // ...reportDefaultValues,
-//   // ...sessionInputDefaultValues,
-// };

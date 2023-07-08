@@ -6,8 +6,8 @@ import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProps } from "../../App";
 import {
   Form,
-  FormInputV1,
-  FormOutputV1,
+  FormRequestV1,
+  FormResponseV1,
 } from "../../api/types/types.generated";
 import { FormFragment } from "../../api/forms.generated";
 import { ItemContainer } from "../../components";
@@ -27,10 +27,10 @@ export function FormsList() {
     navigation.navigate("ReportBuilder", { form });
   };
 
-  const displayForms = (formData: FormOutputV1) => {
-    let formInput: FormInputV1 = FormV1Wrapper.getRequestForm(formData);
+  const displayForms = (formData: FormResponseV1) => {
+    let formRequest: FormRequestV1 = FormV1Wrapper.getRequestForm(formData);
 
-    let entries = Object.entries(formInput)
+    let entries = Object.entries(formRequest)
       .sort((a, b) => {
         return (a[1]?.fieldOrder || Infinity) > (b[1]?.fieldOrder || Infinity)
           ? 1

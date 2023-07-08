@@ -3,7 +3,7 @@ import React from "react";
 import { CoreText } from "../../components/textComponents";
 import { useGetApneaSessions } from "../../api/logic";
 import { FormV1Wrapper } from "../../utility/formV1Wrapper";
-import { FormInputV1 } from "../../api/types/types.generated";
+import { FormRequestV1 } from "../../api/types/types.generated";
 import { ItemContainer } from "../../components";
 
 export function RecentSessions() {
@@ -14,7 +14,7 @@ export function RecentSessions() {
     console.error("GETTING SESSIONS ERROR:", error);
   }
 
-  const getFormEntries = (form: FormInputV1) => {
+  const getFormEntries = (form: FormRequestV1) => {
     // TODO: Maybe just show a word for now.
     return <CoreText>memes</CoreText>;
   };

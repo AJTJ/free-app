@@ -5,7 +5,7 @@ import { Noop } from "react-hook-form";
 import {
   CongestionOutputV1,
   DisciplineAndMaxDepthOutputV1,
-  FormInputV1,
+  FormRequestV1,
   MaxDepthOutputV1,
   SessionNameOutputV1,
   VisibilityOutputV1,
@@ -18,11 +18,11 @@ import { FormFragment } from "../../api/forms.generated";
 // import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
 
 type ChildProps = {
-  name: keyof FormInputV1;
-  form: FormInputV1;
+  name: keyof FormRequestV1;
+  form: FormRequestV1;
   onChange: (...event: any[]) => void;
   onBlur: Noop;
-  value: FormInputV1[keyof FormInputV1];
+  value: FormRequestV1[keyof FormRequestV1];
 };
 
 const CongestionComponent = (props: ChildProps) => {
@@ -40,11 +40,11 @@ const CongestionComponent = (props: ChildProps) => {
 };
 
 type ParentProps = {
-  name: keyof FormInputV1;
-  form: FormInputV1;
+  name: keyof FormRequestV1;
+  form: FormRequestV1;
   onChange: (...event: any[]) => void;
   onBlur: Noop;
-  value: FormInputV1[keyof FormInputV1];
+  value: FormRequestV1[keyof FormRequestV1];
 };
 
 // FORM UPDATE AREA

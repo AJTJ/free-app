@@ -58,7 +58,7 @@ export class FormV1Wrapper {
   // let disciplineMaxDepth: InnerDisciplineMaxDepthInputV1[] = [];
 
   static createForm(
-    form_input: Record<
+    form_request: Record<
       keyof FormRequestV1,
       { active: boolean; fieldOrder: number }
     >
@@ -66,7 +66,7 @@ export class FormV1Wrapper {
     let tempForm: FormRequestV1 = {};
     type ValType = { active: boolean; fieldOrder: number };
 
-    let formEntries = Object.entries(form_input) as [
+    let formEntries = Object.entries(form_request) as [
       keyof typeof tempForm,
       ValType
     ][];

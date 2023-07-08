@@ -11,9 +11,9 @@ import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProps } from "../../App";
 import {
-  FormDetailsInput,
-  FormInput,
-  FormInputV1,
+  FormDetails,
+  FormRequest,
+  FormRequestV1,
 } from "../../api/types/types.generated";
 import { useInsertForm } from "../../api/logic/forms";
 import { FormV1Wrapper } from "../../utility/formV1Wrapper";
@@ -42,20 +42,20 @@ export function FormBuilder() {
     defaultValues: { ...fieldDefaults, ...otherTypeDefaults },
   });
 
-  const reorderingSubmit = (formName: string) => (newForm: FormInputV1) => {
-    const formInput: FormInput = {
+  const reorderingSubmit = (formName: string) => (newForm: FormRequestV1) => {
+    const formRequest: FormRequest = {
       v1: newForm,
     };
 
     // TODO: Add originalform and previousform for "editing"?
-    const formDetailsInput: FormDetailsInput = {
+    const formDetails: FormDetails = {
       formName: formName,
       // TODO: make it so that you can "update"
       // originalFormId: _,
       // previousFormId: _
     };
 
-    insertFormMutation({ variables: { formDetailsInput, formInput } })
+    insertFormMutation({ variables: { formDetails, formRequest } })
       .catch((e) => {
         console.error(e);
       })

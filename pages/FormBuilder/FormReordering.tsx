@@ -1,17 +1,12 @@
 import React, { useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import {
-  Btn,
-  CoreText,
-  ItemContainer,
-  LinearGradient,
-  SmallBtn,
-} from "../../components";
-import { AllNavigationProps, RootStackParamList } from "../../App";
+import { Btn, CoreText, ItemContainer, LinearGradient } from "../../components";
+import { RootStackParamList } from "../../App";
 import DraggableFlatList, {
   ScaleDecorator,
 } from "react-native-draggable-flatlist";
 import { FormV1Wrapper } from "../../utility/formV1Wrapper";
+import { TouchableOpacity } from "react-native";
 
 export type Props = NativeStackScreenProps<
   RootStackParamList,
@@ -19,7 +14,8 @@ export type Props = NativeStackScreenProps<
 >;
 
 export const FormReordering = (props: Props) => {
-  let form = props.route.params.form;
+  let incomingForm = props.route.params.form;
+  let form = Object.assign(incomingForm);
   let onSubmit = props.route.params.onSubmit;
   let [sortedForm, setSortedForm] = useState(
     FormV1Wrapper.getSortedFields(form)
@@ -27,13 +23,16 @@ export const FormReordering = (props: Props) => {
 
   let localSubmit = () => {
     sortedForm.forEach((el, i) => {
-      if (form[el[0]] && form[el[0]]?.fieldOrder) {
-        // @ts-ignore it should exist, but it still complains because of type
+      if (form[el[0]]) {
         form[el[0]].fieldOrder = i;
       }
     });
+
+    console.log("AFTER SORT", Object.values(form));
     onSubmit(form);
   };
+
+  console.log({ sortedForm });
 
   return (
     <LinearGradient>
@@ -43,11 +42,24 @@ export const FormReordering = (props: Props) => {
           setSortedForm(data);
         }}
         keyExtractor={(item) => item[0]}
-        renderItem={(e) => {
+        renderItem={({ item, drag, isActive }) => {
           return (
-            e.item[0] && (
+            item[0] && (
               <ItemContainer>
-                <CoreText>{e.item[0]}</CoreText>
+                <ScaleDecorator>
+                  <TouchableOpacity
+                    onLongPress={drag}
+                    disabled={isActive}
+                    style={[
+                      {
+                        backgroundColor: isActive ? "red" : "blue",
+                        height: 100,
+                      },
+                    ]}
+                  >
+                    <CoreText>{item[0]}</CoreText>
+                  </TouchableOpacity>
+                </ScaleDecorator>
               </ItemContainer>
             )
           );

@@ -4,7 +4,11 @@ import { CoreText } from "../../components/textComponents";
 import { useGetForms } from "../../api/logic/forms";
 import { useNavigation } from "@react-navigation/native";
 import { AllNavigationProps } from "../../App";
-import { Form, FormOutputV1 } from "../../api/types/types.generated";
+import {
+  Form,
+  FormInputV1,
+  FormOutputV1,
+} from "../../api/types/types.generated";
 import { FormFragment } from "../../api/forms.generated";
 import { ItemContainer } from "../../components";
 import { FormV1Wrapper } from "../../utility/formV1Wrapper";
@@ -15,14 +19,35 @@ export function FormsList() {
 
   const emptyForm = FormV1Wrapper.getForm();
 
-  console.log("forms data", data);
-
   if (error) {
     console.error(error);
   }
 
   const handleFormPress = (form: FormFragment) => {
     navigation.navigate("ReportBuilder", { form });
+  };
+
+  const displayForms = (formData: FormOutputV1) => {
+    let formInput: FormInputV1 = FormV1Wrapper.getForm(formData);
+
+    let entries = Object.entries(formInput)
+      .sort((a, b) => {
+        return (a[1]?.fieldOrder || Infinity) > (b[1]?.fieldOrder || Infinity)
+          ? 1
+          : -1;
+      })
+      .filter((x) => x[1] !== null);
+
+    return entries.map(([key, value], i) => {
+      return (
+        value &&
+        key !== "__typename" && (
+          <View key={key + i}>
+            <CoreText>{key}</CoreText>
+          </View>
+        )
+      );
+    });
   };
 
   return (
@@ -38,19 +63,7 @@ export function FormsList() {
             <Pressable onPress={() => handleFormPress(f)} key={f.id + i}>
               <CoreText>{f.formName}</CoreText>
               <CoreText>Created: {f.createdAt}</CoreText>
-              <View>
-                {Object.entries(f.formData).map(([key, value], i) => {
-                  console.log({ key, value });
-                  return (
-                    value &&
-                    key !== "__typename" && (
-                      <View key={key + i}>
-                        <CoreText>{key}</CoreText>
-                      </View>
-                    )
-                  );
-                })}
-              </View>
+              <View>{displayForms(f.formData)}</View>
             </Pressable>
           </ItemContainer>
         );

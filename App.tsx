@@ -34,6 +34,10 @@ import { GiftedTest, VictoryTest } from "./pages/ReportVisualizer";
 import { FormReordering } from "./pages/FormBuilder/FormReordering";
 import { FormInputV1 } from "./api/types/types.generated";
 
+// For top of app
+import "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 if (__DEV__) {
   // Adds messages only in a dev environment
   loadDevMessages();
@@ -134,25 +138,26 @@ export default function App() {
       {/* <AutocompleteDropdownContextProvider> */}
       <ThemeProvider theme={GlobalTheme}>
         {/* <StatusBar hidden /> */}
-
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="Landing"
-            // THIS HIDES THE HEADER
-            // screenOptions={{ headerShown: false }}
-          >
-            {/* each stack is being injected the navigation object */}
-            <Stack.Screen name="Landing" component={Landing} />
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="FormsList" component={AllForms} />
-            <Stack.Screen name="FormBuilder" component={FormBuilder} />
-            <Stack.Screen name="ReportBuilder" component={ReportBuilder} />
-            <Stack.Screen name="Reports" component={Reports} />
-            <Stack.Screen name="VictoryTest" component={VictoryTest} />
-            <Stack.Screen name="GiftedTest" component={GiftedTest} />
-            <Stack.Screen name="FormReordering" component={FormReordering} />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName="Landing"
+              // THIS HIDES THE HEADER
+              // screenOptions={{ headerShown: false }}
+            >
+              {/* each stack is being injected the navigation object */}
+              <Stack.Screen name="Landing" component={Landing} />
+              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name="FormsList" component={AllForms} />
+              <Stack.Screen name="FormBuilder" component={FormBuilder} />
+              <Stack.Screen name="ReportBuilder" component={ReportBuilder} />
+              <Stack.Screen name="Reports" component={Reports} />
+              <Stack.Screen name="VictoryTest" component={VictoryTest} />
+              <Stack.Screen name="GiftedTest" component={GiftedTest} />
+              <Stack.Screen name="FormReordering" component={FormReordering} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </GestureHandlerRootView>
       </ThemeProvider>
       {/* </AutocompleteDropdownContextProvider> */}
     </ApolloProvider>

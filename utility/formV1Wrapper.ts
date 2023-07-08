@@ -21,16 +21,33 @@ export class FormV1Wrapper {
 
   // FORM UPDATE AREA
   static getForm(form?: FormOutputV1): FormInputV1 {
-    let congestion: CongestionOutputV1 = { ...form?.congestion };
-    // let disciplineMaxDepth: InnerDisciplineMaxDepthInputV1[] = [];
-    let disciplineAndMaxDepth: DisciplineAndMaxDepthOutputV1 = {
-      ...form?.disciplineAndMaxDepth,
+    const myForm = { ...form };
+    if (myForm) {
+      let keys = Object.keys(myForm) as [keyof FormOutputV1];
+
+      keys.map((key) => {
+        if (key === "__typename") {
+          delete myForm[key];
+        }
+      });
+    }
+
+    let newForm: FormInputV1 = {
+      ...myForm,
     };
-    let maxDepth: MaxDepthOutputV1 = { ...form?.maxDepth };
-    let sessionName: SessionNameOutputV1 = { ...form?.sessionName };
-    let visibility: VisibilityOutputV1 = { ...form?.visibility };
-    let weather: WeatherOutputV1 = { ...form?.weather };
-    let wildlife: WildlifeOutputV1 = { ...form?.wildlife };
+
+    return newForm;
+  }
+
+  static getEmptyForm(): FormInputV1 {
+    let congestion: CongestionOutputV1 = {};
+    // let disciplineMaxDepth: InnerDisciplineMaxDepthInputV1[] = [];
+    let disciplineAndMaxDepth: DisciplineAndMaxDepthOutputV1 = {};
+    let maxDepth: MaxDepthOutputV1 = {};
+    let sessionName: SessionNameOutputV1 = {};
+    let visibility: VisibilityOutputV1 = {};
+    let weather: WeatherOutputV1 = {};
+    let wildlife: WildlifeOutputV1 = {};
 
     let newForm: FormInputV1 = {
       congestion,
@@ -65,7 +82,8 @@ export class FormV1Wrapper {
       }
     });
 
-    return FormV1Wrapper.getForm(tempForm);
+    // return FormV1Wrapper.getForm(tempForm);
+    return tempForm;
   }
 
   static getSortedFields(

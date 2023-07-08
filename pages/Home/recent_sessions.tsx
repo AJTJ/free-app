@@ -10,8 +10,6 @@ export function RecentSessions() {
   const { loading, error, data } = useGetApneaSessions();
   let formClass = new FormV1Wrapper();
 
-  console.log({ data });
-
   if (error) {
     console.error("GETTING SESSIONS ERROR:", error);
   }

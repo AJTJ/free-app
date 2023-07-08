@@ -23,7 +23,7 @@ export function FormBuilder() {
   const { insertFormMutation, result } = useInsertForm();
 
   // Typing information
-  let emptyForm = FormV1Wrapper.getForm();
+  let emptyForm = FormV1Wrapper.getEmptyForm();
   type KeyType = keyof typeof emptyForm;
   type FieldTypes = Record<KeyType, { active: boolean; fieldOrder: number }>;
   let fieldDefaults = Object.keys(emptyForm).reduce<FieldTypes>((acc, cur) => {
@@ -41,8 +41,6 @@ export function FormBuilder() {
   } = useForm<FormTypes>({
     defaultValues: { ...fieldDefaults, ...otherTypeDefaults },
   });
-
-  console.log({ errors });
 
   const reorderingSubmit = (formName: string) => (newForm: FormInputV1) => {
     const formInput: FormInput = {
@@ -62,13 +60,14 @@ export function FormBuilder() {
         console.error(e);
       })
       .then((data) => {
-        console.log("putFormResponse", data);
         navigation.navigate("FormsList");
       });
   };
 
   const onSubmit: SubmitHandler<FormTypes> = (formData) => {
     let newForm = FormV1Wrapper.createForm(formData);
+
+    console.log({ newForm });
     navigation.navigate("FormReordering", {
       form: newForm,
       onSubmit: reorderingSubmit(formData.formName),

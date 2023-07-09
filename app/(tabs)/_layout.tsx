@@ -19,9 +19,11 @@ export default function TabLayout() {
     >
       <Tabs.Screen
         name="index"
-        options={{
-          href: null,
-        }}
+        options={
+          {
+            // href: null,
+          }
+        }
       />
       <Tabs.Screen
         name="(Home)/Home"
@@ -36,7 +38,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="(FormsList)/AllForms"
+        name="(FormsList)/FormsList"
         options={{
           title: "Log Dives",
         }}

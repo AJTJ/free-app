@@ -7,7 +7,7 @@ import { RecentSessions } from "./recent_sessions";
 import { useLogoutUser } from "@/api/logic/user";
 import { useInsertPrePopulatedApneaSession } from "@/api/logic";
 
-import { router } from "expo-router";
+import { Link, Redirect, router } from "expo-router";
 
 const Home = () => {
   const loginData = useSnapshot(loginStore).loginState;
@@ -16,8 +16,7 @@ const Home = () => {
 
   useEffect(() => {
     if (!loginData) {
-      router.push("Landing");
-      // router.push("Landing");
+      router.push("/landing");
     }
   });
 

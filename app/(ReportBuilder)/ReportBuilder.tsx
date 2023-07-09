@@ -9,24 +9,28 @@ import {
   FormRequest,
   ReportDetails,
 } from "@/api/types/types.generated";
+import { useLocalSearchParams } from "expo-router";
 import { useInsertApneaSession } from "@/api/logic";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View } from "react-native";
 import { FormFragment } from "@/api/forms.generated";
 import { router } from "expo-router";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../_layout";
 
-type Props = {
-  form: FormFragment;
-};
+export type Props = NativeStackScreenProps<RootStackParamList, "ReportBuilder">;
 
 const ReportBuilder = (props: Props) => {
+  // const { user } = useLocalSearchParams<{ form: FormFragment }>();
+
+  let form = props.route.params.form;
   const [mode, setMode] = useState<"date" | "time">("date");
   const [show, setShow] = useState(false);
   const { insertReportMutation, result } = useInsertReport();
   const { insertSession } = useInsertApneaSession();
 
-  let form = props.form;
+  // let form = props.form;
   const sortedFields = FormV1Wrapper.getSortedFields(form.formData);
   let myForm = FormV1Wrapper.getRequestForm(form.formData);
   type IncomingFormTypes = typeof myForm;
@@ -186,3 +190,7 @@ const ReportBuilder = (props: Props) => {
 };
 
 export default ReportBuilder;
+
+// type Props = {
+//   form: FormFragment;
+// };

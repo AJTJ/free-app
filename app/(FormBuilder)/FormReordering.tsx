@@ -14,15 +14,17 @@ import {
 } from "@/api/types/types.generated";
 import { router } from "expo-router";
 import { useInsertForm } from "@/api/logic/forms";
+import { RootStackParamList } from "../_layout";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-type Props = {
-  form: FormRequestV1;
-  formName: string;
-  // onSubmit: (form: FormRequestV1) => void;
-};
+export type Props = NativeStackScreenProps<
+  RootStackParamList,
+  "FormReordering"
+>;
 
 const FormReordering = (props: Props) => {
-  let form = Object.assign(props.form);
+  const { form: incomingForm, formName } = props.route.params;
+  let form = Object.assign(incomingForm);
   let [sortedForm, setSortedForm] = useState(
     FormV1Wrapper.getSortedFields(form)
   );
@@ -40,7 +42,7 @@ const FormReordering = (props: Props) => {
 
     // TODO: Add originalform and previousform for "editing"?
     const formDetails: FormDetails = {
-      formName: props.formName,
+      formName: formName,
       // TODO: make it so that you can "update"
       // originalFormId: _,
       // previousFormId: _
@@ -92,3 +94,9 @@ const FormReordering = (props: Props) => {
 };
 
 export default FormReordering;
+
+// type Props = {
+//   form: FormRequestV1;
+//   formName: string;
+//   // onSubmit: (form: FormRequestV1) => void;
+// };

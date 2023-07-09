@@ -8,11 +8,11 @@ import {
   FormResponseV1,
 } from "@/api/types/types.generated";
 import { FormFragment } from "@/api/forms.generated";
-import { ItemContainer } from "@/components";
+import { Btn, ItemContainer, LinearGradient } from "@/components";
 import { FormV1Wrapper } from "@/utility/formV1Wrapper";
-import { router } from "expo-router";
+import { Link, Redirect, router } from "expo-router";
 
-export const FormsList = () => {
+export default function FormsList() {
   const { loading, error, data } = useGetForms();
 
   if (error) {
@@ -21,7 +21,6 @@ export const FormsList = () => {
 
   const handleFormPress = (form: FormFragment) => {
     router.push({ pathname: "ReportBuilder", params: { form } });
-    // navigation.navigate("ReportBuilder", { form });
   };
 
   const displayForms = (formData: FormResponseV1) => {
@@ -48,23 +47,45 @@ export const FormsList = () => {
   };
 
   return (
-    <>
-      {loading && (
-        <View>
-          <CoreText>Loading Forms...</CoreText>
-        </View>
-      )}
-      {data?.forms.map((f, i) => {
-        return (
-          <ItemContainer key={f.createdAt + i}>
-            <Pressable onPress={() => handleFormPress(f)} key={f.id + i}>
-              <CoreText>{f.formName}</CoreText>
-              <CoreText>Created: {f.createdAt}</CoreText>
-              <View>{displayForms(f.formData)}</View>
-            </Pressable>
-          </ItemContainer>
-        );
-      })}
-    </>
+    <LinearGradient>
+      <>
+        <Btn
+          title="Create Dive Logger"
+          type="primary"
+          hasIcon={false}
+          disabled={false}
+          onPress={() => {
+            router.push({ pathname: "FormBuilder" });
+            // navigation.navigate("FormBuilder");
+          }}
+        />
+        <Btn
+          title="Go Home"
+          type="primary"
+          hasIcon={false}
+          disabled={false}
+          onPress={() => {
+            router.push({ pathname: "Home" });
+            // navigation.navigate("Home");
+          }}
+        />
+        {loading && (
+          <View>
+            <CoreText>Loading Forms...</CoreText>
+          </View>
+        )}
+        {data?.forms.map((f, i) => {
+          return (
+            <ItemContainer key={f.createdAt + i}>
+              <Pressable onPress={() => handleFormPress(f)} key={f.id + i}>
+                <CoreText>{f.formName}</CoreText>
+                <CoreText>Created: {f.createdAt}</CoreText>
+                <View>{displayForms(f.formData)}</View>
+              </Pressable>
+            </ItemContainer>
+          );
+        })}
+      </>
+    </LinearGradient>
   );
-};
+}

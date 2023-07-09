@@ -78,25 +78,25 @@ export type ApneaSessionUpdate = {
   startTime?: InputMaybe<Scalars['DateTime']>;
 };
 
-export type CongestionInputV1 = {
+export type CongestionRequestV1 = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
   value?: InputMaybe<Scalars['Int']>;
 };
 
-export type CongestionOutputV1 = {
-  __typename?: 'CongestionOutputV1';
+export type CongestionResponseV1 = {
+  __typename?: 'CongestionResponseV1';
   fieldOrder?: Maybe<Scalars['Int']>;
   value?: Maybe<Scalars['Int']>;
 };
 
-export type DisciplineAndMaxDepthInputV1 = {
-  disciplineMaxDepth?: InputMaybe<Array<InnerDisciplineMaxDepthInputV1>>;
+export type DisciplineAndMaxDepthRequestV1 = {
+  disciplineMaxDepth?: InputMaybe<Array<InnerDisciplineMaxDepthRequestV1>>;
   fieldOrder?: InputMaybe<Scalars['Int']>;
 };
 
-export type DisciplineAndMaxDepthOutputV1 = {
-  __typename?: 'DisciplineAndMaxDepthOutputV1';
-  disciplineMaxDepth?: Maybe<Array<InnerDisciplineMaxDepthOutputV1>>;
+export type DisciplineAndMaxDepthResponseV1 = {
+  __typename?: 'DisciplineAndMaxDepthResponseV1';
+  disciplineMaxDepth?: Maybe<Array<InnerDisciplineMaxDepthResponseV1>>;
   fieldOrder?: Maybe<Scalars['Int']>;
 };
 
@@ -174,35 +174,35 @@ export type FormRequest = {
 };
 
 export type FormRequestV1 = {
-  congestion?: InputMaybe<CongestionInputV1>;
-  disciplineAndMaxDepth?: InputMaybe<DisciplineAndMaxDepthInputV1>;
-  maxDepth?: InputMaybe<MaxDepthInputV1>;
-  sessionName?: InputMaybe<SessionNameInputV1>;
-  visibility?: InputMaybe<VisibilityInputV1>;
-  weather?: InputMaybe<WeatherInputV1>;
-  wildlife?: InputMaybe<WildlifeInputV1>;
+  congestion?: InputMaybe<CongestionRequestV1>;
+  disciplineAndMaxDepth?: InputMaybe<DisciplineAndMaxDepthRequestV1>;
+  maxDepth?: InputMaybe<MaxDepthRequestV1>;
+  sessionName?: InputMaybe<SessionNameRequestV1>;
+  visibility?: InputMaybe<VisibilityRequestV1>;
+  weather?: InputMaybe<WeatherRequestV1>;
+  wildlife?: InputMaybe<WildlifeRequestV1>;
 };
 
 export type FormResponse = FormResponseV1;
 
 export type FormResponseV1 = {
   __typename?: 'FormResponseV1';
-  congestion?: Maybe<CongestionOutputV1>;
-  disciplineAndMaxDepth?: Maybe<DisciplineAndMaxDepthOutputV1>;
-  maxDepth?: Maybe<MaxDepthOutputV1>;
-  sessionName?: Maybe<SessionNameOutputV1>;
-  visibility?: Maybe<VisibilityOutputV1>;
-  weather?: Maybe<WeatherOutputV1>;
-  wildlife?: Maybe<WildlifeOutputV1>;
+  congestion?: Maybe<CongestionResponseV1>;
+  disciplineAndMaxDepth?: Maybe<DisciplineAndMaxDepthResponseV1>;
+  maxDepth?: Maybe<MaxDepthResponseV1>;
+  sessionName?: Maybe<SessionNameResponseV1>;
+  visibility?: Maybe<VisibilityResponseV1>;
+  weather?: Maybe<WeatherResponseV1>;
+  wildlife?: Maybe<WildlifeResponseV1>;
 };
 
-export type InnerDisciplineMaxDepthInputV1 = {
+export type InnerDisciplineMaxDepthRequestV1 = {
   discipline?: InputMaybe<DisciplinesEnum>;
   maxDepth: Scalars['Int'];
 };
 
-export type InnerDisciplineMaxDepthOutputV1 = {
-  __typename?: 'InnerDisciplineMaxDepthOutputV1';
+export type InnerDisciplineMaxDepthResponseV1 = {
+  __typename?: 'InnerDisciplineMaxDepthResponseV1';
   discipline?: Maybe<DisciplinesEnum>;
   maxDepth: Scalars['Int'];
 };
@@ -212,13 +212,13 @@ export type Login = {
   password: Scalars['String'];
 };
 
-export type MaxDepthInputV1 = {
+export type MaxDepthRequestV1 = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
   maxDepth?: InputMaybe<Scalars['Int']>;
 };
 
-export type MaxDepthOutputV1 = {
-  __typename?: 'MaxDepthOutputV1';
+export type MaxDepthResponseV1 = {
+  __typename?: 'MaxDepthResponseV1';
   fieldOrder?: Maybe<Scalars['Int']>;
   maxDepth?: Maybe<Scalars['Int']>;
 };
@@ -386,13 +386,13 @@ export type ReportEdge = {
   node: Report;
 };
 
-export type SessionNameInputV1 = {
+export type SessionNameRequestV1 = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
 };
 
-export type SessionNameOutputV1 = {
-  __typename?: 'SessionNameOutputV1';
+export type SessionNameResponseV1 = {
+  __typename?: 'SessionNameResponseV1';
   fieldOrder?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
 };
@@ -423,24 +423,24 @@ export type UserInput = {
   username: Scalars['String'];
 };
 
-export type VisibilityInputV1 = {
+export type VisibilityRequestV1 = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
   value?: InputMaybe<Scalars['Int']>;
 };
 
-export type VisibilityOutputV1 = {
-  __typename?: 'VisibilityOutputV1';
+export type VisibilityResponseV1 = {
+  __typename?: 'VisibilityResponseV1';
   fieldOrder?: Maybe<Scalars['Int']>;
   value?: Maybe<Scalars['Int']>;
 };
 
-export type WeatherInputV1 = {
+export type WeatherRequestV1 = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
   wind?: InputMaybe<Scalars['Int']>;
 };
 
-export type WeatherOutputV1 = {
-  __typename?: 'WeatherOutputV1';
+export type WeatherResponseV1 = {
+  __typename?: 'WeatherResponseV1';
   fieldOrder?: Maybe<Scalars['Int']>;
   wind?: Maybe<Scalars['Int']>;
 };
@@ -451,13 +451,13 @@ export enum WildlifeEnumV1 {
   Small = 'SMALL'
 }
 
-export type WildlifeInputV1 = {
+export type WildlifeRequestV1 = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
   value?: InputMaybe<WildlifeEnumV1>;
 };
 
-export type WildlifeOutputV1 = {
-  __typename?: 'WildlifeOutputV1';
+export type WildlifeResponseV1 = {
+  __typename?: 'WildlifeResponseV1';
   fieldOrder?: Maybe<Scalars['Int']>;
   value?: Maybe<WildlifeEnumV1>;
 };

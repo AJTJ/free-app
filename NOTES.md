@@ -1,4 +1,14 @@
+Resolutions needed?
+`
+ "resolutions": {
+    "@types/react": "^17"
+  },
 
+  "@expo/webpack-config": "^18.0.1",
+
+  "@react-navigation/native": "^6.0.12",
+    "@react-navigation/native-stack": "^6.8.0",
+`
 
 ### TODOs
 - styling library?

@@ -547,7 +547,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "CongestionInputV1",
+        "name": "CongestionRequestV1",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -582,7 +582,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "CongestionOutputV1",
+        "name": "CongestionResponseV1",
         "description": null,
         "fields": [
           {
@@ -627,7 +627,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "DisciplineAndMaxDepthInputV1",
+        "name": "DisciplineAndMaxDepthRequestV1",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -642,7 +642,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "INPUT_OBJECT",
-                  "name": "InnerDisciplineMaxDepthInputV1",
+                  "name": "InnerDisciplineMaxDepthRequestV1",
                   "ofType": null
                 }
               }
@@ -670,7 +670,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "DisciplineAndMaxDepthOutputV1",
+        "name": "DisciplineAndMaxDepthResponseV1",
         "description": null,
         "fields": [
           {
@@ -685,7 +685,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "InnerDisciplineMaxDepthOutputV1",
+                  "name": "InnerDisciplineMaxDepthResponseV1",
                   "ofType": null
                 }
               }
@@ -1402,7 +1402,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "CongestionInputV1",
+              "name": "CongestionRequestV1",
               "ofType": null
             },
             "defaultValue": null,
@@ -1414,7 +1414,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "DisciplineAndMaxDepthInputV1",
+              "name": "DisciplineAndMaxDepthRequestV1",
               "ofType": null
             },
             "defaultValue": null,
@@ -1426,7 +1426,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "MaxDepthInputV1",
+              "name": "MaxDepthRequestV1",
               "ofType": null
             },
             "defaultValue": null,
@@ -1438,7 +1438,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "SessionNameInputV1",
+              "name": "SessionNameRequestV1",
               "ofType": null
             },
             "defaultValue": null,
@@ -1450,7 +1450,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "VisibilityInputV1",
+              "name": "VisibilityRequestV1",
               "ofType": null
             },
             "defaultValue": null,
@@ -1462,7 +1462,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "WeatherInputV1",
+              "name": "WeatherRequestV1",
               "ofType": null
             },
             "defaultValue": null,
@@ -1474,7 +1474,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "WildlifeInputV1",
+              "name": "WildlifeRequestV1",
               "ofType": null
             },
             "defaultValue": null,
@@ -1513,7 +1513,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "CongestionOutputV1",
+              "name": "CongestionResponseV1",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1525,7 +1525,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "DisciplineAndMaxDepthOutputV1",
+              "name": "DisciplineAndMaxDepthResponseV1",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1537,7 +1537,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "MaxDepthOutputV1",
+              "name": "MaxDepthResponseV1",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1549,7 +1549,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "SessionNameOutputV1",
+              "name": "SessionNameResponseV1",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1561,7 +1561,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "VisibilityOutputV1",
+              "name": "VisibilityResponseV1",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1573,7 +1573,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "WeatherOutputV1",
+              "name": "WeatherResponseV1",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1585,7 +1585,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "WildlifeOutputV1",
+              "name": "WildlifeResponseV1",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1609,7 +1609,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "InnerDisciplineMaxDepthInputV1",
+        "name": "InnerDisciplineMaxDepthRequestV1",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -1648,7 +1648,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "InnerDisciplineMaxDepthOutputV1",
+        "name": "InnerDisciplineMaxDepthResponseV1",
         "description": null,
         "fields": [
           {
@@ -1740,7 +1740,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "MaxDepthInputV1",
+        "name": "MaxDepthRequestV1",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -1775,7 +1775,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "MaxDepthOutputV1",
+        "name": "MaxDepthResponseV1",
         "description": null,
         "fields": [
           {
@@ -2915,7 +2915,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "SessionNameInputV1",
+        "name": "SessionNameRequestV1",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -2950,7 +2950,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "SessionNameOutputV1",
+        "name": "SessionNameResponseV1",
         "description": null,
         "fields": [
           {
@@ -3272,7 +3272,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "VisibilityInputV1",
+        "name": "VisibilityRequestV1",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -3307,7 +3307,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "VisibilityOutputV1",
+        "name": "VisibilityResponseV1",
         "description": null,
         "fields": [
           {
@@ -3342,7 +3342,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "WeatherInputV1",
+        "name": "WeatherRequestV1",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -3377,7 +3377,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "WeatherOutputV1",
+        "name": "WeatherResponseV1",
         "description": null,
         "fields": [
           {
@@ -3441,7 +3441,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "WildlifeInputV1",
+        "name": "WildlifeRequestV1",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -3476,7 +3476,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "WildlifeOutputV1",
+        "name": "WildlifeResponseV1",
         "description": null,
         "fields": [
           {

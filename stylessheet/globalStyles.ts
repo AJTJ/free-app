@@ -1,10 +1,7 @@
 import { createContext } from "react";
-// globalStyles.js
-import styled from "styled-components/native";
 import { colors, spacing } from "./colors";
-/*
-https://javascript.plainenglish.io/global-theming-in-react-native-using-styled-components-redux-toolkit-typescript-7621d2bddbcb
-*/
+
+// https://docs.expo.dev/develop/user-interface/color-themes/?redirected
 
 export const GlobalTheme = {
   colors,

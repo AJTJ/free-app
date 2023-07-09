@@ -1,18 +1,37 @@
 {
   "expo": {
-    "plugins": [
-      "@maplibre/maplibre-react-native"
-    ],
-    "android": {
-      "package": "com.anonymous.free_app"
-    },
-    "ios": {
-      "bundleIdentifier": "io.free.client"
-    },
+    "name": "free_app",
+    "slug": "free_app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "free",
     "extra": {
       "eas": {
         "projectId": "41765981-3e36-437f-ab7c-e1b2d2ec1e24"
       }
+    },
+    "userInterfaceStyle": "automatic",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "io.free.client",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.anonymous.free_app"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "plugins": [
+      "@maplibre/maplibre-react-native",
+      "expo-router"
+    ],
+    "experiments": {
+      "tsconfigPaths": true,
+      "typedRoutes": true
     }
   }
 }

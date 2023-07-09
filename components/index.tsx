@@ -1,4 +1,3 @@
-export * from "./Modal";
 export * from "./btn";
 export * from "./linearGradients";
 export * from "./inputComponents";

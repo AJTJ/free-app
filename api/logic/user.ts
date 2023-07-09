@@ -4,7 +4,7 @@ import {
   LoginDocument,
   LogoutDocument,
 } from "../auth.generated";
-import { emptyLoginState } from "../../state";
+import { emptyLoginState } from "@/state";
 
 export const useLoginUser = () => {
   const [loginUser, { loading, error, data, client }] =

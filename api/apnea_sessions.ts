@@ -44,16 +44,16 @@ fragment MyApneaSessionConnection on ApneaSessionConnection {
 export const INSERT_PREPOPULATED_APNEA_SESSION = gql(`
   mutation insertPrepopulatedApneaSession {
     insertApneaSession(
-      # apneaSessionInput: {
-      #   startTime: "2015-07-01T08:59:60.123"
-      #   endTime: "2015-07-01T08:59:60.123"
-      #   sessionName: "oog"
-      # }
       apneaSessionInput: {
-        startTime: "2023-07-04T18:03:18.398Z"
-        endTime: "2023-07-04T18:03:18.398Z"
+        startTime: "2015-07-01T08:59:60.123Z"
+        endTime: "2015-07-01T08:59:60.123Z"
         sessionName: "oog"
       }
+      # apneaSessionInput: {
+      #   startTime: "2023-07-04T18:03:18.398Z"
+      #   endTime: "2023-07-04T18:03:18.398Z"
+      #   sessionName: "oog"
+      # }
     ) {
       ...ApneaSessionWithDives
     }

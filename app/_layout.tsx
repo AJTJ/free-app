@@ -1,5 +1,6 @@
 import React from "react";
-import { Stack as ExpoStack } from "expo-router/stack";
+// import { Stack as ExpoStack } from "expo-router/stack";
+import { Stack } from "expo-router/stack";
 
 import {
   ApolloClient,
@@ -51,13 +52,13 @@ import {
   createNativeStackNavigator,
 } from "@react-navigation/native-stack";
 import Landing from "./landing";
-import ReportBuilder from "./(ReportBuilder)/ReportBuilder";
-import FormsList from "./(tabs)/(FormsList)/FormsList";
-import Home from "./(tabs)/(Home)/Home";
-import Reports from "./(tabs)/(Reports)/Reports";
-import VictoryTest from "./(ReportVisualizer)/VictoryTest";
-import GiftedTest from "./(ReportVisualizer)/GiftedTest";
-import FormReordering from "./(FormBuilder)/FormReordering";
+import ReportBuilder from "./(reportBuilder)/ReportBuilder";
+import FormsList from "./(tabs)/(formsList)/FormsList";
+import Home from "./(tabs)/(home)/Home";
+import Reports from "./(tabs)/(reports)/Reports";
+import VictoryTest from "./(reportVisualizer)/VictoryTest";
+import GiftedTest from "./(reportVisualizer)/GiftedTest";
+// import FormReordering from "./(formBuilder)/FormReordering";
 
 if (__DEV__) {
   // Adds messages only in a dev environment
@@ -148,7 +149,7 @@ export type RootStackParamList = {
 
 export type AllNavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const NativeStack = createNativeStackNavigator<RootStackParamList>();
 
 const Layout = () => {
   const colorScheme = useColorScheme();
@@ -156,27 +157,43 @@ const Layout = () => {
     <ApolloProvider client={client}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <GestureHandlerRootView style={{ flex: 1 }}>
-          <Stack.Navigator initialRouteName="landing">
-            <Stack.Screen name="landing" component={Landing} />
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="FormsList" component={FormsList} />
-            <Stack.Screen name="ReportBuilder" component={ReportBuilder} />
-            <Stack.Screen name="Reports" component={Reports} />
-            <Stack.Screen name="VictoryTest" component={VictoryTest} />
-            <Stack.Screen name="GiftedTest" component={GiftedTest} />
-            <Stack.Screen name="FormReordering" component={FormReordering} />
-            <ExpoStack>
-              <ExpoStack.Screen
-                name="(tabs)"
-                options={{ headerShown: false }}
-              />
-            </ExpoStack>
-          </Stack.Navigator>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+          </Stack>
         </GestureHandlerRootView>
       </ThemeProvider>
     </ApolloProvider>
   );
 };
+
+// const Layout = () => {
+//   const colorScheme = useColorScheme();
+//   return (
+//     <ApolloProvider client={client}>
+//       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+//         <GestureHandlerRootView style={{ flex: 1 }}>
+//           <Stack.Navigator initialRouteName="landing">
+//             <Stack.Screen name="landing" component={Landing} />
+//             <Stack.Screen name="Home" component={Home} />
+//             <Stack.Screen name="FormsList" component={FormsList} />
+//             <Stack.Screen name="ReportBuilder" component={ReportBuilder} />
+//             <Stack.Screen name="Reports" component={Reports} />
+//             <Stack.Screen name="VictoryTest" component={VictoryTest} />
+//             <Stack.Screen name="GiftedTest" component={GiftedTest} />
+//             <Stack.Screen name="FormReordering" component={FormReordering} />
+//             <ExpoStack>
+//               <ExpoStack.Screen
+//                 name="(tabs)"
+//                 options={{ headerShown: false }}
+//               />
+//             </ExpoStack>
+//           </Stack.Navigator>
+//         </GestureHandlerRootView>
+//       </ThemeProvider>
+//     </ApolloProvider>
+//   );
+// };
 
 export default Layout;
 

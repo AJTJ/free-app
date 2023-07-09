@@ -16,15 +16,23 @@ import { router } from "expo-router";
 import { useInsertForm } from "@/api/logic/forms";
 import { RootStackParamList } from "../_layout";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useLocalSearchParams } from "expo-router";
+import { useGlobalSearchParams } from "expo-router";
+import { FormFragment } from "@/api/forms.generated";
 
-export type Props = NativeStackScreenProps<
-  RootStackParamList,
-  "FormReordering"
->;
+// export type Props = NativeStackScreenProps<
+//   RootStackParamList,
+//   "FormReordering"
+// >;
 
-const FormReordering = (props: Props) => {
-  const { form: incomingForm, formName } = props.route.params;
-  let form = Object.assign(incomingForm);
+type Props = {
+  form: FormRequestV1;
+  formName: string;
+};
+
+export default function FormReordering(props: Props) {
+  const formName = props.formName;
+  let form = Object.assign(props.form) as FormRequestV1;
   let [sortedForm, setSortedForm] = useState(
     FormV1Wrapper.getSortedFields(form)
   );
@@ -33,6 +41,7 @@ const FormReordering = (props: Props) => {
   const onSubmit = () => {
     sortedForm.forEach((el, i) => {
       if (form[el[0]]) {
+        // @ts-ignore
         form[el[0]].fieldOrder = i;
       }
     });
@@ -91,12 +100,4 @@ const FormReordering = (props: Props) => {
       <Btn onPress={onSubmit} title="Submit" type="primary" />
     </LinearGradient>
   );
-};
-
-export default FormReordering;
-
-// type Props = {
-//   form: FormRequestV1;
-//   formName: string;
-//   // onSubmit: (form: FormRequestV1) => void;
-// };
+}

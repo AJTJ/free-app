@@ -19,6 +19,15 @@ export const RecentSessions = () => {
     return <CoreText>memes</CoreText>;
   };
 
+  let myNodes = [...(data?.apneaSessions?.nodes || [])];
+  const sortedSessions = myNodes?.sort((a, b) => {
+    let aStart = a.startTime;
+    let bStart = b.startTime;
+    let aDate = new Date(aStart as unknown as string);
+    let bDate = new Date(bStart as unknown as string);
+    return aDate > bDate ? -1 : 1;
+  });
+
   return (
     <>
       {loading && (
@@ -26,7 +35,7 @@ export const RecentSessions = () => {
           <CoreText>Loading Sessions...</CoreText>
         </View>
       )}
-      {data?.apneaSessions?.nodes.map((session, i) => {
+      {sortedSessions.map((session, i) => {
         return (
           <ItemContainer key={session.id + i}>
             {session.sessionName && (

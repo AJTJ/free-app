@@ -6,7 +6,9 @@ import { FormV1Wrapper } from "@/utility/formV1Wrapper";
 import { useInsertReport } from "@/api/logic/forms";
 import {
   ApneaSessionInput,
+  Form,
   FormRequest,
+  FormRequestV1,
   ReportDetails,
 } from "@/api/types/types.generated";
 import { useLocalSearchParams } from "expo-router";
@@ -22,9 +24,13 @@ import { RootStackParamList } from "../_layout";
 export type Props = NativeStackScreenProps<RootStackParamList, "ReportBuilder">;
 
 const ReportBuilder = (props: Props) => {
-  // const { user } = useLocalSearchParams<{ form: FormFragment }>();
+  //@ts-ignore
+  const { form: incomingForm } = useLocalSearchParams<{
+    form: Form;
+  }>();
 
-  let form = props.route.params.form;
+  const form = incomingForm as unknown as Form;
+
   const [mode, setMode] = useState<"date" | "time">("date");
   const [show, setShow] = useState(false);
   const { insertReportMutation, result } = useInsertReport();

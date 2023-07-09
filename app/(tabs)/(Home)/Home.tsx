@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useSnapshot } from "valtio";
 import { loginStore } from "@/state";
 import { Btn, CoreText, LinearGradient } from "@/components";
-import { RecentSessions } from "./recent_sessions";
+import { RecentSessions } from "../../../components/RecentSessions";
 import { useLogoutUser } from "@/api/logic/user";
 import { useInsertPrePopulatedApneaSession } from "@/api/logic";
 
@@ -71,7 +71,7 @@ const Home = () => {
             hasIcon={false}
             disabled={false}
             onPress={() => {
-              router.push("AllForms");
+              router.push("FormsList");
             }}
           />
           <Btn

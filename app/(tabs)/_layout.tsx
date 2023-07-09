@@ -26,7 +26,7 @@ export default function TabLayout() {
         }
       />
       <Tabs.Screen
-        name="(Home)/Home"
+        name="(home)/Home"
         options={{
           title: "Home",
         }}
@@ -38,13 +38,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="(FormsList)/FormsList"
+        name="(formsList)/FormsList"
         options={{
           title: "Log Dives",
         }}
       />
       <Tabs.Screen
-        name="(Reports)/Reports"
+        name="(reports)/Reports"
         options={{
           title: "Reports",
         }}

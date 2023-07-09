@@ -5,14 +5,19 @@ import {
   LandingTextInput,
   LinearGradient,
 } from "@/components";
-import React from "react";
+import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { View } from "react-native";
 import { FormV1Wrapper } from "@/utility/formV1Wrapper";
 import { router } from "expo-router";
+// import { FormReordering } from "./FormReordering";
+import { FormRequestV1 } from "@/api/types/types.generated";
 
 function FormBuilder() {
-  // Typing information
+  // const [isAddFieldsView, setIsAddFieldsView] = useState(true);
+  // const [formName, setFormName] = useState<string>();
+  // const [workingForm, setWorkingForm] = useState<FormRequestV1>();
+
   let emptyForm = FormV1Wrapper.getEmptyForm();
   type KeyType = keyof typeof emptyForm;
   type FieldTypes = Record<KeyType, { active: boolean; fieldOrder: number }>;
@@ -42,6 +47,10 @@ function FormBuilder() {
         formName: formData.formName,
       },
     });
+
+    // setWorkingForm(newForm);
+    // setFormName(formData.formName);
+    // setIsAddFieldsView(false);
   };
 
   let fieldsObject = Object.entries(emptyForm) as [
@@ -51,55 +60,61 @@ function FormBuilder() {
 
   return (
     <LinearGradient>
-      <CoreText>Form builder</CoreText>
-      <CoreText>{formErrors.congestion?.message}</CoreText>
-      <Controller
-        name={"formName"}
-        rules={{ required: true }}
-        control={control}
-        render={({ field: { onBlur, onChange, value } }) => (
-          <>
-            <View>
-              <CoreText>Form Name</CoreText>
-              <LandingTextInput
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-              />
-            </View>
-          </>
-        )}
-      />
-      {fieldsObject.map(([fieldName, _val], i) => {
-        return (
-          <Controller
-            key={fieldName + i}
-            name={fieldName}
-            rules={{ required: false }}
-            control={control}
-            render={({ field: { onBlur: _onBlur, onChange, value } }) => (
-              <>
-                <View>
-                  <CoreText>{fieldName}</CoreText>
-                  <Checkbox
-                    checked={value?.active}
-                    onChange={(e) =>
-                      onChange({ active: !e, fieldOrder: value.fieldOrder })
-                    }
-                    disabled={false}
-                  />
-                </View>
-              </>
-            )}
-          />
-        );
-      })}
+      {/* {isAddFieldsView ? ( */}
+      <>
+        <CoreText>Form builder</CoreText>
+        <CoreText>{formErrors.congestion?.message}</CoreText>
+        <Controller
+          name={"formName"}
+          rules={{ required: true }}
+          control={control}
+          render={({ field: { onBlur, onChange, value } }) => (
+            <>
+              <View>
+                <CoreText>Form Name</CoreText>
+                <LandingTextInput
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              </View>
+            </>
+          )}
+        />
+        {fieldsObject.map(([fieldName, _val], i) => {
+          return (
+            <Controller
+              key={fieldName + i}
+              name={fieldName}
+              rules={{ required: false }}
+              control={control}
+              render={({ field: { onBlur: _onBlur, onChange, value } }) => (
+                <>
+                  <View>
+                    <CoreText>{fieldName}</CoreText>
+                    <Checkbox
+                      checked={value?.active}
+                      onChange={(e) =>
+                        onChange({ active: !e, fieldOrder: value.fieldOrder })
+                      }
+                      disabled={false}
+                    />
+                  </View>
+                </>
+              )}
+            />
+          );
+        })}
 
-      <Btn
-        title="Submit"
-        type="primary"
-        onPress={handleSubmit((e) => onSubmit(e))}
-      />
+        <Btn
+          title="Submit"
+          type="primary"
+          onPress={handleSubmit((e) => onSubmit(e))}
+        />
+      </>
+      {/* ) : (
+         <FormReordering />
+       )} */}
     </LinearGradient>
   );
 }

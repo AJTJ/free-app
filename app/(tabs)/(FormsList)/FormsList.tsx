@@ -25,19 +25,10 @@ export default function FormsList() {
 
   const displayForms = (formData: FormResponseV1) => {
     let formRequest: FormRequestV1 = FormV1Wrapper.getRequestForm(formData);
-
-    let entries = Object.entries(formRequest)
-      .sort((a, b) => {
-        return (a[1]?.fieldOrder || Infinity) > (b[1]?.fieldOrder || Infinity)
-          ? 1
-          : -1;
-      })
-      .filter((x) => x[1] !== null);
-
-    return entries.map(([key, value], i) => {
+    const sortedFields = FormV1Wrapper.getSortedFields(formRequest);
+    return sortedFields.map(([key, value], i) => {
       return (
-        value &&
-        key !== "__typename" && (
+        value && (
           <View key={key + i}>
             <CoreText>{key}</CoreText>
           </View>
@@ -89,3 +80,11 @@ export default function FormsList() {
     </LinearGradient>
   );
 }
+
+// let entries = Object.entries(formRequest)
+//   .sort((a, b) => {
+//     return (a[1]?.fieldOrder || Infinity) > (b[1]?.fieldOrder || Infinity)
+//       ? 1
+//       : -1;
+//   })
+//   .filter((x) => x[1] !== null);

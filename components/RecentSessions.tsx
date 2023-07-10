@@ -8,7 +8,6 @@ import { ItemContainer } from "@/components";
 
 export const RecentSessions = () => {
   const { loading, error, data } = useGetApneaSessions();
-  let formClass = new FormV1Wrapper();
 
   if (error) {
     console.error("GETTING SESSIONS ERROR:", error);
@@ -21,10 +20,8 @@ export const RecentSessions = () => {
 
   let myNodes = [...(data?.apneaSessions?.nodes || [])];
   const sortedSessions = myNodes?.sort((a, b) => {
-    let aStart = a.startTime;
-    let bStart = b.startTime;
-    let aDate = new Date(aStart as unknown as string);
-    let bDate = new Date(bStart as unknown as string);
+    let aDate = new Date(a.startTime as unknown as string);
+    let bDate = new Date(b.startTime as unknown as string);
     return aDate > bDate ? -1 : 1;
   });
 

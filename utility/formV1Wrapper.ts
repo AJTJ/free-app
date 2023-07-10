@@ -1,61 +1,37 @@
 // import omitDeep from "omit-deep";
+import { FormRequestV1, FormResponseV1 } from "@/api/types/types.generated";
 import { omitDeep } from "@apollo/client/utilities";
-import {
-  CongestionOutputV1,
-  DisciplineAndMaxDepthOutputV1,
-  FormRequestV1,
-  FormResponseV1,
-  MaxDepthOutputV1,
-  SessionNameOutputV1,
-  VisibilityOutputV1,
-  WeatherOutputV1,
-  WildlifeOutputV1,
-} from "../api/types/types.generated";
 import { Values, number } from "zod";
 
 export class FormV1Wrapper {
   // FORM UPDATE AREA
   static getRequestForm(form?: FormResponseV1): FormRequestV1 {
-    const myForm = { ...form };
-    if (myForm) {
-      let keys = Object.keys(myForm) as [keyof FormResponseV1];
+    const myForm: FormRequestV1 = { ...form };
+    omitDeep(myForm, "__typename");
+    // TODO: Does this actually work for the nested objects? TBD
+    return myForm;
+    // if (myForm) {
+    //   let keys = Object.keys(myForm) as [keyof FormResponseV1];
 
-      keys.map((key) => {
-        if (key === "__typename") {
-          delete myForm[key];
-        }
-      });
-    }
-
-    let newForm: FormRequestV1 = {
-      ...myForm,
-    };
-
-    return newForm;
+    //   keys.map((key) => {
+    //     if (key === "__typename") {
+    //       delete myForm[key];
+    //     }
+    //   });
+    // }
   }
 
   static getEmptyForm(): FormRequestV1 {
-    let congestion: CongestionOutputV1 = {};
-    let disciplineAndMaxDepth: DisciplineAndMaxDepthOutputV1 = {};
-    let maxDepth: MaxDepthOutputV1 = {};
-    let sessionName: SessionNameOutputV1 = {};
-    let visibility: VisibilityOutputV1 = {};
-    let weather: WeatherOutputV1 = {};
-    let wildlife: WildlifeOutputV1 = {};
-
-    let newForm: FormRequestV1 = {
-      congestion,
-      disciplineAndMaxDepth,
-      maxDepth,
-      sessionName,
-      visibility,
-      weather,
-      wildlife,
+    return {
+      congestion: {},
+      disciplineAndMaxDepth: { disciplineMaxDepth: [] },
+      maxDepth: {},
+      sessionName: {},
+      visibility: {},
+      weather: {},
+      wildlife: {},
     };
-
-    return newForm;
   }
-  // let disciplineMaxDepth: InnerDisciplineMaxDepthInputV1[] = [];
 
   static createForm(
     form_request: Record<
@@ -84,7 +60,7 @@ export class FormV1Wrapper {
   static getSortedFields(
     inputForm: FormRequestV1
   ): [keyof FormRequestV1, FormRequestV1[keyof FormRequestV1]][] {
-    let form: FormRequestV1 = FormV1Wrapper.getRequestForm(inputForm);
+    const form = { ...inputForm };
 
     type KeyType = keyof typeof form;
     let formValues = Object.values(form);
@@ -93,7 +69,7 @@ export class FormV1Wrapper {
       typeof formValues[number]
     ][];
 
-    let sortedEntries = entries
+    let sortedFields = entries
       .sort(([_aKey, aValue], [_bKey, bValue]) => {
         return (aValue?.fieldOrder || Infinity) <
           (bValue?.fieldOrder || Infinity)
@@ -102,7 +78,7 @@ export class FormV1Wrapper {
       })
       .filter((x) => x[1] !== null);
 
-    return sortedEntries;
+    return sortedFields;
   }
 }
 

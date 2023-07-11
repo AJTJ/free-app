@@ -7,13 +7,13 @@ export class FormV1Wrapper {
   // FORM UPDATE AREA
   static getRequestForm(form?: FormV1): FormV1Request {
     const myForm: FormV1Request = { ...form };
-    omitDeep(myForm, "__typename");
+    let cleanedForm = omitDeep(myForm, "__typename");
     /*
      NOTE: I belive this works fine for nested objects, since it is only the type name that changes.
      The field names remain the same, and though the nested types have changed, they are the same 
      object serverside, so there is no difference.
     */
-    return myForm;
+    return cleanedForm;
   }
 
   static getEmptyForm(): FormV1Request {

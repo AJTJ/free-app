@@ -1,7 +1,6 @@
 import React from "react";
 // import { Stack as ExpoStack } from "expo-router/stack";
 import { Stack } from "expo-router/stack";
-
 import {
   ApolloClient,
   InMemoryCache,
@@ -44,6 +43,11 @@ import { Form, FormResponse, FormV1, Report } from "../api/forms";
 // For top of app
 import "react-native-gesture-handler";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+
+// Should this be here?
+// declare module "valtio" {
+//   function useSnapshot<T extends object>(p: T): T;
+// }
 
 import { createStackNavigator } from "@react-navigation/stack";
 

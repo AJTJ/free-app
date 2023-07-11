@@ -12,11 +12,9 @@ import { FormV1Wrapper } from "@/utility/formV1Wrapper";
 import { router } from "expo-router";
 // import { FormReordering } from "./FormReordering";
 
-function FormBuilder() {
-  // const [isAddFieldsView, setIsAddFieldsView] = useState(true);
-  // const [formName, setFormName] = useState<string>();
-  // const [workingForm, setWorkingForm] = useState<FormRequestV1>();
+import { addFormState } from "@/state";
 
+function FormBuilder() {
   let emptyForm = FormV1Wrapper.getEmptyForm();
   type KeyType = keyof typeof emptyForm;
   type FieldTypes = Record<KeyType, { active: boolean; fieldOrder: number }>;
@@ -38,13 +36,13 @@ function FormBuilder() {
 
   const onSubmit: SubmitHandler<FormTypes> = (formData) => {
     let newForm = FormV1Wrapper.createForm(formData);
-
+    addFormState({ form: newForm, formName: formData.formName });
     router.push({
       pathname: "FormReordering",
-      params: {
-        form: newForm,
-        formName: formData.formName,
-      },
+      // params: {
+      //   form: newForm,
+      //   formName: formData.formName,
+      // },
     });
 
     // setWorkingForm(newForm);

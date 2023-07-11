@@ -7,6 +7,7 @@ import { FormFragment } from "@/api/forms.generated";
 import { Btn, ItemContainer, LinearGradient } from "@/components";
 import { FormV1Wrapper } from "@/utility/formV1Wrapper";
 import { Link, Redirect, router } from "expo-router";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function FormsList() {
   const { loading, error, data } = useGetForms();
@@ -21,6 +22,7 @@ export default function FormsList() {
 
   const displayForms = (formData: FormV1) => {
     let formRequest: FormV1Request = FormV1Wrapper.getRequestForm(formData);
+    console.log({ formRequest });
     const sortedFields = FormV1Wrapper.getSortedFields(formRequest);
     return sortedFields.map(([key, value], i) => {
       return (
@@ -61,17 +63,19 @@ export default function FormsList() {
             <CoreText>Loading Forms...</CoreText>
           </View>
         )}
-        {data?.forms?.map((f, i) => {
-          return (
-            <ItemContainer key={f.createdAt + i}>
-              <Pressable onPress={() => handleFormPress(f)} key={f.id + i}>
-                <CoreText>{f.formName}</CoreText>
-                <CoreText>Created: {f.createdAt}</CoreText>
-                <View>{displayForms(f.formData)}</View>
-              </Pressable>
-            </ItemContainer>
-          );
-        })}
+        <ScrollView>
+          {data?.forms?.map((f, i) => {
+            return (
+              <ItemContainer key={f.createdAt + i}>
+                <Pressable onPress={() => handleFormPress(f)} key={f.id + i}>
+                  <CoreText>{f.formName}</CoreText>
+                  <CoreText>Created: {f.createdAt}</CoreText>
+                  <View>{displayForms(f.formData)}</View>
+                </Pressable>
+              </ItemContainer>
+            );
+          })}
+        </ScrollView>
       </>
     </LinearGradient>
   );

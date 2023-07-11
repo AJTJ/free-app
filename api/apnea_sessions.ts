@@ -49,11 +49,6 @@ export const INSERT_PREPOPULATED_APNEA_SESSION = gql(`
         endTime: "2015-07-01T08:59:60.123Z"
         sessionName: "oog"
       }
-      # apneaSessionInput: {
-      #   startTime: "2023-07-04T18:03:18.398Z"
-      #   endTime: "2023-07-04T18:03:18.398Z"
-      #   sessionName: "oog"
-      # }
     ) {
       ...ApneaSessionWithDives
     }

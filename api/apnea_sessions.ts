@@ -70,7 +70,7 @@ export const INSERT_APNEA_SESSION = gql(`
 `);
 
 export const GET_APNEA_SESSIONS = gql(`
-  query ApneaSessions {
+  query apneaSessions {
     apneaSessions(queryParams: {}) {
       ...MyApneaSessionConnection
     }

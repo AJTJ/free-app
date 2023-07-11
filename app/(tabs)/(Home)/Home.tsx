@@ -1,27 +1,42 @@
 import { Text } from "react-native";
 import React, { useEffect } from "react";
-import { useSnapshot } from "valtio";
-import { loginStore } from "@/state";
+
 import { Btn, CoreText, LinearGradient } from "@/components";
 import { RecentSessions } from "../../../components/RecentSessions";
 import { useLogoutUser } from "@/api/logic/user";
 import { useInsertPrePopulatedApneaSession } from "@/api/logic";
 
 import { Link, Redirect, router } from "expo-router";
+import { useFragment } from "@apollo/client";
+import { User } from "@/api/auth";
+import { User as UserType } from "@/api/types/types.generated";
+import { UserFragment } from "@/api/auth.generated";
 
 const Home = () => {
-  const loginData = useSnapshot(loginStore).loginState;
   let { logoutUser } = useLogoutUser();
   let { insertSession, result } = useInsertPrePopulatedApneaSession();
 
-  useEffect(() => {
-    if (!loginData) {
-      router.push("/landing");
-    }
+  const { complete, data } = useFragment<UserFragment>({
+    fragment: User,
+    fragmentName: "User",
+    from: {
+      __typename: "User",
+      id: "USER",
+    },
   });
 
+  console.log({ complete, data });
+
+  useEffect(() => {
+    if (!data.__typename) {
+      router.push("/landing");
+    }
+  }, [data]);
+
   const handleLogout = () => {
-    logoutUser().catch((e) => console.error(e));
+    logoutUser()
+      .catch((e) => console.error(e))
+      .then((d) => console.log("after logout", d));
   };
 
   const handleInsertSession = async () => {
@@ -36,13 +51,12 @@ const Home = () => {
 
   return (
     <LinearGradient>
-      {!loginData ? (
+      {!data ? (
         <Text>Not logged in</Text>
       ) : (
         <>
           <CoreText>
-            Hello {loginData.username}! You last logged in at={" "}
-            {loginData.lastLogin}
+            Hello {data.username}! You last logged in at= {data.lastLogin}
           </CoreText>
           <Btn
             title="Log my dive session"
@@ -89,7 +103,10 @@ const Home = () => {
             hasIcon={false}
             disabled={false}
             onPress={() => {
-              router.push("VictoryTest");
+              router.push({
+                pathname: "VictoryTest",
+                params: { meme: "memes" },
+              });
             }}
           />
           <Btn
@@ -126,3 +143,7 @@ export default Home;
 //     id: "USER",
 //   },
 // });
+
+// import { useSnapshot } from "valtio";
+// import { loginStore } from "@/state";
+// const loginData = useSnapshot(loginStore).loginState;

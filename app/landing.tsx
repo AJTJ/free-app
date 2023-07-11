@@ -8,7 +8,7 @@ import {
 import React from "react";
 import { Btn, CoreText, LandingTextInput, LinearGradient } from "@/components";
 import { Controller, useForm } from "react-hook-form";
-import { addLoginState } from "@/state";
+// import { addLoginState } from "@/state";
 import { colors } from "@/stylessheet/colors";
 import { useLoginUser } from "@/api/logic";
 import { Keyboard } from "react-native";
@@ -43,8 +43,8 @@ export default function Landing() {
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit = (formData: ValidationSchema) => {
-    loginUser({
+  const onSubmit = async (formData: ValidationSchema) => {
+    await loginUser({
       variables: { email: formData.email, password: formData.password },
     })
       .catch((e) => {
@@ -52,7 +52,7 @@ export default function Landing() {
       })
       .then((res) => {
         if (res?.data?.login) {
-          addLoginState(res?.data?.login);
+          // addLoginState(res?.data?.login);
           router.push("Home");
         }
       });

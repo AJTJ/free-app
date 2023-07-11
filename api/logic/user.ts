@@ -1,10 +1,11 @@
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useFragment, useLazyQuery, useMutation } from "@apollo/client";
 import {
   AllUsersDocument,
   LoginDocument,
   LogoutDocument,
 } from "../auth.generated";
-import { emptyLoginState } from "@/state";
+import { User } from "../auth";
+// import { emptyLoginState } from "@/state";
 
 export const useLoginUser = () => {
   const [loginUser, { loading, error, data, client }] =
@@ -21,12 +22,16 @@ export const useLogoutUser = () => {
   const [_, { client: userClient }] = useMutation(LoginDocument);
 
   const logoutUser = async () => {
-    await logoutUserMutation()
-      .then(async () => {
-        await userClient.resetStore().catch((e) => console.error(e));
-        emptyLoginState();
-      })
-      .catch((e) => console.error(e));
+    let res = await logoutUserMutation()
+      .catch((e) => console.error(e))
+      .then(async (d) => {
+        await userClient
+          .resetStore()
+          .catch((e) => console.error(e))
+          .then((d) => console.log("after store reset", d));
+        return d;
+      });
+    return res;
   };
 
   let result = { loading, error, data };

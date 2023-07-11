@@ -30,9 +30,13 @@ type Props = {
   formName: string;
 };
 
-export default function FormReordering(props: Props) {
-  const formName = props.formName;
-  let form = Object.assign(props.form) as FormV1Request;
+export default function FormReordering() {
+  const el = useLocalSearchParams();
+  console.log({ el });
+  const formName = el.formName;
+  const incomingform = el.form as FormV1Request;
+
+  let form = Object.assign(incomingform) as FormV1Request;
   let [sortedForm, setSortedForm] = useState(
     FormV1Wrapper.getSortedFields(form)
   );

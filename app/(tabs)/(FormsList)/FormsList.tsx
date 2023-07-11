@@ -2,11 +2,7 @@ import { Pressable, View } from "react-native";
 import React from "react";
 import { CoreText } from "@/components/textComponents";
 import { useGetForms } from "@/api/logic/forms";
-import {
-  Form,
-  FormRequestV1,
-  FormResponseV1,
-} from "@/api/types/types.generated";
+import { Form, FormV1Request, FormV1 } from "@/api/types/types.generated";
 import { FormFragment } from "@/api/forms.generated";
 import { Btn, ItemContainer, LinearGradient } from "@/components";
 import { FormV1Wrapper } from "@/utility/formV1Wrapper";
@@ -23,8 +19,8 @@ export default function FormsList() {
     router.push({ pathname: "ReportBuilder", params: { form } });
   };
 
-  const displayForms = (formData: FormResponseV1) => {
-    let formRequest: FormRequestV1 = FormV1Wrapper.getRequestForm(formData);
+  const displayForms = (formData: FormV1) => {
+    let formRequest: FormV1Request = FormV1Wrapper.getRequestForm(formData);
     const sortedFields = FormV1Wrapper.getSortedFields(formRequest);
     return sortedFields.map(([key, value], i) => {
       return (
@@ -65,7 +61,7 @@ export default function FormsList() {
             <CoreText>Loading Forms...</CoreText>
           </View>
         )}
-        {data?.forms.map((f, i) => {
+        {data?.forms?.map((f, i) => {
           return (
             <ItemContainer key={f.createdAt + i}>
               <Pressable onPress={() => handleFormPress(f)} key={f.id + i}>

@@ -10,7 +10,7 @@ import { TouchableOpacity } from "react-native";
 import {
   FormDetails,
   FormRequest,
-  FormRequestV1,
+  FormV1Request,
 } from "@/api/types/types.generated";
 import { router } from "expo-router";
 import { useInsertForm } from "@/api/logic/forms";
@@ -26,13 +26,13 @@ import { FormFragment } from "@/api/forms.generated";
 // >;
 
 type Props = {
-  form: FormRequestV1;
+  form: FormV1Request;
   formName: string;
 };
 
 export default function FormReordering(props: Props) {
   const formName = props.formName;
-  let form = Object.assign(props.form) as FormRequestV1;
+  let form = Object.assign(props.form) as FormV1Request;
   let [sortedForm, setSortedForm] = useState(
     FormV1Wrapper.getSortedFields(form)
   );

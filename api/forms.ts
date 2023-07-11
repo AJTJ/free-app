@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 // FRAGMENTS
 
 export const FormV1 = gql(`
-  fragment FormV1 on FormResponseV1 {
+  fragment FormV1 on FormV1 {
     sessionName {
       name
       fieldOrder
@@ -40,7 +40,7 @@ export const FormV1 = gql(`
 
 export const FormResponse = gql(`
   fragment FormResponse on FormResponse {
-      ... on FormResponseV1 {
+      ... on FormV1 {
         ...FormV1
       }
   }
@@ -50,7 +50,7 @@ export const Form = gql(`
   fragment Form on Form {
     createdAt
     formData {
-      ... on FormResponseV1 {
+      ... on FormV1 {
         ...FormV1
       }
     }
@@ -68,7 +68,7 @@ export const Report = gql(`
     isActive
     reportData {
       __typename
-      ... on FormResponseV1 {
+      ... on FormV1 {
         ...FormV1
       }
     }

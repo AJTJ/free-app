@@ -2,28 +2,25 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { CoreText, NumberInput } from "@/components";
 import { Noop } from "react-hook-form";
-import {
-  CongestionRequestV1,
-  FormRequestV1,
-} from "@/api/types/types.generated";
+import { CongestionV1, FormV1Request } from "@/api/types/types.generated";
 import { FormV1Wrapper } from "@/utility/formV1Wrapper";
 import { FormFragment } from "@/api/forms.generated";
 // import AutoComplete from "react-native-autocomplete-input";
 // import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
 
 type ChildProps = {
-  name: keyof FormRequestV1;
-  form: FormRequestV1;
+  name: keyof FormV1Request;
+  form: FormV1Request;
   onChange: (...event: any[]) => void;
   onBlur: Noop;
-  value: FormRequestV1[keyof FormRequestV1];
+  value: FormV1Request[keyof FormV1Request];
 };
 
 const CongestionComponent = (props: ChildProps) => {
   let onChangeText = (e: string) => {
     const cur = props.value;
     let numVal = Number(e);
-    let newValue: CongestionRequestV1 = {
+    let newValue: CongestionV1 = {
       value: numVal,
       fieldOrder: props.form.congestion?.fieldOrder || Infinity,
     };
@@ -34,11 +31,11 @@ const CongestionComponent = (props: ChildProps) => {
 };
 
 type ParentProps = {
-  name: keyof FormRequestV1;
-  form: FormRequestV1;
+  name: keyof FormV1Request;
+  form: FormV1Request;
   onChange: (...event: any[]) => void;
   onBlur: Noop;
-  value: FormRequestV1[keyof FormRequestV1];
+  value: FormV1Request[keyof FormV1Request];
 };
 
 // FORM UPDATE AREA

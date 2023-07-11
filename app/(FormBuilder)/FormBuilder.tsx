@@ -11,7 +11,6 @@ import { View } from "react-native";
 import { FormV1Wrapper } from "@/utility/formV1Wrapper";
 import { router } from "expo-router";
 // import { FormReordering } from "./FormReordering";
-import { FormRequestV1 } from "@/api/types/types.generated";
 
 function FormBuilder() {
   // const [isAddFieldsView, setIsAddFieldsView] = useState(true);

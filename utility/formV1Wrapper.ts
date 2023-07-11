@@ -1,27 +1,22 @@
 // import omitDeep from "omit-deep";
-import { FormRequestV1, FormResponseV1 } from "@/api/types/types.generated";
+import { FormV1Request, FormV1 } from "@/api/types/types.generated";
 import { omitDeep } from "@apollo/client/utilities";
 import { Values, number } from "zod";
 
 export class FormV1Wrapper {
   // FORM UPDATE AREA
-  static getRequestForm(form?: FormResponseV1): FormRequestV1 {
-    const myForm: FormRequestV1 = { ...form };
+  static getRequestForm(form?: FormV1): FormV1Request {
+    const myForm: FormV1Request = { ...form };
     omitDeep(myForm, "__typename");
-    // TODO: Does this actually work for the nested objects? TBD
+    /*
+     NOTE: I belive this works fine for nested objects, since it is only the type name that changes.
+     The field names remain the same, and though the nested types have changed, they are the same 
+     object serverside, so there is no difference.
+    */
     return myForm;
-    // if (myForm) {
-    //   let keys = Object.keys(myForm) as [keyof FormResponseV1];
-
-    //   keys.map((key) => {
-    //     if (key === "__typename") {
-    //       delete myForm[key];
-    //     }
-    //   });
-    // }
   }
 
-  static getEmptyForm(): FormRequestV1 {
+  static getEmptyForm(): FormV1Request {
     return {
       congestion: {},
       disciplineAndMaxDepth: { disciplineMaxDepth: [] },
@@ -35,11 +30,11 @@ export class FormV1Wrapper {
 
   static createForm(
     form_request: Record<
-      keyof FormRequestV1,
+      keyof FormV1Request,
       { active: boolean; fieldOrder: number }
     >
-  ): FormRequestV1 {
-    let tempForm: FormRequestV1 = {};
+  ): FormV1Request {
+    let tempForm: FormV1Request = {};
     type ValType = { active: boolean; fieldOrder: number };
 
     let formEntries = Object.entries(form_request) as [
@@ -58,8 +53,8 @@ export class FormV1Wrapper {
   }
 
   static getSortedFields(
-    inputForm: FormRequestV1
-  ): [keyof FormRequestV1, FormRequestV1[keyof FormRequestV1]][] {
+    inputForm: FormV1Request
+  ): [keyof FormV1Request, FormV1Request[keyof FormV1Request]][] {
     const form = { ...inputForm };
 
     type KeyType = keyof typeof form;
@@ -88,3 +83,13 @@ export class FormV1Wrapper {
 // If you wish to assume otherwise, this utility is often helpful:
 // // A signature for `Object.keys` that assumes the only keys are the ones indicated by the type
 // const unsafeKeys = Object.keys as <T>(obj: T) => Array<keyof T>;
+
+// if (myForm) {
+//   let keys = Object.keys(myForm) as [keyof FormV1];
+
+//   keys.map((key) => {
+//     if (key === "__typename") {
+//       delete myForm[key];
+//     }
+//   });
+// }

@@ -546,43 +546,8 @@
         "possibleTypes": null
       },
       {
-        "kind": "INPUT_OBJECT",
-        "name": "CongestionRequestV1",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "fieldOrder",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "value",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
-        "name": "CongestionResponseV1",
+        "name": "CongestionV1",
         "description": null,
         "fields": [
           {
@@ -612,6 +577,41 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "CongestionV1Request",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "fieldOrder",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "value",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -626,51 +626,8 @@
         "possibleTypes": null
       },
       {
-        "kind": "INPUT_OBJECT",
-        "name": "DisciplineAndMaxDepthRequestV1",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "disciplineMaxDepth",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "InnerDisciplineMaxDepthRequestV1",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "fieldOrder",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
-        "name": "DisciplineAndMaxDepthResponseV1",
+        "name": "DisciplineAndMaxDepthV1",
         "description": null,
         "fields": [
           {
@@ -685,7 +642,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "InnerDisciplineMaxDepthResponseV1",
+                  "name": "InnerDisciplineMaxDepthV1",
                   "ofType": null
                 }
               }
@@ -708,6 +665,49 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "DisciplineAndMaxDepthV1Request",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "disciplineMaxDepth",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "InnerDisciplineMaxDepthV1Request",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "fieldOrder",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -1379,102 +1379,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "FormRequestV1",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "FormRequestV1",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "congestion",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "CongestionRequestV1",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "disciplineAndMaxDepth",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "DisciplineAndMaxDepthRequestV1",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "maxDepth",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "MaxDepthRequestV1",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "sessionName",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "SessionNameRequestV1",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "visibility",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "VisibilityRequestV1",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "weather",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "WeatherRequestV1",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "wildlife",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "WildlifeRequestV1",
+              "name": "FormV1Request",
               "ofType": null
             },
             "defaultValue": null,
@@ -1497,14 +1402,14 @@
         "possibleTypes": [
           {
             "kind": "OBJECT",
-            "name": "FormResponseV1",
+            "name": "FormV1",
             "ofType": null
           }
         ]
       },
       {
         "kind": "OBJECT",
-        "name": "FormResponseV1",
+        "name": "FormV1",
         "description": null,
         "fields": [
           {
@@ -1513,7 +1418,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "CongestionResponseV1",
+              "name": "CongestionV1",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1525,7 +1430,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "DisciplineAndMaxDepthResponseV1",
+              "name": "DisciplineAndMaxDepthV1",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1537,7 +1442,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "MaxDepthResponseV1",
+              "name": "MaxDepthV1",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1549,7 +1454,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "SessionNameResponseV1",
+              "name": "SessionNameV1",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1561,7 +1466,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "VisibilityResponseV1",
+              "name": "VisibilityV1",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1573,7 +1478,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "WeatherResponseV1",
+              "name": "WeatherV1",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1585,7 +1490,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "WildlifeResponseV1",
+              "name": "WildlifeV1",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1594,6 +1499,101 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "FormV1Request",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "congestion",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "CongestionV1Request",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "disciplineAndMaxDepth",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "DisciplineAndMaxDepthV1Request",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "maxDepth",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "MaxDepthV1Request",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "sessionName",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "SessionNameV1Request",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "visibility",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "VisibilityV1Request",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "weather",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "WeatherV1Request",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "wildlife",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "WildlifeV1Request",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -1608,8 +1608,47 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "InnerDisciplineMaxDepthV1",
+        "description": null,
+        "fields": [
+          {
+            "name": "discipline",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "DisciplinesEnum",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "maxDepth",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "INPUT_OBJECT",
-        "name": "InnerDisciplineMaxDepthRequestV1",
+        "name": "InnerDisciplineMaxDepthV1Request",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -1643,45 +1682,6 @@
           }
         ],
         "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "InnerDisciplineMaxDepthResponseV1",
-        "description": null,
-        "fields": [
-          {
-            "name": "discipline",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "ENUM",
-              "name": "DisciplinesEnum",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "maxDepth",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -1739,43 +1739,8 @@
         "possibleTypes": null
       },
       {
-        "kind": "INPUT_OBJECT",
-        "name": "MaxDepthRequestV1",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "fieldOrder",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "maxDepth",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
-        "name": "MaxDepthResponseV1",
+        "name": "MaxDepthV1",
         "description": null,
         "fields": [
           {
@@ -1805,6 +1770,41 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "MaxDepthV1Request",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "fieldOrder",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "maxDepth",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -1977,13 +1977,9 @@
               }
             ],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "Form",
-                "ofType": null
-              }
+              "kind": "OBJECT",
+              "name": "Form",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2042,13 +2038,9 @@
               }
             ],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "Report",
-                "ofType": null
-              }
+              "kind": "OBJECT",
+              "name": "Report",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2140,6 +2132,22 @@
             "description": null,
             "args": [
               {
+                "name": "formDetails",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "FormDetails",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "formRequest",
                 "description": null,
                 "type": {
@@ -2173,13 +2181,9 @@
               }
             ],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "Form",
-                "ofType": null
-              }
+              "kind": "OBJECT",
+              "name": "Form",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2189,7 +2193,39 @@
             "description": null,
             "args": [
               {
-                "name": "formsInput",
+                "name": "previousReportId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "UUID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "reportDetails",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "ReportDetails",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "reportRequest",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -2205,7 +2241,7 @@
                 "deprecationReason": null
               },
               {
-                "name": "previousReportId",
+                "name": "sessionId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -2222,13 +2258,9 @@
               }
             ],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "Report",
-                "ofType": null
-              }
+              "kind": "OBJECT",
+              "name": "Report",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2527,19 +2559,15 @@
               }
             ],
             "type": {
-              "kind": "NON_NULL",
+              "kind": "LIST",
               "name": null,
               "ofType": {
-                "kind": "LIST",
+                "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "Form",
-                    "ofType": null
-                  }
+                  "kind": "OBJECT",
+                  "name": "Form",
+                  "ofType": null
                 }
               }
             },
@@ -2914,43 +2942,8 @@
         "possibleTypes": null
       },
       {
-        "kind": "INPUT_OBJECT",
-        "name": "SessionNameRequestV1",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "fieldOrder",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "name",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
-        "name": "SessionNameResponseV1",
+        "name": "SessionNameV1",
         "description": null,
         "fields": [
           {
@@ -2980,6 +2973,41 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "SessionNameV1Request",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "fieldOrder",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -3271,43 +3299,8 @@
         "possibleTypes": null
       },
       {
-        "kind": "INPUT_OBJECT",
-        "name": "VisibilityRequestV1",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "fieldOrder",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "value",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
-        "name": "VisibilityResponseV1",
+        "name": "VisibilityV1",
         "description": null,
         "fields": [
           {
@@ -3342,7 +3335,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "WeatherRequestV1",
+        "name": "VisibilityV1Request",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -3359,7 +3352,7 @@
             "deprecationReason": null
           },
           {
-            "name": "wind",
+            "name": "value",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -3377,7 +3370,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "WeatherResponseV1",
+        "name": "WeatherV1",
         "description": null,
         "fields": [
           {
@@ -3407,6 +3400,41 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "WeatherV1Request",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "fieldOrder",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "wind",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -3440,43 +3468,8 @@
         "possibleTypes": null
       },
       {
-        "kind": "INPUT_OBJECT",
-        "name": "WildlifeRequestV1",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "fieldOrder",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "value",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "WildlifeEnumV1",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
-        "name": "WildlifeResponseV1",
+        "name": "WildlifeV1",
         "description": null,
         "fields": [
           {
@@ -3506,6 +3499,41 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "WildlifeV1Request",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "fieldOrder",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "value",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "WildlifeEnumV1",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },

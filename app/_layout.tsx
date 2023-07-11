@@ -26,7 +26,7 @@ import {
 import MobileStore from "../storage/SafeStorage";
 import { Login, User } from "../api/auth";
 import { FormFragment } from "../api/forms.generated";
-import { FormRequestV1 } from "../api/types/types.generated";
+import { FormV1Request } from "../api/types/types.generated";
 import { ApneaSession } from "../api/apnea_sessions";
 import { useColorScheme } from "react-native";
 
@@ -142,7 +142,7 @@ export type RootStackParamList = {
   VictoryTest: undefined;
   GiftedTest: undefined;
   FormReordering: {
-    form: FormRequestV1;
+    form: FormV1Request;
     formName: string;
   };
 };
@@ -224,7 +224,7 @@ export default Layout;
 // import MobileStore from "../storage/SafeStorage";
 // import { Login, User } from "../api/auth";
 // import { FormFragment } from "../api/forms.generated";
-// import { FormRequestV1 } from "../api/types/types.generated";
+// import { FormV1Request } from "../api/types/types.generated";
 // import { ApneaSession } from "../api/apnea_sessions";
 // import { useColorScheme } from "react-native";
 
@@ -332,8 +332,8 @@ export default Layout;
 //   VictoryTest: undefined;
 //   GiftedTest: undefined;
 //   FormReordering: {
-//     form: FormRequestV1;
-//     onSubmit: (form: FormRequestV1) => void;
+//     form: FormV1Request;
+//     onSubmit: (form: FormV1Request) => void;
 //   };
 // };
 

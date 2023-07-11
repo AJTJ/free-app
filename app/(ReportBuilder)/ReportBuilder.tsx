@@ -8,7 +8,6 @@ import {
   ApneaSessionInput,
   Form,
   FormRequest,
-  FormRequestV1,
   ReportDetails,
 } from "@/api/types/types.generated";
 import { useLocalSearchParams } from "expo-router";

@@ -16,9 +16,9 @@ export default function FormsList() {
     console.error(error);
   }
 
-  const handleFormPress = (form: FormFragment) => {
+  const handleCardPress = (form: FormFragment) => {
     router.push({
-      pathname: "ReportBuilder/[formId]",
+      pathname: "reportBuilder/[formId]",
       params: { formId: form.id },
     });
   };
@@ -59,7 +59,7 @@ export default function FormsList() {
           {data?.forms?.map((f, i) => {
             return (
               <ItemContainer key={f.createdAt + i}>
-                <Pressable onPress={() => handleFormPress(f)} key={f.id + i}>
+                <Pressable onPress={() => handleCardPress(f)}>
                   <CoreText>{f.formName}</CoreText>
                   <CoreText>Created: {f.createdAt}</CoreText>
                   <View>{displayForms(f.formData)}</View>

@@ -1,7 +1,5 @@
-import { View } from "react-native";
-import { CheckBox, Separator } from "react-native-btr";
+import { CheckBox } from "react-native-btr";
 import React from "react";
-import { CoreText } from "./textComponents";
 
 export const Checkbox = ({
   checked,

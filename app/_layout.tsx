@@ -105,11 +105,11 @@ const Layout = () => {
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <Stack>
-            <Stack.Screen name="(formBuilder)/FormBuilder" />
-            <Stack.Screen name="(reportBuilder)/ReportBuilder" />
-            <Stack.Screen name="(reportVisualizer)/VictoryTest" />
-            <Stack.Screen name="(reportVisualizer)/GiftedTest" />
-            <Stack.Screen name="landing" />
+            {/* <Stack.Screen name="(formBuilder)/FormBuilder" /> */}
+            <Stack.Screen name="reportBuilder/[formId]" />
+            {/* <Stack.Screen name="(reportVisualizer)/VictoryTest" /> */}
+            {/* <Stack.Screen name="(reportVisualizer)/GiftedTest" /> */}
+            {/* <Stack.Screen name="landing" /> */}
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="modal" options={{ presentation: "modal" }} />
           </Stack>

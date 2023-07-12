@@ -16,14 +16,7 @@ export default function TabLayout() {
         tabBarActiveBackgroundColor: "blue",
       }}
     >
-      <Tabs.Screen
-        name="index"
-        options={
-          {
-            // href: null,
-          }
-        }
-      />
+      <Tabs.Screen name="index" options={{ title: "INDEX" }} />
       <Tabs.Screen
         name="(home)/Home"
         options={{

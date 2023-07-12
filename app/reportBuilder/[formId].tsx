@@ -6,16 +6,16 @@ import { FormV1Wrapper } from "@/utility/formV1Wrapper";
 import { useInsertReport } from "@/api/logic/forms";
 import {
   ApneaSessionInput,
-  Form as FormTypes,
   FormRequest,
   ReportDetails,
+  FormV1Request,
 } from "@/api/types/types.generated";
 import { useLocalSearchParams } from "expo-router";
 import { useInsertApneaSession } from "@/api/logic";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View } from "react-native";
-import { FormFragment, FormV1Fragment } from "@/api/forms.generated";
+import { FormFragment } from "@/api/forms.generated";
 import { router } from "expo-router";
 import { useFragment } from "@apollo/client";
 import { Form as FormVal } from "@/api/forms";
@@ -23,33 +23,31 @@ import { Form as FormVal } from "@/api/forms";
 const ReportBuilder = () => {
   //TODO: This is broken atm
   //@ts-ignore
-  const local = useLocalSearchParams<{
+  const { formId } = useLocalSearchParams<{
     formId: string;
   }>();
-  let formId = local.formId;
+
   const { insertReportMutation, result } = useInsertReport();
   const { insertSession } = useInsertApneaSession();
   const [mode, setMode] = useState<"date" | "time">("date");
   const [show, setShow] = useState(false);
 
-  const { complete, data: form } = useFragment<FormV1Fragment>({
+  const { complete, data: form } = useFragment<FormFragment>({
     fragment: FormVal,
-    fragmentName: "FormV1Fragment",
+    fragmentName: "FormFragment",
     from: {
-      __typename: "FormV1Fragment",
+      __typename: "FormFragment",
       id: formId,
     },
   });
 
-  let myForm = FormV1Wrapper.getRequestForm(form?.formData || {});
-  const sortedFields = FormV1Wrapper.getSortedFields(form?.formData || {});
-
-  type IncomingFormTypes = typeof myForm;
+  type IncomingFormTypes = FormV1Request;
   type SessionInputTypes = {
     startTime: string;
     endTime?: string | undefined;
     sessionName: string;
   };
+
   const {
     control,
     watch,
@@ -60,7 +58,8 @@ const ReportBuilder = () => {
   });
 
   if (complete) {
-    // let form = props.form;
+    let myForm = FormV1Wrapper.getRequestForm(form?.formData || {});
+    const sortedFields = FormV1Wrapper.getSortedFields(form?.formData || {});
 
     const onSubmit: SubmitHandler<IncomingFormTypes & SessionInputTypes> = (
       formData

@@ -1,7 +1,5 @@
-import { View } from "react-native";
 import React from "react";
 import { CoreText } from "@/components/textComponents";
-import { useGetApneaSessions, useGetRecentApneaSessions } from "@/api/logic";
 import { FormV1Wrapper } from "@/utility/formV1Wrapper";
 import { FormV1Request } from "@/api/types/types.generated";
 import { ItemContainer } from "@/components";

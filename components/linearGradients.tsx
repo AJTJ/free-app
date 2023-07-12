@@ -1,6 +1,6 @@
 import React, { ReactNode, useContext } from "react";
 import { StyleSheet } from "react-native";
-import { ThemeContext, GlobalTheme } from "../stylessheet/globalStyles";
+import { ThemeContext, theme } from "../stylessheet/globalStyles";
 import { LinearGradient as LinearGradientImport } from "expo-linear-gradient";
 
 export const LinearGradient = ({
@@ -24,7 +24,7 @@ export const LinearGradient = ({
   );
 };
 
-const styles = (theme: typeof GlobalTheme) => () => {
+const styles = (theme: typeof theme) => () => {
   return StyleSheet.create({
     container: {
       height: "100%",

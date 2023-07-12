@@ -1,19 +1,12 @@
 import React, { useContext } from "react";
-import {
-  Text,
-  StyleSheet,
-  TextInput,
-  TextInputProps,
-  View,
-  ViewProps,
-} from "react-native";
-import { ThemeContext, GlobalTheme } from "../stylessheet/globalStyles";
+import { StyleSheet, Pressable, PressableProps } from "react-native";
+import GlobalTheme, { ThemeContext } from "../stylessheet/globalStyles";
 
-export const ItemContainer = (props: ViewProps) => {
+export const ItemContainer = (props: PressableProps) => {
   // https://stackoverflow.com/questions/32946793/react-native-textinput-that-only-accepts-numeric-characters
   const theme = useContext(ThemeContext);
   const stylesWithTheme = styles(theme);
-  return <View style={stylesWithTheme().container} {...props} />;
+  return <Pressable style={stylesWithTheme().container} {...props} />;
 };
 const styles = (theme: typeof GlobalTheme) => () => {
   return StyleSheet.create({

@@ -27,17 +27,14 @@ export default function FormReordering() {
   const { insertFormMutation } = useInsertForm();
 
   if (incomingForm && formName) {
-    let form = Object.assign(incomingForm) as FormV1Request;
-
     const onSubmit = () => {
-      sortedForm.forEach((el, i) => {
-        if (form[el[0]]) {
-          // @ts-ignore
-          form[el[0]].fieldOrder = i;
-        }
+      let newForm: FormV1Request = {};
+      sortedForm.forEach(([key, value], i) => {
+        newForm[key] = { fieldOrder: i };
       });
+
       const formRequest: FormRequest = {
-        v1: form,
+        v1: newForm,
       };
 
       // TODO: Add originalform and previousform for "editing"?
@@ -93,7 +90,7 @@ export default function FormReordering() {
     );
   } else {
     <LinearGradient>
-      <CoreText>There's an issue.</CoreText>
+      <CoreText>There's no form in the reordering component.</CoreText>
     </LinearGradient>;
   }
 }

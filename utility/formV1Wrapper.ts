@@ -8,11 +8,7 @@ export class FormV1Wrapper {
   static getRequestForm(form?: FormV1): FormV1Request {
     const myForm: FormV1Request = { ...form };
     let cleanedForm = omitDeep(myForm, "__typename");
-    /*
-     NOTE: I belive this works fine for nested objects, since it is only the type name that changes.
-     The field names remain the same, and though the nested types have changed, they are the same 
-     object serverside, so there is no difference.
-    */
+
     return cleanedForm;
   }
 
@@ -65,13 +61,12 @@ export class FormV1Wrapper {
     ][];
 
     let sortedFields = entries
+      .filter((x) => x[1] !== null)
       .sort(([_aKey, aValue], [_bKey, bValue]) => {
-        return (aValue?.fieldOrder || Infinity) <
-          (bValue?.fieldOrder || Infinity)
-          ? -1
-          : 1;
-      })
-      .filter((x) => x[1] !== null);
+        let aVal = aValue?.fieldOrder ?? Infinity;
+        let bVal = bValue?.fieldOrder ?? Infinity;
+        return aVal < bVal ? -1 : 1;
+      });
 
     return sortedFields;
   }

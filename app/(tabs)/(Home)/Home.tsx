@@ -2,7 +2,7 @@ import { Text } from "react-native";
 import React, { useEffect } from "react";
 
 import { Btn, CoreText, LinearGradient } from "@/components";
-import { RecentSessions } from "../../../components/RecentSessions";
+import { RecentSessions } from "./RecentSessions";
 import { useLogoutUser } from "@/api/logic/user";
 import { useInsertPrePopulatedApneaSession } from "@/api/logic";
 
@@ -24,8 +24,6 @@ const Home = () => {
       id: "USER",
     },
   });
-
-  console.log({ complete, data });
 
   useEffect(() => {
     if (!data.__typename) {
@@ -59,13 +57,6 @@ const Home = () => {
             Hello {data.username}! You last logged in at= {data.lastLogin}
           </CoreText>
           <Btn
-            title="Log my dive session"
-            type="primary"
-            hasIcon={false}
-            disabled={false}
-            onPress={() => console.log("should do something")}
-          />
-          <Btn
             title="Logout"
             type="primary"
             hasIcon={false}
@@ -78,24 +69,6 @@ const Home = () => {
             hasIcon={false}
             disabled={false}
             onPress={handleInsertSession}
-          />
-          <Btn
-            title="My Dive Loggers"
-            type="primary"
-            hasIcon={false}
-            disabled={false}
-            onPress={() => {
-              router.push("FormsList");
-            }}
-          />
-          <Btn
-            title="My Logged Dives"
-            type="primary"
-            hasIcon={false}
-            disabled={false}
-            onPress={() => {
-              router.push("Reports");
-            }}
           />
           <Btn
             title="Data viz lib Victory test"

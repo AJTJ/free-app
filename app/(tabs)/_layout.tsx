@@ -1,7 +1,6 @@
-import { Link, Tabs } from "expo-router";
-import { Pressable, useColorScheme } from "react-native";
+import { Tabs } from "expo-router";
+import { useColorScheme } from "react-native";
 import React from "react";
-import { CoreText } from "@/components";
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -40,13 +39,13 @@ export default function TabLayout() {
       <Tabs.Screen
         name="(formsList)/FormsList"
         options={{
-          title: "Log Dives",
+          title: "Log A Session",
         }}
       />
       <Tabs.Screen
-        name="(reports)/Reports"
+        name="(sessions)/Sessions"
         options={{
-          title: "Reports",
+          title: "My Sessions",
         }}
       />
       <Tabs.Screen

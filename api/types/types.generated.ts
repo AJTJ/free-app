@@ -11,14 +11,13 @@ export type Scalars = {
   Int: number;
   Float: number;
   DateTime: any;
-  NaiveTime: any;
   UUID: any;
 };
 
 export type ApneaSession = {
   __typename?: 'ApneaSession';
   createdAt: Scalars['DateTime'];
-  dives: Array<Dive>;
+  dives?: Maybe<Array<Dive>>;
   endTime?: Maybe<Scalars['DateTime']>;
   id: Scalars['UUID'];
   isActive: Scalars['Boolean'];
@@ -26,12 +25,6 @@ export type ApneaSession = {
   sessionName?: Maybe<Scalars['String']>;
   startTime: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
-};
-
-
-export type ApneaSessionDivesArgs = {
-  dbQueryDto?: InputMaybe<QueryParams>;
-  diveQuery?: InputMaybe<DiveFilter>;
 };
 
 export type ApneaSessionConnection = {
@@ -53,29 +46,11 @@ export type ApneaSessionEdge = {
   node: ApneaSession;
 };
 
-export type ApneaSessionFilter = {
-  createdAt?: InputMaybe<Scalars['DateTime']>;
-  endTime?: InputMaybe<Scalars['DateTime']>;
-  isActive?: InputMaybe<Scalars['Boolean']>;
-  sessionId?: InputMaybe<Scalars['UUID']>;
-  sessionName?: InputMaybe<Scalars['String']>;
-  startTime?: InputMaybe<Scalars['DateTime']>;
-  updatedAt?: InputMaybe<Scalars['DateTime']>;
-};
-
 export type ApneaSessionInput = {
   endTime?: InputMaybe<Scalars['DateTime']>;
   sessionName?: InputMaybe<Scalars['String']>;
   sessionReport?: InputMaybe<FormRequest>;
   startTime: Scalars['DateTime'];
-};
-
-export type ApneaSessionUpdate = {
-  endTime?: InputMaybe<Scalars['DateTime']>;
-  id: Scalars['UUID'];
-  isActive?: InputMaybe<Scalars['Boolean']>;
-  sessionName?: InputMaybe<Scalars['String']>;
-  startTime?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type CongestionV1 = {
@@ -121,36 +96,12 @@ export type Dive = {
   updatedAt: Scalars['DateTime'];
 };
 
-export type DiveFilter = {
-  apneaSession?: InputMaybe<Scalars['UUID']>;
-  createdAt?: InputMaybe<Scalars['DateTime']>;
-  depth?: InputMaybe<Scalars['Float']>;
-  disciplineType?: InputMaybe<Scalars['String']>;
-  distance?: InputMaybe<Scalars['Float']>;
-  diveName?: InputMaybe<Scalars['String']>;
-  diveTime?: InputMaybe<Scalars['NaiveTime']>;
-  id?: InputMaybe<Scalars['UUID']>;
-  isActive?: InputMaybe<Scalars['Boolean']>;
-  updatedAt?: InputMaybe<Scalars['DateTime']>;
-  userId?: InputMaybe<Scalars['UUID']>;
-};
-
 export type DiveInput = {
   depth?: InputMaybe<Scalars['Float']>;
   disciplineType?: InputMaybe<Scalars['String']>;
   distance?: InputMaybe<Scalars['Float']>;
   diveName?: InputMaybe<Scalars['String']>;
   diveTime?: InputMaybe<Scalars['Int']>;
-};
-
-export type DiveUpdate = {
-  depth?: InputMaybe<Scalars['Float']>;
-  disciplineType?: InputMaybe<Scalars['String']>;
-  distance?: InputMaybe<Scalars['Float']>;
-  diveName?: InputMaybe<Scalars['String']>;
-  diveTime?: InputMaybe<Scalars['Int']>;
-  id: Scalars['UUID'];
-  isActive?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type Form = {
@@ -234,10 +185,10 @@ export type Mutation = {
   insertUser: User;
   login: User;
   logout: Scalars['Boolean'];
+  modifyApneaSession: ApneaSession;
+  modifyDive: Dive;
   modifyForm?: Maybe<Form>;
   modifyReport?: Maybe<Report>;
-  updateApneaSession: ApneaSession;
-  updateDive: Dive;
 };
 
 
@@ -276,6 +227,20 @@ export type MutationLoginArgs = {
 };
 
 
+export type MutationModifyApneaSessionArgs = {
+  apneaSessionInput: ApneaSessionInput;
+  archivedSessionId: Scalars['UUID'];
+  reportDetails?: InputMaybe<ReportDetails>;
+};
+
+
+export type MutationModifyDiveArgs = {
+  apneaSessionId: Scalars['UUID'];
+  archivedDiveId: Scalars['UUID'];
+  diveInput: DiveInput;
+};
+
+
 export type MutationModifyFormArgs = {
   formDetails: FormDetails;
   formRequest: FormRequest;
@@ -288,16 +253,6 @@ export type MutationModifyReportArgs = {
   reportDetails: ReportDetails;
   reportRequest: FormRequest;
   sessionId: Scalars['UUID'];
-};
-
-
-export type MutationUpdateApneaSessionArgs = {
-  apneaSessionUpdate: ApneaSessionUpdate;
-};
-
-
-export type MutationUpdateDiveArgs = {
-  diveUpdate: DiveUpdate;
 };
 
 /** Information about pagination in a connection */
@@ -325,14 +280,12 @@ export type Query = {
 
 
 export type QueryApneaSessionsArgs = {
-  apneaSessionFilter?: InputMaybe<ApneaSessionFilter>;
   queryParams: QueryParams;
 };
 
 
 export type QueryDivesArgs = {
-  dbQueryDto?: InputMaybe<QueryParams>;
-  diveInput?: InputMaybe<DiveFilter>;
+  queryParams?: InputMaybe<QueryParams>;
 };
 
 
@@ -416,7 +369,6 @@ export type User = {
 
 
 export type UserApneaSessionsArgs = {
-  apneaSessionFilter?: InputMaybe<ApneaSessionFilter>;
   queryParams: QueryParams;
 };
 

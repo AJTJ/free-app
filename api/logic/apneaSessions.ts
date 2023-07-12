@@ -3,6 +3,7 @@ import {
   ApneaSessionsDocument,
   InsertApneaSessionDocument,
   InsertPrepopulatedApneaSessionDocument,
+  RecentApneaSessionsDocument,
 } from "../apnea_sessions.generated";
 
 // https://www.apollographql.com/docs/react/pagination/cursor-based/#relay-style-cursor-pagination
@@ -30,8 +31,23 @@ export const useInsertApneaSession = () => {
   return { insertSession, result, client };
 };
 
-export const useGetApneaSessions = () => {
-  const { loading, error, data, client } = useQuery(ApneaSessionsDocument);
+export const useGetRecentApneaSessions = () => {
+  const { loading, error, data, client } = useQuery(
+    RecentApneaSessionsDocument
+  );
+
+  return { loading, error, data, client };
+};
+
+type getApneaSessionsProps = {
+  first?: number;
+  after?: string;
+};
+
+export const useGetApneaSessions = (props: getApneaSessionsProps) => {
+  const { loading, error, data, client } = useQuery(ApneaSessionsDocument, {
+    variables: { queryParams: { first: props.first, after: props.after } },
+  });
 
   return { loading, error, data, client };
 };

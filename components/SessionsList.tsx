@@ -1,40 +1,31 @@
 import { View } from "react-native";
 import React from "react";
 import { CoreText } from "@/components/textComponents";
-import { useGetApneaSessions } from "@/api/logic";
+import { useGetApneaSessions, useGetRecentApneaSessions } from "@/api/logic";
 import { FormV1Wrapper } from "@/utility/formV1Wrapper";
 import { FormV1Request } from "@/api/types/types.generated";
 import { ItemContainer } from "@/components";
+import { ApneaSessionFragment } from "@/api/apnea_sessions.generated";
 
-export const RecentSessions = () => {
-  const { loading, error, data } = useGetApneaSessions();
+type Props = {
+  sortedSessions: ApneaSessionFragment[];
+  handlePress: (sessionId: string) => void;
+};
 
-  if (error) {
-    console.error("GETTING SESSIONS ERROR:", error);
-  }
-
+export const SessionsList = (props: Props) => {
   const getFormEntries = (form: FormV1Request) => {
-    // TODO: Maybe just show a word for now.
+    // TODO: Include preview of fields?
     return <CoreText>memes</CoreText>;
   };
 
-  let myNodes = [...(data?.apneaSessions?.nodes || [])];
-  const sortedSessions = myNodes?.sort((a, b) => {
-    let aDate = new Date(a.startTime as unknown as string);
-    let bDate = new Date(b.startTime as unknown as string);
-    return aDate > bDate ? -1 : 1;
-  });
-
   return (
     <>
-      {loading && (
-        <View>
-          <CoreText>Loading Sessions...</CoreText>
-        </View>
-      )}
-      {sortedSessions.map((session, i) => {
+      {props.sortedSessions.map((session, i) => {
         return (
-          <ItemContainer key={session.id + i}>
+          <ItemContainer
+            onPress={() => props?.handlePress(session.id)}
+            key={session.id + i}
+          >
             {session.sessionName && (
               <CoreText>Apnea Session Name: {session.sessionName}</CoreText>
             )}

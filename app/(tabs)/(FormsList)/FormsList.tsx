@@ -17,12 +17,14 @@ export default function FormsList() {
   }
 
   const handleFormPress = (form: FormFragment) => {
-    router.push({ pathname: "ReportBuilder", params: { form } });
+    router.push({
+      pathname: "ReportBuilder/[formId]",
+      params: { formId: form.id },
+    });
   };
 
   const displayForms = (formData: FormV1) => {
     let formRequest: FormV1Request = FormV1Wrapper.getRequestForm(formData);
-    console.log({ formRequest });
     const sortedFields = FormV1Wrapper.getSortedFields(formRequest);
     return sortedFields.map(([key, value], i) => {
       return (
@@ -39,23 +41,13 @@ export default function FormsList() {
     <LinearGradient>
       <>
         <Btn
-          title="Create Dive Logger"
+          title="Create A Session Logger"
           type="primary"
           hasIcon={false}
           disabled={false}
           onPress={() => {
             router.push({ pathname: "FormBuilder" });
             // navigation.navigate("FormBuilder");
-          }}
-        />
-        <Btn
-          title="Go Home"
-          type="primary"
-          hasIcon={false}
-          disabled={false}
-          onPress={() => {
-            router.push({ pathname: "Home" });
-            // navigation.navigate("Home");
           }}
         />
         {loading && (

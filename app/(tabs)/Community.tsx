@@ -1,11 +1,11 @@
-import { CoreText } from "@/components";
+import { CoreText, LinearGradient } from "@/components";
 import React from "react";
 import { View } from "react-native";
 
 export default function Community() {
   return (
-    <View>
+    <LinearGradient>
       <CoreText>Community page</CoreText>
-    </View>
+    </LinearGradient>
   );
 }

@@ -64,9 +64,16 @@ export const INSERT_APNEA_SESSION = gql(`
   }
 `);
 
+export const GET_RECENT_APNEA_SESSIONS = gql(`
+  query recentApneaSessions {
+    apneaSessions(queryParams: {first: 3}) {
+      ...MyApneaSessionConnection
+    }
+  }
+`);
 export const GET_APNEA_SESSIONS = gql(`
-  query apneaSessions {
-    apneaSessions(queryParams: {}) {
+  query apneaSessions($queryParams: QueryParams!) {
+    apneaSessions(queryParams: $queryParams) {
       ...MyApneaSessionConnection
     }
   }

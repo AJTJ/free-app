@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Text, StyleSheet, TextProps } from "react-native";
-import { ThemeContext, GlobalTheme } from "../stylessheet/globalStyles";
+import { ThemeContext, theme } from "../stylessheet/globalStyles";
 
 export const CoreText = (props: TextProps) => {
   const theme = useContext(ThemeContext);
@@ -14,7 +14,7 @@ export const SmallHeader = (props: TextProps) => {
   return <Text style={stylesWithTheme().smallHeader} {...props} />;
 };
 
-const styles = (theme: typeof GlobalTheme) => () => {
+const styles = (theme: typeof theme) => () => {
   return StyleSheet.create({
     text: {
       color: theme.colors.white,

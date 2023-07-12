@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Text, StyleSheet, TextInput, TextInputProps } from "react-native";
-import { ThemeContext, GlobalTheme } from "../stylessheet/globalStyles";
+import { ThemeContext, theme } from "../stylessheet/globalStyles";
 
 export const CoreTextInput = (props: TextInputProps) => {
   const theme = useContext(ThemeContext);
@@ -27,7 +27,7 @@ export const LandingTextInput = (props: TextInputProps) => {
   return <TextInput style={stylesWithTheme().landingTextInput} {...props} />;
 };
 
-const styles = (theme: typeof GlobalTheme) => () => {
+const styles = (theme: typeof theme) => () => {
   return StyleSheet.create({
     textInput: {
       borderColor: theme.colors.blue400,

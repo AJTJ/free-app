@@ -6,7 +6,7 @@ import { SessionsList } from "@/components/SessionsList";
 import { LinearGradient } from "@/components";
 import { router } from "expo-router";
 
-export default function Sessions() {
+export default function AllSessions() {
   const [first, setFirst] = useState(10);
   const [after, setAfter] = useState(undefined);
   const { loading, error, data } = useGetApneaSessions({ first, after });
@@ -22,10 +22,6 @@ export default function Sessions() {
     return aDate > bDate ? -1 : 1;
   });
 
-  const handlePress = (reportId: string) => {
-    router.push({ pathname: "/Session/[id]", params: { id: reportId } });
-  };
-
   return (
     <LinearGradient>
       {loading && (
@@ -33,7 +29,7 @@ export default function Sessions() {
           <CoreText>Loading Sessions...</CoreText>
         </View>
       )}
-      <SessionsList handlePress={handlePress} sortedSessions={sortedSessions} />
+      <SessionsList sortedSessions={sortedSessions} />
     </LinearGradient>
   );
 }

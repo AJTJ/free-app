@@ -8,14 +8,14 @@ import {
 import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { View } from "react-native";
-import { FormV1Wrapper } from "@/utility/formV1Wrapper";
+import { FormV1Helper } from "@/utility/FormV1Helper";
 import { router } from "expo-router";
 // import { FormReordering } from "./FormReordering";
 
 import { addFormState } from "@/state";
 
 function FormBuilder() {
-  let emptyForm = FormV1Wrapper.getEmptyForm();
+  let emptyForm = FormV1Helper.getEmptyForm();
   type KeyType = keyof typeof emptyForm;
   type FieldTypes = Record<KeyType, { active: boolean; fieldOrder: number }>;
   let fieldDefaults = Object.keys(emptyForm).reduce<FieldTypes>((acc, cur) => {
@@ -35,7 +35,7 @@ function FormBuilder() {
   });
 
   const onSubmit: SubmitHandler<FormTypes> = (formData) => {
-    let newForm = FormV1Wrapper.createForm(formData);
+    let newForm = FormV1Helper.createForm(formData);
     addFormState({ form: newForm, formName: formData.formName });
     router.push({
       pathname: "FormReordering",

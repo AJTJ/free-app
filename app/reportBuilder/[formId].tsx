@@ -1,8 +1,14 @@
-import { Btn, CoreText, LinearGradient, SmallBtn } from "@/components";
+import {
+  Btn,
+  CoreText,
+  ItemContainer,
+  LinearGradient,
+  SmallBtn,
+} from "@/components";
 import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { FieldTypeComponent } from "./FieldTypeComponent";
-import { FormV1Wrapper } from "@/utility/formV1Wrapper";
+import { FieldTypeComponent } from "../../components/FieldTypeComponent";
+import { FormV1Helper } from "@/utility/FormV1Helper";
 import { useInsertReport } from "@/api/logic/forms";
 import {
   ApneaSessionInput,
@@ -14,11 +20,13 @@ import { useLocalSearchParams } from "expo-router";
 import { useInsertApneaSession } from "@/api/logic";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { FormFragment } from "@/api/forms.generated";
 import { router } from "expo-router";
 import { useFragment } from "@apollo/client";
 import { Form } from "@/api/forms";
+import { ScrollView } from "react-native-gesture-handler";
+import { toTitleCase } from "@/utility/helpers";
 
 const ReportBuilder = () => {
   //@ts-ignore required because params are currently complaining
@@ -26,9 +34,6 @@ const ReportBuilder = () => {
     formId: string;
   }>();
 
-  console.log({ formId });
-
-  const { insertReportMutation, result } = useInsertReport();
   const { insertSession } = useInsertApneaSession();
   const [mode, setMode] = useState<"date" | "time">("date");
   const [show, setShow] = useState(false);
@@ -41,8 +46,6 @@ const ReportBuilder = () => {
       id: formId,
     },
   });
-
-  console.log(complete, form);
 
   type IncomingFormTypes = FormV1Request;
   type SessionInputTypes = {
@@ -61,21 +64,19 @@ const ReportBuilder = () => {
   });
 
   if (complete) {
-    let myForm = FormV1Wrapper.getRequestForm(form?.formData || {});
-    const sortedFields = FormV1Wrapper.getSortedFields(form?.formData || {});
+    let myForm = FormV1Helper.getRequestForm(form?.formData || {});
+    const sortedFields = FormV1Helper.getSortedFields(form?.formData || {});
 
     const onSubmit: SubmitHandler<IncomingFormTypes & SessionInputTypes> = (
-      formData
+      formAndSessionData
     ) => {
-      let newReport = FormV1Wrapper.getRequestForm(formData);
-
+      let newReport = FormV1Helper.getRequestForm(formAndSessionData);
       let sessionReport: FormRequest = {
         v1: newReport,
       };
-
       let apneaSessionInput: ApneaSessionInput = {
-        startTime: formData.startTime,
-        endTime: formData.endTime,
+        startTime: formAndSessionData.startTime,
+        endTime: formAndSessionData.endTime,
         sessionName: newReport.sessionName?.name,
         sessionReport,
       };
@@ -87,6 +88,8 @@ const ReportBuilder = () => {
         // previousReportId?: InputMaybe<Scalars["UUID"]>;
       };
 
+      console.log(apneaSessionInput, reportDetails);
+
       // TODO: Maybe this will be useful for editing?
       // insertReportMutation({variables: {reportInput: newReport, ReportDetails: })
       insertSession({ variables: { apneaSessionInput, reportDetails } })
@@ -94,7 +97,6 @@ const ReportBuilder = () => {
           console.error("insert sesh e:", e);
         })
         .then((d) => {
-          console.log("it works", d);
           router.push("Home");
         });
     };
@@ -113,97 +115,87 @@ const ReportBuilder = () => {
 
     return (
       <LinearGradient>
-        <CoreText>Report Builder: {form.formName}</CoreText>
-        <Controller
-          name={"startTime"}
-          rules={{ required: true }}
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => {
-            return (
-              <>
-                <View>
-                  {value && (
-                    <>
-                      <CoreText>
-                        {new Date(value).toLocaleDateString()}
-                      </CoreText>
-                      <CoreText>
-                        {new Date(value).toLocaleTimeString()}
-                      </CoreText>
-                    </>
-                  )}
-                </View>
-                <SafeAreaView
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-evenly",
-                    alignItems: "center",
-                  }}
-                >
-                  {/* https:github.com/react-native-datetimepicker/datetimepicker#component-usage-on-ios--android--windows */}
-                  <CoreText>Current Time:</CoreText>
-                  <View
-                    style={{
-                      // width: "100%",
-                      width: 120,
-                      // display: "flex",
-                      // justifyContent: "flex-end",
-                      // alignContent: "flex-start",
-                    }}
-                  >
-                    <DateTimePicker
-                      testID="dateTimePicker"
-                      value={new Date(value)}
-                      mode={mode}
-                      is24Hour={true}
-                      onChange={(e, d) => onChange(d?.toISOString())}
-                    />
-                  </View>
-                  <SmallBtn
-                    onPress={switchDateTime}
-                    title={`Switch to ${mode ? "date" : "time"}`}
-                    type="primary"
-                  />
-                </SafeAreaView>
-              </>
-            );
-          }}
-        />
-        {sortedFields.map(([fieldName, fieldValue], i) => {
-          return (
-            fieldValue &&
-            // @ts-ignore There are still properties from FormResponseV1
-            fieldName !== "__typename" && (
-              <Controller
-                key={i + fieldName}
-                name={fieldName}
-                control={control}
-                render={({ field: { onChange, onBlur, value } }) => {
-                  return (
-                    <>
-                      <CoreText>{toTitleCase(fieldName)}</CoreText>
-                      <FieldTypeComponent
-                        name={fieldName}
-                        form={myForm}
-                        {...{
-                          onChange,
-                          onBlur,
-                          value,
-                        }}
+        <ScrollView>
+          <CoreText>Report Builder: {form.formName}</CoreText>
+          <Controller
+            name={"startTime"}
+            rules={{ required: true }}
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => {
+              return (
+                <>
+                  <CoreText>{toTitleCase("Session Time")}</CoreText>
+                  <ItemContainer>
+                    <View>
+                      {value && (
+                        <>
+                          <CoreText>
+                            {new Date(value).toLocaleDateString()}
+                          </CoreText>
+                          <CoreText>
+                            {new Date(value).toLocaleTimeString()}
+                          </CoreText>
+                        </>
+                      )}
+                    </View>
+                    <SafeAreaView style={styles.timeSafeArea}>
+                      {/* https:github.com/react-native-datetimepicker/datetimepicker#component-usage-on-ios--android--windows */}
+                      <CoreText>Current Time:</CoreText>
+                      <View style={styles.timeContainer}>
+                        <DateTimePicker
+                          testID="dateTimePicker"
+                          value={new Date(value)}
+                          mode={mode}
+                          is24Hour={true}
+                          onChange={(e, d) => onChange(d?.toISOString())}
+                        />
+                      </View>
+                      <SmallBtn
+                        onPress={switchDateTime}
+                        title={`Switch to ${mode ? "date" : "time"}`}
+                        type="primary"
                       />
-                    </>
-                  );
-                }}
-              />
-            )
-          );
-        })}
-        <Btn
-          title="Submit"
-          type="primary"
-          onPress={handleSubmit((e) => onSubmit(e))}
-        />
+                    </SafeAreaView>
+                  </ItemContainer>
+                </>
+              );
+            }}
+          />
+          {sortedFields.map(([fieldName, fieldValue], i) => {
+            return (
+              fieldValue &&
+              // @ts-ignore There are still properties from FormResponseV1
+              fieldName !== "__typename" && (
+                <Controller
+                  key={i + fieldName}
+                  name={fieldName}
+                  control={control}
+                  render={({ field: { onChange, onBlur, value } }) => {
+                    return (
+                      <>
+                        <CoreText>{toTitleCase(fieldName)}</CoreText>
+                        <FieldTypeComponent
+                          name={fieldName}
+                          form={myForm}
+                          {...{
+                            onChange,
+                            onBlur,
+                            value,
+                          }}
+                        />
+                      </>
+                    );
+                  }}
+                />
+              )
+            );
+          })}
+          <Btn
+            title="Submit"
+            type="primary"
+            onPress={handleSubmit((e) => onSubmit(e))}
+          />
+        </ScrollView>
       </LinearGradient>
     );
   } else {
@@ -213,11 +205,32 @@ const ReportBuilder = () => {
 
 export default ReportBuilder;
 
-// type Props = {
-//   form: FormFragment;
-// };
-
-const toTitleCase = (text: string): string => {
-  let result = text.replace(/([A-Z])/g, " $1");
-  return result.charAt(0).toUpperCase() + result.slice(1);
-};
+const styles = StyleSheet.create({
+  timeSafeArea: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+  },
+  timeContainer: {
+    // width: "100%",
+    width: 120,
+    // display: "flex",
+    // justifyContent: "flex-end",
+    // alignContent: "flex-start",
+  },
+  itemText: {
+    fontSize: 15,
+    margin: 2,
+  },
+  autocompleteContainer: {
+    // Hack required to make the autocomplete
+    // work on Andrdoid
+    flex: 1,
+    left: 0,
+    position: "absolute",
+    right: 0,
+    top: 0,
+    zIndex: 1,
+  },
+});

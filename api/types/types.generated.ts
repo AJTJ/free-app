@@ -218,7 +218,7 @@ export type MutationInsertReportArgs = {
 
 
 export type MutationInsertUserArgs = {
-  userData: UserInput;
+  userInput: UserInput;
 };
 
 

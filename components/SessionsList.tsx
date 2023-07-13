@@ -1,19 +1,36 @@
 import React from "react";
 import { CoreText } from "@/components/textComponents";
-import { FormV1Wrapper } from "@/utility/formV1Wrapper";
+import { FormV1Helper } from "@/utility/FormV1Helper";
 import { FormV1Request } from "@/api/types/types.generated";
 import { ItemContainer } from "@/components";
 import { ApneaSessionFragment } from "@/api/apnea_sessions.generated";
+import { View } from "react-native";
+import { router } from "expo-router";
 
 type Props = {
   sortedSessions: ApneaSessionFragment[];
-  handlePress: (sessionId: string) => void;
 };
 
 export const SessionsList = (props: Props) => {
   const getFormEntries = (form: FormV1Request) => {
     // TODO: Include preview of fields?
-    return <CoreText>memes</CoreText>;
+    let sortedFields = FormV1Helper.getSortedFields(form);
+    let allFields = sortedFields.map((f, i) => {
+      let fieldKey = f?.[0];
+      return (
+        <View key={fieldKey + i}>
+          {FormV1Helper.getValueElement({ fieldKey, form })}
+        </View>
+      );
+    });
+    return allFields;
+  };
+
+  const handlePress = (sessionId: string) => {
+    router.push({
+      pathname: "sessions/[sessionId]",
+      params: { sessionId },
+    });
   };
 
   return (
@@ -21,7 +38,7 @@ export const SessionsList = (props: Props) => {
       {props.sortedSessions.map((session, i) => {
         return (
           <ItemContainer
-            onPress={() => props?.handlePress(session.id)}
+            onPress={() => handlePress(session.id)}
             key={session.id + i}
           >
             {session.sessionName && (
@@ -34,7 +51,7 @@ export const SessionsList = (props: Props) => {
             </CoreText>
             {session.report?.reportData &&
               getFormEntries(
-                FormV1Wrapper.getRequestForm(session.report?.reportData)
+                FormV1Helper.getRequestForm(session.report?.reportData)
               )}
           </ItemContainer>
         );

@@ -5,7 +5,7 @@ import { useGetForms } from "@/api/logic/forms";
 import { Form, FormV1Request, FormV1 } from "@/api/types/types.generated";
 import { FormFragment } from "@/api/forms.generated";
 import { Btn, ItemContainer, LinearGradient } from "@/components";
-import { FormV1Wrapper } from "@/utility/formV1Wrapper";
+import { FormV1Helper } from "@/utility/FormV1Helper";
 import { Link, Redirect, router } from "expo-router";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -24,8 +24,8 @@ export default function FormsList() {
   };
 
   const displayForms = (formData: FormV1) => {
-    let formRequest: FormV1Request = FormV1Wrapper.getRequestForm(formData);
-    const sortedFields = FormV1Wrapper.getSortedFields(formRequest);
+    let formRequest: FormV1Request = FormV1Helper.getRequestForm(formData);
+    const sortedFields = FormV1Helper.getSortedFields(formRequest);
     return sortedFields.map(([key, value], i) => {
       return (
         value && (

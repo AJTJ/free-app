@@ -1,34 +1,45 @@
 import React, { useContext } from "react";
-import { StyleSheet, Pressable, PressableProps } from "react-native";
+import {
+  StyleSheet,
+  Pressable,
+  PressableProps,
+  ViewProps,
+  View,
+} from "react-native";
 import GlobalTheme, { ThemeContext } from "../stylessheet/globalStyles";
 
-export const ItemContainer = (props: PressableProps) => {
+type Props = {
+  borderColor?: string;
+};
+
+export const ItemContainer = (props: PressableProps & Props) => {
   // https://stackoverflow.com/questions/32946793/react-native-textinput-that-only-accepts-numeric-characters
   const theme = useContext(ThemeContext);
   const stylesWithTheme = styles(theme);
-  return <Pressable style={stylesWithTheme().container} {...props} />;
+  return <Pressable style={stylesWithTheme(props).itemContainer} {...props} />;
 };
-const styles = (theme: typeof GlobalTheme) => () => {
+
+export const CenteredView = (props: ViewProps) => {
+  const theme = useContext(ThemeContext);
+  const stylesWithTheme = styles(theme);
+  return <View style={stylesWithTheme({}).centeredContainer} {...props} />;
+};
+
+const styles = (theme: typeof GlobalTheme) => (props: Props) => {
   return StyleSheet.create({
-    container: {
-      borderColor: theme.colors.blue400,
+    itemContainer: {
+      padding: 10,
+      margin: 5,
+      borderColor: props.borderColor || theme.colors.blue400,
+      borderRadius: 10,
       color: theme.colors.white,
       borderWidth: 1,
     },
+    centeredContainer: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      color: theme.colors.white,
+    },
   });
 };
-
-// textInput: {
-//   borderColor: theme.colors.blue400,
-//   color: theme.colors.white,
-// },
-// landingTextInput: {
-//   height: 40,
-//   borderWidth: 1,
-//   margin: 12,
-//   padding: 10,
-//   minWidth: "80%",
-//   borderRadius: 4,
-//   borderColor: theme.colors.blue400,
-//   color: "#fff",
-// },

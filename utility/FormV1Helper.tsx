@@ -1,15 +1,34 @@
 // import omitDeep from "omit-deep";
-import { FormV1Request, FormV1 } from "@/api/types/types.generated";
+import React from "react";
+import {
+  FormV1Request,
+  FormV1,
+  CongestionV1Request,
+} from "@/api/types/types.generated";
 import { omitDeep } from "@apollo/client/utilities";
-import { Values, number } from "zod";
+import { View } from "react-native";
+import { CoreText } from "@/components";
+import { toTitleCase } from "./helpers";
 
-export class FormV1Wrapper {
-  // FORM UPDATE AREA
-  static getRequestForm(form?: FormV1): FormV1Request {
+type ValueElementProps = {
+  fieldKey: keyof FormV1Request;
+  form: FormV1Request;
+};
+
+export class FormV1Helper {
+  static getRequestForm(form: FormV1): FormV1Request {
     const myForm: FormV1Request = { ...form };
-    let cleanedForm = omitDeep(myForm, "__typename");
+    let omittedForm = omitDeep(myForm, "__typename");
 
-    return cleanedForm;
+    return {
+      congestion: omittedForm.congestion,
+      disciplineAndMaxDepth: omittedForm.disciplineAndMaxDepth,
+      maxDepth: omittedForm.maxDepth,
+      sessionName: omittedForm.sessionName,
+      visibility: omittedForm.visibility,
+      weather: omittedForm.weather,
+      wildlife: omittedForm.wildlife,
+    };
   }
 
   static getEmptyForm(): FormV1Request {
@@ -69,6 +88,28 @@ export class FormV1Wrapper {
       });
 
     return sortedFields;
+  }
+
+  static getValueElement(props: ValueElementProps) {
+    let key = props.fieldKey;
+    let form = props.form;
+    switch (key) {
+      case "congestion":
+        let value = form[key] as CongestionV1Request;
+        return (
+          <View>
+            <CoreText>{toTitleCase(key)}</CoreText>
+            <CoreText>{value.value}</CoreText>
+          </View>
+        );
+      default:
+        return (
+          <View>
+            <CoreText>{toTitleCase(key)}</CoreText>
+            <CoreText>{"not done"}</CoreText>
+          </View>
+        );
+    }
   }
 }
 

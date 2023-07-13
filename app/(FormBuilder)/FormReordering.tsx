@@ -5,7 +5,7 @@ import { Btn, CoreText, ItemContainer, LinearGradient } from "@/components";
 import DraggableFlatList, {
   ScaleDecorator,
 } from "react-native-draggable-flatlist";
-import { FormV1Wrapper } from "@/utility/formV1Wrapper";
+import { FormV1Helper } from "@/utility/FormV1Helper";
 import { TouchableOpacity } from "react-native";
 import {
   FormDetails,
@@ -22,7 +22,7 @@ export default function FormReordering() {
   let incomingForm = formState?.form;
   const formName = formState?.formName;
   let [sortedForm, setSortedForm] = useState(
-    FormV1Wrapper.getSortedFields({ ...incomingForm })
+    FormV1Helper.getSortedFields({ ...incomingForm })
   );
   const { insertFormMutation } = useInsertForm();
 

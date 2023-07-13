@@ -1609,7 +1609,7 @@
             "description": null,
             "args": [
               {
-                "name": "userData",
+                "name": "userInput",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",

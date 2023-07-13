@@ -5,29 +5,46 @@ import {
   View,
   TouchableWithoutFeedback,
 } from "react-native";
-import React from "react";
-import { Btn, CoreText, LandingTextInput, LinearGradient } from "@/components";
+import React, { useState } from "react";
+import {
+  Btn,
+  CenteredView,
+  CoreText,
+  LandingTextInput,
+  LinearGradient,
+} from "@/components";
 import { Controller, useForm } from "react-hook-form";
-// import { addLoginState } from "@/state";
 import { colors } from "@/stylessheet/colors";
 import { useLoginUser } from "@/api/logic";
 import { Keyboard } from "react-native";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { router } from "expo-router";
+import { Spacer } from "@/components/layout";
 
 const diverImg = "@/assets/Ellipse372.png";
 
 export default function Landing() {
+  const [isRegister, setIsRegister] = useState(false);
   let { loginUser, result } = useLoginUser();
   let { loading, error, data } = result;
 
-  // console.log("LoginData: ", data?.login.diveSessions);
-
-  const validationSchema = z.object({
-    email: z.string(),
-    password: z.string(),
-  });
+  const validationSchema = z
+    .object({
+      email: z.string(),
+      password: z.string().min(5),
+      username: z.string().optional(),
+      cpassword: z.string().min(5).optional(),
+    })
+    .superRefine(({ password, cpassword }, ctx) => {
+      if (isRegister && cpassword !== password) {
+        ctx.addIssue({
+          code: "custom",
+          message: "The passwords do not match",
+          path: ["cpassword"],
+        });
+      }
+    });
 
   type ValidationSchema = z.infer<typeof validationSchema>;
 
@@ -44,90 +61,164 @@ export default function Landing() {
   });
 
   const onSubmit = async (formData: ValidationSchema) => {
-    await loginUser({
-      variables: { email: formData.email, password: formData.password },
-    })
-      .catch((e) => {
-        console.error(e);
+    console.log("SUBMITTING");
+    if (isRegister) {
+      console.log("is register");
+    } else {
+      console.log("is login");
+      await loginUser({
+        variables: { email: formData.email, password: formData.password },
       })
-      .then((res) => {
-        if (res?.data?.login) {
-          // addLoginState(res?.data?.login);
-          router.push("Home");
-        }
-      });
+        .catch((e) => {
+          console.error(e);
+        })
+        .then((res) => {
+          if (res?.data?.login) {
+            router.push("Home");
+          }
+        });
+    }
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <LinearGradient>
-        <Image style={styles.diver} source={require(diverImg)} />
-        <Controller
-          name="email"
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <>
-              <CoreText style={styles.InputText}>Email</CoreText>
-              <LandingTextInput
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-              />
-            </>
-          )}
-        />
-        <View style={styles.emptyView}>
-          <CoreText>
-            <CoreText>{formErrors.email && formErrors.email.message}</CoreText>
-          </CoreText>
-        </View>
-        <Controller
-          name="password"
-          control={control}
-          rules={{
-            maxLength: 100,
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <>
-              <CoreText style={styles.InputText}>Password</CoreText>
-              <LandingTextInput
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-              />
-            </>
-          )}
-        />
+        <CenteredView>
+          <Image style={styles.diver} source={require(diverImg)} />
+          <Controller
+            name="email"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <>
+                <CoreText style={styles.InputText}>Email</CoreText>
 
-        <View style={styles.emptyView}>
-          <CoreText>
-            {formErrors.password && formErrors.password.message}
-          </CoreText>
-        </View>
-        <Button title="Login" onPress={handleSubmit((e) => onSubmit(e))} />
-        <Btn
-          title="Log in"
-          type="primary"
-          hasIcon={false}
-          disabled={false}
-          onPress={() => console.log("should do something")}
-        />
-        <Btn
-          title="New user"
-          type="secondary"
-          hasIcon={false}
-          disabled={false}
-          onPress={() => console.log("should do something")}
-        />
-        <View style={styles.emptyView}>
-          <CoreText>
-            {loading && "Loading"}
-            {error && error.message}
-            {formErrors.password && formErrors.password.message}
-          </CoreText>
-        </View>
+                <LandingTextInput
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              </>
+            )}
+          />
+          <View style={styles.emptyView}>
+            <CoreText>
+              <CoreText>
+                {formErrors.email && formErrors.email.message}
+              </CoreText>
+            </CoreText>
+          </View>
+          {isRegister && (
+            <>
+              <Controller
+                name="username"
+                control={control}
+                rules={{
+                  maxLength: 100,
+                  required: false,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <>
+                    <CoreText style={styles.InputText}>UserName</CoreText>
+                    <LandingTextInput
+                      secureTextEntry={true}
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                    />
+                  </>
+                )}
+              />
+              <View style={styles.emptyView}>
+                <CoreText>
+                  <CoreText>
+                    {formErrors.username && formErrors.username.message}
+                  </CoreText>
+                </CoreText>
+              </View>
+            </>
+          )}
+          <Controller
+            name="password"
+            control={control}
+            rules={{
+              maxLength: 100,
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <>
+                <CoreText style={styles.InputText}>Password</CoreText>
+                <LandingTextInput
+                  secureTextEntry={true}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              </>
+            )}
+          />
+          <View style={styles.emptyView}>
+            <CoreText>
+              <CoreText>
+                {formErrors.password && formErrors.password.message}
+              </CoreText>
+            </CoreText>
+          </View>
+          {isRegister && (
+            <>
+              <Controller
+                name="cpassword"
+                control={control}
+                rules={{
+                  maxLength: 100,
+                  required: false,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <>
+                    <CoreText style={styles.InputText}>
+                      Confirm Password
+                    </CoreText>
+                    <LandingTextInput
+                      secureTextEntry={true}
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                    />
+                  </>
+                )}
+              />
+              <View style={styles.emptyView}>
+                <CoreText>
+                  <CoreText>
+                    {formErrors.cpassword && formErrors.cpassword.message}
+                  </CoreText>
+                </CoreText>
+              </View>
+            </>
+          )}
+          <View style={styles.emptyView}>
+            <CoreText>
+              {formErrors.password && formErrors.password.message}
+            </CoreText>
+          </View>
+          <Btn
+            title={isRegister ? "Register" : "Login"}
+            type="primary"
+            onPress={handleSubmit((e) => onSubmit(e))}
+          />
+          <Spacer height={10} />
+          <Button
+            title={isRegister ? "Login" : "Register New User"}
+            disabled={false}
+            onPress={() => setIsRegister(!isRegister)}
+          />
+          <View style={styles.emptyView}>
+            <CoreText>
+              {loading && "Loading"}
+              {error && error.message}
+            </CoreText>
+          </View>
+        </CenteredView>
       </LinearGradient>
     </TouchableWithoutFeedback>
   );
@@ -139,7 +230,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#DDDDDD",
     padding: 10,
   },
-
   InputText: {
     color: colors.blue400,
   },

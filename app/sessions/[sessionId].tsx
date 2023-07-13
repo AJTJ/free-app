@@ -7,7 +7,7 @@ import {
 } from "@/components";
 import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { FormV1Helper } from "@/utility/FormV1Helper";
+import { FormV1Helper } from "@/utility/FormV1/FormV1Helper";
 import { useInsertReport } from "@/api/logic/forms";
 import {
   ApneaSessionInput,
@@ -28,7 +28,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { toTitleCase } from "@/utility/helpers";
 import { ApneaSessionFragment } from "@/api/apnea_sessions.generated";
 import { ApneaSession } from "@/api/apnea_sessions";
-import { FieldTypeComponent } from "../../components/FieldTypeComponent";
+import { V1InputField } from "../../utility/FormV1/V1InputFields/InputField";
 
 export default function Session() {
   //@ts-ignore required because params are currently complaining
@@ -63,7 +63,7 @@ export default function Session() {
           return (
             <View key={fieldName + i}>
               <CoreText>{fieldName}</CoreText>
-              {/* <FieldTypeComponent
+              {/* <V1InputField
                 name={fieldName}
                 form={requestForm}
                 value={fieldValue}

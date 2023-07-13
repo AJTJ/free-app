@@ -4,3 +4,4 @@ export * from "./inputComponents";
 export * from "./textComponents";
 export * from "./Checkbox";
 export * from "./containers";
+export * from "./sliders";

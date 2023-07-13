@@ -7,8 +7,8 @@ import {
 } from "@/components";
 import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { FieldTypeComponent } from "../../components/FieldTypeComponent";
-import { FormV1Helper } from "@/utility/FormV1Helper";
+import { V1InputField } from "../../utility/FormV1/V1InputFields/InputField";
+import { FormV1Helper } from "@/utility/FormV1/FormV1Helper";
 import { useInsertReport } from "@/api/logic/forms";
 import {
   ApneaSessionInput,
@@ -174,7 +174,7 @@ const ReportBuilder = () => {
                     return (
                       <>
                         <CoreText>{toTitleCase(fieldName)}</CoreText>
-                        <FieldTypeComponent
+                        <V1InputField
                           name={fieldName}
                           form={myForm}
                           {...{

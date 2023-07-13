@@ -10,80 +10,11 @@ import {
   InnerDisciplineMaxDepthV1Request,
   MaxDepthV1Request,
 } from "@/api/types/types.generated";
-import { FormV1Helper } from "@/utility/FormV1Helper";
+import { InputFieldProps } from "./InputField";
 import Slider from "@react-native-community/slider";
 import { Picker } from "@react-native-picker/picker";
 
-import AutoComplete from "react-native-autocomplete-input";
-// import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
-
-type ChildProps = {
-  name: keyof FormV1Request;
-  form: FormV1Request;
-  onChange: (...event: any[]) => void;
-  onBlur: Noop;
-  value: FormV1Request[keyof FormV1Request];
-};
-
-const CongestionComponent = (props: ChildProps) => {
-  let onChange = (e: number) => {
-    let numVal = Number(e);
-    let newValue: CongestionV1Request = {
-      value: numVal,
-      fieldOrder: props.form.congestion?.fieldOrder || Infinity,
-    };
-    props.onChange(newValue);
-  };
-
-  const value = props.value as CongestionV1Request;
-
-  return (
-    <View>
-      <CoreText>How was your level of congestion today?</CoreText>
-      <CoreText>{value?.value || 0}</CoreText>
-      <Slider
-        value={value?.value || 0}
-        minimumValue={0}
-        maximumValue={100}
-        step={1}
-        minimumTrackTintColor="#FFFFFF"
-        maximumTrackTintColor="#000000"
-        onValueChange={onChange}
-      />
-    </View>
-  );
-};
-
-const MaxDepth = (props: ChildProps) => {
-  let onChange = (e: number) => {
-    let numVal = Number(e);
-    let newValue: MaxDepthV1Request = {
-      maxDepth: numVal,
-      fieldOrder: props.form.congestion?.fieldOrder || Infinity,
-    };
-    props.onChange(newValue);
-  };
-
-  const value = props.value as MaxDepthV1Request;
-
-  return (
-    <View>
-      <CoreText>How deep did you go today?</CoreText>
-      <CoreText>{value?.maxDepth || 0}</CoreText>
-      <Slider
-        value={value?.maxDepth || 0}
-        minimumValue={0}
-        maximumValue={100}
-        step={1}
-        minimumTrackTintColor="#FFFFFF"
-        maximumTrackTintColor="#000000"
-        onValueChange={onChange}
-      />
-    </View>
-  );
-};
-
-const DisciplineAndMaxDepth = (props: ChildProps) => {
+export default function DisciplineAndMaxDepth(props: InputFieldProps) {
   const [pickedVal, setPickedval] = useState();
   let onDepthChange = (e: number, i: number) => {
     const prevValue = props.value as DisciplineAndMaxDepthV1Request;
@@ -191,92 +122,7 @@ const DisciplineAndMaxDepth = (props: ChildProps) => {
       })}
     </>
   );
-};
-
-type ParentProps = {
-  name: keyof FormV1Request;
-  form: FormV1Request;
-  onChange: (...event: any[]) => void;
-  onBlur: Noop;
-  value: FormV1Request[keyof FormV1Request];
-};
-
-// FORM UPDATE AREA
-export const FieldTypeComponent = (props: ParentProps) => {
-  const { onChange, onBlur, value } = props;
-  let myForm = FormV1Helper.getRequestForm(props.form);
-
-  const renderComponents = () => {
-    switch (props.name) {
-      case "congestion":
-        return (
-          <CongestionComponent
-            name={props.name}
-            form={myForm}
-            value={value}
-            {...{ onChange, onBlur }}
-          />
-        );
-      case "disciplineAndMaxDepth":
-        return (
-          <DisciplineAndMaxDepth
-            name={props.name}
-            form={myForm}
-            value={value}
-            {...{ onChange, onBlur }}
-          />
-        );
-      case "maxDepth":
-        return (
-          <MaxDepth
-            name={props.name}
-            form={myForm}
-            value={value}
-            {...{ onChange, onBlur }}
-          />
-        );
-      case "sessionName":
-        return (
-          <CongestionComponent
-            name={props.name}
-            form={myForm}
-            value={value}
-            {...{ onChange, onBlur }}
-          />
-        );
-      case "visibility":
-        return (
-          <CongestionComponent
-            name={props.name}
-            form={myForm}
-            value={value}
-            {...{ onChange, onBlur }}
-          />
-        );
-      case "weather":
-        return (
-          <CongestionComponent
-            name={props.name}
-            form={myForm}
-            value={value}
-            {...{ onChange, onBlur }}
-          />
-        );
-      case "wildlife":
-        return (
-          <CongestionComponent
-            name={props.name}
-            form={myForm}
-            value={value}
-            {...{ onChange, onBlur }}
-          />
-        );
-    }
-  };
-
-  return <ItemContainer>{renderComponents()}</ItemContainer>;
-};
-
+}
 const styles = StyleSheet.create({
   picker: {},
   pickerItems: { color: "white" },

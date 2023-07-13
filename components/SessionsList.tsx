@@ -1,6 +1,6 @@
 import React from "react";
 import { CoreText } from "@/components/textComponents";
-import { FormV1Helper } from "@/utility/FormV1Helper";
+import { FormV1Helper } from "@/utility/FormV1/FormV1Helper";
 import { FormV1Request } from "@/api/types/types.generated";
 import { ItemContainer } from "@/components";
 import { ApneaSessionFragment } from "@/api/apnea_sessions.generated";

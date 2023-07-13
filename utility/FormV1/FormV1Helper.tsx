@@ -8,7 +8,7 @@ import {
 import { omitDeep } from "@apollo/client/utilities";
 import { View } from "react-native";
 import { CoreText } from "@/components";
-import { toTitleCase } from "./helpers";
+import { toTitleCase } from "../helpers";
 
 type ValueElementProps = {
   fieldKey: keyof FormV1Request;

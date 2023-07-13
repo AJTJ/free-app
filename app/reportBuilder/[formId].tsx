@@ -18,14 +18,15 @@ import { View } from "react-native";
 import { FormFragment } from "@/api/forms.generated";
 import { router } from "expo-router";
 import { useFragment } from "@apollo/client";
-import { Form as FormVal } from "@/api/forms";
+import { Form } from "@/api/forms";
 
 const ReportBuilder = () => {
-  //TODO: This is broken atm
-  //@ts-ignore
+  //@ts-ignore required because params are currently complaining
   const { formId } = useLocalSearchParams<{
     formId: string;
   }>();
+
+  console.log({ formId });
 
   const { insertReportMutation, result } = useInsertReport();
   const { insertSession } = useInsertApneaSession();
@@ -33,13 +34,15 @@ const ReportBuilder = () => {
   const [show, setShow] = useState(false);
 
   const { complete, data: form } = useFragment<FormFragment>({
-    fragment: FormVal,
-    fragmentName: "FormFragment",
+    fragment: Form,
+    fragmentName: "Form",
     from: {
-      __typename: "FormFragment",
+      __typename: "Form",
       id: formId,
     },
   });
+
+  console.log(complete, form);
 
   type IncomingFormTypes = FormV1Request;
   type SessionInputTypes = {
@@ -179,7 +182,7 @@ const ReportBuilder = () => {
                 render={({ field: { onChange, onBlur, value } }) => {
                   return (
                     <>
-                      <CoreText>{fieldName}</CoreText>
+                      <CoreText>{toTitleCase(fieldName)}</CoreText>
                       <FieldTypeComponent
                         name={fieldName}
                         form={myForm}
@@ -213,3 +216,8 @@ export default ReportBuilder;
 // type Props = {
 //   form: FormFragment;
 // };
+
+const toTitleCase = (text: string): string => {
+  let result = text.replace(/([A-Z])/g, " $1");
+  return result.charAt(0).toUpperCase() + result.slice(1);
+};

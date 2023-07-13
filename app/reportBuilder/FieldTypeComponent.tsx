@@ -2,10 +2,16 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { CoreText, NumberInput } from "@/components";
 import { Noop } from "react-hook-form";
-import { CongestionV1, FormV1Request } from "@/api/types/types.generated";
+import {
+  CongestionV1,
+  CongestionV1Request,
+  DisciplineAndMaxDepthV1Request,
+  FormV1Request,
+} from "@/api/types/types.generated";
 import { FormV1Wrapper } from "@/utility/formV1Wrapper";
-import { FormFragment } from "@/api/forms.generated";
-// import AutoComplete from "react-native-autocomplete-input";
+import Slider from "@react-native-community/slider";
+
+import AutoComplete from "react-native-autocomplete-input";
 // import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
 
 type ChildProps = {
@@ -17,17 +23,76 @@ type ChildProps = {
 };
 
 const CongestionComponent = (props: ChildProps) => {
-  let onChangeText = (e: string) => {
-    const cur = props.value;
+  let onChange = (e: number) => {
     let numVal = Number(e);
-    let newValue: CongestionV1 = {
+    let newValue: CongestionV1Request = {
       value: numVal,
       fieldOrder: props.form.congestion?.fieldOrder || Infinity,
     };
     props.onChange(newValue);
   };
 
-  return <NumberInput onBlur={props.onBlur} onChangeText={onChangeText} />;
+  const value = props.value as CongestionV1Request;
+
+  return (
+    <View>
+      <CoreText>How was your level of congestion today?</CoreText>
+      <CoreText>{value?.value || 0}</CoreText>
+      <Slider
+        value={value?.value || 0}
+        minimumValue={0}
+        maximumValue={100}
+        step={1}
+        minimumTrackTintColor="#FFFFFF"
+        maximumTrackTintColor="#000000"
+        onValueChange={onChange}
+      />
+      {/* <NumberInput onBlur={props.onBlur} onChangeText={onChangeText} /> */}
+    </View>
+  );
+};
+
+const DisciplineAndMaxDepth = (props: ChildProps) => {
+  let onDepthChange = (e: number) => {
+    const prevValue = props.value as DisciplineAndMaxDepthV1Request;
+    let newValue: DisciplineAndMaxDepthV1Request = {
+      disciplineMaxDepth: [],
+      fieldOrder: props.form.disciplineAndMaxDepth?.fieldOrder || Infinity,
+    };
+    props.onChange(newValue);
+  };
+
+  const value = props.value as DisciplineAndMaxDepthV1Request;
+
+  return (
+    <>
+      {value?.disciplineMaxDepth?.map((el) => {
+        <View>
+              <AutoComplete
+      data={["cat", "dog"]}
+      // value={""}
+      // onChangeText={(text) => this.setState({ query: text })}
+      flatListProps={{
+        keyExtractor: (_, idx) => idx,
+        renderItem: ({ item }) => <CoreText>{item}</CoreText>,
+      }}
+    />
+          <CoreText>Max depth for this discipline?</CoreText>
+          <CoreText>{value?.value || 0}</CoreText>
+          <Dropdo
+          <Slider
+            minimumValue={0}
+            maximumValue={200}
+            step={0.5}
+            minimumTrackTintColor="#FFFFFF"
+            maximumTrackTintColor="#000000"
+            onValueChange={onDepthChange}
+          />
+          {/* <NumberInput onBlur={props.onBlur} onChangeText={onChangeText} /> */}
+        </View>;
+      })}
+    </>
+  );
 };
 
 type ParentProps = {
@@ -54,12 +119,53 @@ export const FieldTypeComponent = (props: ParentProps) => {
           />
         );
       case "disciplineAndMaxDepth":
+        return (
+          <DisciplineAndMaxDepth
+            name={props.name}
+            form={myForm}
+            {...{ onChange, onBlur, value }}
+          />
+        );
       case "maxDepth":
+        return (
+          <CongestionComponent
+            name={props.name}
+            form={myForm}
+            {...{ onChange, onBlur, value }}
+          />
+        );
       case "sessionName":
+        return (
+          <CongestionComponent
+            name={props.name}
+            form={myForm}
+            {...{ onChange, onBlur, value }}
+          />
+        );
       case "visibility":
+        return (
+          <CongestionComponent
+            name={props.name}
+            form={myForm}
+            {...{ onChange, onBlur, value }}
+          />
+        );
       case "weather":
+        return (
+          <CongestionComponent
+            name={props.name}
+            form={myForm}
+            {...{ onChange, onBlur, value }}
+          />
+        );
       case "wildlife":
-        return <CoreText>Memes</CoreText>;
+        return (
+          <CongestionComponent
+            name={props.name}
+            form={myForm}
+            {...{ onChange, onBlur, value }}
+          />
+        );
     }
   };
 

@@ -78,12 +78,20 @@ export default function DisciplineAndMaxDepth(props: InputFieldProps) {
 
   return (
     <>
-      <SmallBtn title="Add another" type="secondary" onPress={handleAddField} />
-      <SmallBtn
-        title="Remove A field"
-        type="secondary"
-        onPress={handleRemoveField}
-      />
+      {!props.isDisplay && (
+        <>
+          <SmallBtn
+            title="Add another"
+            type="secondary"
+            onPress={handleAddField}
+          />
+          <SmallBtn
+            title="Remove A field"
+            type="secondary"
+            onPress={handleRemoveField}
+          />
+        </>
+      )}
       {allEntries.map((el, i) => {
         const disciplineVal = el?.discipline;
         const maxDepthVal = el?.maxDepth;
@@ -117,16 +125,18 @@ export default function DisciplineAndMaxDepth(props: InputFieldProps) {
             </ItemContainer>
             <CoreText>Max depth for this discipline?</CoreText>
             <CoreText>{maxDepthVal || 0}</CoreText>
-            <Slider
-              disabled={props.isDisplay}
-              minimumValue={0}
-              maximumValue={200}
-              value={maxDepthVal || 0}
-              step={0.5}
-              minimumTrackTintColor="#FFFFFF"
-              maximumTrackTintColor="#000000"
-              onValueChange={(e) => onDepthChange(e, i)}
-            />
+            {!props.isDisplay && (
+              <Slider
+                disabled={props.isDisplay}
+                minimumValue={0}
+                maximumValue={200}
+                value={maxDepthVal || 0}
+                step={0.5}
+                minimumTrackTintColor="#FFFFFF"
+                maximumTrackTintColor="#000000"
+                onValueChange={(e) => onDepthChange(e, i)}
+              />
+            )}
           </View>
         );
       })}

@@ -78,13 +78,17 @@ export class FormV1Helper {
       typeof formValues[number]
     ][];
 
-    let sortedFields = entries
-      .filter((x) => x[1] !== null)
-      .sort(([_aKey, aValue], [_bKey, bValue]) => {
+    let filteredFields = entries.filter((x) => {
+      return x[1] !== null && x[1] !== undefined;
+    });
+
+    let sortedFields = filteredFields.sort(
+      ([_aKey, aValue], [_bKey, bValue]) => {
         let aVal = aValue?.fieldOrder ?? Infinity;
         let bVal = bValue?.fieldOrder ?? Infinity;
         return aVal < bVal ? -1 : 1;
-      });
+      }
+    );
 
     return sortedFields;
   }
@@ -95,18 +99,17 @@ export class FormV1Helper {
     let form = props.form;
     switch (key) {
       case "easeOfEqualization":
-        let value = form[key] as EaseOfEqualizationRequest;
+        let value = form?.[key] as EaseOfEqualizationRequest;
         return (
           <View>
             <CoreText>{toTitleCase(key)}</CoreText>
-            <CoreText>{value.value}</CoreText>
+            <CoreText>{value?.value || "no val"}</CoreText>
           </View>
         );
       default:
         return (
           <View>
             <CoreText>{toTitleCase(key)}</CoreText>
-            <CoreText>{"not done"}</CoreText>
           </View>
         );
     }

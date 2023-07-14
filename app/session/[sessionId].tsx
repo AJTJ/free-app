@@ -35,18 +35,16 @@ export default function Session() {
       <LinearGradient>
         <ScrollView>
           {sortedFields.map(([fieldName, fieldValue], i) => {
-            if (fieldValue) {
-              return (
-                <View key={fieldName + i}>
-                  <CoreText>{fieldName}</CoreText>
-                  <V1InputField
-                    name={fieldName}
-                    form={requestForm}
-                    value={fieldValue}
-                  />
-                </View>
-              );
-            }
+            return (
+              <View key={fieldName + i}>
+                <CoreText>{fieldName}</CoreText>
+                <V1InputField
+                  name={fieldName}
+                  form={requestForm}
+                  value={fieldValue}
+                />
+              </View>
+            );
           })}
         </ScrollView>
       </LinearGradient>

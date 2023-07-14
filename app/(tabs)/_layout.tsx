@@ -36,7 +36,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="SessionsList"
+        name="AllSessions"
         options={{
           title: "My Sessions",
         }}

@@ -27,7 +27,7 @@ export const SessionsList = (props: Props) => {
 
   const handlePress = (sessionId: string) => {
     router.push({
-      pathname: "sessions/[sessionId]",
+      pathname: "session/[sessionId]",
       params: { sessionId },
     });
   };

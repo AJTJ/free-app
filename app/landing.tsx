@@ -55,7 +55,9 @@ export default function Landing() {
   } = useForm<ValidationSchema>({
     defaultValues: {
       email: "memes@memes.com",
+      username: "Rudolph",
       password: "memes",
+      cpassword: "memes",
     },
     resolver: zodResolver(validationSchema),
   });

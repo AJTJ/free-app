@@ -1,13 +1,14 @@
-import { CoreText, LinearGradient } from "@/components";
+import { Btn, CoreText, LinearGradient } from "@/components";
 import React from "react";
 import { FormV1Helper } from "@/utility/FormV1/FormV1Helper";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useFragment } from "@apollo/client";
 import { ApneaSessionFragment } from "@/api/apnea_sessions.generated";
 import { ApneaSession } from "@/api/apnea_sessions";
 import { V1InputField } from "../../utility/FormV1/V1Fields/FieldSwitch";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { FormFragment } from "@/api/forms.generated";
 
 export default function Session() {
   //@ts-ignore required because params are currently complaining
@@ -28,11 +29,28 @@ export default function Session() {
     const requestForm = FormV1Helper.getRequestForm(
       sessionData.report?.reportData
     );
-    console.log(requestForm);
     const sortedFields = FormV1Helper.getSortedFields(requestForm);
+
+    console.log("SHOULD FORM ID", sessionData.report);
+
+    const handleOnPress = () => {
+      router.push({
+        pathname: "reportBuilder/[formId]",
+        params: { formId: sessionData.report?.form?.id },
+      });
+    };
 
     return (
       <LinearGradient>
+        <Btn
+          title="Edit"
+          type="primary"
+          onPress={() => {
+            if (sessionData.report) {
+              handleOnPress();
+            }
+          }}
+        />
         <ScrollView>
           {sortedFields.map(([fieldName, fieldValue], i) => {
             return (

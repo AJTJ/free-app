@@ -26,7 +26,6 @@ export class FormV1Helper {
   static getRequestForm(form?: FormV1): FormV1Request {
     const myForm: FormV1Request = { ...form };
 
-    console.log({ myForm });
     let cleanedForm = omitDeep(myForm, "__typename");
 
     return {

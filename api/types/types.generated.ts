@@ -356,6 +356,7 @@ export type QueryParams = {
 export type Report = {
   __typename?: 'Report';
   createdAt: Scalars['DateTime'];
+  form?: Maybe<Form>;
   id: Scalars['UUID'];
   isActive: Scalars['Boolean'];
   reportData: FormResponse;

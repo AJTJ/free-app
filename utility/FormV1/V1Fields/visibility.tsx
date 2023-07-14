@@ -26,7 +26,7 @@ export default function Visibility(props: InputFieldProps) {
       <Slider
         disabled={props.isDisplay}
         onValueChange={onChange}
-        value={value.value || 0}
+        value={value?.value || 0}
       />
     </View>
   );

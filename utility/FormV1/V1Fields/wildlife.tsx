@@ -22,7 +22,7 @@
 //     <View>
 //       <CoreText>How was the visibility?</CoreText>
 //       <CoreText>Visibility: {value?.value || ""}</CoreText>
-//       {/* <Slider props.isDisplay onValueChange={onChange} value={value.value || 0} /> */}
+//       {/* <Slider props.isDisplay onValueChange={onChange} value={value?.value || 0} /> */}
 //     </View>
 //   );
 // }

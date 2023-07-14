@@ -11,7 +11,7 @@ export const useInsertPrePopulatedApneaSession = () => {
   const [insertSession, { loading, error, data, client }] = useMutation(
     InsertPrepopulatedApneaSessionDocument,
     {
-      refetchQueries: [ApneaSessionsDocument],
+      refetchQueries: [ApneaSessionsDocument, RecentApneaSessionsDocument],
     }
   );
 
@@ -23,7 +23,7 @@ export const useInsertApneaSession = () => {
   const [insertSession, { loading, error, data, client }] = useMutation(
     InsertApneaSessionDocument,
     {
-      refetchQueries: [ApneaSessionsDocument],
+      refetchQueries: [ApneaSessionsDocument, RecentApneaSessionsDocument],
     }
   );
 

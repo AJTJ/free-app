@@ -46,6 +46,8 @@ const ReportBuilder = () => {
     },
   });
 
+  console.log({ formId });
+
   type IncomingFormTypes = FormV1Request;
   type SessionInputTypes = {
     startTime: string;

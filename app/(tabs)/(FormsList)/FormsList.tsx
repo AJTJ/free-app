@@ -2,12 +2,12 @@ import { Pressable, View } from "react-native";
 import React from "react";
 import { CoreText } from "@/components/textComponents";
 import { useGetForms } from "@/api/logic/forms";
-import { Form, FormV1Request, FormV1 } from "@/api/types/types.generated";
+import { FormV1Request, FormV1 } from "@/api/types/types.generated";
 import { FormFragment } from "@/api/forms.generated";
 import { Btn, ItemContainer, LinearGradient } from "@/components";
 import { FormV1Helper } from "@/utility/FormV1/FormV1Helper";
-import { Link, Redirect, router } from "expo-router";
 import { ScrollView } from "react-native-gesture-handler";
+import { router } from "expo-router";
 
 export default function FormsList() {
   const { loading, error, data } = useGetForms();
@@ -47,7 +47,6 @@ export default function FormsList() {
           disabled={false}
           onPress={() => {
             router.push({ pathname: "FormBuilder" });
-            // navigation.navigate("FormBuilder");
           }}
         />
         {loading && (

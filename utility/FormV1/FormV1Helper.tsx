@@ -3,7 +3,7 @@ import React from "react";
 import {
   FormV1Request,
   FormV1,
-  CongestionV1Request,
+  EaseOfEqualizationRequest,
 } from "@/api/types/types.generated";
 import { omitDeep } from "@apollo/client/utilities";
 import { View } from "react-native";
@@ -15,31 +15,31 @@ type ValueElementProps = {
   form: FormV1Request;
 };
 
+/*
+All places to update with new/changed fields:
+- global find: FIELDS UPDATE HERE
+- forms.ts
+*/
+
+// FIELDS UPDATE HERE
 export class FormV1Helper {
-  static getRequestForm(form: FormV1): FormV1Request {
+  static getRequestForm(form?: FormV1): FormV1Request {
     const myForm: FormV1Request = { ...form };
-    let omittedForm = omitDeep(myForm, "__typename");
+
+    console.log({ myForm });
+    let cleanedForm = omitDeep(myForm, "__typename");
 
     return {
-      congestion: omittedForm.congestion,
-      disciplineAndMaxDepth: omittedForm.disciplineAndMaxDepth,
-      maxDepth: omittedForm.maxDepth,
-      sessionName: omittedForm.sessionName,
-      visibility: omittedForm.visibility,
-      weather: omittedForm.weather,
-      wildlife: omittedForm.wildlife,
-    };
-  }
-
-  static getEmptyForm(): FormV1Request {
-    return {
-      congestion: {},
-      disciplineAndMaxDepth: { disciplineMaxDepth: [] },
-      maxDepth: {},
-      sessionName: {},
-      visibility: {},
-      weather: {},
-      wildlife: {},
+      disciplineAndMaxDepth: cleanedForm.disciplineAndMaxDepth,
+      easeOfEqualization: cleanedForm.easeOfEqualization,
+      generalFeeling: cleanedForm.generalFeeling,
+      injury: cleanedForm.injury,
+      maxDepth: cleanedForm.maxDepth,
+      sessionName: cleanedForm.sessionName,
+      staticApnea: cleanedForm.staticApnea,
+      visibility: cleanedForm.visibility,
+      waterTemp: cleanedForm.waterTemp,
+      weather: cleanedForm.weather,
     };
   }
 
@@ -63,7 +63,6 @@ export class FormV1Helper {
       }
     });
 
-    // return FormV1Wrapper.getForm(tempForm);
     return tempForm;
   }
 
@@ -90,12 +89,13 @@ export class FormV1Helper {
     return sortedFields;
   }
 
+  // FIELDS UPDATE HERE
   static getValueElement(props: ValueElementProps) {
     let key = props.fieldKey;
     let form = props.form;
     switch (key) {
-      case "congestion":
-        let value = form[key] as CongestionV1Request;
+      case "easeOfEqualization":
+        let value = form[key] as EaseOfEqualizationRequest;
         return (
           <View>
             <CoreText>{toTitleCase(key)}</CoreText>

@@ -9,7 +9,6 @@ import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { V1InputField } from "../../utility/FormV1/V1Fields/FieldSwitch";
 import { FormV1Helper } from "@/utility/FormV1/FormV1Helper";
-import { useInsertReport } from "@/api/logic/forms";
 import {
   ApneaSessionInput,
   FormRequest,
@@ -60,7 +59,9 @@ const ReportBuilder = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IncomingFormTypes & SessionInputTypes>({
-    defaultValues: { startTime: new Date(Date.now()).toISOString() },
+    defaultValues: {
+      startTime: new Date(Date.now()).toISOString(),
+    },
   });
 
   if (complete) {
@@ -88,7 +89,11 @@ const ReportBuilder = () => {
         // previousReportId?: InputMaybe<Scalars["UUID"]>;
       };
 
-      console.log(apneaSessionInput, reportDetails);
+      console.log(
+        "REPORT SUBMISSION",
+        apneaSessionInput.sessionReport?.v1?.disciplineAndMaxDepth,
+        sessionReport
+      );
 
       // TODO: Maybe this will be useful for editing?
       // insertReportMutation({variables: {reportInput: newReport, ReportDetails: })

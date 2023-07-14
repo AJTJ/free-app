@@ -36,7 +36,7 @@ export const LOGIN_USER = gql(`
 
 export const INSERT_USER = gql(`
   mutation insertUser($userName: String!, $email: String!, $password: String!) {
-    insertUser(userData: {username: $userName, email: $email, password: $password}) {
+    insertUser(userInput: {username: $userName, email: $email, password: $password}) {
       ...Login
     }
   }

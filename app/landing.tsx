@@ -15,7 +15,7 @@ import {
 } from "@/components";
 import { Controller, useForm } from "react-hook-form";
 import { colors } from "@/stylessheet/colors";
-import { useLoginUser } from "@/api/logic";
+import { useInsertUser, useLoginUser } from "@/api/logic";
 import { Keyboard } from "react-native";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -26,8 +26,8 @@ const diverImg = "@/assets/Ellipse372.png";
 
 export default function Landing() {
   const [isRegister, setIsRegister] = useState(false);
-  let { loginUser, result } = useLoginUser();
-  let { loading, error, data } = result;
+  let { loginUser, result: loginResult } = useLoginUser();
+  let { insertUser, result: insertResult } = useInsertUser();
 
   const validationSchema = z
     .object({
@@ -61,11 +61,23 @@ export default function Landing() {
   });
 
   const onSubmit = async (formData: ValidationSchema) => {
-    console.log("SUBMITTING");
     if (isRegister) {
-      console.log("is register");
+      await insertUser({
+        variables: {
+          userName: formData.username,
+          email: formData.email,
+          password: formData.cpassword,
+        },
+      })
+        .catch((e) => {
+          console.error(e);
+        })
+        .then((res) => {
+          if (res?.data?.insertUser) {
+            router.push("Home");
+          }
+        });
     } else {
-      console.log("is login");
       await loginUser({
         variables: { email: formData.email, password: formData.password },
       })
@@ -121,7 +133,6 @@ export default function Landing() {
                   <>
                     <CoreText style={styles.InputText}>UserName</CoreText>
                     <LandingTextInput
-                      secureTextEntry={true}
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
@@ -214,8 +225,9 @@ export default function Landing() {
           />
           <View style={styles.emptyView}>
             <CoreText>
-              {loading && "Loading"}
-              {error && error.message}
+              {(loginResult.loading || insertResult.loading) && "Loading"}
+              {loginResult.error && loginResult.error.message}
+              {insertResult.error && insertResult.error.message}
             </CoreText>
           </View>
         </CenteredView>

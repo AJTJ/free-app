@@ -1,6 +1,7 @@
 import { useFragment, useLazyQuery, useMutation } from "@apollo/client";
 import {
   AllUsersDocument,
+  InsertUserDocument,
   LoginDocument,
   LogoutDocument,
 } from "../auth.generated";
@@ -36,6 +37,14 @@ export const useLogoutUser = () => {
 
   let result = { loading, error, data };
   return { logoutUser, result };
+};
+
+export const useInsertUser = () => {
+  const [insertUser, { loading, error, data, client }] =
+    useMutation(InsertUserDocument);
+
+  let result = { loading, error, data };
+  return { insertUser, result };
 };
 
 export const useAllUsers = () => {

@@ -61,6 +61,7 @@
     "@graphql-codegen/typescript-operations": "^4.0.1",
     "@graphql-codegen/typescript-resolvers": "3.2.1",
     "@react-native-community/eslint-config": "^3.1.0",
+    "@types/lodash": "^4.14.195",
     "@types/react": "^18.2.14",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "eslint": "^8.23.0",
@@ -75,7 +76,8 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web --port 8081",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "codegen": "graphql-codegen --config codegen.ts",
+    "tsc": "tsc --watch"
   },
   "version": "1.0.0",
   "name": "free_app",

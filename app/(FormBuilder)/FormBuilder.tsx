@@ -15,7 +15,7 @@ import { router } from "expo-router";
 import { addFormState } from "@/state";
 
 function FormBuilder() {
-  let emptyForm = FormV1Helper.getEmptyForm();
+  let emptyForm = FormV1Helper.getRequestForm();
   type KeyType = keyof typeof emptyForm;
   type FieldTypes = Record<KeyType, { active: boolean; fieldOrder: number }>;
   let fieldDefaults = Object.keys(emptyForm).reduce<FieldTypes>((acc, cur) => {
@@ -57,61 +57,54 @@ function FormBuilder() {
 
   return (
     <LinearGradient>
-      {/* {isAddFieldsView ? ( */}
-      <>
-        <CoreText>Form builder</CoreText>
-        <CoreText>{formErrors.congestion?.message}</CoreText>
-        <Controller
-          name={"formName"}
-          rules={{ required: true }}
-          control={control}
-          render={({ field: { onBlur, onChange, value } }) => (
-            <>
-              <View>
-                <CoreText>Form Name</CoreText>
-                <LandingTextInput
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
-              </View>
-            </>
-          )}
-        />
-        {fieldsObject.map(([fieldName, _val], i) => {
-          return (
-            <Controller
-              key={fieldName + i}
-              name={fieldName}
-              rules={{ required: false }}
-              control={control}
-              render={({ field: { onBlur: _onBlur, onChange, value } }) => (
-                <>
-                  <View>
-                    <CoreText>{fieldName}</CoreText>
-                    <Checkbox
-                      checked={value?.active}
-                      onChange={(e) =>
-                        onChange({ active: !e, fieldOrder: value.fieldOrder })
-                      }
-                      disabled={false}
-                    />
-                  </View>
-                </>
-              )}
-            />
-          );
-        })}
+      <CoreText>Form builder</CoreText>
+      <Controller
+        name={"formName"}
+        rules={{ required: true }}
+        control={control}
+        render={({ field: { onBlur, onChange, value } }) => (
+          <>
+            <View>
+              <CoreText>Form Name</CoreText>
+              <LandingTextInput
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            </View>
+          </>
+        )}
+      />
+      {fieldsObject.map(([fieldName, _val], i) => {
+        return (
+          <Controller
+            key={fieldName + i}
+            name={fieldName}
+            rules={{ required: false }}
+            control={control}
+            render={({ field: { onBlur: _onBlur, onChange, value } }) => (
+              <>
+                <View>
+                  <CoreText>{fieldName}</CoreText>
+                  <Checkbox
+                    checked={value?.active}
+                    onChange={(e) =>
+                      onChange({ active: !e, fieldOrder: value.fieldOrder })
+                    }
+                    disabled={false}
+                  />
+                </View>
+              </>
+            )}
+          />
+        );
+      })}
 
-        <Btn
-          title="Submit"
-          type="primary"
-          onPress={handleSubmit((e) => onSubmit(e))}
-        />
-      </>
-      {/* ) : (
-         <FormReordering />
-       )} */}
+      <Btn
+        title="Submit"
+        type="primary"
+        onPress={handleSubmit((e) => onSubmit(e))}
+      />
     </LinearGradient>
   );
 }

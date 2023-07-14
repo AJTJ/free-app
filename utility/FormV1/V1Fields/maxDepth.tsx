@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Btn, CoreText, ItemContainer, SmallBtn } from "@/components";
 import { Noop } from "react-hook-form";
-import {
-  CongestionV1Request,
-  DisciplineAndMaxDepthV1Request,
-  DisciplinesEnum,
-  FormV1Request,
-  InnerDisciplineMaxDepthV1Request,
-  MaxDepthV1Request,
-} from "@/api/types/types.generated";
+import { MaxDepthV1Request } from "@/api/types/types.generated";
 import { InputFieldProps } from "./FieldSwitch";
 import Slider from "@react-native-community/slider";
 
@@ -32,6 +25,7 @@ export default function MaxDepth(props: InputFieldProps) {
       <CoreText>How deep did you go today?</CoreText>
       <CoreText>{value?.maxDepth || 0}</CoreText>
       <Slider
+        disabled={props.isDisplay}
         value={value?.maxDepth || 0}
         minimumValue={0}
         maximumValue={100}

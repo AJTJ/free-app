@@ -23,7 +23,11 @@ export default function Weather(props: InputFieldProps) {
     <View>
       <CoreText>How was the wind?</CoreText>
       <CoreText>Visibility: {value?.wind || ""}</CoreText>
-      <Slider onValueChange={onChange} value={value.wind || 0} />
+      <Slider
+        disabled={props.isDisplay}
+        onValueChange={onChange}
+        value={value.wind || 0}
+      />
     </View>
   );
 }

@@ -13,7 +13,6 @@ type Props = {
 
 export const SessionsList = (props: Props) => {
   const getFormEntries = (form: FormV1Request) => {
-    // TODO: Include preview of fields?
     let sortedFields = FormV1Helper.getSortedFields(form);
     let allFields = sortedFields.map((f, i) => {
       let fieldKey = f?.[0];

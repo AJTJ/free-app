@@ -53,17 +53,6 @@ export type ApneaSessionInput = {
   startTime: Scalars['DateTime'];
 };
 
-export type CongestionV1 = {
-  __typename?: 'CongestionV1';
-  fieldOrder?: Maybe<Scalars['Int']>;
-  value?: Maybe<Scalars['Int']>;
-};
-
-export type CongestionV1Request = {
-  fieldOrder?: InputMaybe<Scalars['Int']>;
-  value?: InputMaybe<Scalars['Int']>;
-};
-
 export type DisciplineAndMaxDepthV1 = {
   __typename?: 'DisciplineAndMaxDepthV1';
   disciplineMaxDepth?: Maybe<Array<InnerDisciplineMaxDepthV1>>;
@@ -78,9 +67,11 @@ export type DisciplineAndMaxDepthV1Request = {
 export enum DisciplinesEnum {
   Cnf = 'CNF',
   Cwt = 'CWT',
+  CwtPullingUp = 'CWT_PULLING_UP',
   Dnf = 'DNF',
+  Dyn = 'DYN',
   Fim = 'FIM',
-  Sta = 'STA'
+  FimWithFins = 'FIM_WITH_FINS'
 }
 
 export type Dive = {
@@ -102,6 +93,17 @@ export type DiveInput = {
   distance?: InputMaybe<Scalars['Float']>;
   diveName?: InputMaybe<Scalars['String']>;
   diveTime?: InputMaybe<Scalars['Int']>;
+};
+
+export type EaseOfEqualizationRequest = {
+  fieldOrder?: InputMaybe<Scalars['Int']>;
+  value?: InputMaybe<Scalars['Int']>;
+};
+
+export type EaseOfEqualizationV1 = {
+  __typename?: 'EaseOfEqualizationV1';
+  fieldOrder?: Maybe<Scalars['Int']>;
+  value?: Maybe<Scalars['Int']>;
 };
 
 export type Form = {
@@ -128,23 +130,66 @@ export type FormResponse = FormV1;
 
 export type FormV1 = {
   __typename?: 'FormV1';
-  congestion?: Maybe<CongestionV1>;
   disciplineAndMaxDepth?: Maybe<DisciplineAndMaxDepthV1>;
+  easeOfEqualization?: Maybe<EaseOfEqualizationV1>;
+  generalFeeling?: Maybe<GeneralFeelingV1>;
+  injury?: Maybe<InjuryV1>;
   maxDepth?: Maybe<MaxDepthV1>;
   sessionName?: Maybe<SessionNameV1>;
+  staticApnea?: Maybe<StaticV1>;
   visibility?: Maybe<VisibilityV1>;
+  waterTemp?: Maybe<WaterTempV1>;
   weather?: Maybe<WeatherV1>;
-  wildlife?: Maybe<WildlifeV1>;
 };
 
 export type FormV1Request = {
-  congestion?: InputMaybe<CongestionV1Request>;
   disciplineAndMaxDepth?: InputMaybe<DisciplineAndMaxDepthV1Request>;
+  easeOfEqualization?: InputMaybe<EaseOfEqualizationRequest>;
+  generalFeeling?: InputMaybe<GeneralFeelingV1Request>;
+  injury?: InputMaybe<InjuryV1Request>;
   maxDepth?: InputMaybe<MaxDepthV1Request>;
   sessionName?: InputMaybe<SessionNameV1Request>;
+  staticApnea?: InputMaybe<StaticV1Request>;
   visibility?: InputMaybe<VisibilityV1Request>;
+  waterTemp?: InputMaybe<WaterTempV1Request>;
   weather?: InputMaybe<WeatherV1Request>;
-  wildlife?: InputMaybe<WildlifeV1Request>;
+};
+
+export type GeneralFeelingV1 = {
+  __typename?: 'GeneralFeelingV1';
+  fieldOrder?: Maybe<Scalars['Int']>;
+  value?: Maybe<Scalars['Int']>;
+};
+
+export type GeneralFeelingV1Request = {
+  fieldOrder?: InputMaybe<Scalars['Int']>;
+  value?: InputMaybe<Scalars['Int']>;
+};
+
+export enum InjuryEnumV1 {
+  EarDrumPerforation = 'EAR_DRUM_PERFORATION',
+  HeatStroke = 'HEAT_STROKE',
+  Hypothermia = 'HYPOTHERMIA',
+  Hypoxia = 'HYPOXIA',
+  Lmc = 'LMC',
+  LungSqueeze = 'LUNG_SQUEEZE',
+  MaskSqueeze = 'MASK_SQUEEZE',
+  MiddleEarSqueeze = 'MIDDLE_EAR_SQUEEZE',
+  NitrogenNarcosis = 'NITROGEN_NARCOSIS',
+  SinusSqueeze = 'SINUS_SQUEEZE',
+  SunBurn = 'SUN_BURN',
+  TracheaSqueeze = 'TRACHEA_SQUEEZE'
+}
+
+export type InjuryV1 = {
+  __typename?: 'InjuryV1';
+  fieldOrder?: Maybe<Scalars['Int']>;
+  value?: Maybe<InjuryEnumV1>;
+};
+
+export type InjuryV1Request = {
+  fieldOrder?: InputMaybe<Scalars['Int']>;
+  value?: InputMaybe<InjuryEnumV1>;
 };
 
 export type InnerDisciplineMaxDepthV1 = {
@@ -353,6 +398,17 @@ export type SessionNameV1Request = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+export type StaticV1 = {
+  __typename?: 'StaticV1';
+  fieldOrder?: Maybe<Scalars['Int']>;
+  value?: Maybe<Scalars['Int']>;
+};
+
+export type StaticV1Request = {
+  fieldOrder?: InputMaybe<Scalars['Int']>;
+  value?: InputMaybe<Scalars['Int']>;
+};
+
 export type User = {
   __typename?: 'User';
   apneaSessions: ApneaSessionConnection;
@@ -389,30 +445,34 @@ export type VisibilityV1Request = {
   value?: InputMaybe<Scalars['Int']>;
 };
 
+export type WaterTempV1 = {
+  __typename?: 'WaterTempV1';
+  fieldOrder?: Maybe<Scalars['Int']>;
+  value?: Maybe<Scalars['Int']>;
+};
+
+export type WaterTempV1Request = {
+  fieldOrder?: InputMaybe<Scalars['Int']>;
+  value?: InputMaybe<Scalars['Int']>;
+};
+
 export type WeatherV1 = {
   __typename?: 'WeatherV1';
+  airTemperature?: Maybe<Scalars['Int']>;
+  current?: Maybe<Scalars['Int']>;
   fieldOrder?: Maybe<Scalars['Int']>;
+  isFarenheit?: Maybe<Scalars['Boolean']>;
+  rain?: Maybe<Scalars['Int']>;
+  waves?: Maybe<Scalars['Int']>;
   wind?: Maybe<Scalars['Int']>;
 };
 
 export type WeatherV1Request = {
+  airTemperature?: InputMaybe<Scalars['Int']>;
+  current?: InputMaybe<Scalars['Int']>;
   fieldOrder?: InputMaybe<Scalars['Int']>;
+  isFarenheit?: InputMaybe<Scalars['Boolean']>;
+  rain?: InputMaybe<Scalars['Int']>;
+  waves?: InputMaybe<Scalars['Int']>;
   wind?: InputMaybe<Scalars['Int']>;
-};
-
-export enum WildlifeEnumV1 {
-  Big = 'BIG',
-  Medium = 'MEDIUM',
-  Small = 'SMALL'
-}
-
-export type WildlifeV1 = {
-  __typename?: 'WildlifeV1';
-  fieldOrder?: Maybe<Scalars['Int']>;
-  value?: Maybe<WildlifeEnumV1>;
-};
-
-export type WildlifeV1Request = {
-  fieldOrder?: InputMaybe<Scalars['Int']>;
-  value?: InputMaybe<WildlifeEnumV1>;
 };

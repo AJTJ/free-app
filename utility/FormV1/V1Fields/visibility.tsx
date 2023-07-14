@@ -1,24 +1,8 @@
-import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
-import {
-  Btn,
-  CoreText,
-  ItemContainer,
-  LandingTextInput,
-  Slider,
-  SmallBtn,
-} from "@/components";
+import React from "react";
+import { View } from "react-native";
+import { CoreText, Slider } from "@/components";
 import { Noop } from "react-hook-form";
-import {
-  CongestionV1Request,
-  DisciplineAndMaxDepthV1Request,
-  DisciplinesEnum,
-  FormV1Request,
-  InnerDisciplineMaxDepthV1Request,
-  MaxDepthV1Request,
-  SessionNameV1Request,
-  VisibilityV1Request,
-} from "@/api/types/types.generated";
+import { VisibilityV1Request } from "@/api/types/types.generated";
 import { InputFieldProps } from "./FieldSwitch";
 
 export default function Visibility(props: InputFieldProps) {
@@ -39,7 +23,11 @@ export default function Visibility(props: InputFieldProps) {
     <View>
       <CoreText>How was the visibility?</CoreText>
       <CoreText>Visibility: {value?.value || ""}</CoreText>
-      <Slider onValueChange={onChange} value={value.value || 0} />
+      <Slider
+        disabled={props.isDisplay}
+        onValueChange={onChange}
+        value={value.value || 0}
+      />
     </View>
   );
 }

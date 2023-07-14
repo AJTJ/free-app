@@ -2,14 +2,11 @@ import { gql } from "@apollo/client";
 
 // FRAGMENTS
 
+// FIELDS UPDATE HERE
 export const FormV1 = gql(`
   fragment FormV1 on FormV1 {
     sessionName {
       name
-      fieldOrder
-    }
-    wildlife {
-      value
       fieldOrder
     }
     weather {
@@ -27,7 +24,7 @@ export const FormV1 = gql(`
       maxDepth
       fieldOrder
     }
-    congestion {
+    easeOfEqualization {
       value
       fieldOrder
     }

@@ -3,12 +3,9 @@ import { View, StyleSheet } from "react-native";
 import { Btn, CoreText, ItemContainer, SmallBtn } from "@/components";
 import { Noop } from "react-hook-form";
 import {
-  CongestionV1Request,
   DisciplineAndMaxDepthV1Request,
   DisciplinesEnum,
-  FormV1Request,
   InnerDisciplineMaxDepthV1Request,
-  MaxDepthV1Request,
 } from "@/api/types/types.generated";
 import { InputFieldProps } from "./FieldSwitch";
 import Slider from "@react-native-community/slider";
@@ -22,6 +19,7 @@ export default function DisciplineAndMaxDepth(props: InputFieldProps) {
     let discMax: InnerDisciplineMaxDepthV1Request[] = [
       ...(prevValue?.disciplineMaxDepth || []),
     ];
+
     discMax[i] = { maxDepth: e, discipline: discMax[i]?.discipline };
 
     let newValue: DisciplineAndMaxDepthV1Request = {
@@ -92,31 +90,35 @@ export default function DisciplineAndMaxDepth(props: InputFieldProps) {
         return (
           <View key={i + "thing"}>
             <CoreText>
-              Discipline: {disciplineVal?.toUpperCase() || "Not Selected"}
+              Discipline:{" "}
+              {disciplineVal?.toUpperCase() || "Not discipline selected"}
             </CoreText>
             <ItemContainer borderColor="black">
-              <Picker
-                style={styles.picker}
-                itemStyle={styles.pickerItems}
-                selectedValue={disciplineVal || undefined}
-                onValueChange={(itemValue: DisciplinesEnum, _itemIndex) =>
-                  handleDisciplineChange(itemValue, i)
-                }
-              >
-                {disciplineArray.map((e, i) => {
-                  return (
-                    <Picker.Item
-                      key={e + i}
-                      label={e.toUpperCase()}
-                      value={e}
-                    />
-                  );
-                })}
-              </Picker>
+              {!props.isDisplay && (
+                <Picker
+                  style={styles.picker}
+                  itemStyle={styles.pickerItems}
+                  selectedValue={disciplineVal || undefined}
+                  onValueChange={(itemValue: DisciplinesEnum, _itemIndex) =>
+                    handleDisciplineChange(itemValue, i)
+                  }
+                >
+                  {disciplineArray.map((e, i) => {
+                    return (
+                      <Picker.Item
+                        key={e + i}
+                        label={e.toUpperCase()}
+                        value={e}
+                      />
+                    );
+                  })}
+                </Picker>
+              )}
             </ItemContainer>
             <CoreText>Max depth for this discipline?</CoreText>
             <CoreText>{maxDepthVal || 0}</CoreText>
             <Slider
+              disabled={props.isDisplay}
               minimumValue={0}
               maximumValue={200}
               value={maxDepthVal || 0}

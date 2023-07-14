@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { CoreText } from "@/components";
 import { Noop } from "react-hook-form";
 import { WildlifeEnumV1, WildlifeV1Request } from "@/api/types/types.generated";
-import { InputFieldProps } from "./InputField";
+import { InputFieldProps } from "./FieldSwitch";
 
 export default function Wildlife(props: InputFieldProps) {
   let onChange = (v: WildlifeEnumV1) => {
@@ -12,7 +12,9 @@ export default function Wildlife(props: InputFieldProps) {
       value: inputVal,
       fieldOrder: props.form.wildlife?.fieldOrder || Infinity,
     };
-    props.onChange(newValue);
+    if (props.onChange) {
+      props.onChange(newValue);
+    }
   };
 
   const value = props.value as WildlifeV1Request;

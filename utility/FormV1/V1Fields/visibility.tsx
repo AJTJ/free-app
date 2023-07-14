@@ -19,7 +19,7 @@ import {
   SessionNameV1Request,
   VisibilityV1Request,
 } from "@/api/types/types.generated";
-import { InputFieldProps } from "./InputField";
+import { InputFieldProps } from "./FieldSwitch";
 
 export default function Visibility(props: InputFieldProps) {
   let onChange = (v: number) => {
@@ -28,7 +28,9 @@ export default function Visibility(props: InputFieldProps) {
       value: inputVal,
       fieldOrder: props.form.visibility?.fieldOrder || Infinity,
     };
-    props.onChange(newValue);
+    if (props.onChange) {
+      props.onChange(newValue);
+    }
   };
 
   const value = props.value as VisibilityV1Request;

@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { CoreText, Slider } from "@/components";
 import { Noop } from "react-hook-form";
 import { WeatherV1Request } from "@/api/types/types.generated";
-import { InputFieldProps } from "./InputField";
+import { InputFieldProps } from "./FieldSwitch";
 
 export default function Weather(props: InputFieldProps) {
   let onChange = (v: number) => {
@@ -12,7 +12,9 @@ export default function Weather(props: InputFieldProps) {
       wind: inputVal,
       fieldOrder: props.form.weather?.fieldOrder || Infinity,
     };
-    props.onChange(newValue);
+    if (props.onChange) {
+      props.onChange(newValue);
+    }
   };
 
   const value = props.value as WeatherV1Request;

@@ -10,7 +10,7 @@ import {
   InnerDisciplineMaxDepthV1Request,
   MaxDepthV1Request,
 } from "@/api/types/types.generated";
-import { InputFieldProps } from "./InputField";
+import { InputFieldProps } from "./FieldSwitch";
 import Slider from "@react-native-community/slider";
 import { Picker } from "@react-native-picker/picker";
 
@@ -28,7 +28,9 @@ export default function DisciplineAndMaxDepth(props: InputFieldProps) {
       disciplineMaxDepth: discMax,
       fieldOrder: props.form.disciplineAndMaxDepth?.fieldOrder || Infinity,
     };
-    props.onChange(newValue);
+    if (props.onChange) {
+      props.onChange(newValue);
+    }
   };
 
   let handleDisciplineChange = (e: DisciplinesEnum, i: number) => {
@@ -41,7 +43,9 @@ export default function DisciplineAndMaxDepth(props: InputFieldProps) {
       disciplineMaxDepth: discMax,
       fieldOrder: props.form.disciplineAndMaxDepth?.fieldOrder || Infinity,
     };
-    props.onChange(newValue);
+    if (props.onChange) {
+      props.onChange(newValue);
+    }
   };
 
   let handleAddField = () => {
@@ -50,7 +54,9 @@ export default function DisciplineAndMaxDepth(props: InputFieldProps) {
     let newObj = { ...prevValue };
     newObj.disciplineMaxDepth?.push({ maxDepth: 0 });
 
-    props.onChange(newObj);
+    if (props.onChange) {
+      props.onChange(newObj);
+    }
   };
 
   let handleRemoveField = () => {
@@ -59,7 +65,9 @@ export default function DisciplineAndMaxDepth(props: InputFieldProps) {
     if ((prevValue?.disciplineMaxDepth?.length || 0) > 1) {
       let newObj = { ...prevValue };
       newObj.disciplineMaxDepth?.pop();
-      props.onChange(newObj);
+      if (props.onChange) {
+        props.onChange(newObj);
+      }
     }
   };
 

@@ -10,16 +10,18 @@ import {
   InnerDisciplineMaxDepthV1Request,
   MaxDepthV1Request,
 } from "@/api/types/types.generated";
-import { InputFieldProps } from "./InputField";
+import { InputFieldProps } from "./FieldSwitch";
 
-export default function CongestionComponent(props: InputFieldProps) {
+export default function Congestion(props: InputFieldProps) {
   let onChange = (e: number) => {
     let numVal = Number(e);
     let newValue: CongestionV1Request = {
       value: numVal,
       fieldOrder: props.form.congestion?.fieldOrder || Infinity,
     };
-    props.onChange(newValue);
+    if (props.onChange) {
+      props.onChange(newValue);
+    }
   };
 
   const value = props.value as CongestionV1Request;

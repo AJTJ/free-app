@@ -17,7 +17,7 @@ import {
   MaxDepthV1Request,
   SessionNameV1Request,
 } from "@/api/types/types.generated";
-import { InputFieldProps } from "./InputField";
+import { InputFieldProps } from "./FieldSwitch";
 import Slider from "@react-native-community/slider";
 
 export default function SessionName(props: InputFieldProps) {
@@ -27,7 +27,9 @@ export default function SessionName(props: InputFieldProps) {
       name: inputVal,
       fieldOrder: props.form.sessionName?.fieldOrder || Infinity,
     };
-    props.onChange(newValue);
+    if (props.onChange) {
+      props.onChange(newValue);
+    }
   };
 
   const value = props.value as SessionNameV1Request;

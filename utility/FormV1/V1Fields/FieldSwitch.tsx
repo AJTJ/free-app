@@ -4,12 +4,12 @@ import { CoreText, ItemContainer } from "@/components";
 import { Noop } from "react-hook-form";
 import { FormV1Request } from "@/api/types/types.generated";
 import { FormV1Helper } from "@/utility/FormV1/FormV1Helper";
-import CongestionComponent from "./congestion";
+import Congestion from "./congestion";
 import DisciplineAndMaxDepth from "./disciplineAndMaxDepth";
 import MaxDepth from "./maxDepth";
 import SessionName from "./sessionName";
 import Visibility from "./visibility";
-import Weather from "./Weather";
+// import Weather from "./weather";
 
 // import AutoComplete from "react-native-autocomplete-input";
 // import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
@@ -17,17 +17,19 @@ import Weather from "./Weather";
 export type InputFieldProps = {
   name: keyof FormV1Request;
   form: FormV1Request;
-  onChange: (...event: any[]) => void;
-  onBlur: Noop;
+  onChange?: (...event: any[]) => void;
+  onBlur?: Noop;
   value: FormV1Request[keyof FormV1Request];
+  isDisplay?: boolean;
 };
 
 type ParentProps = {
   name: keyof FormV1Request;
   form: FormV1Request;
-  onChange: (...event: any[]) => void;
-  onBlur: Noop;
+  onChange?: (...event: any[]) => void;
+  onBlur?: Noop;
   value: FormV1Request[keyof FormV1Request];
+  isDisplay?: boolean;
 };
 
 // FORM UPDATE AREA
@@ -39,7 +41,7 @@ export const V1InputField = (props: ParentProps) => {
     switch (props.name) {
       case "congestion":
         return (
-          <CongestionComponent
+          <Congestion
             name={props.name}
             form={myForm}
             value={value}
@@ -82,18 +84,18 @@ export const V1InputField = (props: ParentProps) => {
             {...{ onChange, onBlur }}
           />
         );
-      case "weather":
-        return (
-          <Weather
-            name={props.name}
-            form={myForm}
-            value={value}
-            {...{ onChange, onBlur }}
-          />
-        );
+      // case "weather":
+      //   return (
+      //     <Weather
+      //       name={props.name}
+      //       form={myForm}
+      //       value={value}
+      //       {...{ onChange, onBlur }}
+      //     />
+      //   );
       default:
         return (
-          <CoreText>No Componet for {props.name} yet</CoreText>
+          <CoreText>No component for {props.name} yet</CoreText>
 
           // <Wildlife
           //   name={props.name}

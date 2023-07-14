@@ -7,7 +7,7 @@ import {
 } from "@/components";
 import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { V1InputField } from "../../utility/FormV1/V1InputFields/InputField";
+import { V1InputField } from "../../utility/FormV1/V1Fields/FieldSwitch";
 import { FormV1Helper } from "@/utility/FormV1/FormV1Helper";
 import { useInsertReport } from "@/api/logic/forms";
 import {

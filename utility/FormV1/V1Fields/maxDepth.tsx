@@ -10,7 +10,7 @@ import {
   InnerDisciplineMaxDepthV1Request,
   MaxDepthV1Request,
 } from "@/api/types/types.generated";
-import { InputFieldProps } from "./InputField";
+import { InputFieldProps } from "./FieldSwitch";
 import Slider from "@react-native-community/slider";
 
 export default function MaxDepth(props: InputFieldProps) {
@@ -20,7 +20,9 @@ export default function MaxDepth(props: InputFieldProps) {
       maxDepth: numVal,
       fieldOrder: props.form.maxDepth?.fieldOrder || Infinity,
     };
-    props.onChange(newValue);
+    if (props.onChange) {
+      props.onChange(newValue);
+    }
   };
 
   const value = props.value as MaxDepthV1Request;

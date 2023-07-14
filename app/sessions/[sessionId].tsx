@@ -28,7 +28,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { toTitleCase } from "@/utility/helpers";
 import { ApneaSessionFragment } from "@/api/apnea_sessions.generated";
 import { ApneaSession } from "@/api/apnea_sessions";
-import { V1InputField } from "../../utility/FormV1/V1InputFields/InputField";
+import { V1InputField } from "../../utility/FormV1/V1Fields/FieldSwitch";
 
 export default function Session() {
   //@ts-ignore required because params are currently complaining

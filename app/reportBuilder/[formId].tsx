@@ -26,16 +26,17 @@ import { useFragment } from "@apollo/client";
 import { Form } from "@/api/forms";
 import { ScrollView } from "react-native-gesture-handler";
 import { toTitleCase } from "@/utility/helpers";
+import { useGetForms } from "@/api/logic/forms";
 
 const ReportBuilder = () => {
+  // const { loading, error, data } = useGetForms();
+
+  // console.log("GET FORMS IN REPORT BUILDER", data);
+
   //@ts-ignore required because params are currently complaining
   const { formId } = useLocalSearchParams<{
     formId: string;
   }>();
-
-  const { insertSession } = useInsertApneaSession();
-  const [mode, setMode] = useState<"date" | "time">("date");
-  const [show, setShow] = useState(false);
 
   const { complete, data: form } = useFragment<FormFragment>({
     fragment: Form,
@@ -46,7 +47,11 @@ const ReportBuilder = () => {
     },
   });
 
-  console.log({ formId });
+  // console.log("fragmentData: ", fragmentData);
+
+  const { insertSession } = useInsertApneaSession();
+  const [mode, setMode] = useState<"date" | "time">("date");
+  const [show, setShow] = useState(false);
 
   type IncomingFormTypes = FormV1Request;
   type SessionInputTypes = {
@@ -65,6 +70,8 @@ const ReportBuilder = () => {
       startTime: new Date(Date.now()).toISOString(),
     },
   });
+
+  // const form = data?.forms?.find((f) => f.id === formId);
 
   if (complete) {
     let myForm = FormV1Helper.getRequestForm(form?.formData || {});

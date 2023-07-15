@@ -105,9 +105,10 @@ const Layout = () => {
     <ApolloProvider client={client}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <GestureHandlerRootView style={{ flex: 1 }}>
-          <Stack>
+          <Stack /*screenOptions={{ headerShown: false }} */>
             {/* <Stack.Screen name="(formBuilder)/FormBuilder" /> */}
-            <Stack.Screen name="reportBuilder/[formId]" />
+            {/* <Stack.Screen name="reportBuilder/[formId]" /> */}
+            <Stack.Screen name="userProfile" options={{ headerShown: true }} />
             {/* <Stack.Screen name="(reportVisualizer)/VictoryTest" /> */}
             {/* <Stack.Screen name="(reportVisualizer)/GiftedTest" /> */}
             {/* <Stack.Screen name="landing" /> */}

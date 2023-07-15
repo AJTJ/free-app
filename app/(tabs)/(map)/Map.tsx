@@ -1,11 +1,11 @@
-import { CoreText } from "@/components";
+import { CoreText, LinearGradient } from "@/components";
 import React from "react";
 import { View } from "react-native";
 
 export default function Map() {
   return (
-    <View>
+    <LinearGradient>
       <CoreText>The Map</CoreText>
-    </View>
+    </LinearGradient>
   );
 }

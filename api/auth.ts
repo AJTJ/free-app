@@ -55,3 +55,11 @@ export const GET_USERS = gql(`
     }
   }
 `);
+
+export const VERIFY_EMAIL_CODE = gql(`
+  query verifyEmail {
+    verifyEmail {
+      response
+    }
+  }
+`);

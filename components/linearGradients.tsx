@@ -1,5 +1,5 @@
 import React, { ReactNode, useContext } from "react";
-import { StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import GlobalTheme, { ThemeContext } from "../stylessheet/globalStyles";
 import { LinearGradient as LinearGradientImport } from "expo-linear-gradient";
 
@@ -19,7 +19,7 @@ export const LinearGradient = ({
       colors={gradient_colors}
       {...rest}
     >
-      {children}
+      <SafeAreaView>{children}</SafeAreaView>
     </LinearGradientImport>
   );
 };

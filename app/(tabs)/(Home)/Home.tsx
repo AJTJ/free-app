@@ -1,16 +1,14 @@
-import { Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from "react";
-
-import { Btn, CoreText, LinearGradient } from "@/components";
+import { CircularButton, CoreText, LinearGradient } from "@/components";
 import { RecentSessions } from "./RecentSessions";
-import { useLogoutUser } from "@/api/logic/user";
+import { useLogoutUser } from "@/api/logic/auth";
 import { useInsertPrePopulatedApneaSession } from "@/api/logic";
-
-import { Link, Redirect, router } from "expo-router";
+import { router } from "expo-router";
 import { useFragment } from "@apollo/client";
 import { User } from "@/api/auth";
-import { User as UserType } from "@/api/types/types.generated";
 import { UserFragment } from "@/api/auth.generated";
+import { HomeFrame } from "./homeframe";
 
 const Home = () => {
   let { logoutUser } = useLogoutUser();
@@ -27,7 +25,7 @@ const Home = () => {
 
   useEffect(() => {
     if (!data.__typename) {
-      router.push("/landing");
+      router.push("/(landing)/loginAndRegister");
     }
   }, [data]);
 
@@ -56,42 +54,20 @@ const Home = () => {
           <CoreText>
             Hello {data.username}! You last logged in at= {data.lastLogin}
           </CoreText>
-          <Btn
-            title="Logout"
-            type="primary"
-            hasIcon={false}
-            disabled={false}
-            onPress={handleLogout}
-          />
-          <Btn
-            title="AddPregeneratedSession"
-            type="primary"
-            hasIcon={false}
-            disabled={false}
-            onPress={handleInsertSession}
-          />
-          <Btn
-            title="Data viz lib Victory test"
-            type="primary"
-            hasIcon={false}
-            disabled={false}
-            onPress={() => {
-              router.push({
-                pathname: "VictoryTest",
-                params: { meme: "memes" },
-              });
-            }}
-          />
-          <Btn
-            title="Data viz lib Gifted test"
-            type="primary"
-            hasIcon={false}
-            disabled={false}
-            onPress={() => {
-              router.push("GiftedTest");
-            }}
-          />
-
+          <HomeFrame />
+          <View style={styles.userProfileContainer}>
+            <CircularButton
+              title=""
+              type="primary"
+              hasIcon={true}
+              disabled={false}
+              onPress={() => {
+                router.push({
+                  pathname: "userProfile",
+                });
+              }}
+            />
+          </View>
           <RecentSessions />
         </>
       )}
@@ -100,6 +76,14 @@ const Home = () => {
 };
 
 export default Home;
+
+const styles = StyleSheet.create({
+  userProfileContainer: {
+    position: "absolute",
+    top: 30,
+    right: 30,
+  },
+});
 
 // this does not subscribe the component
 // let client = useApolloClient();

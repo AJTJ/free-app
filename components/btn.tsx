@@ -1,6 +1,13 @@
 import React, { useContext, useState } from "react";
-import { Text, StyleSheet, Pressable } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  Pressable,
+  StyleProp,
+  ViewStyle,
+} from "react-native";
 import { ThemeContext, GlobalTheme } from "../stylessheet/globalStyles";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 type ButtonType = "primary" | "secondary";
 
@@ -21,11 +28,9 @@ export const Btn = (props: BtnProps) => {
       onPress={() => {
         props.onPress();
       }}
-      style={({ pressed }) => [themedStyles({ pressed }).BigBtn]}
+      style={({ pressed }) => [themedStyles({ ...props, pressed }).BigBtn]}
     >
-      <Text style={themedStyles({ type: props.type }).BigBtnText}>
-        {props.title}
-      </Text>
+      <Text style={themedStyles(props).BigBtnText}>{props.title}</Text>
     </Pressable>
   );
 };
@@ -38,18 +43,33 @@ export const SmallBtn = (props: BtnProps) => {
       onPress={() => {
         props.onPress();
       }}
-      style={({ pressed }) => [themedStyles({ pressed }).SmallBtn]}
+      style={({ pressed }) => [themedStyles({ ...props, pressed }).SmallBtn]}
     >
-      <Text style={themedStyles({ type: props.type }).SmallBtnText}>
-        {props.title}
-      </Text>
+      <Text style={themedStyles(props).SmallBtnText}>{props.title}</Text>
     </Pressable>
   );
 };
 
+export const CircularButton = (props: BtnProps) => {
+  const theme = useContext(ThemeContext);
+  let themedStyles = styles(theme);
+  return (
+    <TouchableOpacity
+      {...props}
+      style={themedStyles({ ...props }).CircularButton}
+    >
+      <Text>{props.title}</Text>
+    </TouchableOpacity>
+  );
+};
+
+type StypeProps = {
+  pressed?: boolean;
+};
+
 const styles =
-  (theme: typeof GlobalTheme) =>
-  ({ pressed, type }: { pressed?: boolean; type?: ButtonType }) => {
+  (theme: typeof GlobalTheme) => (props: BtnProps & StypeProps) => {
+    const { type, pressed } = props;
     return StyleSheet.create({
       BigBtn: {
         display: "flex",
@@ -94,6 +114,16 @@ const styles =
       SmallBtnText: {
         fontSize: 14,
         color: type === "primary" ? theme.colors.white : theme.colors.black,
+      },
+
+      CircularButton: {
+        width: 50,
+        height: 50,
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 10,
+        borderRadius: 100,
+        backgroundColor: "orange",
       },
     });
   };

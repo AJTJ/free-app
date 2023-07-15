@@ -80,14 +80,12 @@ export const Report = gql(`
     id
     isActive
     reportData {
-      __typename
       ... on FormV1 {
         ...FormV1
       }
     }
     form {
-      id
-      formName
+      ...Form
     }
     updatedAt
   }
@@ -103,20 +101,20 @@ export const GET_FORMS = gql(`
   }
 `);
 
+export const INSERT_FORM = gql(`
+  mutation insertForm($formDetails: FormDetails!, $formRequest: FormRequest!) {
+    insertForm( formDetails: $formDetails, formRequest: $formRequest ) {
+      ...Form
+    }
+  }
+`);
+
 export const GET_REPORTS = gql(`
   query getReports {
     reports(queryParams: {}) {
       nodes {
         ...Report
       }
-    }
-  }
-`);
-
-export const INSERT_FORM = gql(`
-  mutation insertForm($formDetails: FormDetails!, $formRequest: FormRequest!) {
-    insertForm( formDetails: $formDetails, formRequest: $formRequest ) {
-      ...Form
     }
   }
 `);

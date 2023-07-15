@@ -37,6 +37,8 @@ export default function FormsList() {
     });
   };
 
+  console.log("all forms in forms list", JSON.stringify(data));
+
   return (
     <LinearGradient>
       <>

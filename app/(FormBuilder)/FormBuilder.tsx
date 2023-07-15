@@ -13,6 +13,7 @@ import { router } from "expo-router";
 // import { FormReordering } from "./FormReordering";
 
 import { addFormState } from "@/state";
+import { Switch } from "react-native-gesture-handler";
 
 function FormBuilder() {
   let emptyForm = FormV1Helper.getRequestForm();
@@ -86,12 +87,14 @@ function FormBuilder() {
               <>
                 <View>
                   <CoreText>{fieldName}</CoreText>
-                  <Checkbox
-                    checked={value?.active}
-                    onChange={(e) =>
-                      onChange({ active: !e, fieldOrder: value.fieldOrder })
+                  <Switch
+                    value={value?.active}
+                    onChange={() =>
+                      onChange({
+                        active: !value.active,
+                        fieldOrder: value.fieldOrder,
+                      })
                     }
-                    disabled={false}
                   />
                 </View>
               </>

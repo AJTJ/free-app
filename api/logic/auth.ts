@@ -1,9 +1,11 @@
 import { useFragment, useLazyQuery, useMutation } from "@apollo/client";
 import {
   AllUsersDocument,
+  EmailVerificationCodeDocument,
   InsertUserDocument,
   LoginDocument,
   LogoutDocument,
+  VerifyEmailCodeDocument,
 } from "../auth.generated";
 import { User } from "../auth";
 // import { emptyLoginState } from "@/state";
@@ -52,4 +54,22 @@ export const useAllUsers = () => {
     useLazyQuery(AllUsersDocument);
   let result = { loading, error, data };
   return { getAllUsers, result };
+};
+
+export const useVerifyEmailCode = () => {
+  const [verifyEmailCode, { loading, error, data, client }] = useMutation(
+    VerifyEmailCodeDocument
+  );
+
+  let result = { loading, error, data };
+  return { verifyEmailCode, result };
+};
+
+export const useEmailVerificationCode = () => {
+  const [emailVerificationCode, { loading, error, data, client }] = useMutation(
+    EmailVerificationCodeDocument
+  );
+
+  let result = { loading, error, data };
+  return { emailVerificationCode, result };
 };

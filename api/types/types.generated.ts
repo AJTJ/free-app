@@ -223,6 +223,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   deleteAllApneaSessions: Scalars['Int'];
   deleteAllUsers: Scalars['Int'];
+  emailVerificationCode: Scalars['Boolean'];
   insertApneaSession: ApneaSession;
   insertDive: Dive;
   insertForm?: Maybe<Form>;
@@ -234,6 +235,12 @@ export type Mutation = {
   modifyDive: Dive;
   modifyForm?: Maybe<Form>;
   modifyReport?: Maybe<Report>;
+  verifyEmailCode: User;
+};
+
+
+export type MutationEmailVerificationCodeArgs = {
+  email: Scalars['String'];
 };
 
 
@@ -298,6 +305,12 @@ export type MutationModifyReportArgs = {
   reportDetails: ReportDetails;
   reportRequest: FormRequest;
   sessionId: Scalars['UUID'];
+};
+
+
+export type MutationVerifyEmailCodeArgs = {
+  email: Scalars['String'];
+  emailCode: Scalars['String'];
 };
 
 /** Information about pagination in a connection */
@@ -418,10 +431,14 @@ export type User = {
   hashedPassword: Scalars['String'];
   id: Scalars['UUID'];
   isActive: Scalars['Boolean'];
+  isEmailVerified: Scalars['Boolean'];
   lastLogin: Scalars['DateTime'];
   passwordSalt: Array<Scalars['Int']>;
   updatedAt: Scalars['DateTime'];
   username: Scalars['String'];
+  verificationCode?: Maybe<Scalars['String']>;
+  verificationCodeExpiry?: Maybe<Scalars['DateTime']>;
+  verifiedDate?: Maybe<Scalars['DateTime']>;
 };
 
 

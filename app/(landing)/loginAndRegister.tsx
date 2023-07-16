@@ -15,7 +15,11 @@ import {
 } from "@/components";
 import { Controller, useForm } from "react-hook-form";
 import { colors } from "@/stylessheet/colors";
-import { useInsertUser, useLoginUser } from "@/api/logic";
+import {
+  useEmailVerificationCode,
+  useInsertUser,
+  useLoginUser,
+} from "@/api/logic";
 import { Keyboard } from "react-native";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -28,6 +32,8 @@ export default function Landing() {
   const [isRegister, setIsRegister] = useState(false);
   let { loginUser, result: loginResult } = useLoginUser();
   let { insertUser, result: insertResult } = useInsertUser();
+  let { emailVerificationCode, result: emailVerificationResult } =
+    useEmailVerificationCode();
 
   const validationSchema = z
     .object({
@@ -70,14 +76,20 @@ export default function Landing() {
           email: formData.email,
           password: formData.cpassword,
         },
+      }).catch((e) => {
+        console.error(e);
+      });
+
+      await emailVerificationCode({
+        variables: {
+          email: formData.email,
+        },
       })
         .catch((e) => {
           console.error(e);
         })
-        .then((res) => {
-          if (res?.data?.insertUser) {
-            router.push("Home");
-          }
+        .then((e) => {
+          router.push("(landing)/verifyEmail");
         });
     } else {
       await loginUser({

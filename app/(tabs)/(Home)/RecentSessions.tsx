@@ -7,7 +7,7 @@ import { SessionsList } from "@/components/SessionsList";
 export const RecentSessions = () => {
   const { loading, error, data } = useGetRecentApneaSessions();
   if (error) {
-    console.error("GETTING SESSIONS ERROR:", error);
+    // console.error("GETTING SESSIONS ERROR:", error);
   }
 
   let myNodes = [...(data?.apneaSessions?.nodes || [])];

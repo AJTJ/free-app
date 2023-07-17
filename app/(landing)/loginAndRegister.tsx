@@ -100,6 +100,7 @@ export default function Landing() {
         })
         .then((res) => {
           if (res?.data?.login) {
+            console.log("LOGIN USER");
             router.push("Home");
           }
         });

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Btn, CoreText, ItemContainer, SmallBtn } from "@/components";
 import { Noop } from "react-hook-form";
+import DropDownPicker from "react-native-dropdown-picker";
 import {
   DisciplineAndMaxDepthV1Request,
   DisciplinesEnum,
@@ -10,17 +11,24 @@ import {
 import { InputFieldProps } from "./FieldSwitch";
 import Slider from "@react-native-community/slider";
 import { Picker } from "@react-native-picker/picker";
+import { CorePicker } from "@/components/pickers";
 
 export default function DisciplineAndMaxDepth(props: InputFieldProps) {
-  const [pickedVal, setPickedval] = useState();
-  let onDepthChange = (e: number, i: number) => {
+  const disciplineArray = Object.values(DisciplinesEnum);
+  const disciplineArrayValues = disciplineArray.map((v) => {
+    return { label: v, value: v };
+  });
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [pickerValue, setPickerValue] = useState(null);
+  const [pickerItems, setPickerItems] = useState(disciplineArrayValues);
+  let onDepthChange = (value: number, i: number) => {
     const prevValue = props.value as DisciplineAndMaxDepthV1Request;
 
     let discMax: InnerDisciplineMaxDepthV1Request[] = [
       ...(prevValue?.disciplineMaxDepth || []),
     ];
 
-    discMax[i] = { maxDepth: e, discipline: discMax[i]?.discipline };
+    discMax[i] = { maxDepth: value, discipline: discMax[i]?.discipline };
 
     let newValue: DisciplineAndMaxDepthV1Request = {
       disciplineMaxDepth: discMax,
@@ -31,18 +39,22 @@ export default function DisciplineAndMaxDepth(props: InputFieldProps) {
     }
   };
 
-  let handleDisciplineChange = (e: DisciplinesEnum, i: number) => {
-    const prevValue = props.value as DisciplineAndMaxDepthV1Request;
-    let discMax: InnerDisciplineMaxDepthV1Request[] = [
-      ...(prevValue?.disciplineMaxDepth || []),
-    ];
-    discMax[i] = { maxDepth: discMax[i]?.maxDepth || 0, discipline: e };
-    let newValue: DisciplineAndMaxDepthV1Request = {
-      disciplineMaxDepth: discMax,
-      fieldOrder: props.form.disciplineAndMaxDepth?.fieldOrder || Infinity,
-    };
-    if (props.onChange) {
-      props.onChange(newValue);
+  let handleDisciplineChange = (value: DisciplinesEnum, i?: number) => {
+    if (i !== undefined) {
+      const prevValue = props.value as DisciplineAndMaxDepthV1Request;
+      let discMax: InnerDisciplineMaxDepthV1Request[] = [
+        ...(prevValue?.disciplineMaxDepth || []),
+      ];
+      discMax[i] = { maxDepth: discMax[i]?.maxDepth || 0, discipline: value };
+      let newValue: DisciplineAndMaxDepthV1Request = {
+        disciplineMaxDepth: discMax,
+        fieldOrder: props.form.disciplineAndMaxDepth?.fieldOrder || Infinity,
+      };
+      if (props.onChange) {
+        props.onChange(newValue);
+      }
+    } else {
+      console.error("there should be an index");
     }
   };
 
@@ -74,8 +86,6 @@ export default function DisciplineAndMaxDepth(props: InputFieldProps) {
   const allEntries: InnerDisciplineMaxDepthV1Request[] =
     value?.disciplineMaxDepth || [{ maxDepth: 0 }];
 
-  const disciplineArray = Object.values(DisciplinesEnum);
-
   return (
     <>
       {!props.isDisplay && (
@@ -103,24 +113,26 @@ export default function DisciplineAndMaxDepth(props: InputFieldProps) {
             </CoreText>
             <ItemContainer borderColor="black">
               {!props.isDisplay && (
-                <Picker
-                  style={styles.picker}
-                  itemStyle={styles.pickerItems}
-                  selectedValue={disciplineVal || undefined}
-                  onValueChange={(itemValue: DisciplinesEnum, _itemIndex) =>
-                    handleDisciplineChange(itemValue, i)
-                  }
-                >
-                  {disciplineArray.map((e, i) => {
-                    return (
-                      <Picker.Item
-                        key={e + i}
-                        label={e.toUpperCase()}
-                        value={e}
-                      />
-                    );
-                  })}
-                </Picker>
+                <>
+                  <CorePicker<DisciplinesEnum>
+                    value={disciplineVal}
+                    handleChange={handleDisciplineChange}
+                    valueArray={disciplineArray}
+                    parentIndex={i}
+                  />
+                  {/* <DropDownPicker
+                    open={pickerOpen}
+                    value={pickerValue}
+                    items={pickerItems}
+                    setOpen={setPickerOpen}
+                    setValue={setPickerValue}
+                    setItems={setPickerItems}
+                    listMode="SCROLLVIEW"
+                    searchable={true}
+                    zIndex={5000}
+                    zIndexInverse={5000}
+                  /> */}
+                </>
               )}
             </ItemContainer>
             <CoreText>Max depth for this discipline?</CoreText>

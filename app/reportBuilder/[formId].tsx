@@ -101,6 +101,10 @@ const ReportBuilder = () => {
       console.log(
         "REPORT SUBMISSION",
         apneaSessionInput.sessionReport?.v1?.disciplineAndMaxDepth,
+        "TYPEOF MAX DEPTH",
+        apneaSessionInput.sessionReport?.v1?.disciplineAndMaxDepth?.disciplineMaxDepth?.map(
+          (e) => typeof e.maxDepth
+        ),
         sessionReport
       );
 

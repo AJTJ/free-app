@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from "react";
 import { CircularButton, CoreText, LinearGradient } from "@/components";
 import { RecentSessions } from "./RecentSessions";
-import { useLogoutUser } from "@/api/logic/auth";
+
 import { useInsertPrePopulatedApneaSession } from "@/api/logic";
 import { router } from "expo-router";
 import { useFragment } from "@apollo/client";
@@ -11,9 +11,6 @@ import { UserFragment } from "@/api/auth.generated";
 import { HomeFrame } from "./homeframe";
 
 const Home = () => {
-  let { logoutUser } = useLogoutUser();
-  let { insertSession, result } = useInsertPrePopulatedApneaSession();
-
   const { complete, data } = useFragment<UserFragment>({
     fragment: User,
     fragmentName: "User",
@@ -29,32 +26,13 @@ const Home = () => {
     }
   }, [data]);
 
-  const handleLogout = () => {
-    logoutUser()
-      .catch((e) => console.error(e))
-      .then((d) => console.log("after logout", d));
-  };
-
-  const handleInsertSession = async () => {
-    try {
-      await insertSession();
-    } catch (error) {
-      console.error("INSERT SESSION ERROR: ", error);
-    } finally {
-      console.log("INSERT SESSSION result: ", result);
-    }
-  };
-
   return (
     <LinearGradient>
-      {!data ? (
+      {!data || !complete ? (
         <Text>Not logged in</Text>
       ) : (
         <>
-          <CoreText>
-            Hello {data.username}! You last logged in at= {data.lastLogin}
-          </CoreText>
-          <HomeFrame />
+          <HomeFrame userData={data} />
           <View style={styles.userProfileContainer}>
             <CircularButton
               title=""
@@ -80,11 +58,12 @@ export default Home;
 const styles = StyleSheet.create({
   userProfileContainer: {
     position: "absolute",
-    top: 30,
+    top: 60,
     right: 30,
   },
 });
 
+// let { insertSession, result } = useInsertPrePopulatedApneaSession();
 // this does not subscribe the component
 // let client = useApolloClient();
 //   let readUserFrag = client.cache.readFragment({
@@ -104,3 +83,13 @@ const styles = StyleSheet.create({
 // import { useSnapshot } from "valtio";
 // import { loginStore } from "@/state";
 // const loginData = useSnapshot(loginStore).loginState;
+
+// const handleInsertSession = async () => {
+//   try {
+//     await insertSession();
+//   } catch (error) {
+//     console.error("INSERT SESSION ERROR: ", error);
+//   } finally {
+//     console.log("INSERT SESSSION result: ", result);
+//   }
+// };

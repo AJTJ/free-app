@@ -3078,6 +3078,29 @@
         "possibleTypes": null
       },
       {
+        "kind": "ENUM",
+        "name": "TemperatureEnum",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "C",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "F",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
         "kind": "SCALAR",
         "name": "UUID",
         "description": "A UUID is a unique 128-bit number, stored as 16 octets. UUIDs are parsed as\nStrings within GraphQL. UUIDs are used to assign unique identifiers to\nentities without requiring a central allocating authority.\n\n# References\n\n* [Wikipedia: Universally Unique Identifier](http://en.wikipedia.org/wiki/Universally_unique_identifier)\n* [RFC4122: A Universally Unique IDentifier (UUID) URN Namespace](http://tools.ietf.org/html/rfc4122)",
@@ -3482,6 +3505,18 @@
             "deprecationReason": null
           },
           {
+            "name": "measurement",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "TemperatureEnum",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "value",
             "description": null,
             "args": [],
@@ -3511,6 +3546,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "measurement",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "TemperatureEnum",
               "ofType": null
             },
             "defaultValue": null,

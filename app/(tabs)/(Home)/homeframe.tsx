@@ -1,12 +1,20 @@
 import React from "react";
 import { CoreText, LinearGradient } from "@/components";
 import { StyleSheet, View } from "react-native";
-import { Background } from "victory-native";
+import { UserFragment } from "@/api/auth.generated";
 
-export function HomeFrame() {
+type Props = {
+  userData: UserFragment;
+};
+
+export function HomeFrame(props: Props) {
   return (
     <View style={styles.homeFrameContainer}>
       <CoreText>Home Frame</CoreText>
+      <CoreText>
+        Hello {props.userData.username}! You last logged in at={" "}
+        {props.userData.lastLogin}
+      </CoreText>
     </View>
   );
 }

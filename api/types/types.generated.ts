@@ -423,6 +423,11 @@ export type StaticV1Request = {
   value?: InputMaybe<Scalars['Int']>;
 };
 
+export enum TemperatureEnum {
+  C = 'C',
+  F = 'F'
+}
+
 export type User = {
   __typename?: 'User';
   apneaSessions: ApneaSessionConnection;
@@ -466,11 +471,13 @@ export type VisibilityV1Request = {
 export type WaterTempV1 = {
   __typename?: 'WaterTempV1';
   fieldOrder?: Maybe<Scalars['Int']>;
+  measurement?: Maybe<TemperatureEnum>;
   value?: Maybe<Scalars['Int']>;
 };
 
 export type WaterTempV1Request = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
+  measurement?: InputMaybe<TemperatureEnum>;
   value?: InputMaybe<Scalars['Int']>;
 };
 

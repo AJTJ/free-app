@@ -9,6 +9,8 @@ import DisciplineAndMaxDepth from "./disciplineAndMaxDepth";
 import MaxDepth from "./maxDepth";
 import SessionName from "./sessionName";
 import Visibility from "./visibility";
+import GeneralFeeling from "./generalFeeling";
+import Injury from "./injury";
 // import Weather from "./weather";
 
 // import AutoComplete from "react-native-autocomplete-input";
@@ -32,9 +34,9 @@ export const V1InputField = (props: InputFieldProps) => {
       case "easeOfEqualization":
         return <Equalization {...props} />;
       case "generalFeeling":
-        return <CoreText>No component for {props.name} yet</CoreText>;
+        return <GeneralFeeling {...props} />;
       case "injury":
-        return <CoreText>No component for {props.name} yet</CoreText>;
+        return <Injury {...props} />;
       case "maxDepth":
         return <MaxDepth {...props} />;
       case "sessionName":

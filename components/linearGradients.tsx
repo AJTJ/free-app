@@ -19,7 +19,7 @@ export const LinearGradient = ({
       colors={gradient_colors}
       {...rest}
     >
-      <SafeAreaView>{children}</SafeAreaView>
+      <SafeAreaView style={themedStyles().safeArea}>{children}</SafeAreaView>
     </LinearGradientImport>
   );
 };
@@ -29,6 +29,9 @@ const styles = (theme: typeof GlobalTheme) => () => {
     container: {
       height: "100%",
       width: "100%",
+    },
+    safeArea: {
+      position: "relative",
     },
   });
 };

@@ -3,7 +3,6 @@ import {
   ApneaSessionsDocument,
   InsertApneaSessionDocument,
   InsertPrepopulatedApneaSessionDocument,
-  RecentApneaSessionsDocument,
 } from "../apnea_sessions.generated";
 
 // https://www.apollographql.com/docs/react/pagination/cursor-based/#relay-style-cursor-pagination
@@ -11,7 +10,7 @@ export const useInsertPrePopulatedApneaSession = () => {
   const [insertSession, { loading, error, data, client }] = useMutation(
     InsertPrepopulatedApneaSessionDocument,
     {
-      refetchQueries: [ApneaSessionsDocument, RecentApneaSessionsDocument],
+      refetchQueries: [ApneaSessionsDocument],
     }
   );
 
@@ -23,7 +22,7 @@ export const useInsertApneaSession = () => {
   const [insertSession, { loading, error, data, client }] = useMutation(
     InsertApneaSessionDocument,
     {
-      refetchQueries: [ApneaSessionsDocument, RecentApneaSessionsDocument],
+      refetchQueries: [ApneaSessionsDocument],
     }
   );
 
@@ -32,9 +31,9 @@ export const useInsertApneaSession = () => {
 };
 
 export const useGetRecentApneaSessions = () => {
-  const { loading, error, data, client } = useQuery(
-    RecentApneaSessionsDocument
-  );
+  const { loading, error, data, client } = useQuery(ApneaSessionsDocument, {
+    variables: { queryParams: { first: 4 } },
+  });
 
   return { loading, error, data, client };
 };

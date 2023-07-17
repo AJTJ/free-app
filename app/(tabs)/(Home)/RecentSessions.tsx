@@ -17,8 +17,6 @@ export const RecentSessions = () => {
     return aDate > bDate ? -1 : 1;
   });
 
-  console.log("recent sessions sorted: ", sortedSessions);
-
   return (
     <>
       {loading && (

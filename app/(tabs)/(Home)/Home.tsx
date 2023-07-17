@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { CircularButton, CoreText, LinearGradient } from "@/components";
 import { RecentSessions } from "./RecentSessions";
 
-import { useInsertPrePopulatedApneaSession } from "@/api/logic";
 import { router } from "expo-router";
 import { useFragment } from "@apollo/client";
 import { User } from "@/api/auth";
@@ -19,12 +18,6 @@ const Home = () => {
       id: "USER",
     },
   });
-
-  // useEffect(() => {
-  //   if (!data.__typename) {
-  //     router.push("/(landing)/loginAndRegister");
-  //   }
-  // }, [data]);
 
   return (
     <LinearGradient>
@@ -46,6 +39,7 @@ const Home = () => {
               }}
             />
           </View>
+          {/* TODO: Sort out how to ONLY use caching here */}
           <RecentSessions />
         </>
       )}
@@ -93,3 +87,9 @@ const styles = StyleSheet.create({
 //     console.log("INSERT SESSSION result: ", result);
 //   }
 // };
+
+// useEffect(() => {
+//   if (!data.__typename) {
+//     router.push("/(landing)/loginAndRegister");
+//   }
+// }, [data]);

@@ -18,8 +18,8 @@ import { relayStylePagination } from "@apollo/client/utilities";
 import MobileStore from "../storage/SafeStorage";
 import { Login, User } from "../api/auth";
 import { ApneaSession } from "../api/apnea_sessions";
-import { useColorScheme } from "react-native";
-import { Form, FormResponse, FormV1, Report } from "../api/forms";
+import { NativeModules, useColorScheme } from "react-native";
+import { Form, FormResponse, FormV1 } from "../api/forms";
 // For top of app
 import "react-native-gesture-handler";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -28,6 +28,11 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
+
+// TODO: does this work?
+import "react-native-devsettings";
+
+NativeModules.DevSettings.setIsDebuggingRemotely(true);
 
 if (__DEV__) {
   // Adds messages only in a dev environment

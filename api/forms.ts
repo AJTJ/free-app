@@ -10,43 +10,75 @@ export const FormV1 = gql(`
         discipline
         maxDepth
       }
+      # default values
       fieldOrder
+      isUsed
     }
     easeOfEqualization {
       value
+      # default values
       fieldOrder
+      isUsed
+    }
+    endTime {
+      time
+      # default values
+      fieldOrder
+      isUsed
     }
     generalFeeling {
       value
+      # default values
       fieldOrder
+      isUsed
     }
     injury {
       value
+      # default values
       fieldOrder
+      isUsed
     }
     maxDepth {
       maxDepth
+      # default values
       fieldOrder
+      isUsed
     }
     sessionName {
       name
+      # default values
       fieldOrder
+      isUsed
+    }
+    startTime {
+      time
+      # default values
+      fieldOrder
+      isUsed
     }
     staticApnea {
       value
+      # default values
       fieldOrder
+      isUsed
     }
     visibility {
       value
+      # default values
       fieldOrder
+      isUsed
     }
     waterTemp {
       value
+      # default values
       fieldOrder
+      isUsed
     }
     weather {
       wind
+      # default values
       fieldOrder
+      isUsed
     }
   }
 `);
@@ -74,23 +106,6 @@ export const Form = gql(`
   }
 `);
 
-export const Report = gql(`
-  fragment Report on Report {
-    createdAt
-    id
-    isActive
-    reportData {
-      ... on FormV1 {
-        ...FormV1
-      }
-    }
-    form {
-      ...Form
-    }
-    updatedAt
-  }
-`);
-
 // QUERIES/MUTATIONS
 
 export const GET_FORMS = gql(`
@@ -109,20 +124,37 @@ export const INSERT_FORM = gql(`
   }
 `);
 
-export const GET_REPORTS = gql(`
-  query getReports {
-    reports(queryParams: {}) {
-      nodes {
-        ...Report
-      }
-    }
-  }
-`);
+// export const INSERT_REPORT = gql(`
+//   mutation insertReport($sessionId: UUID!, $reportDetails: ReportDetails!, $reportRequest: FormRequest!) {
+//     insertReport( sessionId: $sessionId, reportDetails: $reportDetails, reportRequest: $reportRequest ) {
+//       ...Report
+//     }
+//   }
+// `);
 
-export const INSERT_REPORT = gql(`
-  mutation insertReport($sessionId: UUID!, $reportDetails: ReportDetails!, $reportRequest: FormRequest!) {
-    insertReport( sessionId: $sessionId, reportDetails: $reportDetails, reportRequest: $reportRequest ) {
-      ...Report
-    }
-  }
-`);
+// export const GET_REPORTS = gql(`
+//   query getReports {
+//     reports(queryParams: {}) {
+//       nodes {
+//         ...Report
+//       }
+//     }
+//   }
+// `);
+
+// export const Report = gql(`
+//   fragment Report on Report {
+//     createdAt
+//     id
+//     isActive
+//     reportData {
+//       ... on FormV1 {
+//         ...FormV1
+//       }
+//     }
+//     form {
+//       ...Form
+//     }
+//     updatedAt
+//   }
+// `);

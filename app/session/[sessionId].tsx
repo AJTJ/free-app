@@ -26,17 +26,15 @@ export default function Session() {
   });
 
   if (complete) {
-    const requestForm = FormV1Helper.getRequestForm(
-      sessionData.report?.reportData
-    );
+    const requestForm = FormV1Helper.getRequestForm(sessionData.reportData);
     const sortedFields = FormV1Helper.getSortedFields(requestForm);
 
-    console.log("SHOULD FORM ID", sessionData.report);
+    console.log("SHOULD FORM ID", sessionData.form?.id);
 
     const handleOnPress = () => {
       router.push({
         pathname: "reportBuilder/[formId]",
-        params: { formId: sessionData.report?.form?.id },
+        params: { formId: sessionData.form?.id },
       });
     };
 
@@ -46,7 +44,7 @@ export default function Session() {
           title="Edit"
           type="primary"
           onPress={() => {
-            if (sessionData.report) {
+            if (sessionData.reportData) {
               handleOnPress();
             }
           }}

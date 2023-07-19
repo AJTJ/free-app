@@ -5,8 +5,10 @@ import { useGetApneaSessions } from "@/api/logic";
 import { SessionsList } from "@/components/SessionsList";
 import { LinearGradient } from "@/components";
 import { router } from "expo-router";
+import { Calendar } from "react-native-calendars";
 
 export default function AllSessions() {
+  const [isCalendar, setIsCalendar] = useState(true);
   const [first, setFirst] = useState(10);
   const [after, setAfter] = useState(undefined);
   const { loading, error, data } = useGetApneaSessions({ first, after });
@@ -17,8 +19,8 @@ export default function AllSessions() {
 
   let myNodes = [...(data?.apneaSessions?.nodes || [])];
   const sortedSessions = myNodes?.sort((a, b) => {
-    let aDate = new Date(a.startTime as unknown as string);
-    let bDate = new Date(b.startTime as unknown as string);
+    let aDate = new Date(a.reportData.startTime as unknown as string);
+    let bDate = new Date(b.reportData.startTime as unknown as string);
     return aDate > bDate ? -1 : 1;
   });
 
@@ -31,7 +33,15 @@ export default function AllSessions() {
           <CoreText>Loading Sessions...</CoreText>
         </View>
       )}
-      <SessionsList sortedSessions={sortedSessions} />
+      {isCalendar ? (
+        <Calendar
+          onDayPress={(day) => {
+            console.log("selected day", day);
+          }}
+        />
+      ) : (
+        <SessionsList sortedSessions={sortedSessions} />
+      )}
     </LinearGradient>
   );
 }

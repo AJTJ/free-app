@@ -19,6 +19,12 @@ const Home = () => {
     },
   });
 
+  useEffect(() => {
+    if (!data.__typename) {
+      router.push("/(landing)/loginAndRegister");
+    }
+  }, [data]);
+
   return (
     <LinearGradient>
       {!data || !complete ? (

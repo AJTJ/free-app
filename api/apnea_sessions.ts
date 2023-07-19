@@ -3,11 +3,11 @@ import { gql } from "@apollo/client";
 export const ApneaSession = gql(`
   fragment ApneaSession on ApneaSession {
     id
-    sessionName
-    startTime
-    endTime
-    report {
-      ...Report
+    reportData {
+      ...FormResponse
+    }
+    form {
+      ...Form
     }
   }
 `);
@@ -41,23 +41,9 @@ fragment MyApneaSessionConnection on ApneaSessionConnection {
 }
 `);
 
-export const INSERT_PREPOPULATED_APNEA_SESSION = gql(`
-  mutation insertPrepopulatedApneaSession {
-    insertApneaSession(
-      apneaSessionInput: {
-        startTime: "2015-07-01T08:59:60.123Z"
-        endTime: "2015-07-01T08:59:60.123Z"
-        sessionName: "oog"
-      }
-    ) {
-      ...ApneaSessionWithDives
-    }
-  }
-`);
-
 export const INSERT_APNEA_SESSION = gql(`
-  mutation insertApneaSession($apneaSessionInput: ApneaSessionInput!, $reportDetails: ReportDetails) {
-    insertApneaSession(apneaSessionInput: $apneaSessionInput, reportDetails: $reportDetails)
+  mutation insertApneaSession($apneaSessionInput: ApneaSessionInput!) {
+    insertApneaSession(apneaSessionInput: $apneaSessionInput)
      {
       ...ApneaSessionWithDives
     }
@@ -71,3 +57,19 @@ export const GET_APNEA_SESSIONS = gql(`
     }
   }
 `);
+
+// export const INSERT_PREPOPULATED_APNEA_SESSION = gql(`
+//   mutation insertPrepopulatedApneaSession {
+//     insertApneaSession(
+//       apneaSessionInput: {
+//         formRequest: {},
+//         startTime: "2015-07-01T08:59:60.123Z"
+//         endTime: "2015-07-01T08:59:60.123Z"
+//         sessionName: "oog"
+
+//       }
+//     ) {
+//       ...ApneaSessionWithDives
+//     }
+//   }
+// `);

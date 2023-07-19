@@ -14,9 +14,10 @@ import { router } from "expo-router";
 
 import { addFormState } from "@/state";
 import { Switch } from "react-native-gesture-handler";
+import { FormV1Request } from "@/api/types/types.generated";
 
 function FormBuilder() {
-  let emptyForm = FormV1Helper.getRequestForm();
+  let emptyForm = FormV1Helper.getDefaultForm();
   type KeyType = keyof typeof emptyForm;
   type FieldTypes = Record<KeyType, { active: boolean; fieldOrder: number }>;
   let fieldDefaults = Object.keys(emptyForm).reduce<FieldTypes>((acc, cur) => {
@@ -40,15 +41,7 @@ function FormBuilder() {
     addFormState({ form: newForm, formName: formData.formName });
     router.push({
       pathname: "FormReordering",
-      // params: {
-      //   form: newForm,
-      //   formName: formData.formName,
-      // },
     });
-
-    // setWorkingForm(newForm);
-    // setFormName(formData.formName);
-    // setIsAddFieldsView(false);
   };
 
   let fieldsObject = Object.entries(emptyForm) as [

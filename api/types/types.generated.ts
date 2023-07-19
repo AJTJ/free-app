@@ -18,12 +18,10 @@ export type ApneaSession = {
   __typename?: 'ApneaSession';
   createdAt: Scalars['DateTime'];
   dives?: Maybe<Array<Dive>>;
-  endTime?: Maybe<Scalars['DateTime']>;
+  form?: Maybe<Form>;
   id: Scalars['UUID'];
   isActive: Scalars['Boolean'];
-  report?: Maybe<Report>;
-  sessionName?: Maybe<Scalars['String']>;
-  startTime: Scalars['DateTime'];
+  reportData: FormResponse;
   updatedAt: Scalars['DateTime'];
 };
 
@@ -47,21 +45,23 @@ export type ApneaSessionEdge = {
 };
 
 export type ApneaSessionInput = {
-  endTime?: InputMaybe<Scalars['DateTime']>;
-  sessionName?: InputMaybe<Scalars['String']>;
-  sessionReport?: InputMaybe<FormRequest>;
-  startTime: Scalars['DateTime'];
+  formId: Scalars['UUID'];
+  originalFormId?: InputMaybe<Scalars['UUID']>;
+  previousSessionId?: InputMaybe<Scalars['UUID']>;
+  reportData: FormRequest;
 };
 
 export type DisciplineAndMaxDepthV1 = {
   __typename?: 'DisciplineAndMaxDepthV1';
   disciplineMaxDepth?: Maybe<Array<InnerDisciplineMaxDepthV1>>;
   fieldOrder?: Maybe<Scalars['Int']>;
+  isUsed?: Maybe<Scalars['Boolean']>;
 };
 
 export type DisciplineAndMaxDepthV1Request = {
   disciplineMaxDepth?: InputMaybe<Array<InnerDisciplineMaxDepthV1Request>>;
   fieldOrder?: InputMaybe<Scalars['Int']>;
+  isUsed?: InputMaybe<Scalars['Boolean']>;
 };
 
 export enum DisciplinesEnum {
@@ -97,13 +97,28 @@ export type DiveInput = {
 
 export type EaseOfEqualizationRequest = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
+  isUsed?: InputMaybe<Scalars['Boolean']>;
   value?: InputMaybe<Scalars['Int']>;
 };
 
 export type EaseOfEqualizationV1 = {
   __typename?: 'EaseOfEqualizationV1';
   fieldOrder?: Maybe<Scalars['Int']>;
+  isUsed?: Maybe<Scalars['Boolean']>;
   value?: Maybe<Scalars['Int']>;
+};
+
+export type EndTimeV1 = {
+  __typename?: 'EndTimeV1';
+  fieldOrder?: Maybe<Scalars['Int']>;
+  isUsed?: Maybe<Scalars['Boolean']>;
+  time?: Maybe<Scalars['DateTime']>;
+};
+
+export type EndTimeV1Request = {
+  fieldOrder?: InputMaybe<Scalars['Int']>;
+  isUsed?: InputMaybe<Scalars['Boolean']>;
+  time?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type Form = {
@@ -132,10 +147,12 @@ export type FormV1 = {
   __typename?: 'FormV1';
   disciplineAndMaxDepth?: Maybe<DisciplineAndMaxDepthV1>;
   easeOfEqualization?: Maybe<EaseOfEqualizationV1>;
+  endTime?: Maybe<EndTimeV1>;
   generalFeeling?: Maybe<GeneralFeelingV1>;
   injury?: Maybe<InjuryV1>;
   maxDepth?: Maybe<MaxDepthV1>;
   sessionName?: Maybe<SessionNameV1>;
+  startTime: StartTimeV1;
   staticApnea?: Maybe<StaticV1>;
   visibility?: Maybe<VisibilityV1>;
   waterTemp?: Maybe<WaterTempV1>;
@@ -145,10 +162,12 @@ export type FormV1 = {
 export type FormV1Request = {
   disciplineAndMaxDepth?: InputMaybe<DisciplineAndMaxDepthV1Request>;
   easeOfEqualization?: InputMaybe<EaseOfEqualizationRequest>;
+  endTime?: InputMaybe<EndTimeV1Request>;
   generalFeeling?: InputMaybe<GeneralFeelingV1Request>;
   injury?: InputMaybe<InjuryV1Request>;
   maxDepth?: InputMaybe<MaxDepthV1Request>;
   sessionName?: InputMaybe<SessionNameV1Request>;
+  startTime: StartTimeV1Request;
   staticApnea?: InputMaybe<StaticV1Request>;
   visibility?: InputMaybe<VisibilityV1Request>;
   waterTemp?: InputMaybe<WaterTempV1Request>;
@@ -158,11 +177,13 @@ export type FormV1Request = {
 export type GeneralFeelingV1 = {
   __typename?: 'GeneralFeelingV1';
   fieldOrder?: Maybe<Scalars['Int']>;
+  isUsed?: Maybe<Scalars['Boolean']>;
   value?: Maybe<Scalars['Int']>;
 };
 
 export type GeneralFeelingV1Request = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
+  isUsed?: InputMaybe<Scalars['Boolean']>;
   value?: InputMaybe<Scalars['Int']>;
 };
 
@@ -176,6 +197,7 @@ export enum InjuryEnumV1 {
   MaskSqueeze = 'MASK_SQUEEZE',
   MiddleEarSqueeze = 'MIDDLE_EAR_SQUEEZE',
   NitrogenNarcosis = 'NITROGEN_NARCOSIS',
+  PanicAttack = 'PANIC_ATTACK',
   SinusSqueeze = 'SINUS_SQUEEZE',
   SunBurn = 'SUN_BURN',
   TracheaSqueeze = 'TRACHEA_SQUEEZE'
@@ -184,11 +206,13 @@ export enum InjuryEnumV1 {
 export type InjuryV1 = {
   __typename?: 'InjuryV1';
   fieldOrder?: Maybe<Scalars['Int']>;
+  isUsed?: Maybe<Scalars['Boolean']>;
   value?: Maybe<InjuryEnumV1>;
 };
 
 export type InjuryV1Request = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
+  isUsed?: InputMaybe<Scalars['Boolean']>;
   value?: InputMaybe<InjuryEnumV1>;
 };
 
@@ -211,11 +235,13 @@ export type Login = {
 export type MaxDepthV1 = {
   __typename?: 'MaxDepthV1';
   fieldOrder?: Maybe<Scalars['Int']>;
+  isUsed?: Maybe<Scalars['Boolean']>;
   maxDepth?: Maybe<Scalars['Int']>;
 };
 
 export type MaxDepthV1Request = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
+  isUsed?: InputMaybe<Scalars['Boolean']>;
   maxDepth?: InputMaybe<Scalars['Int']>;
 };
 
@@ -227,14 +253,12 @@ export type Mutation = {
   insertApneaSession: ApneaSession;
   insertDive: Dive;
   insertForm?: Maybe<Form>;
-  insertReport?: Maybe<Report>;
   insertUser: User;
   login: User;
   logout: Scalars['Boolean'];
   modifyApneaSession: ApneaSession;
   modifyDive: Dive;
   modifyForm?: Maybe<Form>;
-  modifyReport?: Maybe<Report>;
   verifyEmailCode: User;
 };
 
@@ -246,7 +270,6 @@ export type MutationEmailVerificationCodeArgs = {
 
 export type MutationInsertApneaSessionArgs = {
   apneaSessionInput: ApneaSessionInput;
-  reportDetails?: InputMaybe<ReportDetails>;
 };
 
 
@@ -259,13 +282,6 @@ export type MutationInsertDiveArgs = {
 export type MutationInsertFormArgs = {
   formDetails: FormDetails;
   formRequest: FormRequest;
-};
-
-
-export type MutationInsertReportArgs = {
-  reportDetails: ReportDetails;
-  reportRequest: FormRequest;
-  sessionId: Scalars['UUID'];
 };
 
 
@@ -282,7 +298,6 @@ export type MutationLoginArgs = {
 export type MutationModifyApneaSessionArgs = {
   apneaSessionInput: ApneaSessionInput;
   archivedSessionId: Scalars['UUID'];
-  reportDetails?: InputMaybe<ReportDetails>;
 };
 
 
@@ -297,14 +312,6 @@ export type MutationModifyFormArgs = {
   formDetails: FormDetails;
   formRequest: FormRequest;
   previousFormId: Scalars['UUID'];
-};
-
-
-export type MutationModifyReportArgs = {
-  previousReportId: Scalars['UUID'];
-  reportDetails: ReportDetails;
-  reportRequest: FormRequest;
-  sessionId: Scalars['UUID'];
 };
 
 
@@ -332,7 +339,6 @@ export type Query = {
   apneaSessions: ApneaSessionConnection;
   dives: Array<Dive>;
   forms?: Maybe<Array<Form>>;
-  reports: ReportConnection;
   user: User;
 };
 
@@ -352,11 +358,6 @@ export type QueryFormsArgs = {
 };
 
 
-export type QueryReportsArgs = {
-  queryParams: QueryParams;
-};
-
-
 export type QueryUserArgs = {
   email: Scalars['String'];
 };
@@ -366,60 +367,42 @@ export type QueryParams = {
   first?: InputMaybe<Scalars['Int']>;
 };
 
-export type Report = {
-  __typename?: 'Report';
-  createdAt: Scalars['DateTime'];
-  form?: Maybe<Form>;
-  id: Scalars['UUID'];
-  isActive: Scalars['Boolean'];
-  reportData: FormResponse;
-  updatedAt: Scalars['DateTime'];
-};
-
-export type ReportConnection = {
-  __typename?: 'ReportConnection';
-  /** A list of edges. */
-  edges: Array<ReportEdge>;
-  /** A list of nodes. */
-  nodes: Array<Report>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-};
-
-export type ReportDetails = {
-  formId: Scalars['UUID'];
-  originalFormId?: InputMaybe<Scalars['UUID']>;
-  previousReportId?: InputMaybe<Scalars['UUID']>;
-};
-
-/** An edge in a connection. */
-export type ReportEdge = {
-  __typename?: 'ReportEdge';
-  /** A cursor for use in pagination */
-  cursor: Scalars['String'];
-  /** The item at the end of the edge */
-  node: Report;
-};
-
 export type SessionNameV1 = {
   __typename?: 'SessionNameV1';
   fieldOrder?: Maybe<Scalars['Int']>;
+  isUsed?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
 };
 
 export type SessionNameV1Request = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
+  isUsed?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
+};
+
+export type StartTimeV1 = {
+  __typename?: 'StartTimeV1';
+  fieldOrder?: Maybe<Scalars['Int']>;
+  isUsed?: Maybe<Scalars['Boolean']>;
+  time: Scalars['DateTime'];
+};
+
+export type StartTimeV1Request = {
+  fieldOrder?: InputMaybe<Scalars['Int']>;
+  isUsed?: InputMaybe<Scalars['Boolean']>;
+  time: Scalars['DateTime'];
 };
 
 export type StaticV1 = {
   __typename?: 'StaticV1';
   fieldOrder?: Maybe<Scalars['Int']>;
+  isUsed?: Maybe<Scalars['Boolean']>;
   value?: Maybe<Scalars['Int']>;
 };
 
 export type StaticV1Request = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
+  isUsed?: InputMaybe<Scalars['Boolean']>;
   value?: InputMaybe<Scalars['Int']>;
 };
 
@@ -460,23 +443,27 @@ export type UserInput = {
 export type VisibilityV1 = {
   __typename?: 'VisibilityV1';
   fieldOrder?: Maybe<Scalars['Int']>;
+  isUsed?: Maybe<Scalars['Boolean']>;
   value?: Maybe<Scalars['Int']>;
 };
 
 export type VisibilityV1Request = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
+  isUsed?: InputMaybe<Scalars['Boolean']>;
   value?: InputMaybe<Scalars['Int']>;
 };
 
 export type WaterTempV1 = {
   __typename?: 'WaterTempV1';
   fieldOrder?: Maybe<Scalars['Int']>;
+  isUsed?: Maybe<Scalars['Boolean']>;
   measurement?: Maybe<TemperatureEnum>;
   value?: Maybe<Scalars['Int']>;
 };
 
 export type WaterTempV1Request = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
+  isUsed?: InputMaybe<Scalars['Boolean']>;
   measurement?: InputMaybe<TemperatureEnum>;
   value?: InputMaybe<Scalars['Int']>;
 };
@@ -487,6 +474,7 @@ export type WeatherV1 = {
   current?: Maybe<Scalars['Int']>;
   fieldOrder?: Maybe<Scalars['Int']>;
   isFarenheit?: Maybe<Scalars['Boolean']>;
+  isUsed?: Maybe<Scalars['Boolean']>;
   rain?: Maybe<Scalars['Int']>;
   waves?: Maybe<Scalars['Int']>;
   wind?: Maybe<Scalars['Int']>;
@@ -497,6 +485,7 @@ export type WeatherV1Request = {
   current?: InputMaybe<Scalars['Int']>;
   fieldOrder?: InputMaybe<Scalars['Int']>;
   isFarenheit?: InputMaybe<Scalars['Boolean']>;
+  isUsed?: InputMaybe<Scalars['Boolean']>;
   rain?: InputMaybe<Scalars['Int']>;
   waves?: InputMaybe<Scalars['Int']>;
   wind?: InputMaybe<Scalars['Int']>;

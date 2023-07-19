@@ -23,23 +23,30 @@ All places to update with new/changed fields:
 
 // FIELDS UPDATE HERE
 export class FormV1Helper {
-  static getRequestForm(form?: FormV1): FormV1Request {
-    const myForm: FormV1Request = { ...form };
+  static getDefaultForm(): FormV1Request {
+    return {
+      disciplineAndMaxDepth: {},
+      easeOfEqualization: {},
+      endTime: {},
+      generalFeeling: {},
+      injury: {},
+      maxDepth: {},
+      sessionName: {},
+      startTime: { time: new Date(Date.now()).toISOString() },
+      staticApnea: {},
+      visibility: {},
+      waterTemp: {},
+      weather: {},
+    };
+  }
+
+  static convertToRequestForm(form: FormV1): FormV1Request {
+    const myForm: FormV1Request = {
+      ...form,
+    };
 
     let cleanedForm = omitDeep(myForm, "__typename");
-
-    return {
-      disciplineAndMaxDepth: cleanedForm.disciplineAndMaxDepth,
-      easeOfEqualization: cleanedForm.easeOfEqualization,
-      generalFeeling: cleanedForm.generalFeeling,
-      injury: cleanedForm.injury,
-      maxDepth: cleanedForm.maxDepth,
-      sessionName: cleanedForm.sessionName,
-      staticApnea: cleanedForm.staticApnea,
-      visibility: cleanedForm.visibility,
-      waterTemp: cleanedForm.waterTemp,
-      weather: cleanedForm.weather,
-    };
+    return cleanedForm;
   }
 
   static createForm(
@@ -48,7 +55,7 @@ export class FormV1Helper {
       { active: boolean; fieldOrder: number }
     >
   ): FormV1Request {
-    let tempForm: FormV1Request = {};
+    let tempForm: FormV1Request = this.getDefaultForm();
     type ValType = { active: boolean; fieldOrder: number };
 
     let formEntries = Object.entries(form_request) as [
@@ -57,8 +64,8 @@ export class FormV1Helper {
     ][];
 
     formEntries.forEach(([fieldName, val]) => {
-      if (val.active) {
-        tempForm[fieldName] = { fieldOrder: val.fieldOrder };
+      if (val.active && tempForm[fieldName]) {
+        tempForm[fieldName] = { fieldOrder: val.fieldOrder, isUsed: true };
       }
     });
 

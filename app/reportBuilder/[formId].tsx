@@ -12,7 +12,7 @@ import { FormV1Helper } from "@/utility/FormV1/FormV1Helper";
 import {
   ApneaSessionInput,
   FormRequest,
-  ReportDetails,
+  // ReportDetails,
   FormV1Request,
 } from "@/api/types/types.generated";
 import { useLocalSearchParams } from "expo-router";
@@ -74,43 +74,55 @@ const ReportBuilder = () => {
   // const form = data?.forms?.find((f) => f.id === formId);
 
   if (complete) {
-    let myForm = FormV1Helper.getRequestForm(form?.formData || {});
+    let myForm: FormV1Request;
+
+    if (form.formData) {
+      myForm = FormV1Helper.convertToRequestForm(form?.formData || {});
+    } else {
+      myForm = FormV1Helper.getDefaultForm();
+    }
+
     const sortedFields = FormV1Helper.getSortedFields(form?.formData || {});
 
     const onSubmit: SubmitHandler<IncomingFormTypes & SessionInputTypes> = (
       formAndSessionData
     ) => {
-      let newReport = FormV1Helper.getRequestForm(formAndSessionData);
+      // there is extra data on this object
+      let newReport = FormV1Helper.convertToRequestForm(formAndSessionData);
       let sessionReport: FormRequest = {
         v1: newReport,
       };
+
       let apneaSessionInput: ApneaSessionInput = {
-        startTime: formAndSessionData.startTime,
-        endTime: formAndSessionData.endTime,
-        sessionName: newReport.sessionName?.name,
-        sessionReport,
-      };
-
-      let reportDetails: ReportDetails = {
         formId: form.id,
-        // TODO: Allow "editing" eventually
-        // originalFormId?: InputMaybe<Scalars["UUID"]>;
-        // previousReportId?: InputMaybe<Scalars["UUID"]>;
+        originalFormId: null,
+        previousSessionId: null,
+        reportData: sessionReport,
+        // startTime: formAndSessionData.startTime,
+        // endTime: formAndSessionData.endTime,
+        // sessionName: newReport.sessionName?.name,
       };
 
-      console.log(
-        "REPORT SUBMISSION",
-        apneaSessionInput.sessionReport?.v1?.disciplineAndMaxDepth,
-        "TYPEOF MAX DEPTH",
-        apneaSessionInput.sessionReport?.v1?.disciplineAndMaxDepth?.disciplineMaxDepth?.map(
-          (e) => typeof e.maxDepth
-        ),
-        sessionReport
-      );
+      // let reportDetails: ReportDetails = {
+      //   formId: form.id,
+      //   // TODO: Allow "editing" eventually
+      //   // originalFormId?: InputMaybe<Scalars["UUID"]>;
+      //   // previousReportId?: InputMaybe<Scalars["UUID"]>;
+      // };
+
+      // console.log(
+      //   "REPORT SUBMISSION",
+      //   apneaSessionInput.sessionReport?.v1?.disciplineAndMaxDepth,
+      //   "TYPEOF MAX DEPTH",
+      //   apneaSessionInput.sessionReport?.v1?.disciplineAndMaxDepth?.disciplineMaxDepth?.map(
+      //     (e) => typeof e.maxDepth
+      //   ),
+      //   sessionReport
+      // );
 
       // TODO: Maybe this will be useful for editing?
       // insertReportMutation({variables: {reportInput: newReport, ReportDetails: })
-      insertSession({ variables: { apneaSessionInput, reportDetails } })
+      insertSession({ variables: { apneaSessionInput } })
         .catch((e) => {
           console.error("insert sesh e:", e);
         })

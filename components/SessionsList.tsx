@@ -34,7 +34,8 @@ export const SessionsList = (props: Props) => {
 
   return (
     <>
-      {props.sortedSessions.map((session, i) => {
+      <CoreText>Gotta fix sessionslist</CoreText>
+      {/* {props.sortedSessions.map((session, i) => {
         return (
           <ItemContainer
             onPress={() => handlePress(session.id)}
@@ -55,6 +56,7 @@ export const SessionsList = (props: Props) => {
           </ItemContainer>
         );
       })}
+      */}
     </>
   );
 };

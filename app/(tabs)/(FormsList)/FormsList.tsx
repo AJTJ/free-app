@@ -24,7 +24,8 @@ export default function FormsList() {
   };
 
   const displayForms = (formData: FormV1) => {
-    let formRequest: FormV1Request = FormV1Helper.getRequestForm(formData);
+    let formRequest: FormV1Request =
+      FormV1Helper.convertToRequestForm(formData);
     const sortedFields = FormV1Helper.getSortedFields(formRequest);
     return sortedFields.map(([key, value], i) => {
       return (

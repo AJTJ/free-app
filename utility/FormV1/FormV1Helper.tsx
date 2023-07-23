@@ -63,6 +63,7 @@ export class FormV1Helper {
       ValType
     ][];
 
+    // TODO: fix this TS issue
     formEntries.forEach(([fieldName, val]) => {
       if (val.active && tempForm[fieldName]) {
         tempForm[fieldName] = { fieldOrder: val.fieldOrder, isUsed: true };

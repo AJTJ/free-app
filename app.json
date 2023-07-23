@@ -26,6 +26,14 @@
       "output": "static"
     },
     "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "13.0"
+          }
+        }
+      ],
       "@maplibre/maplibre-react-native",
       "expo-router"
     ],

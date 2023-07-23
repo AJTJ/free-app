@@ -1,9 +1,9 @@
 import { useMutation, useQuery } from "@apollo/client";
 import {
   GetFormsDocument,
-  GetReportsDocument,
+  // GetReportsDocument,
   InsertFormDocument,
-  InsertReportDocument,
+  // InsertReportDocument,
 } from "../forms.generated";
 
 export const useGetForms = () => {
@@ -11,10 +11,10 @@ export const useGetForms = () => {
   return { loading, error, data, client };
 };
 
-export const useGetReports = () => {
-  const { loading, error, data, client } = useQuery(GetReportsDocument);
-  return { loading, error, data, client };
-};
+// export const useGetReports = () => {
+//   const { loading, error, data, client } = useQuery(GetReportsDocument);
+//   return { loading, error, data, client };
+// };
 
 export const useInsertForm = () => {
   const [insertFormMutation, { loading, error, data, client }] = useMutation(
@@ -28,14 +28,14 @@ export const useInsertForm = () => {
   return { insertFormMutation, result };
 };
 
-export const useInsertReport = () => {
-  const [insertReportMutation, { loading, error, data, client }] = useMutation(
-    InsertReportDocument,
-    {
-      // TODO: Need something better than a refetch
-      refetchQueries: [GetReportsDocument],
-    }
-  );
-  let result = { loading, error, data, client };
-  return { insertReportMutation, result };
-};
+// export const useInsertReport = () => {
+//   const [insertReportMutation, { loading, error, data, client }] = useMutation(
+//     InsertReportDocument,
+//     {
+//       // TODO: Need something better than a refetch
+//       refetchQueries: [GetReportsDocument],
+//     }
+//   );
+//   let result = { loading, error, data, client };
+//   return { insertReportMutation, result };
+// };

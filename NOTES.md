@@ -1,3 +1,6 @@
+### Dev mode things
+- https://expo.dev/accounts/aaronjanke/projects/free_app/builds/d56bbfd2-410c-4de7-861c-26de6173dd05
+
 Resolutions needed?
 `
  "resolutions": {

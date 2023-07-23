@@ -31,8 +31,9 @@ import {
 
 // TODO: does this work?
 import "react-native-devsettings";
+import "expo-dev-client";
 
-NativeModules.DevSettings.setIsDebuggingRemotely(true);
+// NativeModules.DevSettings.setIsDebuggingRemotely(true);
 
 if (__DEV__) {
   // Adds messages only in a dev environment
@@ -91,7 +92,6 @@ const client = new ApolloClient({
       ${FormV1}
       ${Form}
       ${FormResponse}
-      ${Report}
       ${Login}
       ${User}
     `),
@@ -103,6 +103,8 @@ const client = new ApolloClient({
     },
   },
 });
+
+// # ${Report}
 
 const Layout = () => {
   const colorScheme = useColorScheme();
@@ -116,7 +118,7 @@ const Layout = () => {
             <Stack.Screen name="userProfile" options={{ headerShown: true }} />
             {/* <Stack.Screen name="(reportVisualizer)/VictoryTest" /> */}
             {/* <Stack.Screen name="(reportVisualizer)/GiftedTest" /> */}
-            {/* <Stack.Screen name="landing" /> */}
+            <Stack.Screen name="(landing)/loginAndRegister" />
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="modal" options={{ presentation: "modal" }} />
           </Stack>

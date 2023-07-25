@@ -87,12 +87,18 @@ function FormBuilder() {
             render={({ field: { onBlur: _onBlur, onChange, value } }) => (
               <>
                 <View>
-                  <CoreText>{fieldName}</CoreText>
+                  <CoreText>
+                    {fieldName === "startTime"
+                      ? "startTime: Required"
+                      : fieldName}
+                  </CoreText>
                   <Switch
                     value={value?.isActive ?? undefined}
+                    disabled={fieldName === "startTime"}
                     onChange={() =>
                       onChange({
-                        isActive: !value?.isActive,
+                        isActive:
+                          fieldName === "startTime" ? true : !value?.isActive,
                         fieldOrder: value?.fieldOrder,
                       })
                     }

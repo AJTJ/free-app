@@ -36,6 +36,7 @@ export class FormV1Helper {
       maxDepth: { isActive: false, fieldOrder: Infinity },
 
       // GENERAL
+      startTime: { isActive: true, fieldOrder: Infinity },
       easeOfEqualization: { isActive: false, fieldOrder: Infinity },
       endTime: { isActive: false, fieldOrder: Infinity },
       generalFeeling: { isActive: false, fieldOrder: Infinity },
@@ -64,8 +65,21 @@ export class FormV1Helper {
     let formEntries = Object.entries(form) as [keyof typeof form, ValType][];
 
     formEntries.forEach(([fieldName, val]) => {
-      if (val.isActive === true) {
-        myReport[fieldName] = { isActive: true, fieldOrder: val.fieldOrder };
+      if (val?.isActive === true) {
+        if (myReport[fieldName]) {
+          //@ts-ignore
+          myReport[fieldName] = {
+            ...myReport[fieldName],
+            isActive: true,
+            fieldOrder: val.fieldOrder,
+          };
+        } else {
+          myReport[fieldName] = {};
+          //@ts-ignore
+          myReport[fieldName].isActive = true;
+          //@ts-ignore
+          myReport[fieldName].fieldOrder = val.fieldOrder;
+        }
       }
     });
 
@@ -88,7 +102,7 @@ export class FormV1Helper {
       typeof formValues[number]
     ][];
     let filteredFields = entries.filter((x) => {
-      return x[1] !== null && x[1] !== undefined;
+      return x[1] !== null && x[1] !== undefined && x[1].isActive;
     });
 
     let sortedFields = filteredFields.sort(

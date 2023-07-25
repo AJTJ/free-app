@@ -9,6 +9,7 @@ import SessionName from "./sessionName";
 import Visibility from "./visibility";
 import GeneralFeeling from "./generalFeeling";
 import Injury from "./injury";
+import StartTime from "./startTime";
 // import Weather from "./weather";
 
 // import AutoComplete from "react-native-autocomplete-input";
@@ -43,6 +44,8 @@ export const InputFieldV1 = (props: InputFieldProps) => {
         return <Visibility {...props} />;
       case "waterTemp":
         return <CoreText>No component for {props.name} yet</CoreText>;
+      case "startTime":
+        return <StartTime {...props} />;
       default:
         return <CoreText>No component for {props.name} yet</CoreText>;
     }

@@ -19,7 +19,7 @@ export default function Equalization(props: InputFieldProps) {
   const value = props.value as EaseOfEqualizationRequest;
   return (
     <View>
-      <CoreText>How was your level of congestion today?</CoreText>
+      <CoreText>How was it equalizing today?</CoreText>
       <CoreText>{value?.value || 0}</CoreText>
       <Slider
         disabled={props.isDisplay}

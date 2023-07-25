@@ -336,6 +336,7 @@ export type FormV1 = {
   injury?: Maybe<FormFieldOptionsV1>;
   maxDepth?: Maybe<FormFieldOptionsV1>;
   sessionName?: Maybe<FormFieldOptionsV1>;
+  startTime?: Maybe<FormFieldOptionsV1>;
   staticHolds?: Maybe<StaticFormV1>;
   visibility?: Maybe<FormFieldOptionsV1>;
   waterTemp?: Maybe<FormFieldOptionsV1>;
@@ -351,6 +352,7 @@ export type FormV1Request = {
   injury?: InputMaybe<FormFieldOptionsV1Request>;
   maxDepth?: InputMaybe<FormFieldOptionsV1Request>;
   sessionName?: InputMaybe<FormFieldOptionsV1Request>;
+  startTime?: InputMaybe<FormFieldOptionsV1Request>;
   staticHolds?: InputMaybe<StaticFormV1Request>;
   visibility?: InputMaybe<FormFieldOptionsV1Request>;
   waterTemp?: InputMaybe<FormFieldOptionsV1Request>;

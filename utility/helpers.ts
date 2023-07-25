@@ -1,4 +1,5 @@
 export const toTitleCase = (text: string): string => {
-  let result = text.replace(/([A-Z])/g, " $1");
-  return result.charAt(0).toUpperCase() + result.slice(1);
+  return text
+    .replace(/^[-_]*(.)/, (_, c) => c.toUpperCase())
+    .replace(/[-_]+(.)/g, (_, c) => " " + c.toUpperCase());
 };

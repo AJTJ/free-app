@@ -18,6 +18,15 @@ export const FormV1 = gql(`
     }
 
     # GENERAL
+    startTime {
+      isActive
+      fieldOrder
+    }
+    sessionName {
+      isActive
+      fieldOrder
+    }
+
     easeOfEqualization {
       isActive
       fieldOrder

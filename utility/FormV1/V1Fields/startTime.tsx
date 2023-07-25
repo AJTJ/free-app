@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { CoreText, Slider, SmallBtn } from "@/components";
+import { Btn, CoreText, Slider, SmallBtn } from "@/components";
 import { Noop } from "react-hook-form";
 import { StartTimeV1Request } from "@/api/types/types.generated";
 import { InputFieldProps } from "./FieldSwitch";
@@ -35,21 +35,29 @@ export default function StartTime(props: InputFieldProps) {
 
   const value = props.value as StartTimeV1Request;
 
-  console.log("time props", props.value);
+  {
+    /* https:github.com/react-native-datetimepicker/datetimepicker#component-usage-on-ios--android--windows */
+  }
+
+  console.log("mode", mode);
 
   return (
     <>
+      <CoreText>Set the session start time.</CoreText>
       <View>
         {value && (
           <>
-            <CoreText>{new Date(value?.time).toLocaleDateString()}</CoreText>
-            <CoreText>{new Date(value?.time).toLocaleTimeString()}</CoreText>
+            <CoreText>
+              Start Time: {new Date(value?.time).toLocaleTimeString()}
+            </CoreText>
+            <CoreText>
+              Start Date: {new Date(value?.time).toLocaleDateString()}
+            </CoreText>
           </>
         )}
       </View>
 
       <SafeAreaView style={styles.timeSafeArea}>
-        <CoreText>When did this session start?</CoreText>
         <View style={styles.timeContainer}>
           <DateTimePicker
             testID="dateTimePicker"
@@ -59,11 +67,13 @@ export default function StartTime(props: InputFieldProps) {
             onChange={(e, d) => onChange(d)}
           />
         </View>
-        <SmallBtn
-          onPress={switchDateTime}
-          title={`Switch to ${mode ? "date" : "time"}`}
-          type="primary"
-        />
+        <View>
+          <Btn
+            onPress={switchDateTime}
+            title={`Show the ${mode === "date" ? "time" : "date"} picker`}
+            type="primary"
+          />
+        </View>
       </SafeAreaView>
     </>
   );
@@ -150,7 +160,3 @@ const styles = StyleSheet.create({
 //   );
 // }}
 // />
-
-{
-  /* https:github.com/react-native-datetimepicker/datetimepicker#component-usage-on-ios--android--windows */
-}

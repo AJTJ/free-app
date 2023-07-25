@@ -1,3 +1,4 @@
+import { toTitleCase } from "@/utility/helpers";
 import { Picker } from "@react-native-picker/picker";
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
@@ -20,7 +21,7 @@ export const CorePicker = <T extends string>(props: Props<T>) => {
       }
     >
       {props.valueArray.map((e, i) => {
-        return <Picker.Item key={e + i} label={e.toUpperCase()} value={e} />;
+        return <Picker.Item key={e + i} label={toTitleCase(e)} value={e} />;
       })}
     </Picker>
   );

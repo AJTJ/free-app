@@ -28,8 +28,8 @@ export class FormV1Helper {
     return {
       // INDIVIDUAL
       deepDives: undefined,
-      staticHolds: undefined,
       dynamicDives: undefined,
+      staticHolds: undefined,
 
       // ACTIVITY-BASED
       disciplineAndMaxDepth: { isActive: false, fieldOrder: Infinity },
@@ -37,13 +37,14 @@ export class FormV1Helper {
 
       // GENERAL
       startTime: { isActive: true, fieldOrder: Infinity },
-      easeOfEqualization: { isActive: false, fieldOrder: Infinity },
+      sessionName: { isActive: false, fieldOrder: Infinity },
       endTime: { isActive: false, fieldOrder: Infinity },
+      easeOfEqualization: { isActive: false, fieldOrder: Infinity },
+      visibility: { isActive: false, fieldOrder: Infinity },
       generalFeeling: { isActive: false, fieldOrder: Infinity },
       injury: { isActive: false, fieldOrder: Infinity },
-      sessionName: { isActive: false, fieldOrder: Infinity },
-      visibility: { isActive: false, fieldOrder: Infinity },
       waterTemp: { isActive: false, fieldOrder: Infinity },
+      location: { isActive: false, fieldOrder: Infinity },
 
       // FORM SPECIFIC
     };
@@ -67,18 +68,19 @@ export class FormV1Helper {
     formEntries.forEach(([fieldName, val]) => {
       if (val?.isActive === true) {
         if (myReport[fieldName]) {
-          //@ts-ignore
-          myReport[fieldName] = {
+          const x = myReport[fieldName];
+
+          (myReport[fieldName] as typeof x) = {
             ...myReport[fieldName],
             isActive: true,
             fieldOrder: val.fieldOrder,
           };
         } else {
-          myReport[fieldName] = {};
-          //@ts-ignore
-          myReport[fieldName].isActive = true;
-          //@ts-ignore
-          myReport[fieldName].fieldOrder = val.fieldOrder;
+          const x = myReport[fieldName];
+          (myReport[fieldName] as typeof x) = {
+            isActive: true,
+            fieldOrder: val.fieldOrder,
+          };
         }
       }
     });

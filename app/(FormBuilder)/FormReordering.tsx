@@ -22,7 +22,7 @@ export default function FormReordering() {
   let incomingForm = formState?.form;
   const formName = formState?.formName;
   let [sortedForm, setSortedForm] = useState(
-    FormV1Helper.getSortedFields({ ...incomingForm })
+    FormV1Helper.getSortedFormFields({ ...incomingForm })
   );
   const { insertFormMutation } = useInsertForm();
 

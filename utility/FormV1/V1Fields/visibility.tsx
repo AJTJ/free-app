@@ -10,7 +10,7 @@ export default function Visibility(props: InputFieldProps) {
     let inputVal = v;
     let newValue: VisibilityV1Request = {
       value: inputVal,
-      fieldOrder: props.form.visibility?.fieldOrder || Infinity,
+      fieldOrder: props.report.visibility?.fieldOrder || Infinity,
     };
     if (props.onChange) {
       props.onChange(newValue);

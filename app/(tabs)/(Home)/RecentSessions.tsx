@@ -12,8 +12,8 @@ export const RecentSessions = () => {
 
   let myNodes = [...(data?.apneaSessions?.nodes || [])];
   const sortedSessions = myNodes?.sort((a, b) => {
-    let aDate = new Date(a.startTime as unknown as string);
-    let bDate = new Date(b.startTime as unknown as string);
+    let aDate = new Date(a.reportData.startTime as unknown as string);
+    let bDate = new Date(b.reportData.startTime as unknown as string);
     return aDate > bDate ? -1 : 1;
   });
 

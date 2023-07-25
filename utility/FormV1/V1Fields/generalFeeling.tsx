@@ -10,7 +10,7 @@ export default function GeneralFeeling(props: InputFieldProps) {
     let inputVal = v;
     let newValue: GeneralFeelingV1Request = {
       value: inputVal,
-      fieldOrder: props.form.generalFeeling?.fieldOrder || Infinity,
+      fieldOrder: props.report.generalFeeling?.fieldOrder || Infinity,
     };
     if (props.onChange) {
       props.onChange(newValue);

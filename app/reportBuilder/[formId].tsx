@@ -7,13 +7,12 @@ import {
 } from "@/components";
 import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { V1InputField } from "../../utility/FormV1/V1Fields/FieldSwitch";
+import { InputFieldV1 } from "../../utility/FormV1/V1Fields/FieldSwitch";
 import { FormV1Helper } from "@/utility/FormV1/FormV1Helper";
 import {
   ApneaSessionInput,
-  FormRequest,
-  // ReportDetails,
   FormV1Request,
+  ReportRequest,
   ReportV1Request,
 } from "@/api/types/types.generated";
 import { useLocalSearchParams } from "expo-router";
@@ -29,10 +28,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import { toTitleCase } from "@/utility/helpers";
 
 const ReportBuilder = () => {
-  // const { loading, error, data } = useGetForms();
-
-  // console.log("GET FORMS IN REPORT BUILDER", data);
-
   //@ts-ignore required because params are currently complaining
   const { formId } = useLocalSearchParams<{
     formId: string;
@@ -47,13 +42,11 @@ const ReportBuilder = () => {
     },
   });
 
-  // console.log("fragmentData: ", fragmentData);
-
   const { insertSession } = useInsertApneaSession();
   const [mode, setMode] = useState<"date" | "time">("date");
   const [show, setShow] = useState(false);
 
-  type IncomingFormTypes = FormV1Request;
+  type ReportTypes = ReportV1Request;
   type SessionInputTypes = {
     startTime: string;
     endTime?: string | undefined;
@@ -65,7 +58,7 @@ const ReportBuilder = () => {
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm<IncomingFormTypes & SessionInputTypes>({
+  } = useForm<ReportTypes & SessionInputTypes>({
     defaultValues: {
       startTime: new Date(Date.now()).toISOString(),
     },
@@ -82,15 +75,16 @@ const ReportBuilder = () => {
       myForm = FormV1Helper.getEmptyForm();
     }
 
-    const sortedFields = FormV1Helper.getSortedFields(form?.formData || {});
+    const myReport = FormV1Helper.getReportTemplateFromForm(myForm);
+    const sortedFields = FormV1Helper.getSortedReportFields(myReport);
 
-    const onSubmit: SubmitHandler<IncomingFormTypes & SessionInputTypes> = (
+    const onSubmit: SubmitHandler<ReportTypes & SessionInputTypes> = (
       formAndSessionData
     ) => {
       // there is extra data on this object
       let newReport: ReportV1Request = formAndSessionData;
       // let newReport: ReportV1Request = FormV1Helper.convertToRequestForm(formAndSessionData);
-      let sessionReport: FormRequest = {
+      let sessionReport: ReportRequest = {
         v1: newReport,
       };
 
@@ -99,27 +93,7 @@ const ReportBuilder = () => {
         originalFormId: null,
         previousSessionId: null,
         reportData: sessionReport,
-        // startTime: formAndSessionData.startTime,
-        // endTime: formAndSessionData.endTime,
-        // sessionName: newReport.sessionName?.name,
       };
-
-      // let reportDetails: ReportDetails = {
-      //   formId: form.id,
-      //   // TODO: Allow "editing" eventually
-      //   // originalFormId?: InputMaybe<Scalars["UUID"]>;
-      //   // previousReportId?: InputMaybe<Scalars["UUID"]>;
-      // };
-
-      // console.log(
-      //   "REPORT SUBMISSION",
-      //   apneaSessionInput.sessionReport?.v1?.disciplineAndMaxDepth,
-      //   "TYPEOF MAX DEPTH",
-      //   apneaSessionInput.sessionReport?.v1?.disciplineAndMaxDepth?.disciplineMaxDepth?.map(
-      //     (e) => typeof e.maxDepth
-      //   ),
-      //   sessionReport
-      // );
 
       // TODO: Maybe this will be useful for editing?
       // insertReportMutation({variables: {reportInput: newReport, ReportDetails: })
@@ -205,9 +179,9 @@ const ReportBuilder = () => {
                     return (
                       <>
                         <CoreText>{toTitleCase(fieldName)}</CoreText>
-                        <V1InputField
+                        <InputFieldV1
                           name={fieldName}
-                          form={myForm}
+                          report={myReport}
                           {...{
                             onChange,
                             onBlur,
@@ -265,3 +239,20 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
 });
+
+// let reportDetails: ReportDetails = {
+//   formId: form.id,
+//   // TODO: Allow "editing" eventually
+//   // originalFormId?: InputMaybe<Scalars["UUID"]>;
+//   // previousReportId?: InputMaybe<Scalars["UUID"]>;
+// };
+
+// console.log(
+//   "REPORT SUBMISSION",
+//   apneaSessionInput.sessionReport?.v1?.disciplineAndMaxDepth,
+//   "TYPEOF MAX DEPTH",
+//   apneaSessionInput.sessionReport?.v1?.disciplineAndMaxDepth?.disciplineMaxDepth?.map(
+//     (e) => typeof e.maxDepth
+//   ),
+//   sessionReport
+// );

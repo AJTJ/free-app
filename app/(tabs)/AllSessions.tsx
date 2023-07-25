@@ -24,8 +24,6 @@ export default function AllSessions() {
     return aDate > bDate ? -1 : 1;
   });
 
-  console.log("all sessions sorted: ", sortedSessions);
-
   return (
     <LinearGradient>
       {loading && (

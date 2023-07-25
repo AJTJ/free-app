@@ -89,7 +89,7 @@ function FormBuilder() {
                 <View>
                   <CoreText>{fieldName}</CoreText>
                   <Switch
-                    value={value?.isActive}
+                    value={value?.isActive ?? undefined}
                     onChange={() =>
                       onChange({
                         isActive: !value?.isActive,

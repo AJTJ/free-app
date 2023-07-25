@@ -58,11 +58,11 @@ export type DeepDiveFormV1 = {
   discipline?: Maybe<FormFieldOptionsV1>;
   diveTime?: Maybe<FormFieldOptionsV1>;
   earlyTurnDepth?: Maybe<FormFieldOptionsV1>;
-  fieldOrder: Scalars['Int'];
+  fieldOrder?: Maybe<Scalars['Int']>;
   generalFeeling?: Maybe<FormFieldOptionsV1>;
   goalDepth?: Maybe<FormFieldOptionsV1>;
   incidents?: Maybe<FormFieldOptionsV1>;
-  isActive: Scalars['Boolean'];
+  isActive?: Maybe<Scalars['Boolean']>;
   levelOfExertion?: Maybe<FormFieldOptionsV1>;
   levelOfHypoxia?: Maybe<FormFieldOptionsV1>;
   mouthFillChargeDepths?: Maybe<FormFieldOptionsV1>;
@@ -78,11 +78,11 @@ export type DeepDiveFormV1Request = {
   discipline?: InputMaybe<FormFieldOptionsV1Request>;
   diveTime?: InputMaybe<FormFieldOptionsV1Request>;
   earlyTurnDepth?: InputMaybe<FormFieldOptionsV1Request>;
-  fieldOrder: Scalars['Int'];
+  fieldOrder?: InputMaybe<Scalars['Int']>;
   generalFeeling?: InputMaybe<FormFieldOptionsV1Request>;
   goalDepth?: InputMaybe<FormFieldOptionsV1Request>;
   incidents?: InputMaybe<FormFieldOptionsV1Request>;
-  isActive: Scalars['Boolean'];
+  isActive?: InputMaybe<Scalars['Boolean']>;
   levelOfExertion?: InputMaybe<FormFieldOptionsV1Request>;
   levelOfHypoxia?: InputMaybe<FormFieldOptionsV1Request>;
   mouthFillChargeDepths?: InputMaybe<FormFieldOptionsV1Request>;
@@ -105,9 +105,11 @@ export type DeepDiveReportFieldsV1 = {
   discipline?: Maybe<DisciplinesEnumV1>;
   diveTime?: Maybe<Scalars['NaiveTime']>;
   earlyTurnDepth?: Maybe<Scalars['Int']>;
+  fieldOrder?: Maybe<Scalars['Int']>;
   generalFeeling?: Maybe<Scalars['Int']>;
   goalDepth?: Maybe<Scalars['Int']>;
   injuries?: Maybe<Array<InjuryEnumV1>>;
+  isActive?: Maybe<Scalars['Boolean']>;
   levelOfExertion?: Maybe<Scalars['Int']>;
   levelOfHypoxia?: Maybe<Scalars['Int']>;
   mouthFillChargeDepths?: Maybe<Array<Scalars['Int']>>;
@@ -124,9 +126,11 @@ export type DeepDiveReportV1Request = {
   discipline?: InputMaybe<DisciplinesEnumV1>;
   diveTime?: InputMaybe<Scalars['NaiveTime']>;
   earlyTurnDepth?: InputMaybe<Scalars['Int']>;
+  fieldOrder?: InputMaybe<Scalars['Int']>;
   generalFeeling?: InputMaybe<Scalars['Int']>;
   goalDepth?: InputMaybe<Scalars['Int']>;
   injuries?: InputMaybe<Array<InjuryEnumV1>>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
   levelOfExertion?: InputMaybe<Scalars['Int']>;
   levelOfHypoxia?: InputMaybe<Scalars['Int']>;
   mouthFillChargeDepths?: InputMaybe<Array<Scalars['Int']>>;
@@ -151,11 +155,13 @@ export type DisciplineAndMaxDepthV1 = {
   __typename?: 'DisciplineAndMaxDepthV1';
   disciplineMaxDepth?: Maybe<Array<InnerDisciplineMaxDepthV1>>;
   fieldOrder?: Maybe<Scalars['Int']>;
+  isActive?: Maybe<Scalars['Boolean']>;
 };
 
 export type DisciplineAndMaxDepthV1Request = {
   disciplineMaxDepth?: InputMaybe<Array<InnerDisciplineMaxDepthV1Request>>;
   fieldOrder?: InputMaybe<Scalars['Int']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
 };
 
 export enum DisciplinesEnumV1 {
@@ -196,8 +202,8 @@ export type DynamicFormV1 = {
   __typename?: 'DynamicFormV1';
   activityOfTheMind?: Maybe<FormFieldOptionsV1>;
   averageHeartRate?: Maybe<FormFieldOptionsV1>;
-  fieldOrder: Scalars['Int'];
-  isActive: Scalars['Boolean'];
+  fieldOrder?: Maybe<Scalars['Int']>;
+  isActive?: Maybe<Scalars['Boolean']>;
   levelOfHypoxia?: Maybe<FormFieldOptionsV1>;
   levelOfRelaxation?: Maybe<FormFieldOptionsV1>;
   reasonForStopping?: Maybe<FormFieldOptionsV1>;
@@ -208,8 +214,8 @@ export type DynamicFormV1 = {
 export type DynamicFormV1Request = {
   activityOfTheMind?: InputMaybe<FormFieldOptionsV1Request>;
   averageHeartRate?: InputMaybe<FormFieldOptionsV1Request>;
-  fieldOrder: Scalars['Int'];
-  isActive: Scalars['Boolean'];
+  fieldOrder?: InputMaybe<Scalars['Int']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
   levelOfHypoxia?: InputMaybe<FormFieldOptionsV1Request>;
   levelOfRelaxation?: InputMaybe<FormFieldOptionsV1Request>;
   reasonForStopping?: InputMaybe<FormFieldOptionsV1Request>;
@@ -224,13 +230,15 @@ export enum DynamicIncidentsEnumV1 {
 
 export type DynamicReportFieldV1 = {
   __typename?: 'DynamicReportFieldV1';
-  dynamicDives: Array<DynamicReportFieldsV1>;
+  dynamicDives?: Maybe<Array<DynamicReportFieldsV1>>;
   fieldOrder?: Maybe<Scalars['Int']>;
+  isActive?: Maybe<Scalars['Boolean']>;
 };
 
 export type DynamicReportFieldV1Request = {
-  dynamicDives: Array<DynamicReportFieldsV1Request>;
+  dynamicDives?: InputMaybe<Array<DynamicReportFieldsV1Request>>;
   fieldOrder?: InputMaybe<Scalars['Int']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type DynamicReportFieldsV1 = {
@@ -238,9 +246,11 @@ export type DynamicReportFieldsV1 = {
   achievedDistance?: Maybe<Scalars['Int']>;
   discipline?: Maybe<DisciplinesEnumV1>;
   diveTime?: Maybe<Scalars['NaiveTime']>;
+  fieldOrder?: Maybe<Scalars['Int']>;
   generalFeeling?: Maybe<Scalars['Int']>;
   goalDistance?: Maybe<Scalars['Int']>;
   incidents?: Maybe<Array<DynamicIncidentsEnumV1>>;
+  isActive?: Maybe<Scalars['Boolean']>;
   reasonForEnding?: Maybe<Array<TurnReasonsEnumV1>>;
 };
 
@@ -248,33 +258,37 @@ export type DynamicReportFieldsV1Request = {
   achievedDistance?: InputMaybe<Scalars['Int']>;
   discipline?: InputMaybe<DisciplinesEnumV1>;
   diveTime?: InputMaybe<Scalars['NaiveTime']>;
+  fieldOrder?: InputMaybe<Scalars['Int']>;
   generalFeeling?: InputMaybe<Scalars['Int']>;
   goalDistance?: InputMaybe<Scalars['Int']>;
   incidents?: InputMaybe<Array<DynamicIncidentsEnumV1>>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
   reasonForEnding?: InputMaybe<Array<TurnReasonsEnumV1>>;
 };
 
 export type EaseOfEqualizationRequest = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
-  isUsed?: InputMaybe<Scalars['Boolean']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
   value?: InputMaybe<Scalars['Int']>;
 };
 
 export type EaseOfEqualizationV1 = {
   __typename?: 'EaseOfEqualizationV1';
   fieldOrder?: Maybe<Scalars['Int']>;
-  isUsed?: Maybe<Scalars['Boolean']>;
+  isActive?: Maybe<Scalars['Boolean']>;
   value?: Maybe<Scalars['Int']>;
 };
 
 export type EndTimeV1 = {
   __typename?: 'EndTimeV1';
   fieldOrder?: Maybe<Scalars['Int']>;
+  isActive?: Maybe<Scalars['Boolean']>;
   time?: Maybe<Scalars['DateTime']>;
 };
 
 export type EndTimeV1Request = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
   time?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -296,13 +310,13 @@ export type FormDetails = {
 
 export type FormFieldOptionsV1 = {
   __typename?: 'FormFieldOptionsV1';
-  fieldOrder: Scalars['Int'];
-  isActive: Scalars['Boolean'];
+  fieldOrder?: Maybe<Scalars['Int']>;
+  isActive?: Maybe<Scalars['Boolean']>;
 };
 
 export type FormFieldOptionsV1Request = {
-  fieldOrder: Scalars['Int'];
-  isActive: Scalars['Boolean'];
+  fieldOrder?: InputMaybe<Scalars['Int']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type FormRequest = {
@@ -345,13 +359,13 @@ export type FormV1Request = {
 export type GeneralFeelingV1 = {
   __typename?: 'GeneralFeelingV1';
   fieldOrder?: Maybe<Scalars['Int']>;
-  isUsed?: Maybe<Scalars['Boolean']>;
+  isActive?: Maybe<Scalars['Boolean']>;
   value?: Maybe<Scalars['Int']>;
 };
 
 export type GeneralFeelingV1Request = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
-  isUsed?: InputMaybe<Scalars['Boolean']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
   value?: InputMaybe<Scalars['Int']>;
 };
 
@@ -377,13 +391,13 @@ export enum InjuryEnumV1 {
 export type InjuryV1 = {
   __typename?: 'InjuryV1';
   fieldOrder?: Maybe<Scalars['Int']>;
-  isUsed?: Maybe<Scalars['Boolean']>;
+  isActive?: Maybe<Scalars['Boolean']>;
   value?: Maybe<InjuryEnumV1>;
 };
 
 export type InjuryV1Request = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
-  isUsed?: InputMaybe<Scalars['Boolean']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
   value?: InputMaybe<InjuryEnumV1>;
 };
 
@@ -406,13 +420,13 @@ export type Login = {
 export type MaxDepthV1 = {
   __typename?: 'MaxDepthV1';
   fieldOrder?: Maybe<Scalars['Int']>;
-  isUsed?: Maybe<Scalars['Boolean']>;
+  isActive?: Maybe<Scalars['Boolean']>;
   maxDepth?: Maybe<Scalars['Int']>;
 };
 
 export type MaxDepthV1Request = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
-  isUsed?: InputMaybe<Scalars['Boolean']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
   maxDepth?: InputMaybe<Scalars['Int']>;
 };
 
@@ -580,24 +594,26 @@ export type ReportV1Request = {
 export type SessionNameV1 = {
   __typename?: 'SessionNameV1';
   fieldOrder?: Maybe<Scalars['Int']>;
-  isUsed?: Maybe<Scalars['Boolean']>;
+  isActive?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
 };
 
 export type SessionNameV1Request = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
-  isUsed?: InputMaybe<Scalars['Boolean']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
 };
 
 export type StartTimeV1 = {
   __typename?: 'StartTimeV1';
   fieldOrder?: Maybe<Scalars['Int']>;
+  isActive?: Maybe<Scalars['Boolean']>;
   time: Scalars['DateTime'];
 };
 
 export type StartTimeV1Request = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
   time: Scalars['DateTime'];
 };
 
@@ -605,8 +621,8 @@ export type StaticFormV1 = {
   __typename?: 'StaticFormV1';
   activityOfTheMind?: Maybe<FormFieldOptionsV1>;
   averageHeartRate?: Maybe<FormFieldOptionsV1>;
-  fieldOrder: Scalars['Int'];
-  isActive: Scalars['Boolean'];
+  fieldOrder?: Maybe<Scalars['Int']>;
+  isActive?: Maybe<Scalars['Boolean']>;
   levelOfHypoxia?: Maybe<FormFieldOptionsV1>;
   levelOfRelaxation?: Maybe<FormFieldOptionsV1>;
   reasonForStopping?: Maybe<FormFieldOptionsV1>;
@@ -617,8 +633,8 @@ export type StaticFormV1 = {
 export type StaticFormV1Request = {
   activityOfTheMind?: InputMaybe<FormFieldOptionsV1Request>;
   averageHeartRate?: InputMaybe<FormFieldOptionsV1Request>;
-  fieldOrder: Scalars['Int'];
-  isActive: Scalars['Boolean'];
+  fieldOrder?: InputMaybe<Scalars['Int']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
   levelOfHypoxia?: InputMaybe<FormFieldOptionsV1Request>;
   levelOfRelaxation?: InputMaybe<FormFieldOptionsV1Request>;
   reasonForStopping?: InputMaybe<FormFieldOptionsV1Request>;
@@ -629,18 +645,22 @@ export type StaticFormV1Request = {
 export type StaticReportFieldV1 = {
   __typename?: 'StaticReportFieldV1';
   fieldOrder?: Maybe<Scalars['Int']>;
-  staticHolds: Array<StaticReportFieldsV1>;
+  isActive?: Maybe<Scalars['Boolean']>;
+  staticHolds?: Maybe<Array<StaticReportFieldsV1>>;
 };
 
 export type StaticReportFieldV1Request = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
-  staticHolds: Array<StaticReportFieldsV1Request>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
+  staticHolds?: InputMaybe<Array<StaticReportFieldsV1Request>>;
 };
 
 export type StaticReportFieldsV1 = {
   __typename?: 'StaticReportFieldsV1';
   activityOfTheMind?: Maybe<Scalars['Int']>;
   averageHeartRate?: Maybe<Scalars['Int']>;
+  fieldOrder?: Maybe<Scalars['Int']>;
+  isActive?: Maybe<Scalars['Boolean']>;
   levelOfHypoxia?: Maybe<Scalars['Int']>;
   levelOfRelaxation?: Maybe<Scalars['Int']>;
   reasonForStopping?: Maybe<StaticStoppingEnumV1>;
@@ -651,6 +671,8 @@ export type StaticReportFieldsV1 = {
 export type StaticReportFieldsV1Request = {
   activityOfTheMind?: InputMaybe<Scalars['Int']>;
   averageHeartRate?: InputMaybe<Scalars['Int']>;
+  fieldOrder?: InputMaybe<Scalars['Int']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
   levelOfHypoxia?: InputMaybe<Scalars['Int']>;
   levelOfRelaxation?: InputMaybe<Scalars['Int']>;
   reasonForStopping?: InputMaybe<StaticStoppingEnumV1>;
@@ -712,27 +734,27 @@ export type UserInput = {
 export type VisibilityV1 = {
   __typename?: 'VisibilityV1';
   fieldOrder?: Maybe<Scalars['Int']>;
-  isUsed?: Maybe<Scalars['Boolean']>;
+  isActive?: Maybe<Scalars['Boolean']>;
   value?: Maybe<Scalars['Int']>;
 };
 
 export type VisibilityV1Request = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
-  isUsed?: InputMaybe<Scalars['Boolean']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
   value?: InputMaybe<Scalars['Int']>;
 };
 
 export type WaterTempV1 = {
   __typename?: 'WaterTempV1';
   fieldOrder?: Maybe<Scalars['Int']>;
-  isUsed?: Maybe<Scalars['Boolean']>;
+  isActive?: Maybe<Scalars['Boolean']>;
   measurement?: Maybe<TemperatureEnumV1>;
   value?: Maybe<Scalars['Int']>;
 };
 
 export type WaterTempV1Request = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
-  isUsed?: InputMaybe<Scalars['Boolean']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
   measurement?: InputMaybe<TemperatureEnumV1>;
   value?: InputMaybe<Scalars['Int']>;
 };

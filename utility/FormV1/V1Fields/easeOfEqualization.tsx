@@ -10,7 +10,7 @@ export default function Equalization(props: InputFieldProps) {
     let numVal = Number(e);
     let newValue: EaseOfEqualizationRequest = {
       value: numVal,
-      fieldOrder: props.form.easeOfEqualization?.fieldOrder || Infinity,
+      fieldOrder: props.report.easeOfEqualization?.fieldOrder || Infinity,
     };
     if (props.onChange) {
       props.onChange(newValue);

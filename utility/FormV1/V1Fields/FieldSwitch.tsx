@@ -1,9 +1,7 @@
 import React from "react";
-import { StyleSheet } from "react-native";
 import { CoreText, ItemContainer } from "@/components";
 import { Noop } from "react-hook-form";
-import { FormV1Request } from "@/api/types/types.generated";
-import { FormV1Helper } from "@/utility/FormV1/FormV1Helper";
+import { ReportV1Request } from "@/api/types/types.generated";
 import Equalization from "./easeOfEqualization";
 import DisciplineAndMaxDepth from "./disciplineAndMaxDepth";
 import MaxDepth from "./maxDepth";
@@ -17,16 +15,16 @@ import Injury from "./injury";
 // import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
 
 export type InputFieldProps = {
-  name: keyof FormV1Request;
-  form: FormV1Request;
+  name: keyof ReportV1Request;
+  report: ReportV1Request;
   onChange?: (...event: any[]) => void;
   onBlur?: Noop;
-  value: FormV1Request[keyof FormV1Request];
+  value: ReportV1Request[keyof ReportV1Request];
   isDisplay?: boolean;
 };
 
 // FORM UPDATE AREA
-export const V1InputField = (props: InputFieldProps) => {
+export const InputFieldV1 = (props: InputFieldProps) => {
   const renderComponents = () => {
     switch (props.name) {
       case "disciplineAndMaxDepth":
@@ -41,13 +39,9 @@ export const V1InputField = (props: InputFieldProps) => {
         return <MaxDepth {...props} />;
       case "sessionName":
         return <SessionName {...props} />;
-      case "staticApnea":
-        return <CoreText>No component for {props.name} yet</CoreText>;
       case "visibility":
         return <Visibility {...props} />;
       case "waterTemp":
-        return <CoreText>No component for {props.name} yet</CoreText>;
-      case "weather":
         return <CoreText>No component for {props.name} yet</CoreText>;
       default:
         return <CoreText>No component for {props.name} yet</CoreText>;

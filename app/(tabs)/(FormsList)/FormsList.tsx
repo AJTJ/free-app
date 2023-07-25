@@ -26,7 +26,7 @@ export default function FormsList() {
   const displayForms = (formData: FormV1) => {
     let formRequest: FormV1Request =
       FormV1Helper.convertToRequestForm(formData);
-    const sortedFields = FormV1Helper.getSortedFields(formRequest);
+    const sortedFields = FormV1Helper.getSortedFormFields(formRequest);
     return sortedFields.map(([key, value], i) => {
       return (
         value && (
@@ -37,8 +37,6 @@ export default function FormsList() {
       );
     });
   };
-
-  console.log("all forms in forms list", JSON.stringify(data));
 
   return (
     <LinearGradient>

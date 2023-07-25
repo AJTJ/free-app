@@ -1,26 +1,21 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Btn, CoreText, ItemContainer, SmallBtn } from "@/components";
-import { Noop } from "react-hook-form";
-import DropDownPicker from "react-native-dropdown-picker";
+// import { Noop } from "react-hook-form";
+// import DropDownPicker from "react-native-dropdown-picker";
 import {
   DisciplineAndMaxDepthV1Request,
-  DisciplinesEnum,
+  DisciplinesEnumV1,
   InnerDisciplineMaxDepthV1Request,
 } from "@/api/types/types.generated";
 import { InputFieldProps } from "./FieldSwitch";
 import Slider from "@react-native-community/slider";
-import { Picker } from "@react-native-picker/picker";
+// import { Picker } from "@react-native-picker/picker";
 import { CorePicker } from "@/components/pickers";
 
 export default function DisciplineAndMaxDepth(props: InputFieldProps) {
-  const disciplineArray = Object.values(DisciplinesEnum);
-  const disciplineArrayValues = disciplineArray.map((v) => {
-    return { label: v, value: v };
-  });
-  const [pickerOpen, setPickerOpen] = useState(false);
-  const [pickerValue, setPickerValue] = useState(null);
-  const [pickerItems, setPickerItems] = useState(disciplineArrayValues);
+  const disciplineArray = Object.values(DisciplinesEnumV1);
+
   let onDepthChange = (value: number, i: number) => {
     const prevValue = props.value as DisciplineAndMaxDepthV1Request;
 
@@ -32,14 +27,14 @@ export default function DisciplineAndMaxDepth(props: InputFieldProps) {
 
     let newValue: DisciplineAndMaxDepthV1Request = {
       disciplineMaxDepth: discMax,
-      fieldOrder: props.form.disciplineAndMaxDepth?.fieldOrder || Infinity,
+      fieldOrder: props.report.disciplineAndMaxDepth?.fieldOrder || Infinity,
     };
     if (props.onChange) {
       props.onChange(newValue);
     }
   };
 
-  let handleDisciplineChange = (value: DisciplinesEnum, i?: number) => {
+  let handleDisciplineChange = (value: DisciplinesEnumV1, i?: number) => {
     if (i !== undefined) {
       const prevValue = props.value as DisciplineAndMaxDepthV1Request;
       let discMax: InnerDisciplineMaxDepthV1Request[] = [
@@ -48,7 +43,7 @@ export default function DisciplineAndMaxDepth(props: InputFieldProps) {
       discMax[i] = { maxDepth: discMax[i]?.maxDepth || 0, discipline: value };
       let newValue: DisciplineAndMaxDepthV1Request = {
         disciplineMaxDepth: discMax,
-        fieldOrder: props.form.disciplineAndMaxDepth?.fieldOrder || Infinity,
+        fieldOrder: props.report.disciplineAndMaxDepth?.fieldOrder || Infinity,
       };
       if (props.onChange) {
         props.onChange(newValue);
@@ -114,24 +109,12 @@ export default function DisciplineAndMaxDepth(props: InputFieldProps) {
             <ItemContainer borderColor="black">
               {!props.isDisplay && (
                 <>
-                  <CorePicker<DisciplinesEnum>
+                  <CorePicker<DisciplinesEnumV1>
                     value={disciplineVal}
                     handleChange={handleDisciplineChange}
                     valueArray={disciplineArray}
                     parentIndex={i}
                   />
-                  {/* <DropDownPicker
-                    open={pickerOpen}
-                    value={pickerValue}
-                    items={pickerItems}
-                    setOpen={setPickerOpen}
-                    setValue={setPickerValue}
-                    setItems={setPickerItems}
-                    listMode="SCROLLVIEW"
-                    searchable={true}
-                    zIndex={5000}
-                    zIndexInverse={5000}
-                  /> */}
                 </>
               )}
             </ItemContainer>
@@ -155,21 +138,34 @@ export default function DisciplineAndMaxDepth(props: InputFieldProps) {
     </>
   );
 }
-const styles = StyleSheet.create({
-  picker: {},
-  pickerItems: { color: "white" },
-  itemText: {
-    fontSize: 15,
-    margin: 2,
-  },
-  autocompleteContainer: {
-    // Hack required to make the autocomplete
-    // work on Andrdoid
-    flex: 1,
-    left: 0,
-    position: "absolute",
-    right: 0,
-    top: 0,
-    zIndex: 1,
-  },
-});
+// const styles = StyleSheet.create({
+//   picker: {},
+//   pickerItems: { color: "white" },
+//   itemText: {
+//     fontSize: 15,
+//     margin: 2,
+//   },
+//   autocompleteContainer: {
+//     // Hack required to make the autocomplete
+//     // work on Andrdoid
+//     flex: 1,
+//     left: 0,
+//     position: "absolute",
+//     right: 0,
+//     top: 0,
+//     zIndex: 1,
+//   },
+// });
+
+// <DropDownPicker
+//   open={pickerOpen}
+//   value={pickerValue}
+//   items={pickerItems}
+//   setOpen={setPickerOpen}
+//   setValue={setPickerValue}
+//   setItems={setPickerItems}
+//   listMode="SCROLLVIEW"
+//   searchable={true}
+//   zIndex={5000}
+//   zIndexInverse={5000}
+// />;

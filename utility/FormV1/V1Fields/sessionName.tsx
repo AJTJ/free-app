@@ -10,7 +10,7 @@ export default function SessionName(props: InputFieldProps) {
     let inputVal = v;
     let newValue: SessionNameV1Request = {
       name: inputVal,
-      fieldOrder: props.form.sessionName?.fieldOrder || Infinity,
+      fieldOrder: props.report.sessionName?.fieldOrder || Infinity,
     };
     if (props.onChange) {
       props.onChange(newValue);

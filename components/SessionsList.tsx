@@ -1,7 +1,7 @@
 import React from "react";
 import { CoreText } from "@/components/textComponents";
 import { FormV1Helper } from "@/utility/FormV1/FormV1Helper";
-import { FormV1Request } from "@/api/types/types.generated";
+import { FormV1Request, ReportV1Request } from "@/api/types/types.generated";
 import { ItemContainer } from "@/components";
 import { ApneaSessionFragment } from "@/api/apnea_sessions.generated";
 import { View } from "react-native";
@@ -11,20 +11,20 @@ type Props = {
   sortedSessions: ApneaSessionFragment[];
 };
 
-export const SessionsList = (props: Props) => {
-  const getFormEntries = (form: FormV1Request) => {
-    let sortedFields = FormV1Helper.getSortedFields(form);
-    let allFields = sortedFields.map((f, i) => {
-      let fieldKey = f?.[0];
-      return (
-        <View key={fieldKey + i}>
-          {FormV1Helper.getValueElement({ fieldKey, form })}
-        </View>
-      );
-    });
-    return allFields;
-  };
+const getFormEntries = (report: ReportV1Request) => {
+  let sortedFields = FormV1Helper.getSortedReportFields(report);
+  let allFields = sortedFields.map((f, i) => {
+    let fieldKey = f?.[0];
+    return (
+      <View key={fieldKey + i}>
+        {FormV1Helper.getValueElement({ fieldKey, form: report })}
+      </View>
+    );
+  });
+  return allFields;
+};
 
+export const SessionsList = (props: Props) => {
   const handlePress = (sessionId: string) => {
     router.push({
       pathname: "session/[sessionId]",
@@ -34,29 +34,30 @@ export const SessionsList = (props: Props) => {
 
   return (
     <>
-      <CoreText>Gotta fix sessionslist</CoreText>
-      {/* {props.sortedSessions.map((session, i) => {
+      {props.sortedSessions.map((session, i) => {
         return (
           <ItemContainer
             onPress={() => handlePress(session.id)}
             key={session.id + i}
           >
-            {session.sessionName && (
-              <CoreText>Apnea Session Name: {session.sessionName}</CoreText>
+            {session.reportData.sessionName?.name && (
+              <CoreText>
+                Apnea Session Name: {session.reportData.sessionName.name}
+              </CoreText>
             )}
             <CoreText>
-              Session time: {new Date(session.startTime).toLocaleString()}
-              {session.endTime &&
-                " -> " + new Date(session.endTime).toLocaleTimeString()}
+              Session time:{" "}
+              {new Date(session.reportData.startTime.time).toLocaleString()}
+              {session?.reportData?.endTime?.time &&
+                " -> " +
+                  new Date(
+                    session.reportData.endTime.time
+                  ).toLocaleTimeString()}
             </CoreText>
-            {session.report?.reportData &&
-              getFormEntries(
-                FormV1Helper.getRequestForm(session.report?.reportData)
-              )}
+            {getFormEntries(session.reportData)}
           </ItemContainer>
         );
       })}
-      */}
     </>
   );
 };

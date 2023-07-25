@@ -4,6 +4,7 @@ import {
   FormV1Request,
   FormV1,
   EaseOfEqualizationRequest,
+  ReportV1Request,
 } from "@/api/types/types.generated";
 import { omitDeep } from "@apollo/client/utilities";
 import { View } from "react-native";
@@ -23,55 +24,75 @@ All places to update with new/changed fields:
 
 // FIELDS UPDATE HERE
 export class FormV1Helper {
-  static getDefaultForm(): FormV1Request {
+  static getEmptyForm(): FormV1Request {
     return {
-      disciplineAndMaxDepth: {},
-      easeOfEqualization: {},
-      endTime: {},
-      generalFeeling: {},
-      injury: {},
-      maxDepth: {},
-      sessionName: {},
+      // INDIVIDUAL
+      deepDives: undefined,
+      staticHolds: undefined,
+      dynamicDives: undefined,
+
+      // ACTIVITY-BASED
+      disciplineAndMaxDepth: { isActive: false, fieldOrder: Infinity },
+      maxDepth: { isActive: false, fieldOrder: Infinity },
+
+      // GENERAL
+      easeOfEqualization: { isActive: false, fieldOrder: Infinity },
+      endTime: { isActive: false, fieldOrder: Infinity },
+      generalFeeling: { isActive: false, fieldOrder: Infinity },
+      injury: { isActive: false, fieldOrder: Infinity },
+      sessionName: { isActive: false, fieldOrder: Infinity },
+      visibility: { isActive: false, fieldOrder: Infinity },
+      waterTemp: { isActive: false, fieldOrder: Infinity },
+
+      // FORM SPECIFIC
+    };
+  }
+
+  // FIELDS UPDATE HERE
+  static getEmptyReport(): ReportV1Request {
+    return {
+      // FORM SPECIFIC
       startTime: { time: new Date(Date.now()).toISOString() },
-      staticApnea: {},
-      visibility: {},
-      waterTemp: {},
-      weather: {},
     };
   }
 
-  static convertToRequestForm(form: FormV1): FormV1Request {
-    const myForm: FormV1Request = {
-      ...form,
-    };
-
-    let cleanedForm = omitDeep(myForm, "__typename");
-    return cleanedForm;
+  static getReportTemplateFromForm(form: FormV1): ReportV1Request {
+    // iterate over the form and "active" all the relevant report fields.
+    // I could also include a previous report if the user is "editing", because a report may have more fields than the "form"
   }
 
-  static createForm(
-    form_request: Record<
-      keyof FormV1Request,
-      { active: boolean; fieldOrder: number }
-    >
-  ): FormV1Request {
-    let tempForm: FormV1Request = this.getDefaultForm();
-    type ValType = { active: boolean; fieldOrder: number };
+  // static convertToRequestForm(form: FormV1): FormV1Request {
+  //   const myForm: FormV1Request = {
+  //     ...form,
+  //   };
 
-    let formEntries = Object.entries(form_request) as [
-      keyof typeof tempForm,
-      ValType
-    ][];
+  //   let cleanedForm = omitDeep(myForm, "__typename");
+  //   return cleanedForm;
+  // }
 
-    // TODO: fix this TS issue
-    formEntries.forEach(([fieldName, val]) => {
-      if (val.active && tempForm[fieldName]) {
-        tempForm[fieldName] = { fieldOrder: val.fieldOrder, isUsed: true };
-      }
-    });
+  // static createForm(
+  //   form_request: Record<
+  //     keyof FormV1Request,
+  //     { active: boolean; fieldOrder: number }
+  //   >
+  // ): FormV1Request {
+  //   let tempForm: FormV1Request = this.getDefaultForm();
+  //   type ValType = { active: boolean; fieldOrder: number };
 
-    return tempForm;
-  }
+  //   let formEntries = Object.entries(form_request) as [
+  //     keyof typeof tempForm,
+  //     ValType
+  //   ][];
+
+  //   // TODO: fix this TS issue
+  //   formEntries.forEach(([fieldName, val]) => {
+  //     if (val.active && tempForm[fieldName]) {
+  //       tempForm[fieldName] = { fieldOrder: val.fieldOrder, isUsed: true };
+  //     }
+  //   });
+
+  //   return tempForm;
+  // }
 
   static getSortedFields(
     inputForm: FormV1Request
@@ -139,3 +160,21 @@ export class FormV1Helper {
 //     }
 //   });
 // }
+
+// // INDIVIDUAL
+// deepDives: undefined,
+// staticHolds: undefined,
+// dynamicDives: undefined,
+
+// // ACTIVITY-BASED
+// disciplineAndMaxDepth: undefined,
+// maxDepth: undefined,
+
+// // GENERAL
+// easeOfEqualization: undefined,
+// endTime: undefined,
+// generalFeeling: undefined,
+// injury: undefined,
+// sessionName: undefined,
+// visibility: undefined,
+// waterTemp: undefined,

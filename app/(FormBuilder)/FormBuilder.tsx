@@ -17,36 +17,44 @@ import { Switch } from "react-native-gesture-handler";
 import { FormV1Request } from "@/api/types/types.generated";
 
 function FormBuilder() {
-  let emptyForm = FormV1Helper.getDefaultForm();
-  type KeyType = keyof typeof emptyForm;
-  type FieldTypes = Record<KeyType, { active: boolean; fieldOrder: number }>;
-  let fieldDefaults = Object.keys(emptyForm).reduce<FieldTypes>((acc, cur) => {
-    return { ...acc, [cur]: { active: false, fieldOrder: Infinity } };
-  }, {} as FieldTypes);
+  let emptyForm = FormV1Helper.getEmptyForm();
+  // type KeyType = keyof typeof emptyForm;
+  // type FieldTypes = Record<KeyType, { isActive: boolean; fieldOrder: number }>;
+  // let fieldDefaults = Object.keys(emptyForm).reduce<FieldTypes>((acc, cur) => {
+  //   return { ...acc, [cur]: { isActive: false, fieldOrder: Infinity } };
+  // }, {} as FieldTypes);
   type OtherTypes = { formName: string };
   let otherTypeDefaults = { formName: "" };
 
-  type FormTypes = FieldTypes & OtherTypes;
+  type FormTypes = typeof emptyForm & OtherTypes;
+  // type FormTypes = FieldTypes & OtherTypes;
+  // type FormTypes = FieldTypes;
 
   const {
     control,
     handleSubmit,
     formState: { errors: formErrors },
   } = useForm<FormTypes>({
-    defaultValues: { ...fieldDefaults, ...otherTypeDefaults },
+    defaultValues: { ...emptyForm, ...otherTypeDefaults },
   });
 
-  const onSubmit: SubmitHandler<FormTypes> = (formData) => {
-    let newForm = FormV1Helper.createForm(formData);
-    addFormState({ form: newForm, formName: formData.formName });
+  const onSubmit: SubmitHandler<FormTypes> = ({ formName, ...rest }) => {
+    let newForm: FormV1Request = { ...rest };
+    // let newForm = FormV1Helper.createForm(formData);
+    addFormState({ form: newForm, formName });
     router.push({
       pathname: "FormReordering",
     });
   };
 
+  // let fieldsObject = Object.entries(emptyForm) as [
+  //   KeyType,
+  //   { isActive: boolean; fieldOrder: number }
+  // ][];
+
   let fieldsObject = Object.entries(emptyForm) as [
-    KeyType,
-    { active: boolean; fieldOrder: number }
+    keyof typeof emptyForm,
+    { isActive: boolean; fieldOrder: number }
   ][];
 
   return (
@@ -81,11 +89,11 @@ function FormBuilder() {
                 <View>
                   <CoreText>{fieldName}</CoreText>
                   <Switch
-                    value={value?.active}
+                    value={value?.isActive}
                     onChange={() =>
                       onChange({
-                        active: !value.active,
-                        fieldOrder: value.fieldOrder,
+                        isActive: !value?.isActive,
+                        fieldOrder: value?.fieldOrder,
                       })
                     }
                   />

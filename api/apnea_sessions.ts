@@ -4,7 +4,7 @@ export const ApneaSession = gql(`
   fragment ApneaSession on ApneaSession {
     id
     reportData {
-      ...FormResponse
+      ...ReportResponse
     }
     form {
       ...Form

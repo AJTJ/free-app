@@ -30,7 +30,7 @@ export default function FormReordering() {
     const onSubmit = () => {
       let newForm: FormV1Request = {};
       sortedForm.forEach(([key, value], i) => {
-        newForm[key] = { fieldOrder: i };
+        newForm[key] = { isActive: value?.isActive || false, fieldOrder: i };
       });
 
       const formRequest: FormRequest = {

@@ -5,81 +5,45 @@ import { gql } from "@apollo/client";
 // FIELDS UPDATE HERE
 export const FormV1 = gql(`
   fragment FormV1 on FormV1 {
+    # INDIVIDUAL
+
+    # ACTIVITY-BASED
     disciplineAndMaxDepth {
-      disciplineMaxDepth {
-        discipline
-        maxDepth
-      }
-      # default values
+      isActive
       fieldOrder
-      isUsed
-    }
-    easeOfEqualization {
-      value
-      # default values
-      fieldOrder
-      isUsed
-    }
-    endTime {
-      time
-      # default values
-      fieldOrder
-      isUsed
-    }
-    generalFeeling {
-      value
-      # default values
-      fieldOrder
-      isUsed
-    }
-    injury {
-      value
-      # default values
-      fieldOrder
-      isUsed
     }
     maxDepth {
-      maxDepth
-      # default values
+      isActive
       fieldOrder
-      isUsed
     }
-    sessionName {
-      name
-      # default values
+
+    # GENERAL
+    easeOfEqualization {
+      isActive
       fieldOrder
-      isUsed
     }
-    startTime {
-      time
-      # default values
+    endTime {
+      isActive
       fieldOrder
-      isUsed
     }
-    staticApnea {
-      value
-      # default values
+    generalFeeling {
+      isActive
       fieldOrder
-      isUsed
+    }
+    injury {
+      isActive
+      fieldOrder
     }
     visibility {
-      value
-      # default values
+      isActive
       fieldOrder
-      isUsed
     }
     waterTemp {
-      value
-      # default values
+      isActive
       fieldOrder
-      isUsed
     }
-    weather {
-      wind
-      # default values
-      fieldOrder
-      isUsed
-    }
+
+    # FORM SPECIFIC
   }
 `);
 
@@ -123,38 +87,3 @@ export const INSERT_FORM = gql(`
     }
   }
 `);
-
-// export const INSERT_REPORT = gql(`
-//   mutation insertReport($sessionId: UUID!, $reportDetails: ReportDetails!, $reportRequest: FormRequest!) {
-//     insertReport( sessionId: $sessionId, reportDetails: $reportDetails, reportRequest: $reportRequest ) {
-//       ...Report
-//     }
-//   }
-// `);
-
-// export const GET_REPORTS = gql(`
-//   query getReports {
-//     reports(queryParams: {}) {
-//       nodes {
-//         ...Report
-//       }
-//     }
-//   }
-// `);
-
-// export const Report = gql(`
-//   fragment Report on Report {
-//     createdAt
-//     id
-//     isActive
-//     reportData {
-//       ... on FormV1 {
-//         ...FormV1
-//       }
-//     }
-//     form {
-//       ...Form
-//     }
-//     updatedAt
-//   }
-// `);

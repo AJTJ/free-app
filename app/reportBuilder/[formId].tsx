@@ -14,6 +14,7 @@ import {
   FormRequest,
   // ReportDetails,
   FormV1Request,
+  ReportV1Request,
 } from "@/api/types/types.generated";
 import { useLocalSearchParams } from "expo-router";
 import { useInsertApneaSession } from "@/api/logic";
@@ -26,7 +27,6 @@ import { useFragment } from "@apollo/client";
 import { Form } from "@/api/forms";
 import { ScrollView } from "react-native-gesture-handler";
 import { toTitleCase } from "@/utility/helpers";
-import { useGetForms } from "@/api/logic/forms";
 
 const ReportBuilder = () => {
   // const { loading, error, data } = useGetForms();
@@ -77,9 +77,9 @@ const ReportBuilder = () => {
     let myForm: FormV1Request;
 
     if (form.formData) {
-      myForm = FormV1Helper.convertToRequestForm(form?.formData || {});
+      myForm = form.formData;
     } else {
-      myForm = FormV1Helper.getDefaultForm();
+      myForm = FormV1Helper.getEmptyForm();
     }
 
     const sortedFields = FormV1Helper.getSortedFields(form?.formData || {});
@@ -88,7 +88,8 @@ const ReportBuilder = () => {
       formAndSessionData
     ) => {
       // there is extra data on this object
-      let newReport = FormV1Helper.convertToRequestForm(formAndSessionData);
+      let newReport: ReportV1Request = formAndSessionData;
+      // let newReport: ReportV1Request = FormV1Helper.convertToRequestForm(formAndSessionData);
       let sessionReport: FormRequest = {
         v1: newReport,
       };

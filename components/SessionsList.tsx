@@ -1,18 +1,23 @@
 import React from "react";
 import { CoreText } from "@/components/textComponents";
 import { FormV1Helper } from "@/utility/FormV1/FormV1Helper";
-import { FormV1Request, ReportV1Request } from "@/api/types/types.generated";
+import { ReportV1Request } from "@/api/types/types.generated";
 import { ItemContainer } from "@/components";
 import { ApneaSessionFragment } from "@/api/apnea_sessions.generated";
 import { View } from "react-native";
 import { router } from "expo-router";
+import { pipe } from "@/utility/helpers";
 
 type Props = {
   sortedSessions: ApneaSessionFragment[];
 };
 
 const getFormEntries = (report: ReportV1Request) => {
-  let sortedFields = FormV1Helper.getSortedReportFields(report);
+  const sortedFields = pipe(
+    FormV1Helper.cleanReport(report),
+    FormV1Helper.getSortedReportFields
+  );
+
   let allFields = sortedFields.map((f, i) => {
     let fieldKey = f?.[0];
     return (
@@ -35,6 +40,7 @@ export const SessionsList = (props: Props) => {
   return (
     <>
       {props.sortedSessions.map((session, i) => {
+        console.log({ reportData: session.reportData });
         return (
           <ItemContainer
             onPress={() => handlePress(session.id)}
@@ -47,7 +53,8 @@ export const SessionsList = (props: Props) => {
             )}
             <CoreText>
               Session time:{" "}
-              {new Date(session.reportData.startTime.time).toLocaleString()}
+              {session?.reportData?.startTime?.time &&
+                new Date(session.reportData.startTime.time).toLocaleString()}
               {session?.reportData?.endTime?.time &&
                 " -> " +
                   new Date(

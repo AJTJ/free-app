@@ -16,11 +16,7 @@ import { createFragmentRegistry } from "@apollo/client/cache";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { relayStylePagination } from "@apollo/client/utilities";
 import MobileStore from "../storage/SafeStorage";
-import { Login, User } from "../api/auth";
-import { ApneaSession } from "../api/apnea_sessions";
-import { NativeModules, useColorScheme } from "react-native";
-import { Form, FormResponse, FormV1 } from "../api/forms";
-// For top of app
+import { useColorScheme } from "react-native";
 import "react-native-gesture-handler";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
@@ -28,6 +24,11 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
+
+import { ReportV1 } from "@/api/report";
+import { Login, User } from "@/api/auth";
+import { ApneaSession } from "@/api/apnea_sessions";
+import { Form, FormResponse, FormV1 } from "@/api/forms";
 
 // TODO: does this work?
 import "react-native-devsettings";
@@ -90,8 +91,10 @@ const client = new ApolloClient({
     fragments: createFragmentRegistry(gql`
       ${ApneaSession}
       ${FormV1}
+      ${ReportV1}
       ${Form}
       ${FormResponse}
+
       ${Login}
       ${User}
     `),
@@ -99,11 +102,12 @@ const client = new ApolloClient({
   defaultOptions: {
     watchQuery: {
       // fetchPolicy: __DEV__ ? "no-cache" : "cache-and-network",
-      // fetchPolicy: "no-cache",
+      fetchPolicy: "no-cache",
     },
   },
 });
 
+// # ${ReportResponse}
 // # ${Report}
 
 const Layout = () => {

@@ -17,9 +17,6 @@ export const Login = gql(`
     }) {
       nodes {
         ...ApneaSession
-        dives {
-          ...Dive
-        }
       }
       
     }

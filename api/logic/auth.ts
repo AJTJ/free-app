@@ -28,10 +28,11 @@ export const useLogoutUser = () => {
     let res = await logoutUserMutation()
       .catch((e) => console.error(e))
       .then(async (d) => {
-        await userClient
-          .resetStore()
-          .catch((e) => console.error(e))
-          .then((d) => console.log("after store reset", d));
+        // TODO: This is causing a lack of session data on logout and then login
+        // await userClient
+        //   .resetStore()
+        //   .catch((e) => console.error(e))
+        //   .then((d) => console.log("after store reset", d));
         return d;
       });
     return res;

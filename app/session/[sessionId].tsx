@@ -8,7 +8,7 @@ import { ApneaSession } from "@/api/apnea_sessions";
 import { InputFieldV1 } from "../../utility/FormV1/V1Fields/FieldSwitch";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { FormFragment } from "@/api/forms.generated";
+import { pipe } from "@/utility/helpers";
 
 export default function Session() {
   //@ts-ignore required because params are currently complaining
@@ -27,7 +27,15 @@ export default function Session() {
 
   if (complete) {
     const report = sessionData.reportData;
-    const sortedFields = FormV1Helper.getSortedReportFields(report);
+
+    console.log("In single session REPORT:", report);
+    console.log("In single session: SESSION", sessionData);
+
+    const sortedFields = pipe(
+      FormV1Helper.cleanReport(report),
+      FormV1Helper.getSortedReportFields
+    );
+    // const sortedFields = FormV1Helper.getSortedReportFields(report);
 
     const handleOnPress = () => {
       router.push({

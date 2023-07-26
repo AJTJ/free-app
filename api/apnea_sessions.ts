@@ -4,7 +4,9 @@ export const ApneaSession = gql(`
   fragment ApneaSession on ApneaSession {
     id
     reportData {
-      ...ReportResponse
+      ... on ReportV1 {
+        ...ReportV1
+      }
     }
     form {
       ...Form
@@ -57,19 +59,3 @@ export const GET_APNEA_SESSIONS = gql(`
     }
   }
 `);
-
-// export const INSERT_PREPOPULATED_APNEA_SESSION = gql(`
-//   mutation insertPrepopulatedApneaSession {
-//     insertApneaSession(
-//       apneaSessionInput: {
-//         formRequest: {},
-//         startTime: "2015-07-01T08:59:60.123Z"
-//         endTime: "2015-07-01T08:59:60.123Z"
-//         sessionName: "oog"
-
-//       }
-//     ) {
-//       ...ApneaSessionWithDives
-//     }
-//   }
-// `);

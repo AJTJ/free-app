@@ -65,6 +65,9 @@ export const ReportInputs = ({
       reportData: sessionReport,
     };
 
+    console.log("ON SUBMIT", apneaSessionInput);
+    console.log("ON SUBMIT REPORT DATA", apneaSessionInput.reportData);
+
     // TODO: Maybe this will be useful for editing?
     // insertReportMutation({variables: {reportInput: newReport, ReportDetails: })
     insertSession({ variables: { apneaSessionInput } })

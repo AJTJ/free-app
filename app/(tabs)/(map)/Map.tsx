@@ -1,4 +1,3 @@
-import { CoreText, LinearGradient } from "@/components";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import MapLibreGL from "@maplibre/maplibre-react-native";

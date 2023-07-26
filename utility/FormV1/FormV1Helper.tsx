@@ -3,8 +3,9 @@ import React from "react";
 import {
   FormV1Request,
   FormV1,
-  EaseOfEqualizationRequest,
   ReportV1Request,
+  EaseOfEqualizationV1Request,
+  ReportV1,
 } from "@/api/types/types.generated";
 import { omitDeep } from "@apollo/client/utilities";
 import { View } from "react-native";
@@ -118,6 +119,11 @@ export class FormV1Helper {
     return sortedFields;
   }
 
+  static cleanReport(report: ReportV1): ReportV1Request {
+    let cleanedReport: ReportV1Request = omitDeep(report, "__typename");
+    return cleanedReport;
+  }
+
   static getSortedReportFields(
     report: ReportV1Request
   ): [keyof ReportV1Request, ReportV1Request[keyof ReportV1Request]][] {
@@ -148,7 +154,7 @@ export class FormV1Helper {
     let form = props.form;
     switch (key) {
       case "easeOfEqualization":
-        let value = form?.[key] as EaseOfEqualizationRequest;
+        let value = form?.[key] as EaseOfEqualizationV1Request;
         return (
           <View>
             <CoreText>{toTitleCase(key)}</CoreText>

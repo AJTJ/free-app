@@ -40,6 +40,8 @@ export default function AllSessions() {
       ) : (
         <SessionsList sortedSessions={sortedSessions} />
       )}
+
+      <SessionsList sortedSessions={sortedSessions} />
     </LinearGradient>
   );
 }

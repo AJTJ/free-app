@@ -156,10 +156,10 @@ export const ReportV1 = gql(`
   }
 `);
 
-export const ReportResponse = gql(`
-  fragment ReportResponse on ReportResponse {
-      ... on ReportV1 {
-        ...ReportV1
-      }
-  }
-`);
+// export const ReportResponse = gql(`
+//   fragment ReportResponse on ReportResponse {
+//       ... on ReportV1 {
+//         ...ReportV1
+//       }
+//   }
+// `);

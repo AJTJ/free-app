@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Btn, CoreText, ItemContainer, Slider, SmallBtn } from "@/components";
 import { Noop } from "react-hook-form";
-import { EaseOfEqualizationRequest } from "@/api/types/types.generated";
+import { EaseOfEqualizationV1Request } from "@/api/types/types.generated";
 import { InputFieldProps } from "./FieldSwitch";
 
 export default function Equalization(props: InputFieldProps) {
   let onChange = (e: number) => {
     let numVal = Number(e);
-    let newValue: EaseOfEqualizationRequest = {
+    let newValue: EaseOfEqualizationV1Request = {
       value: numVal,
       fieldOrder: props.report.easeOfEqualization?.fieldOrder || Infinity,
     };
@@ -16,7 +16,7 @@ export default function Equalization(props: InputFieldProps) {
       props.onChange(newValue);
     }
   };
-  const value = props.value as EaseOfEqualizationRequest;
+  const value = props.value as EaseOfEqualizationV1Request;
   return (
     <View>
       <CoreText>How was it equalizing today?</CoreText>

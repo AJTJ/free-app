@@ -6,26 +6,64 @@ export const ReportV1 = gql(`
 
     # INDIVIDUAL
 
+    # DEPTH DIVES
     deepDives {
       dives {
-        discipline
-        goalDepth
-        achievedDepth
+        discipline {
+          discipline
+          # default values
+          isActive
+          fieldOrder    
+        }
+        goalDepth {
+          depth
+          # default values
+          isActive
+          fieldOrder    
+        }
+        achievedDepth {
+          depth
+          # default values
+          isActive
+          fieldOrder    
+        }
       }
       # default values
       isActive
       fieldOrder
     }
+
+    # DYNAMIC DIVES 
+
     dynamicDives {
       dives {
-        discipline
-        goalDistance
-        achievedDistance
+        discipline {
+          discipline
+          # default values
+          isActive
+          fieldOrder    
+        }
+        goalDistance {
+          distance
+          # default values
+          isActive
+          fieldOrder    
+        }
+        achievedDistance {
+          distance
+          # default values
+          isActive
+          fieldOrder    
+        }
       }
       # default values
       isActive
       fieldOrder
     }
+
+    # STATIC HOLDS
+
+    
     staticHolds {
       staticHolds {
         timeGoal {

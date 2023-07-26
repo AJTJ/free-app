@@ -12,8 +12,6 @@ MapLibreGL.setAccessToken(null);
 
 export default function Map() {
   return (
-    // <LinearGradient>
-
     <View style={styles.page}>
       <MapLibreGL.MapView
         style={styles.map}
@@ -21,7 +19,6 @@ export default function Map() {
         styleURL="https://demotiles.maplibre.org/style.json"
       />
     </View>
-    // </LinearGradient>
   );
 }
 

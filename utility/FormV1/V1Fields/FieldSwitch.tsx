@@ -27,6 +27,7 @@ export type InputFieldProps = {
 // FORM UPDATE AREA
 export const InputFieldV1 = (props: InputFieldProps) => {
   const renderComponents = () => {
+    console.log(props.name);
     switch (props.name) {
       case "disciplineAndMaxDepth":
         return <DisciplineAndMaxDepth {...props} />;

@@ -92,7 +92,6 @@ export default function Landing() {
           router.push("(landing)/verifyEmail");
         });
     } else {
-      console.log("hitting log");
       await loginUser({
         variables: { email: formData.email, password: formData.password },
       })
@@ -101,7 +100,6 @@ export default function Landing() {
         })
         .then((res) => {
           if (res?.data?.login) {
-            console.log("LOGIN USER");
             router.push("Home");
           }
         });

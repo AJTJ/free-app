@@ -106,11 +106,23 @@ https://dev.to/lico/react-apollo-refresh-tokens-5h0k
 - mmapbox
   - https://github.com/rnmapbox/maps
 - maplibre
-  - https://github.com/maplibre/maplibre-react-native
+  - React Native Lib
+    - https://github.com/maplibre/maplibre-react-native
+  - Docs
+    - https://maplibre.org/maplibre-gl-js/docs/
+  - GeoJSON
+    - https://geojson.org/
 - GENERAL
   - https://github.com/onthegomap/planetiler
   - https://mapnik.org/
   - https://github.com/mapnik/mapnik
+- POSTGis implementations
+  - POSTgis support for geographic data with postgres
+    - https://postgis.net/
+  - POSTGIS version of postgres
+    - https://registry.hub.docker.com/r/postgis/postgis/
+  - regular postgres
+    - https://registry.hub.docker.com/_/postgres/
 
 ### Eventual deployment
 - EAS

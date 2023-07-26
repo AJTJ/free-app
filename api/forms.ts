@@ -6,6 +6,20 @@ import { gql } from "@apollo/client";
 export const FormV1 = gql(`
   fragment FormV1 on FormV1 {
     # INDIVIDUAL
+    deepDives {
+      isActive
+      fieldOrder
+    }
+
+    dynamicDives {
+      isActive
+      fieldOrder
+    }
+
+    staticHolds {
+      isActive
+      fieldOrder
+    }
 
     # ACTIVITY-BASED
     disciplineAndMaxDepth {

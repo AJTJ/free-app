@@ -3,12 +3,12 @@ import React from "react";
 import { FormV1Helper } from "@/utility/FormV1/FormV1Helper";
 import { router, useLocalSearchParams } from "expo-router";
 import { useFragment } from "@apollo/client";
-import { ApneaSessionFragment } from "@/api/apnea_sessions.generated";
-import { ApneaSession } from "@/api/apnea_sessions";
+import { ApneaSession } from "@/api/apneaSessions";
 import { InputFieldV1 } from "../../utility/FormV1/V1Fields/FieldSwitch";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { pipe } from "@/utility/helpers";
+import { ApneaSessionFragment } from "@/api/apneaSessions.generated";
 
 export default function Session() {
   //@ts-ignore required because params are currently complaining
@@ -27,9 +27,6 @@ export default function Session() {
 
   if (complete) {
     const report = sessionData.reportData;
-
-    console.log("In single session REPORT:", report);
-    console.log("In single session: SESSION", sessionData);
 
     const sortedFields = pipe(
       FormV1Helper.cleanReport(report),

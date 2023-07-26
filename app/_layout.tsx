@@ -27,12 +27,17 @@ import {
 
 import { ReportV1 } from "@/api/report";
 import { Login, User } from "@/api/auth";
-import { ApneaSession } from "@/api/apnea_sessions";
+import { ApneaSession } from "@/api/apneaSessions";
 import { Form, FormResponse, FormV1 } from "@/api/forms";
 
 // TODO: does this work?
 import "react-native-devsettings";
 import "expo-dev-client";
+import {
+  DeepDiveReportFieldsV1,
+  DynamicReportFieldsV1,
+  StaticReportFieldsV1,
+} from "@/api/uniqueApneas";
 
 // NativeModules.DevSettings.setIsDebuggingRemotely(true);
 
@@ -94,9 +99,11 @@ const client = new ApolloClient({
       ${ReportV1}
       ${Form}
       ${FormResponse}
-
       ${Login}
       ${User}
+      ${DeepDiveReportFieldsV1}
+      ${DynamicReportFieldsV1}
+      ${StaticReportFieldsV1}
     `),
   }),
   defaultOptions: {

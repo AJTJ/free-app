@@ -17,20 +17,14 @@ type ValueElementProps = {
   form: ReportV1Request;
 };
 
-/*
-All places to update with new/changed fields:
-- global find: FIELDS UPDATE HERE
-- forms.ts
-*/
-
 // FIELDS UPDATE HERE
 export class FormV1Helper {
   static getEmptyForm(): FormV1Request {
     return {
       // INDIVIDUAL
-      deepDives: undefined,
-      dynamicDives: undefined,
-      staticHolds: undefined,
+      deepDives: { isActive: false, fieldOrder: Infinity },
+      dynamicDives: { isActive: false, fieldOrder: Infinity },
+      staticHolds: { isActive: false, fieldOrder: Infinity },
 
       // ACTIVITY-BASED
       disciplineAndMaxDepth: { isActive: false, fieldOrder: Infinity },
@@ -64,10 +58,19 @@ export class FormV1Helper {
     type ValType = { isActive: boolean; fieldOrder: number };
 
     let form = omitDeep(responseForm, "__typename");
-    let formEntries = Object.entries(form) as [keyof typeof form, ValType][];
+
+    // This is ACTUALLY what it is
+    // let formEntries = Object.entries(form) as [keyof typeof form, ValType][];
+
+    // this feels like a TS hack
+    let formEntries = Object.entries(form) as [
+      keyof typeof myReport,
+      ValType
+    ][];
 
     formEntries.forEach(([fieldName, val]) => {
       if (val?.isActive === true) {
+        // I NEED to check here, because it may not exist
         if (myReport[fieldName]) {
           const x = myReport[fieldName];
 

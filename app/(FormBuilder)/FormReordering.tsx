@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-// import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Btn, CoreText, ItemContainer, LinearGradient } from "@/components";
-// import { RootStackParamList } from "../../root";
 import DraggableFlatList, {
   ScaleDecorator,
 } from "react-native-draggable-flatlist";
@@ -14,7 +12,6 @@ import {
 } from "@/api/types/types.generated";
 import { router } from "expo-router";
 import { useInsertForm } from "@/api/logic/forms";
-import { useSnapshot } from "valtio";
 import { formStore, useLooseSnapshot } from "@/state";
 
 export default function FormReordering() {

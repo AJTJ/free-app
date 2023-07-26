@@ -17,13 +17,6 @@ export const RecentSessions = () => {
     return aDate > bDate ? -1 : 1;
   });
 
-  console.log("sorted in recent");
-
-  sortedSessions.map((s) => {
-    console.log("A SESH Report Data", s.reportData);
-    console.log("A SESH Form Data", s.form);
-  });
-
   return (
     <>
       {loading && (

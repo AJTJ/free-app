@@ -40,7 +40,6 @@ export const SessionsList = (props: Props) => {
   return (
     <>
       {props.sortedSessions.map((session, i) => {
-        console.log({ reportData: session.reportData });
         return (
           <ItemContainer
             onPress={() => handlePress(session.id)}

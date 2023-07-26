@@ -39,8 +39,6 @@ export default function StartTime(props: InputFieldProps) {
     /* https:github.com/react-native-datetimepicker/datetimepicker#component-usage-on-ios--android--windows */
   }
 
-  console.log("mode", mode);
-
   return (
     <>
       <CoreText>Set the session start time.</CoreText>

@@ -18,17 +18,11 @@ import { FormV1Request } from "@/api/types/types.generated";
 
 function FormBuilder() {
   let emptyForm = FormV1Helper.getEmptyForm();
-  // type KeyType = keyof typeof emptyForm;
-  // type FieldTypes = Record<KeyType, { isActive: boolean; fieldOrder: number }>;
-  // let fieldDefaults = Object.keys(emptyForm).reduce<FieldTypes>((acc, cur) => {
-  //   return { ...acc, [cur]: { isActive: false, fieldOrder: Infinity } };
-  // }, {} as FieldTypes);
+
   type OtherTypes = { formName: string };
   let otherTypeDefaults = { formName: "" };
 
   type FormTypes = typeof emptyForm & OtherTypes;
-  // type FormTypes = FieldTypes & OtherTypes;
-  // type FormTypes = FieldTypes;
 
   const {
     control,
@@ -46,11 +40,6 @@ function FormBuilder() {
       pathname: "FormReordering",
     });
   };
-
-  // let fieldsObject = Object.entries(emptyForm) as [
-  //   KeyType,
-  //   { isActive: boolean; fieldOrder: number }
-  // ][];
 
   let fieldsObject = Object.entries(emptyForm) as [
     keyof typeof emptyForm,
@@ -120,3 +109,17 @@ function FormBuilder() {
 }
 
 export default FormBuilder;
+
+// let fieldsObject = Object.entries(emptyForm) as [
+//   KeyType,
+//   { isActive: boolean; fieldOrder: number }
+// ][];
+
+// type FormTypes = FieldTypes & OtherTypes;
+// type FormTypes = FieldTypes;
+
+// type KeyType = keyof typeof emptyForm;
+// type FieldTypes = Record<KeyType, { isActive: boolean; fieldOrder: number }>;
+// let fieldDefaults = Object.keys(emptyForm).reduce<FieldTypes>((acc, cur) => {
+//   return { ...acc, [cur]: { isActive: false, fieldOrder: Infinity } };
+// }, {} as FieldTypes);

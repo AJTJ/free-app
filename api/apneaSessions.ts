@@ -14,23 +14,28 @@ export const ApneaSession = gql(`
   }
 `);
 
-export const Dive = gql(`
-  fragment Dive on Dive {
+export const UniqueApnea = gql(`
+  fragment UniqueApnea on UniqueApnea {
     id
-    depth
-    disciplineType
-    distance
-    diveName
-    diveTime
-    updatedAt   
+    activityData {
+      ... on DeepDiveReportFieldsV1 {
+        ...DeepDiveReportFieldsV1
+      }
+      ... on DynamicReportFieldsV1 {
+        ...DynamicReportFieldsV1
+      }
+      ... on StaticReportFieldsV1 {
+        ...StaticReportFieldsV1
+      }
+    }
   }
 `);
 
-export const ApneaSessionWithDives = gql(`
-  fragment ApneaSessionWithDives on ApneaSession {
+export const ApneaSessionWithUniqueApneas = gql(`
+  fragment ApneaSessionWithUniqueApneas on ApneaSession {
     ...ApneaSession
-    dives {
-      ...Dive
+    uniqueApneas {
+      ...UniqueApnea
     }
   }
 `);
@@ -38,7 +43,7 @@ export const ApneaSessionWithDives = gql(`
 export const MyApneaSessionConnection = gql(`
 fragment MyApneaSessionConnection on ApneaSessionConnection {
   nodes {
-    ...ApneaSessionWithDives
+    ...ApneaSessionWithUniqueApneas
   }
 }
 `);
@@ -47,7 +52,7 @@ export const INSERT_APNEA_SESSION = gql(`
   mutation insertApneaSession($apneaSessionInput: ApneaSessionInput!) {
     insertApneaSession(apneaSessionInput: $apneaSessionInput)
      {
-      ...ApneaSessionWithDives
+      ...ApneaSessionWithUniqueApneas
     }
   }
 `);

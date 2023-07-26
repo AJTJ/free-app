@@ -18,11 +18,11 @@ export type Scalars = {
 export type ApneaSession = {
   __typename?: 'ApneaSession';
   createdAt: Scalars['DateTime'];
-  dives?: Maybe<Array<Dive>>;
   form?: Maybe<Form>;
   id: Scalars['UUID'];
   isActive: Scalars['Boolean'];
   reportData: ReportResponse;
+  uniqueApneas?: Maybe<Array<UniqueApnea>>;
   updatedAt: Scalars['DateTime'];
 };
 
@@ -50,6 +50,7 @@ export type ApneaSessionInput = {
   originalFormId?: InputMaybe<Scalars['UUID']>;
   previousSessionId?: InputMaybe<Scalars['UUID']>;
   reportData: ReportRequest;
+  uniqueApneaActivities?: InputMaybe<Array<UniqueApneaActivityRequest>>;
 };
 
 export type CoordinatesV1 = {
@@ -135,19 +136,6 @@ export enum DeepDiveIncidentsEnumV1 {
   BuddyInjury = 'BUDDY_INJURY',
   BuoyOrPlatformIssues = 'BUOY_OR_PLATFORM_ISSUES'
 }
-
-export type DeepDiveReportFieldV1 = {
-  __typename?: 'DeepDiveReportFieldV1';
-  dives?: Maybe<Array<DeepDiveReportFieldsV1>>;
-  fieldOrder?: Maybe<Scalars['Int']>;
-  isActive?: Maybe<Scalars['Boolean']>;
-};
-
-export type DeepDiveReportFieldV1Request = {
-  dives?: InputMaybe<Array<DeepDiveReportFieldsV1Request>>;
-  fieldOrder?: InputMaybe<Scalars['Int']>;
-  isActive?: InputMaybe<Scalars['Boolean']>;
-};
 
 export type DeepDiveReportFieldsV1 = {
   __typename?: 'DeepDiveReportFieldsV1';
@@ -368,27 +356,6 @@ export enum DisciplinesEnumV1 {
   VariableWeight = 'VARIABLE_WEIGHT'
 }
 
-export type Dive = {
-  __typename?: 'Dive';
-  createdAt: Scalars['DateTime'];
-  depth?: Maybe<Scalars['Float']>;
-  disciplineType?: Maybe<Scalars['String']>;
-  distance?: Maybe<Scalars['Float']>;
-  diveName?: Maybe<Scalars['String']>;
-  diveTime?: Maybe<Scalars['Int']>;
-  id: Scalars['UUID'];
-  isActive: Scalars['Boolean'];
-  updatedAt: Scalars['DateTime'];
-};
-
-export type DiveInput = {
-  depth?: InputMaybe<Scalars['Float']>;
-  disciplineType?: InputMaybe<Scalars['String']>;
-  distance?: InputMaybe<Scalars['Float']>;
-  diveName?: InputMaybe<Scalars['String']>;
-  diveTime?: InputMaybe<Scalars['Int']>;
-};
-
 export type DynAchievedDistanceV1 = {
   __typename?: 'DynAchievedDistanceV1';
   distance?: Maybe<Scalars['Int']>;
@@ -508,19 +475,6 @@ export type DynamicFormV1Request = {
   reasonForStopping?: InputMaybe<FormFieldOptionsV1Request>;
   timeAchieved?: InputMaybe<FormFieldOptionsV1Request>;
   timeGoal?: InputMaybe<FormFieldOptionsV1Request>;
-};
-
-export type DynamicReportFieldV1 = {
-  __typename?: 'DynamicReportFieldV1';
-  dives?: Maybe<Array<DynamicReportFieldsV1>>;
-  fieldOrder?: Maybe<Scalars['Int']>;
-  isActive?: Maybe<Scalars['Boolean']>;
-};
-
-export type DynamicReportFieldV1Request = {
-  dives?: InputMaybe<Array<DynamicReportFieldsV1Request>>;
-  fieldOrder?: InputMaybe<Scalars['Int']>;
-  isActive?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type DynamicReportFieldsV1 = {
@@ -763,13 +717,13 @@ export type Mutation = {
   deleteAllUsers: Scalars['Int'];
   emailVerificationCode: Scalars['Boolean'];
   insertApneaSession: ApneaSession;
-  insertDive: Dive;
+  insertDive: UniqueApnea;
   insertForm?: Maybe<Form>;
   insertUser: User;
   login: User;
   logout: Scalars['Boolean'];
   modifyApneaSession: ApneaSession;
-  modifyDive: Dive;
+  modifyDive: UniqueApnea;
   modifyForm?: Maybe<Form>;
   verifyEmailCode: User;
 };
@@ -787,7 +741,7 @@ export type MutationInsertApneaSessionArgs = {
 
 export type MutationInsertDiveArgs = {
   apneaSessionId: Scalars['UUID'];
-  diveInput: DiveInput;
+  diveInput: UniqueApneaInput;
 };
 
 
@@ -816,7 +770,7 @@ export type MutationModifyApneaSessionArgs = {
 export type MutationModifyDiveArgs = {
   apneaSessionId: Scalars['UUID'];
   archivedDiveId: Scalars['UUID'];
-  diveInput: DiveInput;
+  diveInput: UniqueApneaInput;
 };
 
 
@@ -849,7 +803,7 @@ export type Query = {
   __typename?: 'Query';
   allUsers: Array<User>;
   apneaSessions: ApneaSessionConnection;
-  dives: Array<Dive>;
+  dives: Array<UniqueApnea>;
   forms?: Maybe<Array<Form>>;
   user: User;
 };
@@ -887,9 +841,7 @@ export type ReportResponse = ReportV1;
 
 export type ReportV1 = {
   __typename?: 'ReportV1';
-  deepDives?: Maybe<DeepDiveReportFieldV1>;
   disciplineAndMaxDepth?: Maybe<DisciplineAndMaxDepthV1>;
-  dynamicDives?: Maybe<DynamicReportFieldV1>;
   easeOfEqualization?: Maybe<EaseOfEqualizationV1>;
   endTime?: Maybe<EndTimeV1>;
   generalFeeling?: Maybe<GeneralFeelingV1>;
@@ -898,15 +850,12 @@ export type ReportV1 = {
   maxDepth?: Maybe<MaxDepthV1>;
   sessionName?: Maybe<SessionNameV1>;
   startTime: StartTimeV1;
-  staticHolds?: Maybe<StaticReportFieldV1>;
   visibility?: Maybe<VisibilityV1>;
   waterTemp?: Maybe<WaterTempV1>;
 };
 
 export type ReportV1Request = {
-  deepDives?: InputMaybe<DeepDiveReportFieldV1Request>;
   disciplineAndMaxDepth?: InputMaybe<DisciplineAndMaxDepthV1Request>;
-  dynamicDives?: InputMaybe<DynamicReportFieldV1Request>;
   easeOfEqualization?: InputMaybe<EaseOfEqualizationV1Request>;
   endTime?: InputMaybe<EndTimeV1Request>;
   generalFeeling?: InputMaybe<GeneralFeelingV1Request>;
@@ -915,7 +864,6 @@ export type ReportV1Request = {
   maxDepth?: InputMaybe<MaxDepthV1Request>;
   sessionName?: InputMaybe<SessionNameV1Request>;
   startTime: StartTimeV1Request;
-  staticHolds?: InputMaybe<StaticReportFieldV1Request>;
   visibility?: InputMaybe<VisibilityV1Request>;
   waterTemp?: InputMaybe<WaterTempV1Request>;
 };
@@ -1023,19 +971,6 @@ export type StaticRelaxationV1Request = {
   value?: InputMaybe<Scalars['Int']>;
 };
 
-export type StaticReportFieldV1 = {
-  __typename?: 'StaticReportFieldV1';
-  fieldOrder?: Maybe<Scalars['Int']>;
-  isActive?: Maybe<Scalars['Boolean']>;
-  staticHolds?: Maybe<Array<StaticReportFieldsV1>>;
-};
-
-export type StaticReportFieldV1Request = {
-  fieldOrder?: InputMaybe<Scalars['Int']>;
-  isActive?: InputMaybe<Scalars['Boolean']>;
-  staticHolds?: InputMaybe<Array<StaticReportFieldsV1Request>>;
-};
-
 export type StaticReportFieldsV1 = {
   __typename?: 'StaticReportFieldsV1';
   activityOfTheMind?: Maybe<StaticMindV1>;
@@ -1121,6 +1056,27 @@ export enum TurnReasonsEnumV1 {
   NotFeelingIt = 'NOT_FEELING_IT',
   PanicAttack = 'PANIC_ATTACK'
 }
+
+export type UniqueApnea = {
+  __typename?: 'UniqueApnea';
+  activityData: UniqueApneaActivity;
+  createdAt: Scalars['DateTime'];
+  id: Scalars['UUID'];
+  isActive: Scalars['Boolean'];
+  updatedAt: Scalars['DateTime'];
+};
+
+export type UniqueApneaActivity = DeepDiveReportFieldsV1 | DynamicReportFieldsV1 | StaticReportFieldsV1;
+
+export type UniqueApneaActivityRequest = {
+  deepDiveV1?: InputMaybe<DeepDiveReportFieldsV1Request>;
+  dynDiveV1?: InputMaybe<DynamicReportFieldsV1Request>;
+  staticHoldsV1?: InputMaybe<StaticReportFieldsV1Request>;
+};
+
+export type UniqueApneaInput = {
+  activityData: UniqueApneaActivityRequest;
+};
 
 export type User = {
   __typename?: 'User';

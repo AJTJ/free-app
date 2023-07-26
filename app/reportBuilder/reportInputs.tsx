@@ -1,11 +1,5 @@
-import {
-  Btn,
-  CoreText,
-  ItemContainer,
-  LinearGradient,
-  SmallBtn,
-} from "@/components";
-import React, { useState } from "react";
+import { Btn, CoreText, LinearGradient } from "@/components";
+import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { InputFieldV1 } from "../../utility/FormV1/V1Fields/FieldSwitch";
 import { FormV1Helper } from "@/utility/FormV1/FormV1Helper";
@@ -15,15 +9,10 @@ import {
   ReportRequest,
   ReportV1Request,
 } from "@/api/types/types.generated";
-import { useLocalSearchParams } from "expo-router";
 import { useInsertApneaSession } from "@/api/logic";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { FormFragment } from "@/api/forms.generated";
 import { router } from "expo-router";
-import { useFragment } from "@apollo/client";
-import { Form } from "@/api/forms";
 import { ScrollView } from "react-native-gesture-handler";
 import { toTitleCase } from "@/utility/helpers";
 
@@ -37,8 +26,6 @@ export const ReportInputs = ({
   formFragment: FormFragment;
 }) => {
   const { insertSession } = useInsertApneaSession();
-  // const [mode, setMode] = useState<"date" | "time">("date");
-  // const [show, setShow] = useState(false);
 
   const myReport = FormV1Helper.getReportTemplateFromForm(formRequest);
   const sortedFields = FormV1Helper.getSortedReportFields(myReport);
@@ -51,9 +38,8 @@ export const ReportInputs = ({
   } = useForm<ReportTypes>({ defaultValues: myReport });
 
   const onSubmit: SubmitHandler<ReportTypes> = (formAndSessionData) => {
-    // there is extra data on this object
+    // NOTE: there is extra data on this object
     let newReport: ReportV1Request = formAndSessionData;
-    // let newReport: ReportV1Request = FormV1Helper.convertToRequestForm(formAndSessionData);
     let sessionReport: ReportRequest = {
       v1: newReport,
     };
@@ -65,11 +51,7 @@ export const ReportInputs = ({
       reportData: sessionReport,
     };
 
-    console.log("ON SUBMIT", apneaSessionInput);
-    console.log("ON SUBMIT REPORT DATA", apneaSessionInput.reportData);
-
     // TODO: Maybe this will be useful for editing?
-    // insertReportMutation({variables: {reportInput: newReport, ReportDetails: })
     insertSession({ variables: { apneaSessionInput } })
       .catch((e) => {
         console.error("insert sesh e:", e);
@@ -79,73 +61,13 @@ export const ReportInputs = ({
       });
   };
 
-  // const showMode = (currentMode: "date" | "time") => {
-  //   setShow(true);
-  //   setMode(currentMode);
-  // };
-  // const switchDateTime = () => {
-  //   if (mode === "date") {
-  //     showMode("time");
-  //   } else {
-  //     showMode("date");
-  //   }
-  // };
-
-  {
-    /* https:github.com/react-native-datetimepicker/datetimepicker#component-usage-on-ios--android--windows */
-  }
   return (
     <LinearGradient>
       <ScrollView>
         <CoreText>Report Builder: {formFragment.formName}</CoreText>
-        {/* <Controller
-          name={"startTime"}
-          rules={{ required: true }}
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => {
-            return (
-              <>
-                <CoreText>{toTitleCase("Session Time")}</CoreText>
-                <ItemContainer>
-                  <View>
-                    {value && (
-                      <>
-                        <CoreText>
-                          {new Date(value).toLocaleDateString()}
-                        </CoreText>
-                        <CoreText>
-                          {new Date(value).toLocaleTimeString()}
-                        </CoreText>
-                      </>
-                    )}
-                  </View>
-                  <SafeAreaView style={styles.timeSafeArea}>
-                    <CoreText>Current Time:</CoreText>
-                    <View style={styles.timeContainer}>
-                      <DateTimePicker
-                        testID="dateTimePicker"
-                        value={new Date(value)}
-                        mode={mode}
-                        is24Hour={true}
-                        onChange={(e, d) => onChange(d?.toISOString())}
-                      />
-                    </View>
-                    <SmallBtn
-                      onPress={switchDateTime}
-                      title={`Switch to ${mode ? "date" : "time"}`}
-                      type="primary"
-                    />
-                  </SafeAreaView>
-                </ItemContainer>
-              </>
-            );
-          }}
-        /> */}
         {sortedFields.map(([fieldName, fieldValue], i) => {
           return (
-            fieldValue &&
-            // @ts-ignore There are still properties from FormResponseV1
-            fieldName !== "__typename" && (
+            fieldValue && (
               <Controller
                 key={i + fieldName}
                 name={fieldName}
@@ -208,3 +130,5 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
 });
+
+// insertReportMutation({variables: {reportInput: newReport, ReportDetails: })

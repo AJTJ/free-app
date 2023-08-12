@@ -26,13 +26,19 @@ export default function Session() {
   });
 
   if (complete) {
-    const report = sessionData.reportData;
+    const report = sessionData.report;
 
-    const sortedFields = pipe(
-      FormV1Helper.cleanReport(report),
-      FormV1Helper.getSortedReportFields
+    // const sortedFields = pipe(
+    const cleanedReport = FormV1Helper.cleanReport(report);
+
+    if (!sessionData.form?.formData) {
+      console.error("no formData, it should exist in [sessionId]");
+      return null;
+    }
+    const sortedFields = FormV1Helper.getSortedReportFields(
+      cleanedReport,
+      sessionData.form?.formData
     );
-    // const sortedFields = FormV1Helper.getSortedReportFields(report);
 
     const handleOnPress = () => {
       router.push({
@@ -47,7 +53,7 @@ export default function Session() {
           title="Edit"
           type="primary"
           onPress={() => {
-            if (sessionData.reportData) {
+            if (sessionData.report) {
               handleOnPress();
             }
           }}

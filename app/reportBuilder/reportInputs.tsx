@@ -28,7 +28,10 @@ export const ReportInputs = ({
   const { insertSession } = useInsertApneaSession();
 
   const myReport = FormV1Helper.getReportTemplateFromForm(formRequest);
-  const sortedFields = FormV1Helper.getSortedReportFields(myReport);
+  const sortedFields = FormV1Helper.getSortedReportFields(
+    myReport,
+    formRequest
+  );
 
   const {
     control,

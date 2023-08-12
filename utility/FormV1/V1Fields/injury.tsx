@@ -12,7 +12,7 @@ export default function Injury(props: InputFieldProps) {
     let inputVal = e;
     let newValue: InjuryV1Request = {
       value: inputVal,
-      fieldOrder: props.report.injury?.fieldOrder || Infinity,
+      // fieldOrder: props.report.injury?.fieldOrder || Infinity,
     };
     if (props.onChange) {
       props.onChange(newValue);

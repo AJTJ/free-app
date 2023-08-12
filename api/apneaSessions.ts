@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 export const ApneaSession = gql(`
   fragment ApneaSession on ApneaSession {
     id
-    reportData {
+    report {
       ... on ReportV1 {
         ...ReportV1
       }

@@ -1,8 +1,6 @@
-import { View } from "react-native";
 import React, { useState } from "react";
 import { CoreText } from "@/components/textComponents";
-import { useGetApneaSessions, useVerifyEmailCode } from "@/api/logic";
-import { SessionsList } from "@/components/SessionsList";
+import { useVerifyEmailCode } from "@/api/logic";
 import { Btn, LandingTextInput, LinearGradient } from "@/components";
 import { router } from "expo-router";
 import { Controller, useForm } from "react-hook-form";

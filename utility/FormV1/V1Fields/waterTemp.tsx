@@ -11,7 +11,7 @@ export default function WaterTemp(props: InputFieldProps) {
     let newValue: WaterTempV1Request = {
       value: inputVal,
       measurement: props.report.waterTemp?.measurement,
-      fieldOrder: props.report.waterTemp?.fieldOrder || Infinity,
+      // fieldOrder: props.report.waterTemp?.fieldOrder || Infinity,
     };
     if (props.onChange) {
       props.onChange(newValue);
@@ -23,7 +23,7 @@ export default function WaterTemp(props: InputFieldProps) {
     let newValue: WaterTempV1Request = {
       value: inputVal,
       measurement: props.report.waterTemp?.measurement,
-      fieldOrder: props.report.waterTemp?.fieldOrder || Infinity,
+      // fieldOrder: props.report.waterTemp?.fieldOrder || Infinity,
     };
     if (props.onChange) {
       props.onChange(newValue);

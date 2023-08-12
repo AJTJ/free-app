@@ -4,7 +4,6 @@ import { CoreText } from "@/components/textComponents";
 import { useGetApneaSessions } from "@/api/logic";
 import { SessionsList } from "@/components/SessionsList";
 import { LinearGradient } from "@/components";
-import { router } from "expo-router";
 import { Calendar } from "react-native-calendars";
 
 export default function AllSessions() {
@@ -19,8 +18,8 @@ export default function AllSessions() {
 
   let myNodes = [...(data?.apneaSessions?.nodes || [])];
   const sortedSessions = myNodes?.sort((a, b) => {
-    let aDate = new Date(a.reportData.startTime as unknown as string);
-    let bDate = new Date(b.reportData.startTime as unknown as string);
+    let aDate = new Date(a.report.startTime as unknown as string);
+    let bDate = new Date(b.report.startTime as unknown as string);
     return aDate > bDate ? -1 : 1;
   });
 

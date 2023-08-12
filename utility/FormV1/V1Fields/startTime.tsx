@@ -26,7 +26,7 @@ export default function StartTime(props: InputFieldProps) {
     let inputVal = d ? d.toISOString() : new Date(Date.now()).toISOString();
     let newValue: StartTimeV1Request = {
       time: inputVal,
-      fieldOrder: props.report.startTime?.fieldOrder || Infinity,
+      // fieldOrder: props.report.startTime?.fieldOrder || Infinity,
     };
     if (props.onChange) {
       props.onChange(newValue);

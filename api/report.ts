@@ -4,6 +4,20 @@ import { gql } from "@apollo/client";
 export const ReportV1 = gql(`
   fragment ReportV1 on ReportV1 {
 
+    # UNIQUE APNEAS
+
+    deepDives {
+      ...DeepDiveReportFieldsV1
+    }
+
+    dynamicDives {
+      ...DynamicReportFieldsV1
+    }
+
+    staticHolds {
+      ...StaticReportFieldsV1
+    }
+
     # ACTIVITY-BASED
 
     disciplineAndMaxDepth {
@@ -11,67 +25,67 @@ export const ReportV1 = gql(`
         discipline
         maxDepth
       }
-      # default values
-      isActive
-      fieldOrder
+      # # default values
+      # isActive
+      # fieldOrder
     }
 
     maxDepth {
       maxDepth
-      # default values
-      isActive
-      fieldOrder
+      # # default values
+      # isActive
+      # fieldOrder
     }
 
     # GENERAL
 
     sessionName {
       name
-      # default values
-      isActive
-      fieldOrder
+      # # default values
+      # isActive
+      # fieldOrder
     }
     endTime {
       time
-      # default values
-      isActive
-      fieldOrder
+      # # default values
+      # isActive
+      # fieldOrder
     }
     easeOfEqualization {
       value
-      # default values
-      isActive
-      fieldOrder
+      # # default values
+      # isActive
+      # fieldOrder
     }
     visibility {
       value
-      # default values
-      isActive
-      fieldOrder
+      # # default values
+      # isActive
+      # fieldOrder
     }
     generalFeeling {
       value
-      # default values
-      isActive
-      fieldOrder
+      # # default values
+      # isActive
+      # fieldOrder
     }
     injury {
       value
-      # default values
-      isActive
-      fieldOrder
+      # # default values
+      # isActive
+      # fieldOrder
     }
     waterTemp {
       value
-      # default values
-      isActive
-      fieldOrder
+      # # default values
+      # isActive
+      # fieldOrder
     }
     startTime {
       time
-      # default values
-      isActive
-      fieldOrder
+      # # default values
+      # isActive
+      # fieldOrder
     }
   }
 `);

@@ -3,7 +3,7 @@ import {
   ApneaSessionsDocument,
   InsertApneaSessionDocument,
   // InsertPrepopulatedApneaSessionDocument,
-} from "../apnea_sessions.generated";
+} from "../apneaSessions.generated";
 
 export const useInsertApneaSession = () => {
   const [insertSession, { loading, error, data, client }] = useMutation(

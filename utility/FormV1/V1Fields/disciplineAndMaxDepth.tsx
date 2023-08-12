@@ -27,7 +27,7 @@ export default function DisciplineAndMaxDepth(props: InputFieldProps) {
 
     let newValue: DisciplineAndMaxDepthV1Request = {
       disciplineMaxDepth: discMax,
-      fieldOrder: props.report.disciplineAndMaxDepth?.fieldOrder || Infinity,
+      // fieldOrder: props.report.disciplineAndMaxDepth?.fieldOrder || Infinity,
     };
     if (props.onChange) {
       props.onChange(newValue);
@@ -43,7 +43,7 @@ export default function DisciplineAndMaxDepth(props: InputFieldProps) {
       discMax[i] = { maxDepth: discMax[i]?.maxDepth || 0, discipline: value };
       let newValue: DisciplineAndMaxDepthV1Request = {
         disciplineMaxDepth: discMax,
-        fieldOrder: props.report.disciplineAndMaxDepth?.fieldOrder || Infinity,
+        // fieldOrder: props.report.disciplineAndMaxDepth?.fieldOrder || Infinity,
       };
       if (props.onChange) {
         props.onChange(newValue);

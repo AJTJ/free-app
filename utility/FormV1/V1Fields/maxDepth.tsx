@@ -11,7 +11,7 @@ export default function MaxDepth(props: InputFieldProps) {
     let numVal = Number(e);
     let newValue: MaxDepthV1Request = {
       maxDepth: numVal,
-      fieldOrder: props.report.maxDepth?.fieldOrder || Infinity,
+      // fieldOrder: props.report.maxDepth?.fieldOrder || Infinity,
     };
     if (props.onChange) {
       props.onChange(newValue);

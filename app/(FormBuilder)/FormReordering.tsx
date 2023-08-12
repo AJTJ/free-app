@@ -16,7 +16,12 @@ import { formStore, useLooseSnapshot } from "@/state";
 
 export default function FormReordering() {
   const formState = useLooseSnapshot(formStore).formState;
-  let incomingForm = formState?.form;
+  let incomingForm = formState?.form || {
+    deepDives: {},
+    dynamicDives: {},
+    staticHolds: {},
+  };
+
   const formName = formState?.formName;
   let [sortedForm, setSortedForm] = useState(
     FormV1Helper.getSortedFormFields({ ...incomingForm })
@@ -25,7 +30,11 @@ export default function FormReordering() {
 
   if (incomingForm && formName) {
     const onSubmit = () => {
-      let newForm: FormV1Request = {};
+      let newForm: FormV1Request = {
+        deepDives: {},
+        dynamicDives: {},
+        staticHolds: {},
+      };
       sortedForm.forEach(([key, value], i) => {
         newForm[key] = { isActive: value?.isActive || false, fieldOrder: i };
       });

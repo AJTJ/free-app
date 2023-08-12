@@ -17,7 +17,7 @@ export default function Location(props: InputFieldProps) {
     let newValue: LocationV1Request = {
       coordinates: val,
       sharedLocationId: props.report.location?.sharedLocationId,
-      fieldOrder: props.report.easeOfEqualization?.fieldOrder || Infinity,
+      // fieldOrder: props.report.easeOfEqualization?.fieldOrder || Infinity,
     };
     if (props.onChange) {
       props.onChange(newValue);

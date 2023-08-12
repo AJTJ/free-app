@@ -14,7 +14,7 @@ import { toTitleCase } from "../helpers";
 
 type ValueElementProps = {
   fieldKey: keyof ReportV1Request;
-  form: ReportV1Request;
+  report: ReportV1Request;
 };
 
 // FIELDS UPDATE HERE
@@ -76,14 +76,14 @@ export class FormV1Helper {
 
           (myReport[fieldName] as typeof x) = {
             ...myReport[fieldName],
-            isActive: true,
-            fieldOrder: val.fieldOrder,
+            // isActive: true,
+            // fieldOrder: val.fieldOrder,
           };
         } else {
           const x = myReport[fieldName];
           (myReport[fieldName] as typeof x) = {
-            isActive: true,
-            fieldOrder: val.fieldOrder,
+            // isActive: true,
+            // fieldOrder: val.fieldOrder,
           };
         }
       }
@@ -128,7 +128,8 @@ export class FormV1Helper {
   }
 
   static getSortedReportFields(
-    report: ReportV1Request
+    report: ReportV1Request,
+    form: FormV1Request
   ): [keyof ReportV1Request, ReportV1Request[keyof ReportV1Request]][] {
     type KeyType = keyof typeof report;
     let reportValues = Object.values(report);
@@ -141,10 +142,13 @@ export class FormV1Helper {
     });
 
     let sortedFields = filteredFields.sort(
-      ([_aKey, aValue], [_bKey, bValue]) => {
-        let aVal = aValue?.fieldOrder ?? Infinity;
-        let bVal = bValue?.fieldOrder ?? Infinity;
-        return aVal < bVal ? -1 : 1;
+      ([aKey, _aValue], [bKey, _bValue]) => {
+        let aFormOrder = form[aKey]?.fieldOrder ?? Infinity;
+        let bFormOrder = form[bKey]?.fieldOrder ?? Infinity;
+
+        // let aVal = aValue?.fieldOrder ?? Infinity;
+        // let bVal = bValue?.fieldOrder ?? Infinity;
+        return aFormOrder < bFormOrder ? -1 : 1;
       }
     );
 
@@ -154,7 +158,7 @@ export class FormV1Helper {
   // FIELDS UPDATE HERE
   static getValueElement(props: ValueElementProps) {
     let key = props.fieldKey;
-    let form = props.form;
+    let form = props.report;
     switch (key) {
       case "easeOfEqualization":
         let value = form?.[key] as EaseOfEqualizationV1Request;

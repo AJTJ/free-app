@@ -18,82 +18,198 @@ export const ReportV1 = gql(`
       ...StaticReportFieldsV1
     }
 
-    # ACTIVITY-BASED
+    # DYN GENERAL
+    distanceTravelled {
+      value
+    }
+    longestDynamic {
+      value
+      discipline
+    }
+
+    # DEPTH GENERAL
+
+    depthVolume {
+      dives
+    }
 
     disciplineAndMaxDepth {
-      disciplineMaxDepth {
-        discipline
-        maxDepth
-      }
-      # # default values
-      # isActive
-      # fieldOrder
+      discipline
+      maxDepth
     }
 
-    maxDepth {
-      maxDepth
-      # # default values
-      # isActive
-      # fieldOrder
+    exhaleDives {
+      dives
+      exhaleQuantity
+      depthRange {
+        low
+        high
+      }
     }
+
+    depthSafety {
+      setup
+      safetyExperience
+    }
+
+    # STATIC GENERAL
+
+    staticVolume {
+      breathHolds
+    }
+
+    # FUN GENERAL 
+    funDiveVolume {
+      dives
+      depthRange
+    }
+    
 
     # GENERAL
 
-    sessionName {
-      name
-      # # default values
-      # isActive
-      # fieldOrder
-    }
-    endTime {
-      time
-      # # default values
-      # isActive
-      # fieldOrder
-    }
-    easeOfEqualization {
-      value
-      # # default values
-      # isActive
-      # fieldOrder
-    }
-    visibility {
-      value
-      # # default values
-      # isActive
-      # fieldOrder
-    }
-    generalFeeling {
-      value
-      # # default values
-      # isActive
-      # fieldOrder
-    }
-    injury {
-      value
-      # # default values
-      # isActive
-      # fieldOrder
-    }
-    waterTemp {
-      value
-      # # default values
-      # isActive
-      # fieldOrder
-    }
+    # SESSION INFO
+
     startTime {
       time
-      # # default values
-      # isActive
-      # fieldOrder
+    }
+
+    endTime {
+      time
+    }
+
+    sessionName {
+      name
+    }
+
+    location {
+      coordinates
+      sharedLocationId
+    }
+
+    # PRE SESSION
+
+    qualityOfSleep {
+      value
+    }
+
+    stimulation {
+      value
+    }
+
+    lastMeal {
+      time
+      heavyness
+      mealQualities
+    }
+
+    stomachStatus {
+      status
+    }
+
+    # GEAR
+
+    weightWorn {
+      weightGrams
+    }
+
+    wetsuit {
+      thicknessMm
+      wetsuitSizeType
+      hood
+    }
+
+    fins {
+      finsType
+    }
+
+    noseclip {
+      value
+    }
+
+    mask {
+      value
+    }
+
+    # MENTAL/PHYSICAL
+    
+    generalFeeling {
+      value
+    }
+
+    easeOfEqualization {
+      value
+    }
+
+    tirednessBefore {
+      value
+    }
+
+    tirednessAfter {
+      value
+    }
+
+    comfortInGear {
+      value
+    }
+
+    # ENVIRONMENT
+
+    current {
+      value 
+    }
+
+    waterTemp {
+      tempCelcius
+    }
+    
+    visibility {
+      value
+    }
+
+    waves {
+      value
+    }
+
+    airTemp {
+      tempCelcius
+    }
+
+    rain {
+      value
+    }
+
+    wind {
+      value
+    }
+
+    algae {
+      value
+    }
+
+    pollen {
+      value
+    }
+
+    wildlife {
+      value
+    }
+
+    waterFeatures {
+      feature
+      depth
+      swimThroughLength
+    }
+
+    environmentEvents {
+      event
+      severity
+    }
+
+
+    # INCIDENTS
+    
+    personalIncidents {
+      value
     }
   }
 `);
-
-// export const ReportResponse = gql(`
-//   fragment ReportResponse on ReportResponse {
-//       ... on ReportV1 {
-//         ...ReportV1
-//       }
-//   }
-// `);

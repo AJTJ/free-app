@@ -1,3 +1,35 @@
+
+## CURRENT
+- Ensure that the forms/reports in a basic sense
+  - Check that "non-optional" internal fields works.
+    - Then adapt the rest of them to this logical setting.
+  - Then keep adding to `V1Fields`
+    - Ensure you are extracting the shared components.
+## LATEST TODO
+- Funding
+  - Check with orgs in Canada for money
+- Forms/Reports
+  - Get Patrick reading code and (ideally) writing code.
+    - Get his docker working
+    - Get him a development build of the app? Does he need his own apple developer account?
+  - Things to get together to build out the app
+    - Back AND Front
+      - Update all fields to make sense and to have good names
+      - Work on map usecases
+      - Work on dive and public profile
+      - Work on minimal social connectivity
+        - Basics of adding friends and dive buddies
+        - Basics of sharing dive sites with friends
+    - Front
+      - Build out all components for all the fields
+      - Implement them in a way that works
+      - Implement designs
+    - Back
+      - Learn to query the postgres jsonb fields
+      - add tracing for all sorts of query types
+      - Add email confirmation for account confirmation
+      - Load testing
+
 ### Dev mode things
 - https://expo.dev/accounts/aaronjanke/projects/free_app/builds/d56bbfd2-410c-4de7-861c-26de6173dd05
 

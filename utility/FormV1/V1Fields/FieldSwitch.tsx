@@ -24,7 +24,7 @@ export type InputFieldProps = {
   isDisplay?: boolean;
 };
 
-// FORM UPDATE AREA
+// FIELDS UPDATE HERE (and all the individual components)
 export const InputFieldV1 = (props: InputFieldProps) => {
   const renderComponents = () => {
     console.log(props.name);
@@ -35,10 +35,8 @@ export const InputFieldV1 = (props: InputFieldProps) => {
         return <Equalization {...props} />;
       case "generalFeeling":
         return <GeneralFeeling {...props} />;
-      case "injury":
+      case "personalIncidents":
         return <Injury {...props} />;
-      case "maxDepth":
-        return <MaxDepth {...props} />;
       case "sessionName":
         return <SessionName {...props} />;
       case "visibility":

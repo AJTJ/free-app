@@ -15,6 +15,24 @@ export type Scalars = {
   UUID: any;
 };
 
+export type AirTempV1 = {
+  __typename?: 'AirTempV1';
+  tempCelcius: Scalars['Int'];
+};
+
+export type AirTempV1Request = {
+  tempCelcius: Scalars['Int'];
+};
+
+export type AlgaeV1 = {
+  __typename?: 'AlgaeV1';
+  value?: Maybe<Scalars['Int']>;
+};
+
+export type AlgaeV1Request = {
+  value?: InputMaybe<Scalars['Int']>;
+};
+
 export type ApneaSession = {
   __typename?: 'ApneaSession';
   createdAt: Scalars['DateTime'];
@@ -52,15 +70,22 @@ export type ApneaSessionInput = {
   reportData: ReportRequest;
 };
 
-export type CoordinatesV1 = {
-  __typename?: 'CoordinatesV1';
-  x: Scalars['Int'];
-  y: Scalars['Int'];
+export type ComfortInGearV1 = {
+  __typename?: 'ComfortInGearV1';
+  value?: Maybe<Scalars['Int']>;
 };
 
-export type CoordinatesV1Request = {
-  x: Scalars['Int'];
-  y: Scalars['Int'];
+export type ComfortInGearV1Request = {
+  value?: InputMaybe<Scalars['Int']>;
+};
+
+export type CurrentV1 = {
+  __typename?: 'CurrentV1';
+  value?: Maybe<Scalars['Int']>;
+};
+
+export type CurrentV1Request = {
+  value?: InputMaybe<Scalars['Int']>;
 };
 
 export type DeepAchievedDepthV1 = {
@@ -90,15 +115,15 @@ export type DeepDiveFormV1 = {
   fieldOrder?: Maybe<Scalars['Int']>;
   generalFeeling?: Maybe<FormFieldOptionsV1>;
   goalDepth?: Maybe<FormFieldOptionsV1>;
-  incidents?: Maybe<FormFieldOptionsV1>;
   isActive?: Maybe<Scalars['Boolean']>;
   levelOfExertion?: Maybe<FormFieldOptionsV1>;
   levelOfHypoxia?: Maybe<FormFieldOptionsV1>;
+  mentalCalm?: Maybe<FormFieldOptionsV1>;
   mouthFillChargeDepths?: Maybe<FormFieldOptionsV1>;
-  mouthFillDepth?: Maybe<FormFieldOptionsV1>;
+  otherIncidents?: Maybe<FormFieldOptionsV1>;
+  personalIncidents?: Maybe<FormFieldOptionsV1>;
   reasonForTurning?: Maybe<FormFieldOptionsV1>;
-  specificSensations?: Maybe<FormFieldOptionsV1>;
-  thoughts?: Maybe<FormFieldOptionsV1>;
+  sensations?: Maybe<FormFieldOptionsV1>;
   turnQuality?: Maybe<FormFieldOptionsV1>;
 };
 
@@ -110,22 +135,23 @@ export type DeepDiveFormV1Request = {
   fieldOrder?: InputMaybe<Scalars['Int']>;
   generalFeeling?: InputMaybe<FormFieldOptionsV1Request>;
   goalDepth?: InputMaybe<FormFieldOptionsV1Request>;
-  incidents?: InputMaybe<FormFieldOptionsV1Request>;
   isActive?: InputMaybe<Scalars['Boolean']>;
   levelOfExertion?: InputMaybe<FormFieldOptionsV1Request>;
   levelOfHypoxia?: InputMaybe<FormFieldOptionsV1Request>;
+  mentalCalm?: InputMaybe<FormFieldOptionsV1Request>;
   mouthFillChargeDepths?: InputMaybe<FormFieldOptionsV1Request>;
-  mouthFillDepth?: InputMaybe<FormFieldOptionsV1Request>;
+  otherIncidents?: InputMaybe<FormFieldOptionsV1Request>;
+  personalIncidents?: InputMaybe<FormFieldOptionsV1Request>;
   reasonForTurning?: InputMaybe<FormFieldOptionsV1Request>;
-  specificSensations?: InputMaybe<FormFieldOptionsV1Request>;
-  thoughts?: InputMaybe<FormFieldOptionsV1Request>;
+  sensations?: InputMaybe<FormFieldOptionsV1Request>;
   turnQuality?: InputMaybe<FormFieldOptionsV1Request>;
 };
 
 export enum DeepDiveIncidentsEnumV1 {
   BoatIssues = 'BOAT_ISSUES',
   BuddyInjury = 'BUDDY_INJURY',
-  BuoyOrPlatformIssues = 'BUOY_OR_PLATFORM_ISSUES'
+  BuoyOrPlatformIssues = 'BUOY_OR_PLATFORM_ISSUES',
+  ConflictAmongstPeople = 'CONFLICT_AMONGST_PEOPLE'
 }
 
 export type DeepDiveReportFieldsV1 = {
@@ -136,13 +162,13 @@ export type DeepDiveReportFieldsV1 = {
   earlyTurnDepth?: Maybe<DeepEarlyTurnDepthV1>;
   generalFeeling?: Maybe<DeepGeneralFeelingV1>;
   goalDepth?: Maybe<DeepGoalDepthV1>;
-  injuries?: Maybe<DeepInjuriesV1>;
   levelOfExertion?: Maybe<DeepExertionV1>;
   levelOfHypoxia?: Maybe<DeepHypoxiaV1>;
   mentalCalm?: Maybe<MentalCalmV1>;
   mouthFillChargeDepths?: Maybe<MouthFillChargeDepthsV1>;
   otherIncidents?: Maybe<DeepIncidentsV1>;
-  reasonForTurning?: Maybe<DeepTurnReasonsV1>;
+  personalIncidents?: Maybe<DeepPersonalIncidentsV1>;
+  reasonsForTurning?: Maybe<DeepTurnReasonsV1>;
   sensations?: Maybe<DeepSensationsV1>;
   turnQuality?: Maybe<DeepTurnQualityV1>;
 };
@@ -154,13 +180,13 @@ export type DeepDiveReportFieldsV1Request = {
   earlyTurnDepth?: InputMaybe<DeepEarlyTurnDepthV1Request>;
   generalFeeling?: InputMaybe<DeepGeneralFeelingV1Request>;
   goalDepth?: InputMaybe<DeepGoalDepthV1Request>;
-  injuries?: InputMaybe<DeepInjuriesV1Request>;
   levelOfExertion?: InputMaybe<DeepExertionV1Request>;
   levelOfHypoxia?: InputMaybe<DeepHypoxiaV1Request>;
   mentalCalm?: InputMaybe<MentalCalmV1Request>;
   mouthFillChargeDepths?: InputMaybe<MouthFillChargeDepthsV1Request>;
   otherIncidents?: InputMaybe<DeepIncidentsV1Request>;
-  reasonForTurning?: InputMaybe<DeepTurnReasonsV1Request>;
+  personalIncidents?: InputMaybe<DeepInjuriesV1Request>;
+  reasonsForTurning?: InputMaybe<DeepTurnReasonsV1Request>;
   sensations?: InputMaybe<DeepSensationsV1Request>;
   turnQuality?: InputMaybe<DeepTurnQualityV1Request>;
 };
@@ -185,11 +211,11 @@ export type DeepDiveTimeV1Request = {
 
 export type DeepEarlyTurnDepthV1 = {
   __typename?: 'DeepEarlyTurnDepthV1';
-  time?: Maybe<Scalars['NaiveTime']>;
+  depth?: Maybe<Scalars['Int']>;
 };
 
 export type DeepEarlyTurnDepthV1Request = {
-  time?: InputMaybe<Scalars['NaiveTime']>;
+  depth?: InputMaybe<Scalars['Int']>;
 };
 
 export type DeepExertionV1 = {
@@ -237,13 +263,13 @@ export type DeepIncidentsV1Request = {
   incidents?: InputMaybe<Array<DeepDiveIncidentsEnumV1>>;
 };
 
-export type DeepInjuriesV1 = {
-  __typename?: 'DeepInjuriesV1';
-  injuries?: Maybe<Array<InjuryEnumV1>>;
+export type DeepInjuriesV1Request = {
+  incidents?: InputMaybe<Array<PersonalIncidentEnumV1>>;
 };
 
-export type DeepInjuriesV1Request = {
-  injuries?: InputMaybe<Array<InjuryEnumV1>>;
+export type DeepPersonalIncidentsV1 = {
+  __typename?: 'DeepPersonalIncidentsV1';
+  incidents?: Maybe<Array<PersonalIncidentEnumV1>>;
 };
 
 export type DeepSensationsV1 = {
@@ -273,13 +299,42 @@ export type DeepTurnReasonsV1Request = {
   reasons?: InputMaybe<Array<TurnReasonsEnumV1>>;
 };
 
-export type DisciplineAndMaxDepthV1 = {
-  __typename?: 'DisciplineAndMaxDepthV1';
-  disciplineMaxDepth?: Maybe<Array<InnerDisciplineMaxDepthV1>>;
+export enum DepthSafetySetupEnumV1 {
+  DriftBuoy = 'DRIFT_BUOY',
+  MooredBuoy = 'MOORED_BUOY',
+  NoLine = 'NO_LINE',
+  Platform = 'PLATFORM'
+}
+
+export type DepthSafetyV1 = {
+  __typename?: 'DepthSafetyV1';
+  safetyExperience?: Maybe<Scalars['Int']>;
+  setup: DepthSafetySetupEnumV1;
 };
 
-export type DisciplineAndMaxDepthV1Request = {
-  disciplineMaxDepth?: InputMaybe<Array<InnerDisciplineMaxDepthV1Request>>;
+export type DepthSafetyV1Request = {
+  safetyExperience?: InputMaybe<Scalars['Int']>;
+  setup: DepthSafetySetupEnumV1;
+};
+
+export type DepthVolumeV1 = {
+  __typename?: 'DepthVolumeV1';
+  dives: Scalars['Int'];
+};
+
+export type DepthVolumeV1Request = {
+  dives: Scalars['Int'];
+};
+
+export type DisciplineMaxDepthV1 = {
+  __typename?: 'DisciplineMaxDepthV1';
+  discipline?: Maybe<DisciplinesEnumV1>;
+  maxDepth: Scalars['Int'];
+};
+
+export type DisciplineMaxDepthV1Request = {
+  discipline?: InputMaybe<DisciplinesEnumV1>;
+  maxDepth: Scalars['Int'];
 };
 
 export enum DisciplinesEnumV1 {
@@ -294,6 +349,15 @@ export enum DisciplinesEnumV1 {
   FimWithFins = 'FIM_WITH_FINS',
   VariableWeight = 'VARIABLE_WEIGHT'
 }
+
+export type DistanceTravelledV1 = {
+  __typename?: 'DistanceTravelledV1';
+  value: Scalars['Int'];
+};
+
+export type DistanceTravelledV1Request = {
+  value: Scalars['Int'];
+};
 
 export type DynAchievedDistanceV1 = {
   __typename?: 'DynAchievedDistanceV1';
@@ -365,27 +429,27 @@ export type DynIncidentsV1Request = {
 
 export type DynamicFormV1 = {
   __typename?: 'DynamicFormV1';
-  activityOfTheMind?: Maybe<FormFieldOptionsV1>;
-  averageHeartRate?: Maybe<FormFieldOptionsV1>;
+  achievedDistance?: Maybe<FormFieldOptionsV1>;
+  discipline?: Maybe<FormFieldOptionsV1>;
+  diveTime?: Maybe<FormFieldOptionsV1>;
   fieldOrder?: Maybe<Scalars['Int']>;
+  generalFeeling?: Maybe<FormFieldOptionsV1>;
+  goalDistance?: Maybe<FormFieldOptionsV1>;
+  incidents?: Maybe<FormFieldOptionsV1>;
   isActive?: Maybe<Scalars['Boolean']>;
-  levelOfHypoxia?: Maybe<FormFieldOptionsV1>;
-  levelOfRelaxation?: Maybe<FormFieldOptionsV1>;
-  reasonForStopping?: Maybe<FormFieldOptionsV1>;
-  timeAchieved?: Maybe<FormFieldOptionsV1>;
-  timeGoal?: Maybe<FormFieldOptionsV1>;
+  reasonsForEnding?: Maybe<FormFieldOptionsV1>;
 };
 
 export type DynamicFormV1Request = {
-  activityOfTheMind?: InputMaybe<FormFieldOptionsV1Request>;
-  averageHeartRate?: InputMaybe<FormFieldOptionsV1Request>;
+  achievedDistance?: InputMaybe<FormFieldOptionsV1Request>;
+  discipline?: InputMaybe<FormFieldOptionsV1Request>;
+  diveTime?: InputMaybe<FormFieldOptionsV1Request>;
   fieldOrder?: InputMaybe<Scalars['Int']>;
+  generalFeeling?: InputMaybe<FormFieldOptionsV1Request>;
+  goalDistance?: InputMaybe<FormFieldOptionsV1Request>;
+  incidents?: InputMaybe<FormFieldOptionsV1Request>;
   isActive?: InputMaybe<Scalars['Boolean']>;
-  levelOfHypoxia?: InputMaybe<FormFieldOptionsV1Request>;
-  levelOfRelaxation?: InputMaybe<FormFieldOptionsV1Request>;
-  reasonForStopping?: InputMaybe<FormFieldOptionsV1Request>;
-  timeAchieved?: InputMaybe<FormFieldOptionsV1Request>;
-  timeGoal?: InputMaybe<FormFieldOptionsV1Request>;
+  reasonsForEnding?: InputMaybe<FormFieldOptionsV1Request>;
 };
 
 export type DynamicReportFieldsV1 = {
@@ -427,6 +491,68 @@ export type EndTimeV1Request = {
   time?: InputMaybe<Scalars['DateTime']>;
 };
 
+export type EnvironmentEventV1 = {
+  __typename?: 'EnvironmentEventV1';
+  event?: Maybe<EnvironmentEventsEnumV1>;
+  severity?: Maybe<Scalars['Int']>;
+};
+
+export type EnvironmentEventV1Request = {
+  event?: InputMaybe<EnvironmentEventsEnumV1>;
+  severity?: InputMaybe<Scalars['Int']>;
+};
+
+export enum EnvironmentEventsEnumV1 {
+  Hurricane = 'HURRICANE',
+  Storm = 'STORM',
+  Tornado = 'TORNADO',
+  Tsunami = 'TSUNAMI'
+}
+
+export type ExhaleDivesDepthRangeV1 = {
+  __typename?: 'ExhaleDivesDepthRangeV1';
+  high: Scalars['Int'];
+  low: Scalars['Int'];
+};
+
+export type ExhaleDivesDepthRangeV1Request = {
+  high: Scalars['Int'];
+  low: Scalars['Int'];
+};
+
+export enum ExhaleDivesEnumV1 {
+  Frc = 'FRC',
+  LessThanFrc = 'LESS_THAN_FRC',
+  Rv = 'RV'
+}
+
+export type ExhaleDivesV1 = {
+  __typename?: 'ExhaleDivesV1';
+  depthRange?: Maybe<ExhaleDivesDepthRangeV1>;
+  dives?: Maybe<Scalars['Int']>;
+  exhaleQuantity: ExhaleDivesEnumV1;
+};
+
+export type ExhaleDivesV1Request = {
+  depthRange?: InputMaybe<ExhaleDivesDepthRangeV1Request>;
+  dives?: InputMaybe<Scalars['Int']>;
+  exhaleQuantity: ExhaleDivesEnumV1;
+};
+
+export enum FinsTypeEnumV1 {
+  BiFins = 'BI_FINS',
+  Monofin = 'MONOFIN'
+}
+
+export type FinsV1 = {
+  __typename?: 'FinsV1';
+  finsType?: Maybe<Array<FinsTypeEnumV1>>;
+};
+
+export type FinsV1Request = {
+  finsType?: InputMaybe<Array<FinsTypeEnumV1>>;
+};
+
 export type Form = {
   __typename?: 'Form';
   createdAt: Scalars['DateTime'];
@@ -462,37 +588,104 @@ export type FormResponse = FormV1;
 
 export type FormV1 = {
   __typename?: 'FormV1';
+  airTemp?: Maybe<FormFieldOptionsV1>;
+  algae?: Maybe<FormFieldOptionsV1>;
+  comfortInGear?: Maybe<FormFieldOptionsV1>;
+  current?: Maybe<FormFieldOptionsV1>;
   deepDives: DeepDiveFormV1;
+  depthSafety?: Maybe<FormFieldOptionsV1>;
+  depthVolume?: Maybe<FormFieldOptionsV1>;
   disciplineAndMaxDepth?: Maybe<FormFieldOptionsV1>;
+  distanceTravelled?: Maybe<FormFieldOptionsV1>;
   dynamicDives: DynamicFormV1;
   easeOfEqualization?: Maybe<FormFieldOptionsV1>;
   endTime?: Maybe<FormFieldOptionsV1>;
+  environmentEvents?: Maybe<FormFieldOptionsV1>;
+  exhaleDives?: Maybe<FormFieldOptionsV1>;
+  fins?: Maybe<FormFieldOptionsV1>;
+  funDiveVolume?: Maybe<FormFieldOptionsV1>;
   generalFeeling?: Maybe<FormFieldOptionsV1>;
-  injury?: Maybe<FormFieldOptionsV1>;
+  lastMeal?: Maybe<FormFieldOptionsV1>;
   location?: Maybe<FormFieldOptionsV1>;
-  maxDepth?: Maybe<FormFieldOptionsV1>;
+  longestDynamic?: Maybe<FormFieldOptionsV1>;
+  mask?: Maybe<FormFieldOptionsV1>;
+  noseclip?: Maybe<FormFieldOptionsV1>;
+  personalIncidents?: Maybe<FormFieldOptionsV1>;
+  pollen?: Maybe<FormFieldOptionsV1>;
+  qualityOfSleep?: Maybe<FormFieldOptionsV1>;
+  rain?: Maybe<FormFieldOptionsV1>;
   sessionName?: Maybe<FormFieldOptionsV1>;
   startTime?: Maybe<FormFieldOptionsV1>;
   staticHolds: StaticFormV1;
+  staticVolume?: Maybe<FormFieldOptionsV1>;
+  stimulation?: Maybe<FormFieldOptionsV1>;
+  stomachStatus?: Maybe<FormFieldOptionsV1>;
+  tirednessAfter?: Maybe<FormFieldOptionsV1>;
+  tirednessBefore?: Maybe<FormFieldOptionsV1>;
   visibility?: Maybe<FormFieldOptionsV1>;
+  waterFeatures?: Maybe<FormFieldOptionsV1>;
   waterTemp?: Maybe<FormFieldOptionsV1>;
+  waves?: Maybe<FormFieldOptionsV1>;
+  weightWorn?: Maybe<FormFieldOptionsV1>;
+  wetsuit?: Maybe<FormFieldOptionsV1>;
+  wildlife?: Maybe<FormFieldOptionsV1>;
+  wind?: Maybe<FormFieldOptionsV1>;
 };
 
 export type FormV1Request = {
+  airTemp?: InputMaybe<FormFieldOptionsV1Request>;
+  algae?: InputMaybe<FormFieldOptionsV1Request>;
+  comfortInGear?: InputMaybe<FormFieldOptionsV1Request>;
+  current?: InputMaybe<FormFieldOptionsV1Request>;
   deepDives: DeepDiveFormV1Request;
+  depthSafety?: InputMaybe<FormFieldOptionsV1Request>;
+  depthVolume?: InputMaybe<FormFieldOptionsV1Request>;
   disciplineAndMaxDepth?: InputMaybe<FormFieldOptionsV1Request>;
+  distanceTravelled?: InputMaybe<FormFieldOptionsV1Request>;
   dynamicDives: DynamicFormV1Request;
   easeOfEqualization?: InputMaybe<FormFieldOptionsV1Request>;
   endTime?: InputMaybe<FormFieldOptionsV1Request>;
+  environmentEvents?: InputMaybe<FormFieldOptionsV1Request>;
+  exhaleDives?: InputMaybe<FormFieldOptionsV1Request>;
+  fins?: InputMaybe<FormFieldOptionsV1Request>;
+  funDiveVolume?: InputMaybe<FormFieldOptionsV1Request>;
   generalFeeling?: InputMaybe<FormFieldOptionsV1Request>;
-  injury?: InputMaybe<FormFieldOptionsV1Request>;
+  lastMeal?: InputMaybe<FormFieldOptionsV1Request>;
   location?: InputMaybe<FormFieldOptionsV1Request>;
-  maxDepth?: InputMaybe<FormFieldOptionsV1Request>;
+  longestDynamic?: InputMaybe<FormFieldOptionsV1Request>;
+  mask?: InputMaybe<FormFieldOptionsV1Request>;
+  noseclip?: InputMaybe<FormFieldOptionsV1Request>;
+  personalIncidents?: InputMaybe<FormFieldOptionsV1Request>;
+  pollen?: InputMaybe<FormFieldOptionsV1Request>;
+  qualityOfSleep?: InputMaybe<FormFieldOptionsV1Request>;
+  rain?: InputMaybe<FormFieldOptionsV1Request>;
   sessionName?: InputMaybe<FormFieldOptionsV1Request>;
   startTime?: InputMaybe<FormFieldOptionsV1Request>;
   staticHolds: StaticFormV1Request;
+  staticVolume?: InputMaybe<FormFieldOptionsV1Request>;
+  stimulation?: InputMaybe<FormFieldOptionsV1Request>;
+  stomachStatus?: InputMaybe<FormFieldOptionsV1Request>;
+  tirednessAfter?: InputMaybe<FormFieldOptionsV1Request>;
+  tirednessBefore?: InputMaybe<FormFieldOptionsV1Request>;
   visibility?: InputMaybe<FormFieldOptionsV1Request>;
+  waterFeatures?: InputMaybe<FormFieldOptionsV1Request>;
   waterTemp?: InputMaybe<FormFieldOptionsV1Request>;
+  waves?: InputMaybe<FormFieldOptionsV1Request>;
+  weightWorn?: InputMaybe<FormFieldOptionsV1Request>;
+  wetsuit?: InputMaybe<FormFieldOptionsV1Request>;
+  wildlife?: InputMaybe<FormFieldOptionsV1Request>;
+  wind?: InputMaybe<FormFieldOptionsV1Request>;
+};
+
+export type FunDiveVolumeV1 = {
+  __typename?: 'FunDiveVolumeV1';
+  depthRange?: Maybe<Scalars['Int']>;
+  dives?: Maybe<Scalars['Int']>;
+};
+
+export type FunDiveVolumeV1Request = {
+  depthRange?: InputMaybe<Scalars['Int']>;
+  dives?: InputMaybe<Scalars['Int']>;
 };
 
 export type GeneralFeelingV1 = {
@@ -504,53 +697,31 @@ export type GeneralFeelingV1Request = {
   value?: InputMaybe<Scalars['Int']>;
 };
 
-export enum InjuryEnumV1 {
-  Dehydration = 'DEHYDRATION',
-  EarDrumPerforation = 'EAR_DRUM_PERFORATION',
-  Exhaustion = 'EXHAUSTION',
-  HeatStroke = 'HEAT_STROKE',
-  Hypothermia = 'HYPOTHERMIA',
-  Hypoxia = 'HYPOXIA',
-  Lmc = 'LMC',
-  LungSqueeze = 'LUNG_SQUEEZE',
-  MaskSqueeze = 'MASK_SQUEEZE',
-  MiddleEarSqueeze = 'MIDDLE_EAR_SQUEEZE',
-  NitrogenNarcosis = 'NITROGEN_NARCOSIS',
-  PanicAttack = 'PANIC_ATTACK',
-  PhysicalInjury = 'PHYSICAL_INJURY',
-  SinusSqueeze = 'SINUS_SQUEEZE',
-  SunBurn = 'SUN_BURN',
-  TracheaSqueeze = 'TRACHEA_SQUEEZE'
-}
-
-export type InjuryV1 = {
-  __typename?: 'InjuryV1';
-  value?: Maybe<InjuryEnumV1>;
-};
-
 export type InjuryV1Request = {
-  value?: InputMaybe<InjuryEnumV1>;
+  value?: InputMaybe<PersonalIncidentEnumV1>;
 };
 
-export type InnerDisciplineMaxDepthV1 = {
-  __typename?: 'InnerDisciplineMaxDepthV1';
-  discipline?: Maybe<DisciplinesEnumV1>;
-  maxDepth: Scalars['Int'];
+export type LastMealV1 = {
+  __typename?: 'LastMealV1';
+  heavyness?: Maybe<Scalars['Int']>;
+  mealQualities?: Maybe<Array<MealQualitiesEnumV1>>;
+  time?: Maybe<Scalars['DateTime']>;
 };
 
-export type InnerDisciplineMaxDepthV1Request = {
-  discipline?: InputMaybe<DisciplinesEnumV1>;
-  maxDepth: Scalars['Int'];
+export type LastMealV1Request = {
+  heavyness?: InputMaybe<Scalars['Int']>;
+  mealQualities?: InputMaybe<Array<MealQualitiesEnumV1>>;
+  time?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type LocationV1 = {
   __typename?: 'LocationV1';
-  coordinates?: Maybe<CoordinatesV1>;
+  coordinates?: Maybe<Scalars['Boolean']>;
   sharedLocationId?: Maybe<Scalars['UUID']>;
 };
 
 export type LocationV1Request = {
-  coordinates?: InputMaybe<CoordinatesV1Request>;
+  coordinates?: InputMaybe<Scalars['Boolean']>;
   sharedLocationId?: InputMaybe<Scalars['UUID']>;
 };
 
@@ -559,14 +730,36 @@ export type Login = {
   password: Scalars['String'];
 };
 
-export type MaxDepthV1 = {
-  __typename?: 'MaxDepthV1';
-  maxDepth?: Maybe<Scalars['Int']>;
+export type LongestDynamicV1 = {
+  __typename?: 'LongestDynamicV1';
+  discipline?: Maybe<DisciplinesEnumV1>;
+  value: Scalars['Int'];
 };
 
-export type MaxDepthV1Request = {
-  maxDepth?: InputMaybe<Scalars['Int']>;
+export type LongestDynamicV1Request = {
+  discipline?: InputMaybe<DisciplinesEnumV1>;
+  value: Scalars['Int'];
 };
+
+export type MaskV1 = {
+  __typename?: 'MaskV1';
+  value?: Maybe<Scalars['Boolean']>;
+};
+
+export type MaskV1Request = {
+  value?: InputMaybe<Scalars['Boolean']>;
+};
+
+export enum MealQualitiesEnumV1 {
+  Acidic = 'ACIDIC',
+  Carb = 'CARB',
+  Fat = 'FAT',
+  Fruit = 'FRUIT',
+  Lactose = 'LACTOSE',
+  Oily = 'OILY',
+  Protein = 'PROTEIN',
+  Sweetened = 'SWEETENED'
+}
 
 export type MentalCalmV1 = {
   __typename?: 'MentalCalmV1';
@@ -661,6 +854,15 @@ export type MutationVerifyEmailCodeArgs = {
   emailCode: Scalars['String'];
 };
 
+export type NoseClipV1 = {
+  __typename?: 'NoseClipV1';
+  value?: Maybe<Scalars['Boolean']>;
+};
+
+export type NoseClipV1Request = {
+  value?: InputMaybe<Scalars['Boolean']>;
+};
+
 /** Information about pagination in a connection */
 export type PageInfo = {
   __typename?: 'PageInfo';
@@ -672,6 +874,48 @@ export type PageInfo = {
   hasPreviousPage: Scalars['Boolean'];
   /** When paginating backwards, the cursor to continue. */
   startCursor?: Maybe<Scalars['String']>;
+};
+
+export enum PersonalIncidentEnumV1 {
+  Dehydration = 'DEHYDRATION',
+  EarDrumPerforation = 'EAR_DRUM_PERFORATION',
+  Exhaustion = 'EXHAUSTION',
+  HeatStroke = 'HEAT_STROKE',
+  Hypothermia = 'HYPOTHERMIA',
+  Hypoxia = 'HYPOXIA',
+  Lmc = 'LMC',
+  LungSqueeze = 'LUNG_SQUEEZE',
+  MaskSqueeze = 'MASK_SQUEEZE',
+  MiddleEarSqueeze = 'MIDDLE_EAR_SQUEEZE',
+  NitrogenNarcosis = 'NITROGEN_NARCOSIS',
+  PanicAttack = 'PANIC_ATTACK',
+  PhysicalInjury = 'PHYSICAL_INJURY',
+  SinusSqueeze = 'SINUS_SQUEEZE',
+  SunBurn = 'SUN_BURN',
+  TracheaSqueeze = 'TRACHEA_SQUEEZE'
+}
+
+export type PersonalIncidentV1 = {
+  __typename?: 'PersonalIncidentV1';
+  value?: Maybe<PersonalIncidentEnumV1>;
+};
+
+export type PollenV1 = {
+  __typename?: 'PollenV1';
+  value?: Maybe<Scalars['Int']>;
+};
+
+export type PollenV1Request = {
+  value?: InputMaybe<Scalars['Int']>;
+};
+
+export type QualityOfSleepV1 = {
+  __typename?: 'QualityOfSleepV1';
+  value: Scalars['Int'];
+};
+
+export type QualityOfSleepV1Request = {
+  value: Scalars['Int'];
 };
 
 export type Query = {
@@ -708,6 +952,15 @@ export type QueryParams = {
   first?: InputMaybe<Scalars['Int']>;
 };
 
+export type RainV1 = {
+  __typename?: 'RainV1';
+  value?: Maybe<Scalars['Int']>;
+};
+
+export type RainV1Request = {
+  value?: InputMaybe<Scalars['Int']>;
+};
+
 export type ReportRequest = {
   v1?: InputMaybe<ReportV1Request>;
 };
@@ -716,37 +969,93 @@ export type ReportResponse = ReportV1;
 
 export type ReportV1 = {
   __typename?: 'ReportV1';
+  airTemp?: Maybe<AirTempV1>;
+  algae?: Maybe<AlgaeV1>;
+  comfortInGear?: Maybe<ComfortInGearV1>;
+  current?: Maybe<CurrentV1>;
   deepDives?: Maybe<Array<DeepDiveReportFieldsV1>>;
-  disciplineAndMaxDepth?: Maybe<DisciplineAndMaxDepthV1>;
+  depthSafety?: Maybe<DepthSafetyV1>;
+  depthVolume?: Maybe<DepthVolumeV1>;
+  disciplineAndMaxDepth?: Maybe<Array<DisciplineMaxDepthV1>>;
+  distanceTravelled?: Maybe<DistanceTravelledV1>;
   dynamicDives?: Maybe<Array<DynamicReportFieldsV1>>;
   easeOfEqualization?: Maybe<EaseOfEqualizationV1>;
   endTime?: Maybe<EndTimeV1>;
+  environmentEvents?: Maybe<Array<EnvironmentEventV1>>;
+  exhaleDives?: Maybe<ExhaleDivesV1>;
+  fins?: Maybe<FinsV1>;
+  funDiveVolume?: Maybe<FunDiveVolumeV1>;
   generalFeeling?: Maybe<GeneralFeelingV1>;
-  injury?: Maybe<InjuryV1>;
+  lastMeal?: Maybe<LastMealV1>;
   location?: Maybe<LocationV1>;
-  maxDepth?: Maybe<MaxDepthV1>;
+  longestDynamic?: Maybe<LongestDynamicV1>;
+  mask?: Maybe<MaskV1>;
+  noseclip?: Maybe<NoseClipV1>;
+  personalIncidents?: Maybe<Array<PersonalIncidentV1>>;
+  pollen?: Maybe<PollenV1>;
+  qualityOfSleep?: Maybe<QualityOfSleepV1>;
+  rain?: Maybe<RainV1>;
   sessionName?: Maybe<SessionNameV1>;
   startTime: StartTimeV1;
   staticHolds?: Maybe<Array<StaticReportFieldsV1>>;
+  staticVolume?: Maybe<StaticVolumeV1>;
+  stimulation?: Maybe<StimulationV1>;
+  stomachStatus?: Maybe<StomachStatusV1>;
+  tirednessAfter?: Maybe<TirednessAfterV1>;
+  tirednessBefore?: Maybe<TirednessBeforeV1>;
   visibility?: Maybe<VisibilityV1>;
+  waterFeatures?: Maybe<Array<WaterFeatureV1>>;
   waterTemp?: Maybe<WaterTempV1>;
+  waves?: Maybe<WavesV1>;
+  weightWorn?: Maybe<WeightWornV1>;
+  wetsuit?: Maybe<WetsuitV1>;
+  wildlife?: Maybe<Array<WildlifeV1>>;
+  wind?: Maybe<WindV1>;
 };
 
 export type ReportV1Request = {
+  airTemp?: InputMaybe<AirTempV1Request>;
+  algae?: InputMaybe<AlgaeV1Request>;
+  comfortInGear?: InputMaybe<ComfortInGearV1Request>;
+  current?: InputMaybe<CurrentV1Request>;
   deepDives?: InputMaybe<Array<DeepDiveReportFieldsV1Request>>;
-  disciplineAndMaxDepth?: InputMaybe<DisciplineAndMaxDepthV1Request>;
+  depthSafety?: InputMaybe<DepthSafetyV1Request>;
+  depthVolume?: InputMaybe<DepthVolumeV1Request>;
+  disciplineAndMaxDepth?: InputMaybe<Array<DisciplineMaxDepthV1Request>>;
+  distanceTravelled?: InputMaybe<DistanceTravelledV1Request>;
   dynamicDives?: InputMaybe<Array<DynamicReportFieldsV1Request>>;
   easeOfEqualization?: InputMaybe<EaseOfEqualizationV1Request>;
   endTime?: InputMaybe<EndTimeV1Request>;
+  environmentEvents?: InputMaybe<Array<EnvironmentEventV1Request>>;
+  exhaleDives?: InputMaybe<ExhaleDivesV1Request>;
+  fins?: InputMaybe<FinsV1Request>;
+  funDiveVolume?: InputMaybe<FunDiveVolumeV1Request>;
   generalFeeling?: InputMaybe<GeneralFeelingV1Request>;
-  injury?: InputMaybe<InjuryV1Request>;
+  lastMeal?: InputMaybe<LastMealV1Request>;
   location?: InputMaybe<LocationV1Request>;
-  maxDepth?: InputMaybe<MaxDepthV1Request>;
+  longestDynamic?: InputMaybe<LongestDynamicV1Request>;
+  mask?: InputMaybe<MaskV1Request>;
+  noseclip?: InputMaybe<NoseClipV1Request>;
+  personalIncidents?: InputMaybe<Array<InjuryV1Request>>;
+  pollen?: InputMaybe<PollenV1Request>;
+  qualityOfSleep?: InputMaybe<QualityOfSleepV1Request>;
+  rain?: InputMaybe<RainV1Request>;
   sessionName?: InputMaybe<SessionNameV1Request>;
   startTime: StartTimeV1Request;
   staticHolds?: InputMaybe<Array<StaticReportFieldsV1Request>>;
+  staticVolume?: InputMaybe<StaticVolumeV1Request>;
+  stimulation?: InputMaybe<StimulationV1Request>;
+  stomachStatus?: InputMaybe<StomachStatusV1Request>;
+  tirednessAfter?: InputMaybe<TirednessAfterV1Request>;
+  tirednessBefore?: InputMaybe<TirednessBeforeV1Request>;
   visibility?: InputMaybe<VisibilityV1Request>;
+  waterFeatures?: InputMaybe<Array<WaterFeatureV1Request>>;
   waterTemp?: InputMaybe<WaterTempV1Request>;
+  waves?: InputMaybe<WavesV1Request>;
+  weightWorn?: InputMaybe<WeightWornV1Request>;
+  wetsuit?: InputMaybe<WetsuitV1Request>;
+  wildlife?: InputMaybe<Array<WildlifeV1Request>>;
+  wind?: InputMaybe<WindV1Request>;
 };
 
 export type SessionNameV1 = {
@@ -884,10 +1193,59 @@ export type StaticTimeGoalV1Request = {
   time?: InputMaybe<Scalars['NaiveTime']>;
 };
 
-export enum TemperatureEnumV1 {
-  C = 'C',
-  F = 'F'
+export type StaticVolumeV1 = {
+  __typename?: 'StaticVolumeV1';
+  breathHolds: Scalars['Int'];
+};
+
+export type StaticVolumeV1Request = {
+  breathHolds: Scalars['Int'];
+};
+
+export type StimulationV1 = {
+  __typename?: 'StimulationV1';
+  value: Scalars['Int'];
+};
+
+export type StimulationV1Request = {
+  value: Scalars['Int'];
+};
+
+export enum StomachStatusEnumV1 {
+  AllGood = 'ALL_GOOD',
+  BowelsUpset = 'BOWELS_UPSET',
+  Full = 'FULL',
+  Pain = 'PAIN',
+  SomePain = 'SOME_PAIN',
+  VeryFull = 'VERY_FULL'
 }
+
+export type StomachStatusV1 = {
+  __typename?: 'StomachStatusV1';
+  status: StomachStatusEnumV1;
+};
+
+export type StomachStatusV1Request = {
+  status: StomachStatusEnumV1;
+};
+
+export type TirednessAfterV1 = {
+  __typename?: 'TirednessAfterV1';
+  value?: Maybe<Scalars['Int']>;
+};
+
+export type TirednessAfterV1Request = {
+  value?: InputMaybe<Scalars['Int']>;
+};
+
+export type TirednessBeforeV1 = {
+  __typename?: 'TirednessBeforeV1';
+  value?: Maybe<Scalars['Int']>;
+};
+
+export type TirednessBeforeV1Request = {
+  value?: InputMaybe<Scalars['Int']>;
+};
 
 export enum TurnReasonsEnumV1 {
   C02BuildUp = 'C02_BUILD_UP',
@@ -957,13 +1315,85 @@ export type VisibilityV1Request = {
   value?: InputMaybe<Scalars['Int']>;
 };
 
+export type WaterFeatureV1 = {
+  __typename?: 'WaterFeatureV1';
+  depth?: Maybe<Scalars['Int']>;
+  feature?: Maybe<WaterFeaturesEnumV1>;
+  swimThroughLength?: Maybe<Scalars['Int']>;
+};
+
+export type WaterFeatureV1Request = {
+  depth?: InputMaybe<Scalars['Int']>;
+  feature?: InputMaybe<WaterFeaturesEnumV1>;
+  swimThroughLength?: InputMaybe<Scalars['Int']>;
+};
+
+export enum WaterFeaturesEnumV1 {
+  Plane = 'PLANE',
+  ShipWreck = 'SHIP_WRECK',
+  SwimThrough = 'SWIM_THROUGH',
+  Vehicle = 'VEHICLE'
+}
+
 export type WaterTempV1 = {
   __typename?: 'WaterTempV1';
-  measurement?: Maybe<TemperatureEnumV1>;
-  value?: Maybe<Scalars['Int']>;
+  tempCelcius: Scalars['Int'];
 };
 
 export type WaterTempV1Request = {
-  measurement?: InputMaybe<TemperatureEnumV1>;
+  tempCelcius: Scalars['Int'];
+};
+
+export type WavesV1 = {
+  __typename?: 'WavesV1';
+  value?: Maybe<Scalars['Int']>;
+};
+
+export type WavesV1Request = {
+  value?: InputMaybe<Scalars['Int']>;
+};
+
+export type WeightWornV1 = {
+  __typename?: 'WeightWornV1';
+  weightGrams: Scalars['Int'];
+};
+
+export type WeightWornV1Request = {
+  weightGrams: Scalars['Int'];
+};
+
+export enum WetSuitSizeTypeEnumV1 {
+  Full = 'FULL',
+  ThreeQuarter = 'THREE_QUARTER'
+}
+
+export type WetsuitV1 = {
+  __typename?: 'WetsuitV1';
+  hood?: Maybe<Scalars['Boolean']>;
+  thicknessMm?: Maybe<Scalars['Int']>;
+  wetsuitSizeType?: Maybe<WetSuitSizeTypeEnumV1>;
+};
+
+export type WetsuitV1Request = {
+  hood?: InputMaybe<Scalars['Boolean']>;
+  thicknessMm?: InputMaybe<Scalars['Int']>;
+  wetsuitSizeType?: InputMaybe<WetSuitSizeTypeEnumV1>;
+};
+
+export type WildlifeV1 = {
+  __typename?: 'WildlifeV1';
+  value?: Maybe<Array<Scalars['Boolean']>>;
+};
+
+export type WildlifeV1Request = {
+  value?: InputMaybe<Array<Scalars['Boolean']>>;
+};
+
+export type WindV1 = {
+  __typename?: 'WindV1';
+  value?: Maybe<Scalars['Int']>;
+};
+
+export type WindV1Request = {
   value?: InputMaybe<Scalars['Int']>;
 };

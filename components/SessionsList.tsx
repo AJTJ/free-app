@@ -16,6 +16,7 @@ const getFormEntries = (report: ReportV1Request, form: FormV1Request) => {
   let cleanReport = FormV1Helper.cleanReport(report);
   let sortedFields = FormV1Helper.getSortedReportFields(cleanReport, form);
 
+  // TODO: Can I simply use the V1Fields here? Seems like it might be simpler
   let allFields = sortedFields.map((f, i) => {
     let fieldKey = f?.[0];
     return (

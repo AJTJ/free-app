@@ -25,22 +25,18 @@ export class FormV1Helper {
       deepDives: { isActive: false, fieldOrder: Infinity },
       dynamicDives: { isActive: false, fieldOrder: Infinity },
       staticHolds: { isActive: false, fieldOrder: Infinity },
-
-      // ACTIVITY-BASED
-      disciplineAndMaxDepth: { isActive: false, fieldOrder: Infinity },
-      maxDepth: { isActive: false, fieldOrder: Infinity },
-
-      // GENERAL
-      startTime: { isActive: true, fieldOrder: Infinity },
-      sessionName: { isActive: false, fieldOrder: Infinity },
-      endTime: { isActive: false, fieldOrder: Infinity },
-      easeOfEqualization: { isActive: false, fieldOrder: Infinity },
-      visibility: { isActive: false, fieldOrder: Infinity },
-      generalFeeling: { isActive: false, fieldOrder: Infinity },
-      injury: { isActive: false, fieldOrder: Infinity },
-      waterTemp: { isActive: false, fieldOrder: Infinity },
-      location: { isActive: false, fieldOrder: Infinity },
-
+      // // ACTIVITY-BASED
+      // disciplineAndMaxDepth: { isActive: false, fieldOrder: Infinity },
+      // // GENERAL
+      // startTime: { isActive: true, fieldOrder: Infinity },
+      // sessionName: { isActive: false, fieldOrder: Infinity },
+      // endTime: { isActive: false, fieldOrder: Infinity },
+      // easeOfEqualization: { isActive: false, fieldOrder: Infinity },
+      // visibility: { isActive: false, fieldOrder: Infinity },
+      // generalFeeling: { isActive: false, fieldOrder: Infinity },
+      // injury: { isActive: false, fieldOrder: Infinity },
+      // waterTemp: { isActive: false, fieldOrder: Infinity },
+      // location: { isActive: false, fieldOrder: Infinity },
       // FORM SPECIFIC
     };
   }
